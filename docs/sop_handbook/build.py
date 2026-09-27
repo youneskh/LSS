@@ -388,7 +388,7 @@ def build(lang):
         bad = []
         for level, aid, label, code in bk.toc:
             if code and aid in pages:
-                text = reader.pages[pages[aid] - 1].extract_text() or ""
+                text = re.sub(r"\s", "", reader.pages[pages[aid] - 1].extract_text() or "")
                 if code not in text:
                     bad.append((code, pages[aid]))
         if bad:
