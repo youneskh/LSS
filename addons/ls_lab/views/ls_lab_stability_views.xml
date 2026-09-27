@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_stability_study_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.stability_study.list</field>
+        <field name="model">ls.lab.stability_study</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'completed'"
+                  decoration-info="state == 'ongoing'"
+                  decoration-muted="state == 'terminated'">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="lot_id" optional="show"/>
+                <field name="study_type"/>
+                <field name="storage_condition_id"/>
+                <field name="start_date"/>
+                <field name="planned_end_date" optional="show"/>
+                <field name="timepoint_count"/>
+                <field name="completed_timepoint_count" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"
+                       decoration-info="state == 'ongoing'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_stability_study_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.stability_study.form</field>
+        <field name="model">ls.lab.stability_study</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object" string="Approve Protocol"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_start" type="object" string="Start Study"
+                            class="oe_highlight" invisible="state != 'approved'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            class="oe_highlight" invisible="state != 'ongoing'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_terminate" type="object" string="Terminate"
+                            invisible="state not in ('approved', 'ongoing')"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,ongoing,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_timepoints" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="timepoint_count" widget="statinfo"
+                                   string="Time Points"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <h3>
+                            <field name="description" placeholder="Short description"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Batch">
+                            <field name="product_id" readonly="state != 'draft'"/>
+                            <field name="lot_id" readonly="state != 'draft'"/>
+                            <field name="batch_reference"/>
+                            <field name="batch_size"/>
+                            <field name="batch_size_uom_id"/>
+                            <field name="manufacture_date"/>
+                        </group>
+                        <group string="Study Design">
+                            <field name="study_type" readonly="state != 'draft'"/>
+                            <field name="storage_condition_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="container_closure"/>
+                            <field name="specification_id"
+                                   options="{'no_create': True}"/>
+                            <field name="protocol_reference"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Schedule">
+                            <field name="start_date" readonly="state not in ('draft', 'approved')"/>
+                            <field name="planned_end_date"/>
+                        </group>
+                        <group string="Approval">
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Time Points" name="timepoints">
+                            <div class="alert alert-info" role="alert">
+                                Scheduled dates are derived from the study start date
+                                plus the interval in months. This module ships no time
+                                point schedule; intervals are defined by your
+                                organisation's approved stability protocol.
+                            </div>
+                            <field name="timepoint_ids"
+                                   readonly="state in ('completed', 'terminated')">
+                                <list editable="bottom"
+                                      default_order="sequence, interval_months, id">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="interval_months"/>
+                                    <field name="window_days"/>
+                                    <field name="scheduled_date" readonly="1"/>
+                                    <field name="sample_id" readonly="1"/>
+                                    <field name="actual_pull_date" readonly="1"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'completed'"
+                                           decoration-danger="state == 'missed'"/>
+                                    <button name="action_open_pull_wizard" type="object"
+                                            string="Create Sample" icon="fa-flask"
+                                            invisible="state != 'planned'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Termination" name="termination"
+                              invisible="state != 'terminated'">
+                            <field name="termination_reason" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_stability_study_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.stability_study.search</field>
+        <field name="model">ls.lab.stability_study</field>
+        <field name="arch" type="xml">
+            <search string="Stability Studies">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="batch_reference"/>
+                <field name="storage_condition_id"/>
+                <filter name="filter_ongoing" string="Ongoing"
+                        domain="[('state', '=', 'ongoing')]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_completed" string="Completed"
+                        domain="[('state', '=', 'completed')]"/>
+                <separator/>
+                <filter name="filter_start_date" string="Start Date" date="start_date"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_study_type" string="Study Type"
+                            domain="[]" context="{'group_by': 'study_type'}"/>
+                    <filter name="group_by_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_storage_condition" string="Storage Condition"
+                            domain="[]" context="{'group_by': 'storage_condition_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_stability_study" model="ir.actions.act_window">
+        <field name="name">Stability Studies</field>
+        <field name="res_model">ls.lab.stability_study</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_lab_stability_study_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first stability study</p>
+            <p>
+                Define the batch, the storage condition and the time points. Each time
+                point generates a pull sample tested against the study specification.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_lab_stability_timepoint_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.stability_timepoint.list</field>
+        <field name="model">ls.lab.stability_timepoint</field>
+        <field name="arch" type="xml">
+            <list default_order="scheduled_date, sequence, id"
+                  decoration-danger="state == 'missed'"
+                  decoration-success="state == 'completed'">
+                <field name="study_id"/>
+                <field name="name"/>
+                <field name="interval_months"/>
+                <field name="window_days" optional="hide"/>
+                <field name="scheduled_date"/>
+                <field name="sample_id"/>
+                <field name="actual_pull_date" optional="show"/>
+                <field name="state" widget="badge"/>
+                <button name="action_open_pull_wizard" type="object"
+                        string="Create Sample" icon="fa-flask"
+                        invisible="state != 'planned'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_stability_timepoint_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.stability_timepoint.form</field>
+        <field name="model">ls.lab.stability_timepoint</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_pull_wizard" type="object"
+                            string="Create Pull Sample" class="oe_highlight"
+                            invisible="state != 'planned'"
+                            groups="ls_lab.ls_lab_group_analyst"/>
+                    <button name="action_mark_tested" type="object" string="Mark Tested"
+                            invisible="state != 'sampled'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_mark_completed" type="object" string="Complete"
+                            invisible="state != 'tested'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_mark_missed" type="object" string="Mark Missed"
+                            invisible="state != 'planned'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planned,sampled,tested,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Schedule">
+                            <field name="study_id"/>
+                            <field name="name"/>
+                            <field name="sequence"/>
+                            <field name="interval_months"/>
+                            <field name="window_days"/>
+                            <field name="scheduled_date"/>
+                        </group>
+                        <group string="Execution">
+                            <field name="sample_id"/>
+                            <field name="actual_pull_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"
+                               placeholder="Required when recording a missed time point"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_stability_timepoint_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.stability_timepoint.search</field>
+        <field name="model">ls.lab.stability_timepoint</field>
+        <field name="arch" type="xml">
+            <search string="Time Points">
+                <field name="name"/>
+                <field name="study_id"/>
+                <field name="sample_id"/>
+                <filter name="filter_planned" string="Planned"
+                        domain="[('state', '=', 'planned')]"/>
+                <filter name="filter_missed" string="Missed"
+                        domain="[('state', '=', 'missed')]"/>
+                <separator/>
+                <filter name="filter_scheduled_date" string="Scheduled Date"
+                        date="scheduled_date"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_study" string="Stability Study"
+                            domain="[]" context="{'group_by': 'study_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_stability_timepoint" model="ir.actions.act_window">
+        <field name="name">Stability Time Points</field>
+        <field name="res_model">ls.lab.stability_timepoint</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_lab_stability_timepoint_view_search"/>
+    </record>
+
+</odoo>

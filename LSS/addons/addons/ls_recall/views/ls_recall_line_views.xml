@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_line_list" model="ir.ui.view">
+        <field name="name">ls.recall.line.list</field>
+        <field name="model">ls.recall.line</field>
+        <field name="arch" type="xml">
+            <list editable="bottom"
+                  decoration-danger="status == 'discrepancy'"
+                  decoration-success="status == 'reconciled'">
+                <field name="execution_id"/>
+                <field name="partner_id"/>
+                <field name="product_id" optional="show"/>
+                <field name="lot_id"/>
+                <field name="qty_shipped"/>
+                <field name="qty_returned"/>
+                <field name="qty_destroyed"/>
+                <field name="qty_not_recovered"/>
+                <field name="qty_accounted"/>
+                <field name="qty_outstanding"/>
+                <field name="notified"/>
+                <field name="notification_date" optional="hide"/>
+                <field name="response_received"/>
+                <field name="response_date" optional="hide"/>
+                <field name="status"/>
+                <field name="execution_state" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_line_form" model="ir.ui.view">
+        <field name="name">ls.recall.line.form</field>
+        <field name="model">ls.recall.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Consignment">
+                            <field name="execution_id"/>
+                            <field name="partner_id"/>
+                            <field name="lot_id"/>
+                            <field name="product_id"/>
+                            <field name="picking_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Reconciliation">
+                            <field name="qty_shipped"/>
+                            <field name="qty_returned"/>
+                            <field name="qty_destroyed"/>
+                            <field name="qty_not_recovered"/>
+                            <field name="qty_accounted"/>
+                            <field name="qty_outstanding"/>
+                            <field name="status"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Contact">
+                            <field name="notified"/>
+                            <field name="notification_date"/>
+                            <field name="response_received"/>
+                            <field name="response_date"/>
+                        </group>
+                    </group>
+                    <separator string="Notes"/>
+                    <field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_line_search" model="ir.ui.view">
+        <field name="name">ls.recall.line.search</field>
+        <field name="model">ls.recall.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="lot_id"/>
+                <field name="execution_id"/>
+                <filter name="filter_not_notified" string="Not Notified"
+                        domain="[('notified', '=', False)]"/>
+                <filter name="filter_no_response" string="No Response"
+                        domain="[('response_received', '=', False)]"/>
+                <filter name="filter_outstanding" string="Quantity Outstanding"
+                        domain="[('qty_outstanding', '&gt;', 0)]"/>
+                <filter name="filter_discrepancy" string="Discrepancy"
+                        domain="[('status', '=', 'discrepancy')]"/>
+                <group>
+                    <filter name="group_execution" string="Recall"
+                            context="{'group_by': 'execution_id'}"/>
+                    <filter name="group_partner" string="Consignee"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_status" string="Status"
+                            context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_line" model="ir.actions.act_window">
+        <field name="name">Consignees</field>
+        <field name="res_model">ls.recall.line</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_execution_form" model="ir.ui.view">
+        <field name="name">ls.recall.execution.form</field>
+        <field name="model">ls.recall.execution</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_initiate" type="object"
+                            string="Initiate"
+                            class="oe_highlight"
+                            invisible="state != 'planned'"/>
+                    <button name="action_trace_and_start" type="object"
+                            string="Trace Distribution and Start"
+                            class="oe_highlight"
+                            invisible="state != 'initiated'"/>
+                    <button name="action_start_communication" type="object"
+                            string="Move to Communication"
+                            class="oe_highlight"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_generate_effectiveness_checks"
+                            type="object"
+                            string="Plan Effectiveness Checks"
+                            invisible="state not in ['in_progress', 'communication']"/>
+                    <button name="action_start_effectiveness" type="object"
+                            string="Move to Effectiveness Check"
+                            class="oe_highlight"
+                            invisible="state != 'communication'"/>
+                    <button name="action_open_close_wizard" type="object"
+                            string="Close Recall"
+                            class="oe_highlight"
+                            invisible="state != 'effectiveness_check'"/>
+                    <button name="action_trace_distribution" type="object"
+                            string="Re-trace Distribution"
+                            invisible="state not in ['in_progress', 'communication', 'effectiveness_check']"/>
+                    <button name="action_reset_to_planned" type="object"
+                            string="Reset to Planned"
+                            groups="ls_recall.group_ls_recall_manager"
+                            invisible="state != 'initiated'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            groups="ls_recall.group_ls_recall_manager"
+                            invisible="state in ['closed', 'cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planned,initiated,in_progress,communication,effectiveness_check,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_lines" type="object"
+                                class="oe_stat_button" icon="fa-truck">
+                            <field name="line_count" widget="statinfo"
+                                   string="Consignees"/>
+                        </button>
+                        <button name="action_view_communications"
+                                type="object"
+                                class="oe_stat_button" icon="fa-envelope">
+                            <field name="communication_count"
+                                   widget="statinfo" string="Messages"/>
+                        </button>
+                        <button name="action_view_effectiveness"
+                                type="object"
+                                class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="effectiveness_count"
+                                   widget="statinfo" string="Checks"/>
+                        </button>
+                        <button name="action_view_reports" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="report_count" widget="statinfo"
+                                   string="Reports"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Mock Recall"
+                            bg_color="text-bg-info"
+                            invisible="not is_mock"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <field name="is_mock" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group string="Decision">
+                            <field name="action_type"
+                                   readonly="state != 'planned'"/>
+                            <field name="classification"
+                                   readonly="state != 'planned'"/>
+                            <field name="depth"
+                                   readonly="state != 'planned'"/>
+                            <field name="public_warning"/>
+                            <field name="decision_date"/>
+                            <field name="target_completion_date"/>
+                        </group>
+                        <group string="Scope">
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'planned'"/>
+                            <field name="plan_id"
+                                   readonly="state != 'planned'"/>
+                            <field name="product_id"
+                                   readonly="state != 'planned'"/>
+                            <field name="lot_ids" widget="many2many_tags"
+                                   readonly="state not in ['planned', 'initiated']"/>
+                            <field name="responsible_user_id"
+                                   widget="many2one_avatar_user"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reason and Hazard" name="reason">
+                            <group>
+                                <field name="reason" placeholder="Describe the quality defect or safety concern in terms that can be communicated to consignees."/>
+                                <field name="defect_reference"/>
+                                <field name="capa_reference"/>
+                            </group>
+                            <separator string="Health Hazard Evaluation"/>
+                            <field name="health_hazard_evaluation"
+                                   placeholder="Record the assessment of the health hazard, including the population at risk, the seriousness and the likelihood of occurrence."/>
+                            <group>
+                                <field name="hhe_user_id"/>
+                                <field name="hhe_date"/>
+                            </group>
+                            <separator string="Root Cause"/>
+                            <field name="root_cause"/>
+                        </page>
+                        <page string="Strategy" name="strategy">
+                            <group>
+                                <group string="Effectiveness Checks">
+                                    <field name="effectiveness_level"/>
+                                    <field name="effectiveness_sample_pct"
+                                           invisible="effectiveness_level != 'b'"
+                                           required="effectiveness_level == 'b'"/>
+                                    <field name="effectiveness_required_count"/>
+                                    <field name="effectiveness_planned_count"/>
+                                    <field name="effectiveness_performed_count"/>
+                                    <field name="effectiveness_success_count"/>
+                                    <field name="effectiveness_coverage"/>
+                                </group>
+                                <group string="Authority Notification">
+                                    <field name="authority_notified"/>
+                                    <field name="authority_notification_date"
+                                           invisible="not authority_notified"/>
+                                    <field name="authority_reference"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Timing">
+                                    <field name="initiation_date"/>
+                                    <field name="first_communication_date"/>
+                                    <field name="initiation_delay_hours"/>
+                                    <field name="closure_date"
+                                           invisible="state not in ['closed', 'cancelled']"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Consignees" name="lines">
+                            <field name="line_ids" nolabel="1"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list editable="bottom"
+                                      decoration-danger="status == 'discrepancy'"
+                                      decoration-success="status == 'reconciled'">
+                                    <field name="partner_id"/>
+                                    <field name="lot_id"/>
+                                    <field name="qty_shipped"/>
+                                    <field name="qty_returned"/>
+                                    <field name="qty_destroyed"/>
+                                    <field name="qty_not_recovered"/>
+                                    <field name="qty_accounted"/>
+                                    <field name="qty_outstanding"/>
+                                    <field name="notified"/>
+                                    <field name="response_received"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="qty_distributed"/>
+                                <field name="qty_returned"/>
+                                <field name="qty_destroyed"/>
+                                <field name="qty_not_recovered"/>
+                                <field name="qty_accounted"/>
+                                <field name="qty_outstanding"/>
+                                <field name="reconciliation_rate"/>
+                                <field name="consignee_count"/>
+                                <field name="consignee_responded_count"/>
+                                <field name="response_rate"/>
+                            </group>
+                        </page>
+                        <page string="Communications" name="communications">
+                            <field name="communication_ids" nolabel="1"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="communication_type"/>
+                                    <field name="channel"/>
+                                    <field name="subject"/>
+                                    <field name="recipient_count"/>
+                                    <field name="planned_date"/>
+                                    <field name="sent_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Effectiveness Checks" name="checks">
+                            <field name="effectiveness_ids" nolabel="1"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list>
+                                    <field name="partner_id"/>
+                                    <field name="method"/>
+                                    <field name="attempt_number"/>
+                                    <field name="planned_date"/>
+                                    <field name="performed_date"/>
+                                    <field name="outcome"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Reports" name="reports">
+                            <field name="report_ids" nolabel="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="report_type"/>
+                                    <field name="report_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Closure" name="closure"
+                              invisible="state not in ['closed', 'cancelled']">
+                            <group>
+                                <field name="closed_by_user_id"/>
+                                <field name="closure_justification"/>
+                                <field name="closure_attestation"/>
+                                <field name="cancellation_reason"
+                                       invisible="state != 'cancelled'"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_execution_list" model="ir.ui.view">
+        <field name="name">ls.recall.execution.list</field>
+        <field name="model">ls.recall.execution</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="classification == 'class_i'"
+                  decoration-warning="classification == 'class_ii'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="action_type"/>
+                <field name="product_id"/>
+                <field name="classification"/>
+                <field name="depth" optional="show"/>
+                <field name="decision_date"/>
+                <field name="target_completion_date" optional="show"/>
+                <field name="responsible_user_id" widget="many2one_avatar_user"/>
+                <field name="consignee_count" optional="hide"/>
+                <field name="reconciliation_rate"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_execution_search" model="ir.ui.view">
+        <field name="name">ls.recall.execution.search</field>
+        <field name="model">ls.recall.execution</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="lot_ids"/>
+                <field name="responsible_user_id"/>
+                <field name="defect_reference"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="filter_class_i" string="Class I"
+                        domain="[('classification', '=', 'class_i')]"/>
+                <filter name="filter_class_ii" string="Class II"
+                        domain="[('classification', '=', 'class_ii')]"/>
+                <separator/>
+                <filter name="filter_real" string="Real Field Actions"
+                        domain="[('is_mock', '=', False)]"/>
+                <filter name="filter_mock" string="Mock Recalls"
+                        domain="[('is_mock', '=', True)]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Past Target Date"
+                        domain="[('target_completion_date', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['closed', 'cancelled'])]"/>
+                <filter name="filter_not_notified"
+                        string="Authority Not Notified"
+                        domain="[('authority_notified', '=', False)]"/>
+                <separator/>
+                <filter name="filter_my" string="My Recalls"
+                        domain="[('responsible_user_id', '=', uid)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_classification"
+                            string="Classification"
+                            context="{'group_by': 'classification'}"/>
+                    <filter name="group_action_type" string="Action Type"
+                            context="{'group_by': 'action_type'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_responsible" string="Coordinator"
+                            context="{'group_by': 'responsible_user_id'}"/>
+                    <filter name="group_decision_month" string="Decision Month"
+                            context="{'group_by': 'decision_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_execution_graph" model="ir.ui.view">
+        <field name="name">ls.recall.execution.graph</field>
+        <field name="model">ls.recall.execution</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="classification"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_execution_pivot" model="ir.ui.view">
+        <field name="name">ls.recall.execution.pivot</field>
+        <field name="model">ls.recall.execution</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="classification" type="row"/>
+                <field name="state" type="col"/>
+                <field name="qty_distributed" type="measure"/>
+                <field name="qty_accounted" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_execution" model="ir.actions.act_window">
+        <field name="name">Recalls</field>
+        <field name="res_model">ls.recall.execution</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="context">{'search_default_filter_open': 1, 'search_default_filter_real': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No field action has been recorded.
+            </p>
+            <p>
+                A recall record holds the decision, the traced
+                distribution, the communications issued, the
+                effectiveness checks performed and the reports produced
+                for one field action.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_execution_all" model="ir.actions.act_window">
+        <field name="name">All Field Actions</field>
+        <field name="res_model">ls.recall.execution</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+    </record>
+
+</odoo>

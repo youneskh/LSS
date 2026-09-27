@@ -1,0 +1,5 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Website-specific templates can be added here -->
+    </data>
+</odoo>

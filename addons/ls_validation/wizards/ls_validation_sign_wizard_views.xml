@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_sign_wizard_form" model="ir.ui.view">
+        <field name="name">ls.validation.sign.wizard.form</field>
+        <field name="model">ls.validation.sign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Electronic Signature">
+                <div class="alert alert-info" role="alert">
+                    By signing, you confirm that you are the person identified
+                    below and that the signature carries the meaning shown.
+                    The signature is recorded permanently and cannot be
+                    modified or deleted.
+                </div>
+                <group>
+                    <field name="res_model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="callback" invisible="1"/>
+                    <field name="password_required" invisible="1"/>
+                    <field name="record_label"/>
+                    <field name="meaning"/>
+                    <field name="login"/>
+                    <field name="password" password="True"
+                           required="password_required"
+                           invisible="not password_required"/>
+                    <field name="reason" placeholder="Optional comment"/>
+                </group>
+                <footer>
+                    <button name="action_sign" type="object" string="Sign"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_category_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.category.list</field>
+        <field name="model">ls.supplier.category</field>
+        <field name="arch" type="xml">
+            <list string="Supplier Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="criticality" widget="badge"
+                       decoration-danger="criticality == 'critical'"
+                       decoration-warning="criticality == 'major'"
+                       decoration-info="criticality == 'minor'"/>
+                <field name="requires_assessment"/>
+                <field name="requires_initial_audit"/>
+                <field name="requires_periodic_audit"/>
+                <field name="requalification_interval_months"/>
+                <field name="review_interval_months"/>
+                <field name="qualification_count" string="Dossiers"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_category_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.category.form</field>
+        <field name="model">ls.supplier.category</field>
+        <field name="arch" type="xml">
+            <form string="Supplier Category">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_qualifications" type="object"
+                                class="oe_stat_button" icon="fa-folder-open">
+                            <field name="qualification_count" widget="statinfo"
+                                   string="Dossiers"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Active Substance Manufacturer"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="code"/>
+                            <field name="criticality"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Qualification Rules">
+                            <field name="requires_assessment"/>
+                            <field name="requires_initial_audit"/>
+                            <field name="requires_periodic_audit"/>
+                            <field name="audit_interval_months"
+                                   invisible="not requires_periodic_audit"
+                                   required="requires_periodic_audit"/>
+                            <field name="requalification_interval_months"/>
+                            <field name="review_interval_months"/>
+                        </group>
+                    </group>
+                    <group string="Applicable Frameworks">
+                        <field name="standard_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_category_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.category.search</field>
+        <field name="model">ls.supplier.category</field>
+        <field name="arch" type="xml">
+            <search string="Supplier Categories">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('criticality', '=', 'critical')]"/>
+                <filter name="filter_major" string="Major"
+                        domain="[('criticality', '=', 'major')]"/>
+                <filter name="filter_minor" string="Minor"
+                        domain="[('criticality', '=', 'minor')]"/>
+                <separator/>
+                <filter name="filter_audit_required" string="Audit Required"
+                        domain="[('requires_initial_audit', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_criticality" string="Criticality"
+                        context="{'group_by': 'criticality'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_category" model="ir.actions.act_window">
+        <field name="name">Supplier Categories</field>
+        <field name="res_model">ls.supplier.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define a supplier category</p>
+            <p>
+                A category carries the qualification rules your organisation
+                applies: whether an assessment or an audit is mandatory, and
+                the periodicity of requalification, audit and review.
+            </p>
+        </field>
+    </record>
+
+</odoo>

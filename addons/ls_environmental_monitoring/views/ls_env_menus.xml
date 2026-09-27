@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data>
+
+        <!--
+            No menu item below declares a group restriction.
+
+            Odoo 19 renamed the field that links a menu item to its groups, and
+            the new name could not be verified from official documentation.
+            Referencing a field that does not exist would prevent the module
+            from installing. Menu visibility therefore relies on the access
+            control lists: a user without read access to the underlying model
+            does not see the corresponding menu entry.
+
+            See doc/deviations.md for the full record of this decision.
+        -->
+
+        <menuitem id="menu_ls_env_root"
+                  name="Environmental Monitoring"
+                  sequence="85"
+                  web_icon="ls_environmental_monitoring,static/description/icon.png"/>
+
+        <!-- Operations -->
+        <menuitem id="menu_ls_env_operations"
+                  name="Operations"
+                  parent="menu_ls_env_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_sample_due"
+                  name="Samples Due"
+                  parent="menu_ls_env_operations"
+                  action="action_ls_env_sample_due"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_sample"
+                  name="All Samples"
+                  parent="menu_ls_env_operations"
+                  action="action_ls_env_sample"
+                  sequence="20"/>
+
+        <menuitem id="menu_ls_env_schedule_wizard"
+                  name="Generate Scheduled Samples"
+                  parent="menu_ls_env_operations"
+                  action="action_ls_env_schedule_wizard"
+                  sequence="30"/>
+
+        <!-- Results and excursions -->
+        <menuitem id="menu_ls_env_analysis"
+                  name="Results"
+                  parent="menu_ls_env_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_ls_env_result"
+                  name="Results"
+                  parent="menu_ls_env_analysis"
+                  action="action_ls_env_result"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_result_breach"
+                  name="Threshold Breaches"
+                  parent="menu_ls_env_analysis"
+                  action="action_ls_env_result_breach"
+                  sequence="20"/>
+
+        <menuitem id="menu_ls_env_excursion"
+                  name="Excursions"
+                  parent="menu_ls_env_analysis"
+                  action="action_ls_env_excursion"
+                  sequence="30"/>
+
+        <!-- Trending -->
+        <menuitem id="menu_ls_env_trending"
+                  name="Trending"
+                  parent="menu_ls_env_root"
+                  sequence="30"/>
+
+        <menuitem id="menu_ls_env_trend_wizard"
+                  name="Run Trend Analysis"
+                  parent="menu_ls_env_trending"
+                  action="action_ls_env_trend_wizard"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_trend"
+                  name="Trend Analyses"
+                  parent="menu_ls_env_trending"
+                  action="action_ls_env_trend"
+                  sequence="20"/>
+
+        <!-- Programme definition -->
+        <menuitem id="menu_ls_env_programme"
+                  name="Programme"
+                  parent="menu_ls_env_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_ls_env_plan"
+                  name="Monitoring Plans"
+                  parent="menu_ls_env_programme"
+                  action="action_ls_env_plan"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_sampling_point"
+                  name="Sampling Points"
+                  parent="menu_ls_env_programme"
+                  action="action_ls_env_sampling_point"
+                  sequence="20"/>
+
+        <menuitem id="menu_ls_env_limit"
+                  name="Limits"
+                  parent="menu_ls_env_programme"
+                  action="action_ls_env_limit"
+                  sequence="30"/>
+
+        <!-- Configuration -->
+        <menuitem id="menu_ls_env_configuration"
+                  name="Configuration"
+                  parent="menu_ls_env_root"
+                  sequence="90"/>
+
+        <menuitem id="menu_ls_env_area"
+                  name="Areas"
+                  parent="menu_ls_env_configuration"
+                  action="action_ls_env_area"
+                  sequence="10"/>
+
+        <menuitem id="menu_ls_env_grade"
+                  name="Cleanroom Grades"
+                  parent="menu_ls_env_configuration"
+                  action="action_ls_env_grade"
+                  sequence="20"/>
+
+        <menuitem id="menu_ls_env_parameter"
+                  name="Parameters"
+                  parent="menu_ls_env_configuration"
+                  action="action_ls_env_parameter"
+                  sequence="30"/>
+
+        <menuitem id="menu_ls_env_method"
+                  name="Methods"
+                  parent="menu_ls_env_configuration"
+                  action="action_ls_env_method"
+                  sequence="40"/>
+
+    </data>
+</odoo>

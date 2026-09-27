@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details.
+
+     21 CFR 11.50(b) requires the printed name of the signer, the date and time
+     of signing, and the meaning of the signature to be included in any human
+     readable form of the electronic record, such as a printout.
+
+     The template below is the reusable block that satisfies that requirement.
+     Any QWeb report of a signable model includes it with:
+
+         <t t-call="ls_electronic_signature.signature_manifestation">
+             <t t-set="signatures" t-value="doc.ls_signature_ids"/>
+         </t>
+-->
+<odoo>
+
+    <template id="signature_manifestation">
+        <div class="ls-signature-manifestation" t-if="signatures">
+            <h4>Electronic Signatures</h4>
+            <table class="table table-sm o_main_table" style="font-size:11px;">
+                <thead>
+                    <tr>
+                        <th>Meaning</th>
+                        <th>Printed Name</th>
+                        <th>Identification Code</th>
+                        <th>Date and Time (UTC)</th>
+                        <th>Reference</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="signatures" t-as="signature">
+                        <td><span t-out="signature.meaning_name"/></td>
+                        <td><span t-out="signature.signer_name"/></td>
+                        <td><span t-out="signature.signer_login"/></td>
+                        <td><span t-out="signature.signed_at"/></td>
+                        <td><span t-out="signature.name"/></td>
+                        <td>
+                            <span t-if="signature.is_current">Covers current content</span>
+                            <span t-else="">Superseded by later changes</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size:9px;" class="text-muted">
+                Executed electronically. Integrity is protected by a SHA-256 hash chain;
+                the reference above identifies the entry in the signature log.
+            </p>
+        </div>
+    </template>
+
+</odoo>

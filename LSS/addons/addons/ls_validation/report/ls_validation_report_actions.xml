@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="action_report_ls_validation_protocol" model="ir.actions.report">
+        <field name="name">Validation Protocol</field>
+        <field name="model">ls.validation.protocol</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_validation.report_protocol</field>
+        <field name="report_file">ls_validation.report_protocol</field>
+        <field name="binding_model_id" ref="model_ls_validation_protocol"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'%s-v%s' % (object.reference, object.version)</field>
+    </record>
+
+    <record id="action_report_ls_validation_execution" model="ir.actions.report">
+        <field name="name">Execution Record</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_validation.report_execution</field>
+        <field name="report_file">ls_validation.report_execution</field>
+        <field name="binding_model_id" ref="model_ls_validation_execution"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">object.reference</field>
+    </record>
+
+    <record id="action_report_ls_validation_summary" model="ir.actions.report">
+        <field name="name">Validation Summary Report</field>
+        <field name="model">ls.validation.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_validation.report_summary</field>
+        <field name="report_file">ls_validation.report_summary</field>
+        <field name="binding_model_id" ref="model_ls_validation_report"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">object.reference</field>
+    </record>
+
+</odoo>

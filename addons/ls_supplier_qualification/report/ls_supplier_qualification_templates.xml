@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_supplier_qualification_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.company_id.partner_id.lang)"/>
+            <div class="page">
+                <h2>Supplier Qualification Dossier</h2>
+                <h3 t-field="doc.name"/>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Supplier</strong>
+                        <div t-field="doc.partner_id"
+                             t-options="{'widget': 'contact', 'fields': ['address', 'vat'], 'no_marker': True}"/>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Category</strong></td>
+                                <td><span t-field="doc.category_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Criticality</strong></td>
+                                <td><span t-field="doc.criticality"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Risk level</strong></td>
+                                <td><span t-field="doc.risk_level"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><span t-field="doc.state"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Responsible</strong></td>
+                                <td><span t-field="doc.responsible_id"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Approval</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td style="width:35%"><strong>Registration date</strong></td>
+                        <td><span t-field="doc.registration_date"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approval date</strong></td>
+                        <td><span t-field="doc.approval_date"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approved by</strong></td>
+                        <td><span t-field="doc.approved_by_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Valid until</strong></td>
+                        <td><span t-field="doc.expiry_date"/></td>
+                    </tr>
+                    <tr t-if="doc.approval_conditions">
+                        <td><strong>Conditions</strong></td>
+                        <td><span t-field="doc.approval_conditions"/></td>
+                    </tr>
+                    <tr t-if="doc.suspension_reason">
+                        <td><strong>Suspension reason</strong></td>
+                        <td><span t-field="doc.suspension_reason"/></td>
+                    </tr>
+                    <tr t-if="doc.disqualification_reason">
+                        <td><strong>Disqualification reason</strong></td>
+                        <td><span t-field="doc.disqualification_reason"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Qualified Scope</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Designation</th>
+                            <th>Type</th>
+                            <th>Specification</th>
+                            <th>Qualified on</th>
+                            <th>Valid until</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.material_ids" t-as="material">
+                            <td><span t-field="material.name"/></td>
+                            <td><span t-field="material.material_type"/></td>
+                            <td><span t-field="material.specification_reference"/></td>
+                            <td><span t-field="material.qualification_date"/></td>
+                            <td><span t-field="material.expiry_date"/></td>
+                            <td><span t-field="material.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Assessments</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Assessor</th>
+                            <th class="text-end">Score</th>
+                            <th>Result</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.assessment_ids" t-as="assessment">
+                            <td><span t-field="assessment.name"/></td>
+                            <td><span t-field="assessment.date"/></td>
+                            <td><span t-field="assessment.assessment_type"/></td>
+                            <td><span t-field="assessment.assessor_id"/></td>
+                            <td class="text-end">
+                                <span t-field="assessment.score_percent"/> %
+                            </td>
+                            <td><span t-field="assessment.result"/></td>
+                            <td><span t-field="assessment.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Audits</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Dates</th>
+                            <th>Type</th>
+                            <th>Lead auditor</th>
+                            <th class="text-end">Crit.</th>
+                            <th class="text-end">Major</th>
+                            <th>Outcome</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.audit_ids" t-as="audit">
+                            <td><span t-field="audit.name"/></td>
+                            <td>
+                                <span t-field="audit.date_start"/> -
+                                <span t-field="audit.date_stop"/>
+                            </td>
+                            <td><span t-field="audit.audit_type"/></td>
+                            <td><span t-field="audit.lead_auditor_id"/></td>
+                            <td class="text-end"><span t-field="audit.critical_count"/></td>
+                            <td class="text-end"><span t-field="audit.major_count"/></td>
+                            <td><span t-field="audit.outcome"/></td>
+                            <td><span t-field="audit.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Performance Evaluations</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Period</th>
+                            <th class="text-end">On-time</th>
+                            <th class="text-end">Quality</th>
+                            <th class="text-end">Overall</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.performance_ids" t-as="evaluation">
+                            <td><span t-field="evaluation.name"/></td>
+                            <td>
+                                <span t-field="evaluation.period_start"/> -
+                                <span t-field="evaluation.period_end"/>
+                            </td>
+                            <td class="text-end"><span t-field="evaluation.otd_percent"/> %</td>
+                            <td class="text-end"><span t-field="evaluation.quality_percent"/> %</td>
+                            <td class="text-end"><span t-field="evaluation.overall_score"/> %</td>
+                            <td><span t-field="evaluation.rating"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Periodic Reviews</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Date</th>
+                            <th>Reviewer</th>
+                            <th>Decision</th>
+                            <th>New validity end</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.review_ids" t-as="review">
+                            <td><span t-field="review.name"/></td>
+                            <td><span t-field="review.review_date"/></td>
+                            <td><span t-field="review.reviewer_id"/></td>
+                            <td><span t-field="review.decision"/></td>
+                            <td><span t-field="review.new_expiry_date"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Signature Log</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date and time</th>
+                            <th>Signer</th>
+                            <th>Meaning</th>
+                            <th>Signed record</th>
+                            <th>SHA-256</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.signature_ids.sorted('sequence_number')"
+                            t-as="signature">
+                            <td><span t-field="signature.sequence_number"/></td>
+                            <td><span t-field="signature.signed_on"/></td>
+                            <td><span t-field="signature.user_id"/></td>
+                            <td><span t-field="signature.meaning"/></td>
+                            <td><span t-field="signature.signed_record_name"/></td>
+                            <td>
+                                <span t-esc="signature.record_hash[:16]"/>...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="mt-4 text-muted" style="font-size:9px;">
+                    This document is generated from the Odoo supplier
+                    qualification records at the moment of printing. It states
+                    the status recorded in the system; it is not a certificate
+                    of compliance with any regulatory framework.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_supplier_qualification">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_supplier_qualification.report_ls_supplier_qualification_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

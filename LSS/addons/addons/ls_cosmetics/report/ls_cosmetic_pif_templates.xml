@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_ls_cosmetic_pif_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Product Information File <span t-field="doc.code"/></h2>
+                <h4 t-field="doc.name"/>
+                <p class="text-muted">
+                    Index of the file kept under Article 11 of Regulation (EC)
+                    No 1223/2009.
+                </p>
+                <div class="row mt16 mb32">
+                    <div class="col-6">
+                        <strong>Product:</strong>
+                        <span t-field="doc.product_tmpl_id"/>
+                        <br/>
+                        <strong>Responsible person:</strong>
+                        <span t-field="doc.responsible_person_id"/>
+                        <br/>
+                        <strong>Basis of designation:</strong>
+                        <span t-field="doc.responsible_person_basis"/>
+                        <br/>
+                        <strong>Address where the file is kept:</strong>
+                        <span t-field="doc.file_address"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/>
+                        <br/>
+                        <strong>First placed on the market:</strong>
+                        <span t-field="doc.first_placed_date"/>
+                        <br/>
+                        <strong>Last batch placed on the market:</strong>
+                        <span t-field="doc.last_batch_market_date"/>
+                        <br/>
+                        <strong>Retention end date:</strong>
+                        <span t-field="doc.retention_end_date"/>
+                    </div>
+                </div>
+
+                <h4>(a) Description of the Cosmetic Product</h4>
+                <p t-field="doc.product_description"/>
+
+                <h4>(b) Cosmetic Product Safety Report</h4>
+                <p>
+                    <span t-field="doc.safety_assessment_id"/>
+                    <t t-if="doc.safety_assessment_id">
+                        - conclusion:
+                        <span t-field="doc.safety_assessment_id.conclusion"/>,
+                        approved on
+                        <span t-field="doc.safety_assessment_id.approval_date"/>
+                    </t>
+                </p>
+
+                <h4>(c) Method of Manufacturing and GMP Statement</h4>
+                <p t-field="doc.manufacturing_method"/>
+                <p t-field="doc.gmp_statement"/>
+                <p>
+                    <strong>Standard applied:</strong>
+                    <span t-field="doc.gmp_standard"/>
+                    <br/>
+                    <strong>Manufacturing site:</strong>
+                    <span t-field="doc.gmp_site_id"/>
+                    <br/>
+                    <strong>Evidence reference:</strong>
+                    <span t-field="doc.gmp_certificate_reference"/>
+                    (<span t-field="doc.gmp_certificate_date"/>)
+                </p>
+
+                <h4>(d) Proof of the Effect Claimed</h4>
+                <table class="table table-sm" t-if="doc.claim_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Claim</th>
+                            <th>Criteria met</th>
+                            <th>Evidence items</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.claim_ids" t-as="claim">
+                            <td><span t-field="claim.code"/></td>
+                            <td><span t-field="claim.name"/></td>
+                            <td><span t-field="claim.criteria_met_count"/> / 6</td>
+                            <td><span t-field="claim.evidence_count"/></td>
+                            <td><span t-field="claim.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.claim_ids" t-field="doc.no_claims_justification"/>
+
+                <h4>(e) Data on Animal Testing</h4>
+                <p t-if="doc.no_animal_testing">
+                    No animal testing has been performed by the manufacturer, its
+                    agents or its suppliers.
+                </p>
+                <p t-field="doc.animal_testing_data"/>
+
+                <h4 class="mt32">Notification</h4>
+                <p>
+                    <strong>Reference:</strong>
+                    <span t-field="doc.notification_reference"/>
+                    <br/>
+                    <strong>Date:</strong>
+                    <span t-field="doc.notification_date"/>
+                </p>
+                <table class="table table-sm" t-if="doc.dz_authorization_ids">
+                    <thead>
+                        <tr>
+                            <th>Dossier</th>
+                            <th>Type</th>
+                            <th>Authorisation reference</th>
+                            <th>Decision date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.dz_authorization_ids" t-as="dossier">
+                            <td><span t-field="dossier.code"/></td>
+                            <td><span t-field="dossier.authorization_type"/></td>
+                            <td><span t-field="dossier.authorization_reference"/></td>
+                            <td><span t-field="dossier.decision_date"/></td>
+                            <td><span t-field="dossier.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_cosmetic_pif">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_cosmetics.report_ls_cosmetic_pif_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

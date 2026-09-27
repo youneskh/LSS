@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_program_list" model="ir.ui.view">
+        <field name="name">ls.audit.program.list</field>
+        <field name="model">ls.audit.program</field>
+        <field name="arch" type="xml">
+            <list string="Audit Programmes" decoration-muted="state == 'cancelled'" decoration-success="state == 'closed'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="responsible_id"/>
+                <field name="audit_count"/>
+                <field name="closed_audit_count" optional="show"/>
+                <field name="completion_rate" widget="percentage" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'closed'" decoration-muted="state == 'cancelled'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_program_form" model="ir.ui.view">
+        <field name="name">ls.audit.program.form</field>
+        <field name="model">ls.audit.program</field>
+        <field name="arch" type="xml">
+            <form string="Audit Programme">
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'approved'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="btn-primary" invisible="state != 'in_progress'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,in_progress,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_audits" type="object" class="oe_stat_button" icon="fa-list-ul">
+                            <field name="audit_count" widget="statinfo" string="Audits"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2><field name="reference" readonly="1"/></h2>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Internal Audit Programme 2026"/></h1>
+                    </div>
+                    <group>
+                        <group string="Period">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Governance">
+                            <field name="responsible_id"/>
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                            <field name="completion_rate" widget="percentage"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Objective and Rationale" name="objective">
+                            <field name="objective" nolabel="1"
+                                   placeholder="Objective of the programme, and the rationale used to set the audit frequency: process criticality, regulatory impact, results of previous audits."/>
+                        </page>
+                        <page string="Audits" name="audits">
+                            <field name="audit_ids" nolabel="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="audit_type_id"/>
+                                    <field name="date_planned"/>
+                                    <field name="lead_auditor_id"/>
+                                    <field name="open_finding_count"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                        <page string="Cancellation" name="cancellation" invisible="state != 'cancelled'">
+                            <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_program_search" model="ir.ui.view">
+        <field name="name">ls.audit.program.search</field>
+        <field name="model">ls.audit.program</field>
+        <field name="arch" type="xml">
+            <search string="Audit Programmes">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="responsible_id"/>
+                <filter name="filter_active_programs" string="Open"
+                        domain="[('state', 'not in', ('closed', 'cancelled'))]"/>
+                <filter name="filter_mine" string="My Programmes" domain="[('responsible_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_responsible" string="Programme Owner" context="{'group_by': 'responsible_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_program" model="ir.actions.act_window">
+        <field name="name">Audit Programmes</field>
+        <field name="res_model">ls.audit.program</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_program_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Plan your audit programme</p>
+            <p>A programme groups the audits planned over a period together with the rationale used to set their frequency.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views3.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_sample_list" model="ir.ui.view">
+            <field name="name">ls.env.sample.list</field>
+            <field name="model">ls.env.sample</field>
+            <field name="arch" type="xml">
+                <list string="Samples"
+                      decoration-danger="overall_evaluation in ('action_exceeded', 'spec_exceeded')"
+                      decoration-warning="overall_evaluation == 'alert_exceeded'"
+                      decoration-muted="state == 'cancelled'">
+                    <field name="name"/>
+                    <field name="scheduled_date"/>
+                    <field name="sampling_point_id"/>
+                    <field name="area_id"/>
+                    <field name="occupancy_state"/>
+                    <field name="batch_reference" optional="show"/>
+                    <field name="collection_datetime" optional="hide"/>
+                    <field name="collected_by_id" optional="hide"/>
+                    <field name="result_count" string="Results"/>
+                    <field name="overall_evaluation" widget="badge"/>
+                    <field name="state" widget="badge"/>
+                    <field name="is_overdue" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_sample_form" model="ir.ui.view">
+            <field name="name">ls.env.sample.form</field>
+            <field name="model">ls.env.sample</field>
+            <field name="arch" type="xml">
+                <form string="Sample">
+                    <header>
+                        <button name="action_schedule" type="object" string="Schedule"
+                                invisible="state != 'draft'"/>
+                        <button name="action_collect" type="object" string="Record Collection"
+                                class="btn-primary" invisible="state != 'scheduled'"/>
+                        <button name="action_start_analysis" type="object" string="Start Analysis"
+                                class="btn-primary" invisible="state != 'collected'"/>
+                        <button name="action_enter_results" type="object" string="Submit Results"
+                                class="btn-primary" invisible="state != 'in_analysis'"/>
+                        <button name="action_review" type="object" string="Review"
+                                class="btn-primary" invisible="state != 'results_entered'"/>
+                        <button name="action_approve" type="object" string="Approve"
+                                class="btn-primary" invisible="state != 'reviewed'"/>
+                        <button name="action_reopen_analysis" type="object" string="Return to Analysis"
+                                invisible="state not in ('results_entered', 'reviewed')"/>
+                        <button name="action_open_cancel_wizard" type="object" string="Cancel"
+                                invisible="state in ('approved', 'cancelled')"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,scheduled,collected,in_analysis,results_entered,reviewed,approved"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_excursions" type="object"
+                                    class="oe_stat_button" icon="fa-exclamation-triangle"
+                                    invisible="excursion_count == 0">
+                                <field name="excursion_count" widget="statinfo" string="Excursions"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                                invisible="state != 'cancelled'"/>
+                        <widget name="web_ribbon" title="Overdue" bg_color="text-bg-warning"
+                                invisible="not is_overdue"/>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Location">
+                                <field name="sampling_point_id" readonly="state != 'draft'"/>
+                                <field name="area_id" readonly="1"/>
+                                <field name="grade_id" readonly="1"/>
+                                <field name="occupancy_state" readonly="state not in ('draft', 'scheduled')"/>
+                            </group>
+                            <group string="Schedule">
+                                <field name="scheduled_date" readonly="state not in ('draft', 'scheduled')"/>
+                                <field name="plan_id" readonly="1"/>
+                                <field name="is_unscheduled" readonly="1"/>
+                                <field name="batch_reference" readonly="state in ('approved', 'cancelled')"/>
+                                <field name="is_overdue" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Results" name="results">
+                                <field name="result_ids" nolabel="1"
+                                       readonly="state in ('approved', 'cancelled')"
+                                       context="{'default_sample_id': id}">
+                                    <list editable="bottom"
+                                          decoration-danger="evaluation in ('action_exceeded', 'spec_exceeded')"
+                                          decoration-warning="evaluation == 'alert_exceeded'">
+                                        <field name="parameter_id"/>
+                                        <field name="result_type" column_invisible="1"/>
+                                        <field name="method_id"/>
+                                        <field name="value_set" string="Recorded"/>
+                                        <field name="value_numeric"
+                                               readonly="result_type != 'quantitative'"/>
+                                        <field name="value_qualitative"
+                                               readonly="result_type != 'qualitative'"/>
+                                        <field name="uom_label" readonly="1"/>
+                                        <field name="microbial_identification" optional="show"/>
+                                        <field name="applied_action_value" string="Action Limit"
+                                               readonly="1" optional="show"/>
+                                        <field name="evaluation" widget="badge" readonly="1"/>
+                                        <field name="is_amended" readonly="1" optional="hide"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Execution Record" name="execution">
+                                <group>
+                                    <group string="Collection">
+                                        <field name="collection_datetime" readonly="1"/>
+                                        <field name="collected_by_id" readonly="1"/>
+                                        <field name="analysis_start_datetime" readonly="1"/>
+                                    </group>
+                                    <group string="Review and Approval">
+                                        <field name="results_entered_by_id" readonly="1"/>
+                                        <field name="results_entered_datetime" readonly="1"/>
+                                        <field name="reviewed_by_id" readonly="1"/>
+                                        <field name="review_datetime" readonly="1"/>
+                                        <field name="approved_by_id" readonly="1"/>
+                                        <field name="approval_datetime" readonly="1"/>
+                                    </group>
+                                </group>
+                                <group string="Overall Outcome">
+                                    <field name="overall_evaluation" readonly="1"/>
+                                </group>
+                                <group string="Cancellation" invisible="state != 'cancelled'">
+                                    <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                                </group>
+                            </page>
+                            <page string="Notes" name="notes">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_sample_search" model="ir.ui.view">
+            <field name="name">ls.env.sample.search</field>
+            <field name="model">ls.env.sample</field>
+            <field name="arch" type="xml">
+                <search string="Samples">
+                    <field name="name"/>
+                    <field name="sampling_point_id"/>
+                    <field name="area_id"/>
+                    <field name="batch_reference"/>
+                    <filter name="filter_scheduled" string="Scheduled" domain="[('state', '=', 'scheduled')]"/>
+                    <filter name="filter_in_progress" string="In Progress"
+                            domain="[('state', 'in', ['collected', 'in_analysis', 'results_entered', 'reviewed'])]"/>
+                    <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                    <separator/>
+                    <filter name="filter_overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                    <filter name="filter_breach" string="Threshold Breached"
+                            domain="[('overall_evaluation', 'in', ['alert_exceeded', 'action_exceeded', 'spec_exceeded'])]"/>
+                    <filter name="filter_unscheduled" string="Unscheduled"
+                            domain="[('is_unscheduled', '=', True)]"/>
+                    <separator/>
+                    <filter name="filter_my_samples" string="Collected by Me"
+                            domain="[('collected_by_id', '=', uid)]"/>
+                    <filter name="filter_this_month" string="Scheduled This Month"
+                            domain="[('scheduled_date', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"/>
+                                            <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                    <filter name="group_point" string="Sampling Point" context="{'group_by': 'sampling_point_id'}"/>
+                    <filter name="group_evaluation" string="Outcome" context="{'group_by': 'overall_evaluation'}"/>
+                    <filter name="group_occupancy" string="Occupancy State" context="{'group_by': 'occupancy_state'}"/>
+                    <filter name="group_date" string="Scheduled Date" context="{'group_by': 'scheduled_date'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_sample" model="ir.actions.act_window">
+            <field name="name">Samples</field>
+            <field name="res_model">ls.env.sample</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No sample yet</p>
+                <p>Samples are generated from approved monitoring plans, or created directly for unscheduled monitoring.</p>
+            </field>
+        </record>
+
+        <record id="action_ls_env_sample_due" model="ir.actions.act_window">
+            <field name="name">Samples Due</field>
+            <field name="res_model">ls.env.sample</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('state', 'in', ['draft', 'scheduled'])]</field>
+            <field name="context">{'search_default_filter_overdue': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Nothing is currently due</p>
+                <p>Samples awaiting collection appear here.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

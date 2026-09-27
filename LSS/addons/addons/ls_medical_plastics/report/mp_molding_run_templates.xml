@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+      Moulding run record.
+
+      The template prints the complete production record of one moulding run:
+      production context, specification version applied, material lots
+      consumed, every effective parameter reading with the acceptance criteria
+      frozen at capture, rejects by reason and cavity, and the signature
+      record of setup, start-up verification, review and closure.
+
+      Superseded readings are printed in a separate section so that a
+      correction never removes the original value from the record.
+    -->
+
+    <template id="report_mp_molding_run_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <h2 class="mt-0">
+                    Moulding Run Record
+                    <span t-field="doc.name"/>
+                </h2>
+                <div t-if="doc.state != 'closed'" class="alert alert-warning">
+                    <strong>Draft record.</strong>
+                    This run has not been closed. Its content may still change.
+                </div>
+
+                <h4>Production Context</h4>
+                <table class="table table-sm table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="w-25">Component</th>
+                            <td><span t-field="doc.component_id"/></td>
+                            <th class="w-25">Tool</th>
+                            <td><span t-field="doc.tool_id"/></td>
+                        </tr>
+                        <tr>
+                            <th>Work Centre</th>
+                            <td><span t-field="doc.workcenter_id"/></td>
+                            <th>Manufacturing Order</th>
+                            <td><span t-field="doc.production_id"/></td>
+                        </tr>
+                        <tr>
+                            <th>Produced Lot</th>
+                            <td><span t-field="doc.lot_id"/></td>
+                            <th>Cavities In Production</th>
+                            <td><span t-field="doc.active_cavity_count"/></td>
+                        </tr>
+                        <tr>
+                            <th>Specification</th>
+                            <td><span t-field="doc.parameter_spec_id.name"/></td>
+                            <th>Specification Version</th>
+                            <td><span t-field="doc.parameter_spec_version"/></td>
+                        </tr>
+                        <tr>
+                            <th>Start</th>
+                            <td><span t-field="doc.date_start"/></td>
+                            <th>End</th>
+                            <td><span t-field="doc.date_end"/></td>
+                        </tr>
+                        <tr>
+                            <th>Operator</th>
+                            <td><span t-field="doc.operator_id"/></td>
+                            <th>Setter</th>
+                            <td><span t-field="doc.setter_id"/></td>
+                        </tr>
+                        <tr>
+                            <th>Shift</th>
+                            <td><span t-field="doc.shift"/></td>
+                            <th>Status</th>
+                            <td><span t-field="doc.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Output</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Shot Counter Start</th>
+                            <th>Shot Counter End</th>
+                            <th>Shots</th>
+                            <th>Produced</th>
+                            <th>Start-up Scrap</th>
+                            <th>Rejected</th>
+                            <th>Accepted</th>
+                            <th>Reject Rate (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span t-field="doc.shot_count_start"/></td>
+                            <td><span t-field="doc.shot_count_end"/></td>
+                            <td><span t-field="doc.shot_count"/></td>
+                            <td><span t-field="doc.qty_produced"/></td>
+                            <td><span t-field="doc.qty_startup_scrap"/></td>
+                            <td><span t-field="doc.qty_rejected"/></td>
+                            <td><span t-field="doc.qty_good"/></td>
+                            <td><span t-field="doc.reject_rate"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Material Consumption</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Material Grade</th>
+                            <th>Polymer</th>
+                            <th>Lot</th>
+                            <th>Supplier Lot Reference</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Regrind</th>
+                            <th>Drug Contact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.material_line_ids" t-as="material">
+                            <td><span t-field="material.material_grade_id.display_name"/></td>
+                            <td><span t-field="material.material_grade_id.polymer_type"/></td>
+                            <td><span t-field="material.lot_id.name"/></td>
+                            <td><span t-field="material.supplier_lot_reference"/></td>
+                            <td><span t-field="material.quantity"/></td>
+                            <td><span t-field="material.quantity_uom"/></td>
+                            <td><span t-field="material.is_regrind"/></td>
+                            <td><span t-field="material.drug_contact"/></td>
+                        </tr>
+                        <tr t-if="not doc.material_line_ids">
+                            <td colspan="8">No material consumption recorded.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Parameter Readings</h4>
+                <t t-set="effective_readings"
+                   t-value="doc.reading_ids.filtered(lambda r: not r.superseded_by_ids)"/>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Captured</th>
+                            <th>Type</th>
+                            <th>Parameter</th>
+                            <th>Unit</th>
+                            <th>Min</th>
+                            <th>Target</th>
+                            <th>Max</th>
+                            <th>Value</th>
+                            <th>In Tolerance</th>
+                            <th>Critical</th>
+                            <th>Recorded By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="effective_readings" t-as="reading">
+                            <td><span t-field="reading.capture_date"/></td>
+                            <td><span t-field="reading.reading_type"/></td>
+                            <td><span t-field="reading.parameter_name"/></td>
+                            <td><span t-field="reading.parameter_uom"/></td>
+                            <td><span t-field="reading.min_value"/></td>
+                            <td><span t-field="reading.target_value"/></td>
+                            <td><span t-field="reading.max_value"/></td>
+                            <td>
+                                <span t-if="reading.value_type == 'numeric'"
+                                      t-field="reading.value_numeric"/>
+                                <span t-if="reading.value_type != 'numeric'"
+                                      t-field="reading.value_text"/>
+                            </td>
+                            <td><span t-field="reading.in_tolerance"/></td>
+                            <td><span t-field="reading.is_critical"/></td>
+                            <td><span t-field="reading.recorded_by_id"/></td>
+                        </tr>
+                        <tr t-if="not effective_readings">
+                            <td colspan="11">No parameter reading recorded.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <t t-set="superseded_readings"
+                   t-value="doc.reading_ids.filtered(lambda r: r.superseded_by_ids)"/>
+                <div t-if="superseded_readings">
+                    <h4>Corrected Readings</h4>
+                    <p>
+                        The values below were superseded by a later reading. They are retained
+                        in the record together with the reason for the correction.
+                    </p>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Captured</th>
+                                <th>Parameter</th>
+                                <th>Original Value</th>
+                                <th>Recorded By</th>
+                                <th>Reason For Correction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="superseded_readings" t-as="old_reading">
+                                <td><span t-field="old_reading.capture_date"/></td>
+                                <td><span t-field="old_reading.parameter_name"/></td>
+                                <td>
+                                    <span t-if="old_reading.value_type == 'numeric'"
+                                          t-field="old_reading.value_numeric"/>
+                                    <span t-if="old_reading.value_type != 'numeric'"
+                                          t-field="old_reading.value_text"/>
+                                </td>
+                                <td><span t-field="old_reading.recorded_by_id"/></td>
+                                <td>
+                                    <t t-foreach="old_reading.superseded_by_ids" t-as="correction">
+                                        <span t-field="correction.correction_reason"/>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Rejects</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Reason</th>
+                            <th>Category</th>
+                            <th>Cavity</th>
+                            <th>Quantity</th>
+                            <th>Start-up</th>
+                            <th>Detected On</th>
+                            <th>Detected By</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.scrap_line_ids" t-as="scrap">
+                            <td><span t-field="scrap.reason_id.name"/></td>
+                            <td><span t-field="scrap.reason_id.category"/></td>
+                            <td><span t-field="scrap.cavity_id.display_name"/></td>
+                            <td><span t-field="scrap.quantity"/></td>
+                            <td><span t-field="scrap.is_startup"/></td>
+                            <td><span t-field="scrap.detection_date"/></td>
+                            <td><span t-field="scrap.detected_by_id"/></td>
+                            <td><span t-field="scrap.comment"/></td>
+                        </tr>
+                        <tr t-if="not doc.scrap_line_ids">
+                            <td colspan="8">No reject recorded.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div t-if="doc.blocked_cavity_ids">
+                    <h4>Cavities Blocked During The Run</h4>
+                    <ul>
+                        <li t-foreach="doc.blocked_cavity_ids" t-as="cavity">
+                            <span t-field="cavity.display_name"/>
+                            <span t-if="cavity.blocked_reason">
+                                - <span t-field="cavity.blocked_reason"/>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div t-if="doc.has_deviation" class="alert alert-warning">
+                    <strong>Out of tolerance readings were recorded during this run.</strong>
+                    <div>
+                        Out of tolerance: <span t-field="doc.out_of_tolerance_count"/>,
+                        of which critical: <span t-field="doc.critical_out_of_tolerance_count"/>.
+                    </div>
+                    <div>
+                        Deviation reference: <span t-field="doc.deviation_reference"/>
+                    </div>
+                </div>
+
+                <h4>Record Of Verification</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Step</th>
+                            <th>Performed By</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Setup completed</td>
+                            <td><span t-field="doc.setup_by_id"/></td>
+                            <td><span t-field="doc.setup_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Start-up verified</td>
+                            <td><span t-field="doc.startup_verified_by_id"/></td>
+                            <td><span t-field="doc.startup_verification_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Reviewed</td>
+                            <td><span t-field="doc.reviewed_by_id"/></td>
+                            <td><span t-field="doc.review_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Closed</td>
+                            <td><span t-field="doc.closed_by_id"/></td>
+                            <td><span t-field="doc.close_date"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div t-if="doc.review_comment">
+                    <h4>Review Comment</h4>
+                    <p><span t-field="doc.review_comment"/></p>
+                </div>
+
+                <p class="mt-4">
+                    <small>
+                        This record is produced by the Life Sciences Medical Plastics module.
+                        It reflects the data held in the system at the time of printing.
+                        The identities shown are Odoo user accounts recorded by the
+                        application; this module does not implement electronic signatures.
+                    </small>
+                </p>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_mp_molding_run">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_medical_plastics.report_mp_molding_run_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details.
+
+     GENERATED FILE - produced by tools_generate_data.py. Edit the generator
+     rather than this file. -->
+
+<odoo noupdate="1">
+
+    <record id="risk_category_product_quality" model="ls.risk.category">
+        <field name="name">Product Quality</field>
+        <field name="code">PQ</field>
+        <field name="description">Risks whose harm is a reduction in the quality of the product.</field>
+    </record>
+
+    <record id="risk_category_pq_identity" model="ls.risk.category">
+        <field name="name">Identity</field>
+        <field name="code">PQ-ID</field>
+        <field name="description">Risk that the product is not the product it is declared to be.</field>
+        <field name="parent_id" ref="risk_category_product_quality"/>
+    </record>
+
+    <record id="risk_category_pq_purity" model="ls.risk.category">
+        <field name="name">Purity</field>
+        <field name="code">PQ-PU</field>
+        <field name="description">Risk of contamination, cross-contamination or degradation.</field>
+        <field name="parent_id" ref="risk_category_product_quality"/>
+    </record>
+
+    <record id="risk_category_pq_potency" model="ls.risk.category">
+        <field name="name">Potency</field>
+        <field name="code">PQ-PO</field>
+        <field name="description">Risk that the content of the active substance is outside specification.</field>
+        <field name="parent_id" ref="risk_category_product_quality"/>
+    </record>
+
+    <record id="risk_category_patient_safety" model="ls.risk.category">
+        <field name="name">Patient Safety</field>
+        <field name="code">PS</field>
+        <field name="description">Risks whose harm is injury or damage to the health of a patient or user.</field>
+    </record>
+
+    <record id="risk_category_data_integrity" model="ls.risk.category">
+        <field name="name">Data Integrity</field>
+        <field name="code">DI</field>
+        <field name="description">Risks to the attributability, legibility, contemporaneity, originality and accuracy of regulated records.</field>
+    </record>
+
+    <record id="risk_category_supply" model="ls.risk.category">
+        <field name="name">Supply Continuity</field>
+        <field name="code">SC</field>
+        <field name="description">Risks to the continuity of supply of materials or finished product.</field>
+    </record>
+
+    <record id="risk_category_regulatory" model="ls.risk.category">
+        <field name="name">Regulatory Compliance</field>
+        <field name="code">RG</field>
+        <field name="description">Risks of non-conformance with an authorisation, registration or applicable regulation.</field>
+    </record>
+
+    <record id="risk_category_occupational" model="ls.risk.category">
+        <field name="name">Occupational Health and Safety</field>
+        <field name="code">OH</field>
+        <field name="description">Risks whose harm is injury to personnel.</field>
+    </record>
+
+    <record id="risk_category_environmental" model="ls.risk.category">
+        <field name="name">Environment</field>
+        <field name="code">EN</field>
+        <field name="description">Risks whose harm is damage to the environment.</field>
+    </record>
+
+</odoo>

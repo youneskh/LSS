@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_traceability_wizard_form" model="ir.ui.view">
+        <field name="name">ls.mp.traceability.wizard.form</field>
+        <field name="model">ls.mp.traceability.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Traceability Enquiry">
+                <group>
+                    <group string="Enquiry">
+                        <field name="search_mode" widget="radio"/>
+                        <field name="lot_id" invisible="search_mode != 'produced_lot'"
+                               required="search_mode == 'produced_lot'"/>
+                        <field name="material_lot_id" invisible="search_mode != 'material_lot'"
+                               required="search_mode == 'material_lot'"/>
+                        <field name="component_id" invisible="search_mode != 'component'"
+                               required="search_mode == 'component'"/>
+                        <field name="tool_id" invisible="search_mode != 'tool'"
+                               required="search_mode == 'tool'"/>
+                    </group>
+                    <group string="Period And Scope">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="include_open_runs"/>
+                        <field name="run_count" readonly="1"/>
+                    </group>
+                </group>
+                <separator string="Matching Runs" invisible="run_count == 0"/>
+                <field name="run_ids" readonly="1" invisible="run_count == 0">
+                    <list>
+                        <field name="name"/>
+                        <field name="date_start"/>
+                        <field name="component_id"/>
+                        <field name="tool_id"/>
+                        <field name="lot_id"/>
+                        <field name="parameter_spec_id"/>
+                        <field name="parameter_spec_version"/>
+                        <field name="qty_good"/>
+                        <field name="qty_rejected"/>
+                        <field name="state"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_search" type="object" string="Search"
+                            class="btn-primary"/>
+                    <button name="action_open_runs" type="object" string="Open Results"
+                            invisible="run_count == 0"/>
+                    <button name="action_print" type="object" string="Print Records"
+                            invisible="run_count == 0"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mp_traceability_wizard" model="ir.actions.act_window">
+        <field name="name">Traceability Enquiry</field>
+        <field name="res_model">ls.mp.traceability.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

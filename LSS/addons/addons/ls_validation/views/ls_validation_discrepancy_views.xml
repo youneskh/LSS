@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_discrepancy_list" model="ir.ui.view">
+        <field name="name">ls.validation.discrepancy.list</field>
+        <field name="model">ls.validation.discrepancy</field>
+        <field name="arch" type="xml">
+            <list string="Discrepancies"
+                  decoration-danger="classification == 'critical' and state != 'closed'"
+                  decoration-warning="classification == 'major' and state != 'closed'"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="execution_id"/>
+                <field name="item_id" optional="show"/>
+                <field name="classification" widget="badge"/>
+                <field name="requires_capa" optional="show"/>
+                <field name="capa_reference" optional="hide"/>
+                <field name="raised_by_id" optional="hide"/>
+                <field name="raised_date" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_discrepancy_form" model="ir.ui.view">
+        <field name="name">ls.validation.discrepancy.form</field>
+        <field name="model">ls.validation.discrepancy</field>
+        <field name="arch" type="xml">
+            <form string="Discrepancy">
+                <header>
+                    <button name="action_start_investigation" type="object"
+                            string="Start Investigation" class="btn-primary"
+                            invisible="state != 'open'"/>
+                    <button name="action_resolve" type="object"
+                            string="Resolve" class="btn-primary"
+                            invisible="state != 'investigation'"/>
+                    <button name="action_close" type="object"
+                            string="Close and Sign" class="btn-primary"
+                            invisible="state != 'resolved'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="open,investigation,resolved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_signatures" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="signature_count" widget="statinfo"
+                                   string="Signatures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                        <h2>
+                            <field name="name" placeholder="Short title"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="context" string="Context">
+                            <field name="execution_id"/>
+                            <field name="protocol_id"/>
+                            <field name="item_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group name="handling" string="Handling">
+                            <field name="classification"/>
+                            <field name="raised_by_id"/>
+                            <field name="raised_date"/>
+                            <field name="requires_capa"/>
+                            <field name="capa_reference"
+                                   required="requires_capa"/>
+                            <field name="closed_by_id"
+                                   invisible="not closed_by_id"/>
+                            <field name="closed_date"
+                                   invisible="not closed_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"
+                                   placeholder="Describe the departure from the acceptance criteria."/>
+                        </page>
+                        <page string="Immediate Action" name="immediate_action">
+                            <field name="immediate_action"/>
+                        </page>
+                        <page string="Investigation" name="investigation">
+                            <group string="Root Cause">
+                                <field name="root_cause" nolabel="1"/>
+                            </group>
+                            <group string="Impact Assessment">
+                                <field name="impact_assessment" nolabel="1"/>
+                            </group>
+                            <group string="Corrective Action">
+                                <field name="corrective_action" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Impacted Test Cases" name="results">
+                            <field name="result_ids" readonly="1">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="verdict"/>
+                                    <field name="actual_result"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Electronic Signatures" name="signatures">
+                            <field name="signature_ids" readonly="1" nolabel="1">
+                                <list>
+                                    <field name="signed_on"/>
+                                    <field name="user_id"/>
+                                    <field name="meaning"/>
+                                    <field name="reason"/>
+                                    <field name="signature_hash"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_discrepancy_search" model="ir.ui.view">
+        <field name="name">ls.validation.discrepancy.search</field>
+        <field name="model">ls.validation.discrepancy</field>
+        <field name="arch" type="xml">
+            <search string="Discrepancies">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="execution_id"/>
+                <field name="item_id"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('open', 'investigation', 'resolved'))]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('classification', '=', 'critical')]"/>
+                <filter name="filter_capa" string="CAPA Required"
+                        domain="[('requires_capa', '=', True)]"/>
+                <separator/>
+                <filter name="filter_mine" string="Raised by Me"
+                        domain="[('raised_by_id', '=', uid)]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_classification"
+                        string="Classification"
+                        context="{'group_by': 'classification'}"/>
+                    <filter name="group_by_item" string="Validation Item"
+                        context="{'group_by': 'item_id'}"/>
+                    <filter name="group_by_raised" string="Raised Month"
+                        context="{'group_by': 'raised_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_discrepancy_graph" model="ir.ui.view">
+        <field name="name">ls.validation.discrepancy.graph</field>
+        <field name="model">ls.validation.discrepancy</field>
+        <field name="arch" type="xml">
+            <graph string="Discrepancies" type="bar">
+                <field name="classification"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_discrepancy" model="ir.actions.act_window">
+        <field name="name">Discrepancies</field>
+        <field name="res_model">ls.validation.discrepancy</field>
+        <field name="view_mode">list,form,graph</field>
+        <field name="search_view_id" ref="view_ls_validation_discrepancy_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No discrepancy recorded
+            </p>
+            <p>
+                A discrepancy documents any departure from the pre-approved
+                acceptance criteria observed during an execution.
+            </p>
+        </field>
+    </record>
+
+</odoo>

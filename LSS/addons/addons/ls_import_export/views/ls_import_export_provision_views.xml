@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ===== Provision: tree (list) =================================== -->
+
+    <record id="view_ls_import_export_provision_list" model="ir.ui.view">
+        <field name="name">ls.import_export.provision.list</field>
+        <field name="model">ls.import_export.provision</field>
+        <field name="arch" type="xml">
+            <list decoration-success="status == 'in_force'"
+                  decoration-warning="status == 'under_review'"
+                  decoration-danger="status == 'repealed'"
+                  decoration-info="status == 'amended'">
+                <field name="code"/>
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="authority"/>
+                <field name="instrument_type"/>
+                <field name="effective_date"/>
+                <field name="end_date"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'in_force'"
+                       decoration-danger="status == 'repealed'"
+                       decoration-warning="status == 'under_review'"
+                       decoration-info="status == 'amended'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===== Provision: form ========================================== -->
+
+    <record id="view_ls_import_export_provision_form" model="ir.ui.view">
+        <field name="name">ls.import_export.provision.form</field>
+        <field name="model">ls.import_export.provision</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_citations" type="object"
+                                class="oe_stat_button" icon="fa-quote-left">
+                            <field name="citation_count" widget="statinfo"
+                                   string="Citations"/>
+                        </button>
+                        <button name="action_view_requirements" type="object"
+                                class="oe_stat_button" icon="fa-check-circle">
+                            <field name="requirement_count" widget="statinfo"
+                                   string="Requirements"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="In Force"
+                            bg_color="text-bg-success"
+                            invisible="status != 'in_force'"/>
+                    <widget name="web_ribbon" title="Repealed"
+                            bg_color="text-bg-danger"
+                            invisible="status != 'repealed'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"
+                                  placeholder="Provision title"/></h1>
+                        <h3><field name="code" readonly="1" class="oe_inline"/></h3>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group string="Source">
+                            <field name="authority"/>
+                            <field name="instrument_type"/>
+                            <field name="reference"/>
+                            <field name="source_url"
+                                   widget="url"/>
+                            <field name="source_attachment_id"/>
+                        </group>
+                        <group string="Lifecycle">
+                            <field name="status"/>
+                            <field name="effective_date"/>
+                            <field name="end_date"/>
+                            <field name="jurisdiction"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Scope">
+                        <group>
+                            <field name="operation_type_scope"/>
+                        </group>
+                        <group>
+                            <field name="product_category_ids"
+                                   widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group string="Summary">
+                        <field name="summary" nolabel="1"
+                               colspan="4" placeholder="Neutral paraphrase of what the provision requires."/>
+                    </group>
+                    <notebook>
+                        <page string="Citations">
+                            <field name="citation_ids" nolabel="1">
+                                <list>
+                                    <field name="locator"/>
+                                    <field name="quote_type"/>
+                                    <field name="text"/>
+                                    <field name="language"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="locator"/>
+                                        <field name="quote_type"/>
+                                        <field name="language"/>
+                                    </group>
+                                    <group>
+                                        <field name="text" nolabel="1"
+                                               colspan="4"
+                                               placeholder="The verbatim quote or paraphrase of the passage."/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Requirements">
+                            <field name="requirement_ids" nolabel="1">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="requirement_type"/>
+                                    <field name="in_force"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===== Provision: search ======================================== -->
+
+    <record id="view_ls_import_export_provision_search" model="ir.ui.view">
+        <field name="name">ls.import_export.provision.search</field>
+        <field name="model">ls.import_export.provision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="reference"/>
+                <field name="authority"/>
+                <field name="status"/>
+                <separator/>
+                <filter name="filter_in_force" string="In Force"
+                        domain="[('status', '=', 'in_force')]"/>
+                <filter name="filter_open" string="Under Review"
+                        domain="[('status', '=', 'under_review')]"/>
+                <filter name="filter_repealed" string="Repealed"
+                        domain="[('status', '=', 'repealed')]"/>
+                <separator/>
+                <filter name="filter_import" string="Import Scope"
+                        domain="[('operation_type_scope', 'in', ['import', 'both'])]"/>
+                <filter name="filter_export" string="Export Scope"
+                        domain="[('operation_type_scope', 'in', ['export', 'both'])]"/>
+                <group name="group_by">
+                    <filter name="group_authority" string="Authority"
+                            context="{'group_by': 'authority'}"/>
+                    <filter name="group_status" string="Status"
+                            context="{'group_by': 'status'}"/>
+                    <filter name="group_type" string="Instrument Type"
+                            context="{'group_by': 'instrument_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ===== Provision: actions ======================================= -->
+
+    <record id="action_ls_import_export_provision" model="ir.actions.act_window">
+        <field name="name">Provisions</field>
+        <field name="res_model">ls.import_export.provision</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_import_export_provision_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No provision recorded yet.
+            </p>
+            <p>
+                Add a cited regulatory text: give its official reference,
+                its source URL and its effective date. The compliance engine
+                evaluates requirements only against provisions whose status
+                is "In Force".
+            </p>
+        </field>
+    </record>
+
+</odoo>

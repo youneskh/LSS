@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="0">
+
+        <!--
+            The three roles below are defined without a link to a group
+            privilege record.
+
+            Odoo 19 replaces the group category with a res.groups.privilege
+            model. The existence of that model is confirmed by the official
+            Odoo 19 documentation, but the name of the field that links a
+            res.groups record to it could not be verified from official
+            documentation. Referencing a field that does not exist would make
+            the module fail to install, so the link is omitted. The only
+            consequence is cosmetic: these roles appear without a grouping
+            heading on the user form.
+
+            The roles are also defined without implied group relationships,
+            because the name of that field could not be verified either. Each
+            role therefore carries its own complete set of access control list
+            entries in ir.model.access.csv rather than inheriting them.
+
+            See doc/deviations.md for the full record of this decision.
+        -->
+
+        <record id="group_ls_env_viewer" model="res.groups">
+            <field name="name">Environmental Monitoring / Viewer</field>
+            <field name="comment">Read-only access to environmental monitoring configuration, samples, results, excursions and trend analyses. Cannot record or change any data.</field>
+            <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_ls_env_technician" model="res.groups">
+            <field name="name">Environmental Monitoring / Technician</field>
+            <field name="comment">Records sample collection and enters results. Cannot review or approve samples, cannot approve limits or plans, and cannot close excursions.</field>
+            <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_ls_env_manager" model="res.groups">
+            <field name="name">Environmental Monitoring / Manager</field>
+            <field name="comment">Full access to the environmental monitoring module, including approval of limits and plans, review and approval of samples, closure of excursions and review of trend analyses.</field>
+            <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,1794 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ls_change_control
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-24 00:00+0000\n"
+"PO-Revision-Date: 2026-07-24 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: ls_change_control/models/change_control_request.py:824
+msgid "%(count)s approval(s) have no approver assigned."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1149
+msgid "A cancellation reason is required."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:275
+msgid "A cancellation reason must be recorded on action %(name)s before it can be cancelled."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1095
+msgid "A closure statement is required."
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:67
+msgid "A comment is mandatory to reject the change."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:265
+msgid "A comment is required to reject approval %(name)s. Save the comment before recording the decision."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:210
+msgid "A conclusion is required before completing verification %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:107
+msgid "A corrective action is required because the change was not effective. The corrective action itself is managed outside this module."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:70
+msgid "A mandatory approval blocks the transition to Approved until it is granted."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:64
+msgid "A mandatory approval must be granted before the change request can reach the Approved state. A non-mandatory approval may be removed by the change control manager during the review."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1114
+msgid "A rejection reason is required."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:135
+msgid "A temporary change is reverted at the end of a defined period."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:188
+msgid "A written assessment is required before completing the assessment of area '%(area)s'."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:72
+#: ls_change_control/views/change_control_verification_views.xml:68
+msgid "Acceptance Criteria"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:41
+msgid "Action"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:221
+#: ls_change_control/models/change_control_implementation.py:270
+msgid "Action %(name)s is already closed."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:204
+msgid "Action %(name)s is not Pending."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:46
+#: ls_change_control/views/change_control_implementation_views.xml:114
+msgid "Action Type"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:417
+msgid "Actions"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:69
+msgid "Actions Closed"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:67
+#: ls_change_control/views/change_control_assessment_views.xml:61
+msgid "Actions Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:67
+msgid "Actions that must be planned before the change becomes effective on this area."
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:80
+#: ls_change_control/models/change_control_impact_area.py:47
+#: ls_change_control/models/change_control_request.py:117
+msgid "Active"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:321
+msgid "Actual Implementation Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:328
+msgid "Actual implementation date increased by the verification delay of the category, or of the company when the category does not define one."
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:52
+msgid "All Approvals"
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:23
+msgid "All Change Requests"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:226
+msgid "An evidence reference is required before closing action %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:196
+msgid "An impact was declared on area '%(area)s'. The required actions must be described."
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:33
+msgid "Approval"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:186
+msgid "Approval %(name)s carries a decision and cannot be deleted."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:202
+msgid "Approval %(name)s has already been decided."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:173
+msgid "Approval %(name)s has been decided and can no longer be modified."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:841
+msgid "Approval '%(role)s' is still pending."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:336
+msgid "Approval Date"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:24
+msgid "Approval Reminder Delay (days)"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:56
+#: ls_change_control/models/change_control_approval_template.py:50
+#: ls_change_control/views/change_control_approval_views.xml:104
+msgid "Approval Role"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:54
+#: ls_change_control/views/change_control_category_views.xml:56
+#: ls_change_control/views/change_control_category_views.xml:58
+msgid "Approval Template"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:249
+msgid "Approval granted by %(user)s for role %(role)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:382
+#: ls_change_control/models/change_control_request.py:409
+#: ls_change_control/views/change_control_approval_views.xml:10
+#: ls_change_control/views/change_control_approval_views.xml:85
+#: ls_change_control/views/change_control_request_views.xml:175
+#: ls_change_control/views/change_control_request_views.xml:177
+msgid "Approvals"
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:35
+msgid "Approve"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:79
+#: ls_change_control/models/change_control_approval.py:245
+#: ls_change_control/models/change_control_request.py:20
+#: ls_change_control/views/change_control_approval_views.xml:94
+#: ls_change_control/views/change_control_request_views.xml:63
+#: ls_change_control/views/change_control_request_views.xml:345
+msgid "Approved"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:62
+#: ls_change_control/views/change_control_approval_views.xml:106
+msgid "Approver"
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:90
+#: ls_change_control/views/change_control_impact_area_views.xml:62
+#: ls_change_control/views/change_control_request_views.xml:366
+msgid "Archived"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:80
+msgid "Archived categories remain on existing change requests but can no longer be selected on new ones."
+msgstr ""
+
+#: ls_change_control/models/change_control_impact_area.py:47
+msgid "Archived impact areas remain on existing change requests but can no longer be selected on new ones."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:221
+msgid "Areas of the quality system to be assessed for this change."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:57
+msgid "Assessed"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:235
+msgid "Assessed impact of the change on the quality of the product."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:63
+#: ls_change_control/views/change_control_assessment_views.xml:57
+msgid "Assessment"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:164
+msgid "Assessment %(name)s is already completed."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:134
+msgid "Assessment %(name)s is completed and can no longer be modified."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:147
+msgid "Assessment %(name)s is completed and cannot be deleted."
+msgstr ""
+
+#: ls_change_control/models/change_control_impact_area.py:40
+#: ls_change_control/views/change_control_impact_area_views.xml:60
+msgid "Assessment Mandatory"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:833
+msgid "Assessment of area '%(area)s' is not completed."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:401
+msgid "Assessments"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:169
+msgid "Assessments can only be completed while request %(name)s is in the Impact Assessment state."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:44
+#: ls_change_control/views/change_control_assessment_views.xml:94
+msgid "Assessor"
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:99
+msgid "Awaiting Decision"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:45
+msgid "Block Closure on Open Actions"
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:32
+msgid "Cancel"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:41
+msgid "Cancel Action"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1076
+msgid "Cancel Change Request"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:39
+msgid "Cancel Request"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:42
+msgid "Cancel this implementation action? The cancellation is traced on the change request."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:347
+msgid "Cancellation Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:106
+#: ls_change_control/models/change_control_request.py:362
+#: ls_change_control/views/change_control_implementation_views.xml:79
+#: ls_change_control/views/change_control_request_views.xml:238
+msgid "Cancellation Reason"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:97
+#: ls_change_control/models/change_control_request.py:25
+#: ls_change_control/views/change_control_implementation_views.xml:106
+msgid "Cancelled"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:36
+#: ls_change_control/models/change_control_category.py:24
+#: ls_change_control/views/change_control_request_views.xml:371
+msgid "Category"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:109
+msgid "Category '%(name)s' requires an effectiveness verification but no verification delay is defined, neither on the category nor on company '%(company)s'."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:127
+msgid "Category driving the impact areas to assess, the approval matrix and the applicable deadlines."
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:10
+#: ls_change_control/views/change_control_category_views.xml:84
+#: ls_change_control/views/ls_change_control_menus.xml:92
+msgid "Change Categories"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:127
+#: ls_change_control/views/change_control_category_views.xml:26
+msgid "Change Category"
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:12
+msgid "Change Control"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:190
+#: ls_change_control/views/change_control_request_views.xml:377
+msgid "Change Control Manager"
+msgstr ""
+
+#: ls_change_control/views/res_company_views.xml:15
+msgid "Change Control Settings"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:32
+#: ls_change_control/models/change_control_assessment.py:17
+#: ls_change_control/models/change_control_implementation.py:17
+#: ls_change_control/models/change_control_verification.py:17
+#: ls_change_control/wizards/change_control_decision_wizard.py:21
+#: ls_change_control/views/change_control_approval_views.xml:102
+msgid "Change Request"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:394
+#: ls_change_control/views/change_control_request_views.xml:405
+#: ls_change_control/views/ls_change_control_menus.xml:80
+msgid "Change Request Analysis"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:254
+#: ls_change_control/views/change_control_request_views.xml:325
+#: ls_change_control/views/change_control_request_views.xml:416
+#: ls_change_control/views/ls_change_control_menus.xml:18
+msgid "Change Requests"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:135
+msgid "Change Type"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:306
+msgid "Change control approval requested"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1317
+msgid "Change control effectiveness verification due"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1287
+msgid "Change control implementation overdue"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1181
+msgid "Change request submitted for review."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:151
+#: ls_change_control/views/change_control_request_views.xml:95
+#: ls_change_control/views/change_control_request_views.xml:373
+msgid "Classification"
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:30
+#: ls_change_control/views/change_control_request_views.xml:32
+msgid "Close"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1074
+msgid "Close Change Request"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:23
+#: ls_change_control/views/change_control_request_views.xml:351
+msgid "Closed"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:421
+msgid "Closed Actions"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:352
+msgid "Closure Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:367
+#: ls_change_control/views/change_control_request_views.xml:231
+msgid "Closure Statement"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:29
+#: ls_change_control/models/change_control_impact_area.py:25
+msgid "Code"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:96
+#: ls_change_control/views/change_control_approval_views.xml:65
+msgid "Comment"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:96
+msgid "Comment of the approver. It is mandatory for a rejection."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:39
+#: ls_change_control/models/change_control_assessment.py:24
+#: ls_change_control/models/change_control_implementation.py:24
+#: ls_change_control/models/change_control_request.py:109
+#: ls_change_control/models/change_control_verification.py:24
+msgid "Company"
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:33
+msgid "Complete Assessment"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:75
+#: ls_change_control/models/change_control_verification.py:98
+#: ls_change_control/views/change_control_assessment_views.xml:84
+#: ls_change_control/views/change_control_verification_views.xml:101
+msgid "Completed"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:405
+msgid "Completed Assessments"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:89
+#: ls_change_control/models/change_control_implementation.py:111
+#: ls_change_control/models/change_control_verification.py:118
+msgid "Completed By"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:84
+#: ls_change_control/models/change_control_implementation.py:81
+msgid "Completion Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:56
+msgid "Computerised System Configuration"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:36
+msgid "Conclude: Effective"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:40
+msgid "Conclude: Not Effective"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:78
+#: ls_change_control/views/change_control_verification_views.xml:73
+msgid "Conclusion"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:367
+msgid "Conclusion recorded by the change control manager at closure."
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:86
+msgid "Configuration"
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard_views.xml:28
+msgid "Confirm"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:151
+msgid "Consequences"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:301
+msgid "Creation date and time of the request, in UTC."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:72
+msgid "Criteria defined before the verification is performed, against which effectiveness is judged."
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:71
+msgid "Criteria defined before the verification is performed."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:155
+#: ls_change_control/views/change_control_request_views.xml:358
+msgid "Critical"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:151
+msgid "Criticality of the change, assigned during the review."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:202
+#: ls_change_control/views/change_control_request_views.xml:127
+msgid "Current Situation"
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:38
+msgid "Current Status"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:289
+msgid "Current position of the request in the change control lifecycle."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:58
+msgid "Customer Notification"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:46
+msgid "Data Trend Review"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:336
+msgid "Date and time at which the last mandatory approval was granted."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:107
+msgid "Date and time of the decision, in UTC."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:146
+msgid "Date on which a temporary change is reverted. Mandatory for temporary changes."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:100
+msgid "Date on which the approval was requested, used by the reminder scheduled action."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:314
+msgid "Date on which the change is planned to be implemented. Proposed from the category deadline when the request is approved."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:309
+msgid "Date on which the requester would like the change to be effective. It is not binding."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:113
+msgid "Dates"
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:42
+msgid "Deadlines"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:113
+msgid "Decided By"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:76
+#: ls_change_control/wizards/change_control_decision_wizard.py:28
+#: ls_change_control/views/change_control_approval_views.xml:108
+#: ls_change_control/views/change_control_request_views.xml:229
+#: ls_change_control/wizards/change_control_decision_wizard_views.xml:10
+msgid "Decision"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:107
+msgid "Decision Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:207
+msgid "Decisions can only be recorded while request %(name)s is in the Impact Assessment state."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:28
+msgid "Declare Verified"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:56
+msgid "Default Approver"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:44
+msgid "Default Impact Areas"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:31
+msgid "Default Verification Delay (days)"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:31
+msgid "Default number of days between the actual implementation date and the planned effectiveness verification date. It is used when the change category does not define its own delay."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:379
+msgid "Department"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:185
+msgid "Department that initiated the change request."
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:63
+msgid "Describe the actions to be planned before the change becomes effective."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:135
+msgid "Describe the situation after the change."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:130
+msgid "Describe the situation before the change."
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:59
+msgid "Describe why the change does or does not impact this area."
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:39
+#: ls_change_control/models/change_control_impact_area.py:35
+#: ls_change_control/models/change_control_implementation.py:66
+#: ls_change_control/views/change_control_category_views.xml:48
+#: ls_change_control/views/change_control_impact_area_views.xml:45
+#: ls_change_control/views/change_control_implementation_views.xml:70
+msgid "Description"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:207
+msgid "Description of the situation after the change."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:202
+msgid "Description of the situation before the change."
+msgstr ""
+
+#: ls_change_control/views/res_company_views.xml:42
+#: ls_change_control/wizards/change_control_decision_wizard_views.xml:29
+msgid "Discard"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:34
+msgid "Display order of the category in selection lists."
+msgstr ""
+
+#: ls_change_control/models/change_control_impact_area.py:30
+msgid "Display order of the impact area in lists and reports."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:59
+msgid "Disposition of Existing Stock"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:48
+msgid "Document Creation or Revision"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:44
+msgid "Document Review"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:96
+#: ls_change_control/views/change_control_implementation_views.xml:104
+msgid "Done"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:74
+#: ls_change_control/models/change_control_request.py:17
+#: ls_change_control/views/change_control_request_views.xml:339
+msgid "Draft"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:106
+msgid "Due"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:85
+msgid "Effective"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:33
+#: ls_change_control/views/res_company_views.xml:26
+msgid "Effectiveness Verification"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:38
+msgid "Effectiveness Verification Mandatory"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:74
+msgid "Effectiveness Verification Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:392
+#: ls_change_control/views/change_control_request_views.xml:215
+#: ls_change_control/views/change_control_verification_views.xml:10
+#: ls_change_control/views/change_control_verification_views.xml:92
+#: ls_change_control/views/ls_change_control_menus.xml:69
+msgid "Effectiveness Verifications"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:242
+msgid "Effectiveness verification '%(name)s' completed by %(user)s with result '%(result)s'."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:18
+msgid "Engineering and Maintenance"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:52
+msgid "Equipment Modification"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:50
+msgid "Equipment Qualification"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:74
+msgid "Evidence"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:87
+msgid "Evidence Reference"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:118
+#: ls_change_control/views/ls_change_control_menus.xml:58
+msgid "Execution"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:140
+msgid "Explain why the change is required."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:53
+msgid "Facility Modification"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:76
+msgid "Follow-up"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:113
+msgid "Follow-up Reference"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:107
+msgid "Follow-up Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:50
+msgid "Function that must approve the change."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:56
+msgid "Function that must take the decision."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:229
+#: ls_change_control/views/change_control_request_views.xml:354
+msgid "GMP Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:413
+msgid "Granted Approvals"
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:101
+#: ls_change_control/views/change_control_assessment_views.xml:89
+#: ls_change_control/views/change_control_implementation_views.xml:111
+#: ls_change_control/views/change_control_request_views.xml:368
+#: ls_change_control/views/change_control_verification_views.xml:108
+msgid "Group By"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:56
+#: ls_change_control/models/change_control_request.py:240
+msgid "High"
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:37
+msgid "Identification"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:143
+msgid "Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:37
+#: ls_change_control/models/change_control_impact_area.py:20
+#: ls_change_control/views/change_control_assessment_views.xml:92
+#: ls_change_control/views/change_control_impact_area_views.xml:25
+msgid "Impact Area"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:221
+#: ls_change_control/views/change_control_category_views.xml:52
+#: ls_change_control/views/change_control_impact_area_views.xml:10
+#: ls_change_control/views/change_control_impact_area_views.xml:57
+#: ls_change_control/views/change_control_request_views.xml:158
+#: ls_change_control/views/ls_change_control_menus.xml:98
+msgid "Impact Areas"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:19
+#: ls_change_control/views/change_control_assessment_views.xml:30
+#: ls_change_control/views/change_control_request_views.xml:343
+msgid "Impact Assessment"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:377
+#: ls_change_control/views/change_control_assessment_views.xml:10
+#: ls_change_control/views/change_control_assessment_views.xml:75
+#: ls_change_control/views/change_control_request_views.xml:161
+#: ls_change_control/views/change_control_request_views.xml:163
+#: ls_change_control/views/ls_change_control_menus.xml:35
+msgid "Impact Assessments"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:145
+msgid "Impact Declaration"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:51
+#: ls_change_control/views/change_control_assessment_views.xml:96
+msgid "Impact Level"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:44
+msgid "Impact areas proposed on a change request that uses this category. The requester may add areas but may not remove an area whose assessment is mandatory."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:211
+msgid "Impact assessment completed for area '%(area)s' with impact level '%(impact)s'."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:21
+#: ls_change_control/views/change_control_request_views.xml:192
+#: ls_change_control/views/change_control_request_views.xml:347
+#: ls_change_control/views/res_company_views.xml:30
+msgid "Implementation"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:34
+msgid "Implementation Action"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:387
+#: ls_change_control/views/change_control_implementation_views.xml:10
+#: ls_change_control/views/change_control_implementation_views.xml:94
+#: ls_change_control/views/change_control_request_views.xml:196
+#: ls_change_control/views/ls_change_control_menus.xml:63
+msgid "Implementation Actions"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:61
+msgid "Implementation Deadline (days)"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:361
+msgid "Implementation Late"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:161
+msgid "Implementation action %(name)s has been started and cannot be deleted."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:148
+msgid "Implementation action %(name)s is closed and can no longer be modified."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:290
+msgid "Implementation action '%(name)s' cancelled by %(user)s: %(reason)s"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:241
+msgid "Implementation action '%(name)s' completed by %(user)s. Evidence: %(evidence)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:851
+msgid "Implementation action '%(name)s' is not closed."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:174
+msgid "Implementation actions of request %(name)s can only be executed once the change is approved."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:95
+msgid "In Progress"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:23
+msgid "Information Technology"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:50
+msgid "Internal Audit"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:212
+#: ls_change_control/wizards/change_control_decision_wizard.py:43
+#: ls_change_control/views/change_control_request_views.xml:137
+#: ls_change_control/wizards/change_control_decision_wizard_views.xml:16
+msgid "Justification"
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:43
+msgid "Justification of the decision. It is written on the change request and cannot be modified afterwards."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:106
+msgid "Justification recorded when the action is cancelled. It must be filled in before the action can be cancelled."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:120
+msgid "Last Reminder"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:109
+msgid "Late"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:321
+msgid "Latest completion date of the implementation actions. It is only set once every action is Done or Cancelled."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:429
+msgid "List of the items preventing the next transition. It is recomputed on every display and is never stored."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:54
+#: ls_change_control/models/change_control_request.py:238
+msgid "Low"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:154
+msgid "Major"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:334
+msgid "Managed by Me"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:70
+#: ls_change_control/models/change_control_approval_template.py:64
+msgid "Mandatory"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:109
+msgid "Manufacturing site owning the change request."
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:38
+msgid "Mark as Done"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:55
+msgid "Material or Supplier Change"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:89
+msgid "Meaning associated with the recorded decision, stored with the decision itself so that the record remains self-explanatory."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:89
+msgid "Meaning of Signature"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:55
+#: ls_change_control/models/change_control_request.py:239
+msgid "Medium"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:111
+msgid "Method"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:153
+msgid "Minor"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:99
+msgid "My Actions"
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:89
+#: ls_change_control/views/ls_change_control_menus.xml:46
+msgid "My Approvals"
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:79
+msgid "My Assessments"
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:29
+msgid "My Change Requests"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:332
+msgid "My Requests"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:96
+msgid "My Verifications"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:46
+msgid "Nature of the action, used for reporting and for planning the evidence to be retained."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:702
+#: ls_change_control/models/change_control_request.py:99
+#: ls_change_control/models/change_control_request.py:655
+#: ls_change_control/models/change_control_request.py:661
+msgid "New"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:53
+msgid "No Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:249
+msgid "No Regulatory Action"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:820
+msgid "No approval is defined."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:816
+msgid "No change control manager is assigned."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:860
+msgid "No effectiveness verification has been completed."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:818
+msgid "No impact area is selected."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:237
+msgid "None"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:165
+msgid "Normal"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:86
+#: ls_change_control/views/change_control_verification_views.xml:103
+msgid "Not Effective"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:250
+msgid "Notification to the Authority"
+msgstr ""
+
+#: ls_change_control/models/res_company.py:24
+msgid "Number of days a pending approval may stay without a decision before the scheduled action sends a reminder to the approver. Set to 0 to disable approval reminders for this company."
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:61
+msgid "Number of days after approval used to propose a planned implementation date. Set to 0 to propose no date."
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:67
+msgid "Number of days after the actual implementation date used to compute the planned verification date. When 0, the company default verification delay applies."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:588
+msgid "On request %(name)s, the %(label)s cannot be earlier than the request date."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:215
+msgid "Only %(user)s may record the decision for approval %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:201
+msgid "Only %(user)s or a Change Control Manager may complete verification %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:189
+msgid "Only %(user)s or a Change Control Manager may update action %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:117
+msgid "Only Draft requests may be archived. Submitted requests are retained for the full record retention period."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:264
+msgid "Only a Change Control Manager may cancel an implementation action."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:785
+msgid "Only a Change Control Manager may perform this operation."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1122
+msgid "Only a Change Control Manager or an assigned approver may reject request %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:180
+msgid "Only the assigned assessor or a Change Control Manager may complete assessment %(name)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:939
+msgid "Only the requester or a Change Control Manager may submit request %(name)s."
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:102
+#: ls_change_control/views/change_control_request_views.xml:337
+msgid "Open"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:43
+msgid "Order in which the approvals are presented. The module does not enforce a sequential approval order; all approvals of a request may be granted in any order."
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:54
+msgid "Ordered list of approval roles generated on a change request of this category when it is submitted for review."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:78
+msgid "Outcome of the verification against the acceptance criteria."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:429
+msgid "Outstanding Items"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:78
+#: ls_change_control/models/change_control_implementation.py:94
+#: ls_change_control/models/change_control_verification.py:84
+#: ls_change_control/views/change_control_approval_views.xml:92
+msgid "Pending"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:137
+msgid "Permanent"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:190
+msgid "Person accountable for driving the request through its lifecycle. Assigned during the review."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:176
+msgid "Person who initiated the change request."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:48
+msgid "Physical Inspection"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:97
+#: ls_change_control/views/change_control_verification_views.xml:99
+msgid "Planned"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:76
+#: ls_change_control/models/change_control_verification.py:62
+#: ls_change_control/views/change_control_implementation_views.xml:120
+msgid "Planned Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:314
+#: ls_change_control/models/change_control_request.py:583
+msgid "Planned Implementation Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:328
+msgid "Planned Verification Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:252
+msgid "Prior Approval Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:163
+msgid "Priority"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:54
+msgid "Process Modification"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:51
+msgid "Process or Method Validation"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:235
+msgid "Product Quality Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:17
+msgid "Production"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:207
+#: ls_change_control/views/change_control_request_views.xml:132
+msgid "Proposed Change"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:25
+msgid "Qualified Person"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:15
+msgid "Quality Assurance"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:16
+msgid "Quality Control"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:63
+msgid "Rationale supporting the declared impact level."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:212
+msgid "Reason why the change is required."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:45
+msgid "Record Review"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:37
+#: ls_change_control/views/change_control_verification_views.xml:41
+msgid "Record this conclusion? A completed verification cannot be modified."
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:36
+msgid "Record your approval decision? A recorded decision cannot be modified."
+msgstr ""
+
+#: ls_change_control/views/change_control_approval_views.xml:39
+msgid "Record your rejection? The change request will be rejected and cannot be reopened."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:93
+msgid "Reference"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:113
+msgid "Reference of the corrective action record opened as a consequence of the verification."
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:80
+msgid "Reference of the corrective action record."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:87
+msgid "Reference of the document, record or system entry that evidences the completion of the action."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:280
+msgid "Reference of the risk assessment supporting the change. The risk assessment itself is managed outside this module."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:326
+msgid "Reference or Title"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:356
+msgid "Regulatory Action Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:20
+msgid "Regulatory Affairs"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:247
+#: ls_change_control/views/change_control_request_views.xml:381
+msgid "Regulatory Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:57
+msgid "Regulatory Submission"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:247
+msgid "Regulatory action triggered by the change. The applicable action must be determined by Regulatory Affairs against the regulations of each market concerned."
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:31
+#: ls_change_control/views/change_control_approval_views.xml:38
+#: ls_change_control/views/change_control_request_views.xml:36
+msgid "Reject"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1075
+msgid "Reject Change Request"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:80
+#: ls_change_control/models/change_control_approval.py:273
+#: ls_change_control/models/change_control_request.py:24
+#: ls_change_control/views/change_control_approval_views.xml:96
+msgid "Rejected"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:277
+msgid "Rejected by %(user)s for role %(role)s: %(comment)s"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:342
+msgid "Rejection Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:357
+#: ls_change_control/views/change_control_request_views.xml:234
+msgid "Rejection Reason"
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:75
+msgid "Reporting"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:613
+msgid "Request %(name)s cannot be archived because it is not in the Draft state. Submitted change requests are retained."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1044
+msgid "Request %(name)s cannot be verified:\n%(reasons)s"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:960
+msgid "Request %(name)s cannot start the impact assessment:\n%(reasons)s"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:772
+msgid "Request %(name)s has been submitted. Only a Change Control Manager may modify it."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:739
+msgid "Request %(name)s has been submitted. The fields %(fields)s are frozen. A modification of the change itself requires a new change request."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1026
+msgid "Request %(name)s has no implementation action. At least one action must be planned before the implementation starts."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:567
+msgid "Request %(name)s is a permanent change and must not declare a temporary change end date."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:559
+msgid "Request %(name)s is a temporary change and must declare a temporary change end date."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:798
+msgid "Request %(name)s is in state '%(state)s'. This operation is only allowed in: %(expected)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:301
+#: ls_change_control/views/change_control_request_views.xml:383
+msgid "Request Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:46
+#: ls_change_control/models/change_control_assessment.py:31
+#: ls_change_control/models/change_control_implementation.py:31
+#: ls_change_control/models/change_control_verification.py:31
+msgid "Request Status"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:985
+msgid "Request returned to Draft for completion."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:100
+msgid "Requested On"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:309
+#: ls_change_control/models/change_control_request.py:582
+msgid "Requested Target Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:176
+#: ls_change_control/views/change_control_request_views.xml:375
+msgid "Requester"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:185
+msgid "Requesting Department"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:82
+msgid "Required before the action can be cancelled."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:275
+msgid "Requires Customer Notification"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:270
+msgid "Requires Document Update"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:261
+msgid "Requires Revalidation"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:265
+msgid "Requires Training"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:21
+msgid "Research and Development"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:106
+msgid "Responsibilities"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:69
+#: ls_change_control/views/change_control_implementation_views.xml:116
+msgid "Responsible"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:82
+#: ls_change_control/views/change_control_verification_views.xml:115
+msgid "Result"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:20
+msgid "Return to Draft"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:280
+msgid "Risk Assessment Reference"
+msgstr ""
+
+#: ls_change_control/views/res_company_views.xml:41
+msgid "Save"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:39
+msgid "Scope of the category, used as guidance for the requester."
+msgstr ""
+
+#: ls_change_control/models/change_control_impact_area.py:35
+msgid "Scope of the impact area, used as guidance for the assessor."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:52
+#: ls_change_control/models/change_control_approval_template.py:43
+#: ls_change_control/models/change_control_category.py:34
+#: ls_change_control/models/change_control_impact_area.py:30
+#: ls_change_control/models/change_control_implementation.py:37
+msgid "Sequence"
+msgstr ""
+
+#: ls_change_control/views/ls_change_control_menus.xml:104
+msgid "Settings"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:41
+msgid "Short description of the action to perform."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:103
+msgid "Short description of the change, used in lists and reports."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:37
+msgid "Short description of what is verified."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:84
+msgid "Short title of the change"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:29
+#: ls_change_control/models/change_control_impact_area.py:25
+msgid "Short unique code used in reports and exports."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:24
+msgid "Site Management"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:36
+msgid "Start"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:16
+msgid "Start Impact Assessment"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:24
+msgid "Start Implementation"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:72
+#: ls_change_control/models/change_control_implementation.py:92
+#: ls_change_control/models/change_control_request.py:289
+#: ls_change_control/models/change_control_verification.py:95
+#: ls_change_control/views/change_control_assessment_views.xml:98
+#: ls_change_control/views/change_control_implementation_views.xml:118
+msgid "Status"
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:44
+msgid "Subject matter expert responsible for assessing this area."
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:13
+msgid "Submit for Review"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:22
+msgid "Supply Chain"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:138
+msgid "Temporary"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:146
+msgid "Temporary Change End Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:49
+msgid "Testing"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:229
+msgid "The change affects an activity carried out under good manufacturing practices."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:275
+msgid "The change must be notified to customers, for example under a quality agreement."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:261
+msgid "The change requires a qualification or validation activity."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:265
+msgid "The change requires personnel to be trained before it becomes effective."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:270
+msgid "The change requires the creation or revision of a controlled document."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:83
+msgid "The default approver must be an internal user."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1318
+msgid "The effectiveness verification of change request %(name)s is due."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:691
+msgid "The following change requests cannot be deleted because they have been submitted: %(names)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:164
+msgid "The following fields are maintained by the approval workflow and cannot be written directly: %(fields)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_assessment.py:117
+msgid "The following fields are maintained by the assessment workflow and cannot be written directly: %(fields)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:723
+msgid "The following fields are maintained by the change control workflow and cannot be written directly: %(fields)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:138
+msgid "The following fields are maintained by the implementation workflow and cannot be written directly: %(fields)s."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:146
+msgid "The following fields are maintained by the verification workflow and cannot be written directly: %(fields)s."
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard.py:55
+msgid "The justification cannot be empty."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:1288
+msgid "The planned implementation date of change request %(name)s has passed."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:603
+msgid "The requester and the change control manager must be internal users."
+msgstr ""
+
+#: ls_change_control/wizards/change_control_decision_wizard_views.xml:18
+msgid "This justification is written on the change request and cannot be modified afterwards."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:103
+msgid "Title"
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:82
+msgid "To Complete"
+msgstr ""
+
+#: ls_change_control/models/change_control_implementation.py:49
+msgid "Training"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:47
+msgid "Training Record Review"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:18
+#: ls_change_control/views/change_control_request_views.xml:341
+msgid "Under Review"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:93
+msgid "Unique reference allocated from the sequence when the request is created. It is never reused and never modified."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:166
+msgid "Urgent"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:163
+msgid "Urgent requests are highlighted in the kanban and list views."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:56
+msgid "User proposed as approver when the approval is generated. When empty, the approver must be assigned manually by the change control manager during the review."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:113
+msgid "User who actually recorded the decision."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:62
+msgid "User who must take the decision. It must be assigned before the impact assessment starts."
+msgstr ""
+
+#: ls_change_control/models/change_control_approval_template.py:19
+msgid "Validation"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:251
+msgid "Variation of the Marketing Authorisation"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:37
+#: ls_change_control/views/change_control_request_views.xml:211
+msgid "Verification"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:218
+msgid "Verification %(name)s concludes that the change is not effective. A follow-up must be requested."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:188
+msgid "Verification %(name)s is already completed."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:156
+msgid "Verification %(name)s is completed and can no longer be modified."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:169
+msgid "Verification %(name)s is completed and cannot be deleted."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:867
+msgid "Verification '%(name)s' concluded that the change is not effective."
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:67
+msgid "Verification Date"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:67
+msgid "Verification Delay (days)"
+msgstr ""
+
+#: ls_change_control/views/change_control_request_views.xml:363
+msgid "Verification Due"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:42
+msgid "Verification Method"
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:88
+msgid "Verification Required"
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:425
+#: ls_change_control/views/change_control_request_views.xml:75
+msgid "Verifications"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:193
+msgid "Verifications can only be completed while request %(name)s is in the Implementation state."
+msgstr ""
+
+#: ls_change_control/models/change_control_request.py:22
+#: ls_change_control/views/change_control_request_views.xml:349
+msgid "Verified"
+msgstr ""
+
+#: ls_change_control/models/change_control_verification.py:55
+#: ls_change_control/views/change_control_verification_views.xml:113
+msgid "Verifier"
+msgstr ""
+
+#: ls_change_control/models/change_control_category.py:74
+msgid "When disabled, a change of this category may be closed without a completed effectiveness verification."
+msgstr ""
+
+#: ls_change_control/models/res_company.py:38
+msgid "When enabled, a change request cannot be closed before at least one effectiveness verification has been completed, unless the change category explicitly waives verification."
+msgstr ""
+
+#: ls_change_control/models/res_company.py:45
+msgid "When enabled, a change request cannot leave the Implementation state while implementation actions are still pending or in progress."
+msgstr ""
+
+#: ls_change_control/models/change_control_impact_area.py:40
+msgid "When enabled, an assessment on this area must be completed before the change request can leave the Impact Assessment state."
+msgstr ""
+
+#: ls_change_control/views/change_control_assessment_views.xml:87
+msgid "With Impact"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:307
+msgid "Your decision is expected on change request %(name)s for the role %(role)s."
+msgstr ""
+
+#: ls_change_control/views/change_control_category_views.xml:33
+msgid "e.g. Equipment Change"
+msgstr ""
+
+#: ls_change_control/views/change_control_impact_area_views.xml:32
+msgid "e.g. Manufacturing Process"
+msgstr ""
+
+#: ls_change_control/views/change_control_verification_views.xml:49
+msgid "e.g. Review of 3 batches after the process change"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:52
+msgid "e.g. Revise SOP-PROD-014"
+msgstr ""
+
+#: ls_change_control/views/change_control_implementation_views.xml:77
+msgid "e.g. SOP-PROD-014 rev. 5, effective 2026-09-01"
+msgstr ""
+
+#: ls_change_control/models/change_control_approval.py:218
+msgid "the assigned approver"
+msgstr ""

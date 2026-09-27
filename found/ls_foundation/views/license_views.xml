@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_lss_foundation_license_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.license.tree</field>
+        <field name="model">lss.foundation.license</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="alert_level=='red'" decoration-warning="alert_level=='yellow'">
+                <field name="number"/><field name="license_type_id"/><field name="issuing_authority"/><field name="issue_date"/><field name="expiry_date"/><field name="status" widget="badge"/><field name="alert_level" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_lss_foundation_license" model="ir.actions.act_window">
+        <field name="name">Licenses</field>
+        <field name="res_model">lss.foundation.license</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

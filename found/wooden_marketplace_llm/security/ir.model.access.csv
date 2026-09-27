@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_marketplace_res_partner,marketplace.res.partner,model_res_partner,wooden_marketplace.vendor_group,1,1,1,0

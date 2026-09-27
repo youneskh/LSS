@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <record id="ls_calibration_instrument_sequence" model="ir.sequence">
+        <field name="name">Calibration Instrument</field>
+        <field name="code">ls.calibration.instrument</field>
+        <field name="prefix">INS/</field>
+        <field name="padding">5</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="ls_calibration_plan_sequence" model="ir.sequence">
+        <field name="name">Calibration Plan</field>
+        <field name="code">ls.calibration.plan</field>
+        <field name="prefix">CP/</field>
+        <field name="padding">5</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="ls_calibration_record_sequence" model="ir.sequence">
+        <field name="name">Calibration Record</field>
+        <field name="code">ls.calibration.record</field>
+        <field name="prefix">CAL/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="ls_calibration_certificate_sequence" model="ir.sequence">
+        <field name="name">Calibration Certificate</field>
+        <field name="code">ls.calibration.certificate</field>
+        <field name="prefix">CERT/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="implementation">standard</field>
+    </record>
+
+</odoo>

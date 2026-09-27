@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_formulation_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.formulation.list</field>
+        <field name="model">ls.cosmetic.formulation</field>
+        <field name="arch" type="xml">
+            <list string="Formulations"
+                  decoration-muted="state in ('superseded', 'cancelled')"
+                  decoration-danger="blocking_finding_count &gt; 0"
+                  decoration-success="state == 'approved'">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="product_tmpl_id" optional="show"/>
+                <field name="line_count"/>
+                <field name="total_percentage" digits="[16, 6]"/>
+                <field name="contains_nanomaterial" optional="show"/>
+                <field name="blocking_finding_count" optional="show"/>
+                <field name="unevaluated_line_count" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_formulation_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.formulation.form</field>
+        <field name="model">ls.cosmetic.formulation</field>
+        <field name="arch" type="xml">
+            <form string="Formulation">
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="btn-primary"
+                            invisible="state != 'review'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'review'"/>
+                    <button name="action_open_revise_wizard" type="object"
+                            string="Create New Version" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            invisible="state not in ('draft', 'review')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_safety_assessments" type="object"
+                                class="oe_stat_button" icon="fa-flask">
+                            <field name="safety_assessment_count" widget="statinfo"
+                                   string="Safety Reports"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-secondary"
+                            invisible="state != 'superseded'"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1>
+                            <field name="code" readonly="1"/>
+                            <span> v</span><field name="version" readonly="1" class="oe_inline"/>
+                        </h1>
+                        <label for="name" class="oe_edit_only"/>
+                        <h2><field name="name" placeholder="Formulation name"/></h2>
+                    </div>
+                    <group>
+                        <group string="Product">
+                            <field name="product_tmpl_id"/>
+                            <field name="bom_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Version History">
+                            <field name="predecessor_id"/>
+                            <field name="successor_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Composition Summary">
+                            <field name="line_count"/>
+                            <field name="total_percentage" digits="[16, 6]"/>
+                        </group>
+                        <group string="Regulatory Flags">
+                            <field name="contains_nanomaterial"/>
+                            <field name="contains_cmr"/>
+                            <field name="blocking_finding_count"/>
+                            <field name="unevaluated_line_count"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="unevaluated_line_count == 0">
+                        Some ingredients have no annex entry linked. Compliance with
+                        Annexes II to VI has not been evaluated for those lines.
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="blocking_finding_count == 0">
+                        This composition contains a prohibited substance or exceeds a
+                        recorded annex limit. It cannot be approved.
+                    </div>
+                    <notebook>
+                        <page string="Composition" name="composition">
+                            <field name="line_ids"
+                                   readonly="state in ('approved', 'superseded', 'cancelled')">
+                                <list string="Composition" editable="bottom"
+                                      decoration-danger="restriction_status in ('prohibited', 'over_limit')"
+                                      decoration-warning="restriction_status == 'no_reference_data'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="ingredient_id"/>
+                                    <field name="concentration" digits="[16, 6]"/>
+                                    <field name="function_in_product"/>
+                                    <field name="is_nanomaterial" optional="show"/>
+                                    <field name="is_perfume_component" optional="hide"/>
+                                    <field name="exclude_from_label" optional="hide"/>
+                                    <field name="restriction_status"/>
+                                    <field name="restriction_message" optional="show"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_percentage" digits="[16, 6]"
+                                       string="Total (% w/w)"/>
+                            </group>
+                        </page>
+                        <page string="Use and Population" name="use">
+                            <group>
+                                <group string="Specific Assessments Required">
+                                    <field name="for_children_under_three"/>
+                                    <field name="for_intimate_hygiene"/>
+                                </group>
+                            </group>
+                            <separator string="Normal and Reasonably Foreseeable Use"/>
+                            <field name="intended_use"
+                                   placeholder="Annex I Part A section 5"/>
+                            <separator string="Targeted Population"/>
+                            <field name="target_population"
+                                   placeholder="Annex I Part A section 6, item 6"/>
+                        </page>
+                        <page string="Approval" name="approval">
+                            <group>
+                                <group string="Submission">
+                                    <field name="submitted_by_id"/>
+                                    <field name="submitted_date"/>
+                                </group>
+                                <group string="Approval">
+                                    <field name="approved_by_id"/>
+                                    <field name="approved_date"/>
+                                </group>
+                            </group>
+                            <field name="cancel_reason" invisible="state != 'cancelled'"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_formulation_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.formulation.search</field>
+        <field name="model">ls.cosmetic.formulation</field>
+        <field name="arch" type="xml">
+            <search string="Formulations">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <field name="line_ids" string="Ingredient"
+                       filter_domain="[('line_ids.ingredient_id', 'ilike', self)]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_review" string="Under Review"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_blocking" string="Blocking Annex Findings"
+                        domain="[('blocking_finding_count', '&gt;', 0)]"/>
+                <filter name="filter_unevaluated" string="Unevaluated Lines"
+                        domain="[('unevaluated_line_count', '&gt;', 0)]"/>
+                <filter name="filter_nano" string="Contains Nanomaterials"
+                        domain="[('contains_nanomaterial', '=', True)]"/>
+                <filter name="filter_cmr" string="Contains CMR Substances"
+                        domain="[('contains_cmr', '=', True)]"/>
+                <separator/>
+                <filter name="filter_children" string="For Children Under Three"
+                        domain="[('for_children_under_three', '=', True)]"/>
+                <filter name="filter_intimate" string="External Intimate Hygiene"
+                        domain="[('for_intimate_hygiene', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter name="group_approved_date" string="Approval Date"
+                            context="{'group_by': 'approved_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_formulation" model="ir.actions.act_window">
+        <field name="name">Product Formulations</field>
+        <field name="res_model">ls.cosmetic.formulation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_formulation_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record your first formulation</p>
+            <p>
+                A formulation holds the qualitative and quantitative composition
+                required by Annex I Part A section 1 of Regulation (EC)
+                No 1223/2009, and is the source from which the label list of
+                ingredients is generated.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_finished_product" model="ir.actions.act_window">
+        <field name="name">Finished Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('ls_is_cosmetic', '=', True)]</field>
+        <field name="context">{'default_ls_is_cosmetic': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Flag your cosmetic products</p>
+            <p>
+                Tick "Cosmetic Product" on the product form to make it appear here
+                together with its formulations, safety reports, labels, claims and
+                product information files.
+            </p>
+        </field>
+    </record>
+
+</odoo>

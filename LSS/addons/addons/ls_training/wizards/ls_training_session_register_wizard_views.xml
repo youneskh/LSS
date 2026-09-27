@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_session_register_wizard_form_view"
+            model="ir.ui.view">
+        <field name="name">ls.training.session.register.wizard.form</field>
+        <field name="model">ls.training.session.register.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Register Employees">
+                <group>
+                    <field name="session_id" readonly="1"
+                           options="{'no_open': True}"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="selection_mode" widget="radio"/>
+                    <field name="employee_ids" widget="many2many_tags"
+                           options="{'no_create': True}"
+                           invisible="selection_mode != 'employees'"
+                           required="selection_mode == 'employees'"/>
+                    <field name="department_id"
+                           options="{'no_create': True}"
+                           invisible="selection_mode != 'department'"
+                           required="selection_mode == 'department'"/>
+                    <field name="job_id" options="{'no_create': True}"
+                           invisible="selection_mode != 'job'"
+                           required="selection_mode == 'job'"/>
+                    <field name="exclude_certified"/>
+                </group>
+                <footer>
+                    <button name="action_register" type="object"
+                            string="Register" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_session_register_wizard_action"
+            model="ir.actions.act_window">
+        <field name="name">Register Employees</field>
+        <field name="res_model">ls.training.session.register.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

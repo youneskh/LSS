@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <!--
+        No parameter, grade, area, sampling point or limit record is shipped
+        with this module.
+
+        Parameter definitions and, above all, the numeric thresholds attached
+        to them are determined by the regulatory framework the implementing
+        organisation operates under, by its contamination control strategy and
+        by its own risk assessments. Shipping example values would place
+        unverified numbers into a regulated system where they could be mistaken
+        for approved acceptance criteria.
+
+        Configuration is therefore created by the implementing organisation as
+        described in doc/configuration_guide.md.
+
+        This file is retained in the manifest so that a future release can add
+        genuinely non-prescriptive master data without changing the manifest.
+    -->
+    <data noupdate="1">
+    </data>
+</odoo>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="ls_training_employee_record_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Individual Training Record</h2>
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <strong>Employee</strong><br/>
+                                <span t-field="doc.name"/><br/>
+                                <span t-field="doc.job_title"/><br/>
+                                <span t-field="doc.department_id.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Compliance</strong><br/>
+                                Mandatory courses:
+                                <span t-field="doc.ls_training_required_count"/><br/>
+                                Compliant:
+                                <span t-field="doc.ls_training_compliant_count"/><br/>
+                                Rate:
+                                <span t-field="doc.ls_training_compliance_rate"/> %
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Certifications</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Course</th>
+                                    <th>Version</th>
+                                    <th>Granted</th>
+                                    <th>Expires</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.ls_training_certification_ids"
+                                    t-as="certification">
+                                    <td><span t-field="certification.name"/></td>
+                                    <td>
+                                        <span t-field="certification.course_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="certification.course_version"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="certification.date_granted"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="certification.date_expiry"/>
+                                    </td>
+                                    <td><span t-field="certification.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 class="mt-4">Competency Assessments</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Competency</th>
+                                    <th>Assessor</th>
+                                    <th>Date</th>
+                                    <th>Level</th>
+                                    <th>Acquired</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.ls_training_assessment_ids"
+                                    t-as="assessment">
+                                    <td>
+                                        <span t-field="assessment.competency_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="assessment.assessor_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="assessment.date_assessment"/>
+                                    </td>
+                                    <td><span t-field="assessment.level"/></td>
+                                    <td>
+                                        <span t-field="assessment.is_acquired"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="mt-4">
+                            <small>
+                                Document generated from the Life Sciences
+                                Training Management module. It reflects the
+                                training records held in the system at the
+                                time of printing.
+                            </small>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

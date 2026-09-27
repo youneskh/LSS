@@ -1,0 +1,17 @@
+[flake8]
+# Odoo community style. Matches OCA maintained-branches defaults where practical.
+max-line-length = 88
+# E203: conflicts with black slicing whitespace handling (PEP 8 itself)
+# E501:  line too long — Odoo codebase commonly exceeds; rely on judgment
+# E704:  statement on same line as def (style only)
+extend-ignore = E203, E501, E704
+per-file-ignores =
+    __init__.py:F401
+    __manifest__.py:E999,W391
+exclude =
+    .git,
+    __pycache__,
+    *.egg-info,
+    .venv,
+    static/src,
+    static/lib

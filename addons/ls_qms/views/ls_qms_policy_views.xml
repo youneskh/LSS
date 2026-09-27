@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="ls_qms_policy_view_list" model="ir.ui.view">
+        <field name="name">ls.qms.policy.list</field>
+        <field name="model">ls.qms.policy</field>
+        <field name="arch" type="xml">
+            <list string="Quality Policies" decoration-muted="state == 'obsolete'" decoration-bf="state == 'published'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="version"/>
+                <field name="author_id" widget="many2one_avatar_user"/>
+                <field name="date_effective"/>
+                <field name="date_next_review"/>
+                <field name="review_state" string="Review"/>
+                <field name="state" widget="badge" decoration-success="state == 'published'" decoration-warning="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_qms_policy_view_form" model="ir.ui.view">
+        <field name="name">ls.qms.policy.form</field>
+        <field name="model">ls.qms.policy</field>
+        <field name="arch" type="xml">
+            <form string="Quality Policy">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state not in ('draft', 'under_revision')"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'" groups="ls_qms.group_ls_qms_approver"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject" invisible="state != 'under_review'" groups="ls_qms.group_ls_qms_approver"/>
+                    <button name="action_publish" type="object" string="Publish" class="oe_highlight" invisible="state != 'approved'" groups="ls_qms.group_ls_qms_approver"/>
+                    <button name="action_open_new_revision_wizard" type="object" string="New Revision" invisible="state != 'published'"/>
+                    <button name="action_set_obsolete" type="object" string="Set Obsolete" invisible="state not in ('draft', 'approved', 'published', 'under_revision')" groups="ls_qms.group_ls_qms_manager"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state not in ('under_review', 'approved')" groups="ls_qms.group_ls_qms_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved,published"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_objectives" type="object" class="oe_stat_button" icon="fa-bullseye">
+                            <field name="objective_count" widget="statinfo" string="Objectives"/>
+                        </button>
+                        <button name="action_open_attachments" type="object" class="oe_stat_button" icon="fa-paperclip">
+                            <field name="attachment_count" widget="statinfo" string="Attachments"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Title of the quality policy"/></h1>
+                        <h3>
+                            <field name="reference" class="oe_inline"/>
+                            <span class="oe_inline"> - version </span>
+                            <field name="version" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Ownership">
+                            <field name="author_id"/>
+                            <field name="department_id"/>
+                            <field name="reviewer_ids" widget="many2many_tags" readonly="state in ('published', 'obsolete')"/>
+                            <field name="approver_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Lifecycle">
+                            <field name="date_submitted"/>
+                            <field name="date_approved"/>
+                            <field name="date_effective" readonly="state in ('published', 'obsolete')"/>
+                            <field name="review_period_months"/>
+                            <field name="date_next_review"/>
+                            <field name="review_state"/>
+                            <field name="date_obsolete" invisible="state != 'obsolete'"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Policy Statement" name="statement">
+                            <field name="policy_statement" readonly="state in ('published', 'obsolete')" placeholder="Statement of intent and direction issued by top management."/>
+                        </page>
+                        <page string="Scope" name="scope">
+                            <field name="scope" readonly="state in ('published', 'obsolete')" placeholder="Sites, products and processes covered."/>
+                        </page>
+                        <page string="Commitments" name="commitment">
+                            <field name="commitment" readonly="state in ('published', 'obsolete')"/>
+                        </page>
+                        <page string="Communication" name="communication">
+                            <field name="communication_method" readonly="state in ('published', 'obsolete')"/>
+                        </page>
+                        <page string="Objectives" name="objectives">
+                            <field name="objective_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="responsible_id"/>
+                                    <field name="date_target"/>
+                                    <field name="achievement_rate"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Revision" name="revision">
+                            <group>
+                                <field name="previous_revision_id"/>
+                                <field name="next_revision_ids" widget="many2many_tags"/>
+                            </group>
+                            <field name="reason_for_change" readonly="state in ('published', 'obsolete')" placeholder="Justification of this revision."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_qms_policy_view_search" model="ir.ui.view">
+        <field name="name">ls.qms.policy.search</field>
+        <field name="model">ls.qms.policy</field>
+        <field name="arch" type="xml">
+            <search string="Quality Policies">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="author_id"/>
+                <field name="department_id"/>
+                <filter name="filter_published" string="Published" domain="[('state', '=', 'published')]"/>
+                <filter name="filter_in_approval" string="In Approval" domain="[('state', 'in', ('under_review', 'approved'))]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', 'in', ('draft', 'under_revision'))]"/>
+                <filter name="filter_obsolete" string="Obsolete" domain="[('state', '=', 'obsolete')]"/>
+                <separator/>
+                <filter name="filter_review_overdue" string="Review Overdue" domain="[('state', '=', 'published'), ('date_next_review', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_my_documents" string="My Documents" domain="[('author_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_author" string="Author" context="{'group_by': 'author_id'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_next_review" string="Next Review" context="{'group_by': 'date_next_review'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_qms_policy_action" model="ir.actions.act_window">
+        <field name="name">Quality Policy</field>
+        <field name="res_model">ls.qms.policy</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_qms_policy_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first quality policy</p>
+            <p>The quality policy states the intent and direction of the organisation. It is approved, published and then reviewed periodically.</p>
+        </field>
+    </record>
+
+</odoo>

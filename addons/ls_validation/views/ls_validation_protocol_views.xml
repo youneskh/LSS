@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_protocol_list" model="ir.ui.view">
+        <field name="name">ls.validation.protocol.list</field>
+        <field name="model">ls.validation.protocol</field>
+        <field name="arch" type="xml">
+            <list string="Validation Protocols"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-success="state in ('executed', 'closed')">
+                <field name="reference"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="protocol_type"/>
+                <field name="item_id"/>
+                <field name="master_plan_id" optional="show"/>
+                <field name="planned_start_date" optional="show"/>
+                <field name="test_count" optional="hide"/>
+                <field name="execution_count" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_protocol_form" model="ir.ui.view">
+        <field name="name">ls.validation.protocol.form</field>
+        <field name="model">ls.validation.protocol</field>
+        <field name="arch" type="xml">
+            <form string="Validation Protocol">
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_back_to_draft" type="object"
+                            string="Back to Draft"
+                            invisible="state != 'review'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve and Sign" class="btn-primary"
+                            invisible="state != 'review'"
+                            groups="ls_validation.group_ls_validation_approver"/>
+                    <button name="action_create_execution" type="object"
+                            string="New Execution" class="btn-primary"
+                            invisible="state not in ('approved', 'execution')"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'executed'"/>
+                    <button name="action_new_version" type="object"
+                            string="New Version"
+                            invisible="state in ('draft', 'review', 'cancelled')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('cancelled', 'closed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved,execution,executed,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_executions" type="object"
+                                class="oe_stat_button" icon="fa-flask">
+                            <field name="execution_count" widget="statinfo"
+                                   string="Executions"/>
+                        </button>
+                        <button name="action_open_signatures" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="signature_count" widget="statinfo"
+                                   string="Signatures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                        <h2>
+                            <field name="name" placeholder="Title of the protocol"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="subject" string="Subject">
+                            <field name="protocol_type"/>
+                            <field name="item_id"/>
+                            <field name="master_plan_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group name="control" string="Document Control">
+                            <field name="version"/>
+                            <field name="previous_version_id"
+                                   invisible="not previous_version_id"/>
+                            <field name="author_id"/>
+                            <field name="reviewer_id"/>
+                            <field name="approver_id" invisible="not approver_id"/>
+                            <field name="approval_date"
+                                   invisible="not approval_date"/>
+                            <field name="planned_start_date"/>
+                            <field name="planned_end_date"/>
+                            <field name="test_count" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Test Cases" name="tests">
+                            <field name="test_ids"
+                                   readonly="state not in ('draft', 'review')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="acceptance_criteria"/>
+                                    <field name="expected_evidence"
+                                           optional="hide"/>
+                                    <field name="is_critical"/>
+                                </list>
+                                <form string="Test Case">
+                                    <group>
+                                        <group>
+                                            <field name="code"/>
+                                            <field name="name"/>
+                                            <field name="is_critical"/>
+                                            <field name="sequence"/>
+                                        </group>
+                                    </group>
+                                    <group string="Objective">
+                                        <field name="objective" nolabel="1"/>
+                                    </group>
+                                    <group string="Procedure">
+                                        <field name="procedure" nolabel="1"/>
+                                    </group>
+                                    <group string="Acceptance Criteria">
+                                        <field name="acceptance_criteria"
+                                               nolabel="1"/>
+                                    </group>
+                                    <group string="Expected Evidence">
+                                        <field name="expected_evidence"
+                                               nolabel="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Objective" name="objective">
+                            <field name="objective"/>
+                        </page>
+                        <page string="Scope" name="scope">
+                            <field name="scope"/>
+                        </page>
+                        <page string="Prerequisites" name="prerequisites">
+                            <field name="prerequisites"/>
+                        </page>
+                        <page string="Reference Documents" name="references">
+                            <field name="reference_documents"
+                                   placeholder="One reference per line."/>
+                        </page>
+                        <page string="Executions" name="executions">
+                            <field name="execution_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="execution_round"/>
+                                    <field name="date_start"/>
+                                    <field name="overall_result"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Electronic Signatures" name="signatures">
+                            <field name="signature_ids" readonly="1" nolabel="1">
+                                <list>
+                                    <field name="signed_on"/>
+                                    <field name="user_id"/>
+                                    <field name="meaning"/>
+                                    <field name="reason"/>
+                                    <field name="signature_hash"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_protocol_search" model="ir.ui.view">
+        <field name="name">ls.validation.protocol.search</field>
+        <field name="model">ls.validation.protocol</field>
+        <field name="arch" type="xml">
+            <search string="Validation Protocols">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="item_id"/>
+                <field name="master_plan_id"/>
+                <field name="author_id"/>
+                <filter name="filter_to_approve" string="To Approve"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_in_execution" string="In Execution"
+                        domain="[('state', '=', 'execution')]"/>
+                <separator/>
+                <filter name="filter_my_protocols" string="My Protocols"
+                        domain="[('author_id', '=', uid)]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_type" string="Protocol Type"
+                        context="{'group_by': 'protocol_type'}"/>
+                    <filter name="group_by_item" string="Validation Item"
+                        context="{'group_by': 'item_id'}"/>
+                    <filter name="group_by_plan" string="Master Plan"
+                        context="{'group_by': 'master_plan_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_protocol" model="ir.actions.act_window">
+        <field name="name">Protocols</field>
+        <field name="res_model">ls.validation.protocol</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_validation_protocol_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Write the first protocol
+            </p>
+            <p>
+                A protocol declares the test cases and the acceptance criteria
+                before any test is executed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

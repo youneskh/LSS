@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views3.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_trend_list" model="ir.ui.view">
+            <field name="name">ls.env.trend.list</field>
+            <field name="model">ls.env.trend</field>
+            <field name="arch" type="xml">
+                <list string="Trend Analyses">
+                    <field name="name"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="line_count" string="Lines"/>
+                    <field name="computed_by_id"/>
+                    <field name="reviewed_by_id"/>
+                    <field name="state" widget="badge"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_trend_form" model="ir.ui.view">
+            <field name="name">ls.env.trend.form</field>
+            <field name="model">ls.env.trend</field>
+            <field name="arch" type="xml">
+                <form string="Trend Analysis">
+                    <header>
+                        <button name="action_compute" type="object" string="Compute"
+                                class="btn-primary" invisible="state == 'reviewed'"/>
+                        <button name="action_review" type="object" string="Mark as Reviewed"
+                                invisible="state != 'computed'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,computed,reviewed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Analysis title"/></h1>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            This analysis is descriptive. It reports counts, exceedance rates and
+                            summary statistics, and compares the later half of each series with the
+                            earlier half. It does not perform a test of statistical significance.
+                        </div>
+                        <group>
+                            <group string="Period">
+                                <field name="date_from" readonly="state == 'reviewed'"/>
+                                <field name="date_to" readonly="state == 'reviewed'"/>
+                                <field name="change_threshold" readonly="state == 'reviewed'"/>
+                            </group>
+                            <group string="Control">
+                                <field name="computed_by_id" readonly="1"/>
+                                <field name="computed_datetime" readonly="1"/>
+                                <field name="reviewed_by_id" readonly="1"/>
+                                <field name="review_datetime" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group string="Scope">
+                            <field name="area_ids" widget="many2many_tags" readonly="state == 'reviewed'"/>
+                            <field name="sampling_point_ids" widget="many2many_tags" readonly="state == 'reviewed'"/>
+                            <field name="parameter_ids" widget="many2many_tags" readonly="state == 'reviewed'"/>
+                        </group>
+                        <notebook>
+                            <page string="Results" name="lines">
+                                <field name="line_ids" nolabel="1" readonly="1">
+                                    <list decoration-warning="direction == 'increasing'"
+                                          decoration-danger="spec_count &gt; 0">
+                                        <field name="sampling_point_id"/>
+                                        <field name="area_id"/>
+                                        <field name="parameter_id"/>
+                                        <field name="result_count"/>
+                                        <field name="alert_count"/>
+                                        <field name="action_count"/>
+                                        <field name="spec_count"/>
+                                        <field name="exceedance_ratio" widget="percentage"/>
+                                        <field name="value_min" optional="show"/>
+                                        <field name="value_max" optional="show"/>
+                                        <field name="value_mean" optional="show"/>
+                                        <field name="value_median" optional="hide"/>
+                                        <field name="value_stdev" optional="hide"/>
+                                        <field name="value_stdev_available" optional="hide"/>
+                                        <field name="direction" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Conclusion" name="conclusion">
+                                <field name="conclusion" nolabel="1" readonly="state == 'reviewed'"
+                                       placeholder="Interpretation of the figures and any action arising."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ls_env_trend" model="ir.actions.act_window">
+            <field name="name">Trend Analyses</field>
+            <field name="res_model">ls.env.trend</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Run a trend analysis</p>
+                <p>Analyses summarise released results over a period so that drift can be identified and reviewed.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

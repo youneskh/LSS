@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Declared deviation: the standard company form is not inherited.
+
+     Extending it would require referring to an XML identifier owned by the
+     "base" module that could not be verified against the Odoo 19 source, and
+     an unresolved "ref" attribute aborts the installation of the whole
+     module. The four pharmaceutical settings of a company are therefore
+     edited through a form that this module owns entirely, reached from
+     Pharmaceutical / Configuration / Company Settings. -->
+<odoo>
+
+    <record id="view_ls_pharma_res_company_list" model="ir.ui.view">
+        <field name="name">res.company.list.ls.pharma</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <list string="Pharmaceutical Settings" create="false" delete="false">
+                <field name="name"/>
+                <field name="pharma_gs1_company_prefix"/>
+                <field name="pharma_sscc_extension_digit"/>
+                <field name="pharma_serial_length"/>
+                <field name="pharma_batch_expiry_alert_days"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_res_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.ls.pharma</field>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <form string="Pharmaceutical Settings" create="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="GS1 Identification">
+                            <field name="pharma_gs1_company_prefix"/>
+                            <field name="pharma_sscc_extension_digit"/>
+                            <field name="pharma_serial_length"/>
+                        </group>
+                        <group string="Alerts">
+                            <field name="pharma_batch_expiry_alert_days"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        The GS1 company prefix is issued to the company by its
+                        GS1 Member Organisation. It is the leading part of every
+                        Global Trade Item Number and of every Serial Shipping
+                        Container Code built by this module. The extension digit
+                        is the first digit of a Serial Shipping Container Code
+                        and is chosen by the company that builds the code.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_res_company" model="ir.actions.act_window">
+        <field name="name">Company Settings</field>
+        <field name="res_model">res.company</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'list', 'view_id': ref('view_ls_pharma_res_company_list')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_ls_pharma_res_company_form')})]"/>
+    </record>
+
+</odoo>

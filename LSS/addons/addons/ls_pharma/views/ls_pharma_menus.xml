@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     This file is loaded last, because every menu item refers to an action
+     declared in one of the view files. -->
+<odoo>
+
+    <menuitem id="menu_ls_pharma_root"
+              name="Pharmaceutical"
+              web_icon="ls_pharma,static/description/icon.png"
+              sequence="55"
+              groups="ls_pharma.group_ls_pharma_viewer"/>
+
+    <!-- ================================================================ -->
+    <!-- Batches                                                           -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_batches"
+              name="Batches"
+              parent="menu_ls_pharma_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_batch"
+              name="Manufacturing Batches"
+              parent="menu_ls_pharma_batches"
+              action="action_ls_pharma_batch"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_batch_record"
+              name="Batch Records"
+              parent="menu_ls_pharma_batches"
+              action="action_ls_pharma_batch_record"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_batch_release"
+              name="Batch Release"
+              parent="menu_ls_pharma_batches"
+              action="action_ls_pharma_batch_release"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_pharma_discrepancy"
+              name="Open Discrepancies"
+              parent="menu_ls_pharma_batches"
+              action="action_ls_pharma_discrepancy"
+              sequence="40"/>
+
+    <!-- ================================================================ -->
+    <!-- Materials                                                         -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_materials"
+              name="Materials"
+              parent="menu_ls_pharma_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_api"
+              name="APIs"
+              parent="menu_ls_pharma_materials"
+              action="action_ls_pharma_api"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_excipient"
+              name="Excipients"
+              parent="menu_ls_pharma_materials"
+              action="action_ls_pharma_excipient"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_product_template"
+              name="Pharmaceutical Products"
+              parent="menu_ls_pharma_materials"
+              action="action_ls_pharma_product_template"
+              sequence="30"/>
+
+    <!-- ================================================================ -->
+    <!-- Stability                                                         -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_stability"
+              name="Stability"
+              parent="menu_ls_pharma_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_pharma_stability_study"
+              name="Stability Studies"
+              parent="menu_ls_pharma_stability"
+              action="action_ls_pharma_stability_study"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_stability_sample"
+              name="Stability Samples"
+              parent="menu_ls_pharma_stability"
+              action="action_ls_pharma_stability_sample"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_stability_timepoint"
+              name="Time Points"
+              parent="menu_ls_pharma_stability"
+              action="action_ls_pharma_stability_timepoint"
+              sequence="30"/>
+
+    <!-- ================================================================ -->
+    <!-- Serialisation                                                     -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_serialization_root"
+              name="Serialization"
+              parent="menu_ls_pharma_root"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_pharma_serialization"
+              name="Serial Numbers"
+              parent="menu_ls_pharma_serialization_root"
+              action="action_ls_pharma_serialization"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_aggregation"
+              name="Aggregation"
+              parent="menu_ls_pharma_serialization_root"
+              action="action_ls_pharma_aggregation"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_serial_generate"
+              name="Generate Serial Numbers"
+              parent="menu_ls_pharma_serialization_root"
+              action="action_ls_pharma_serial_generate_wizard"
+              groups="ls_pharma.group_ls_pharma_production_manager"
+              sequence="30"/>
+
+    <!-- ================================================================ -->
+    <!-- Regulatory                                                        -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_regulatory"
+              name="Regulatory"
+              parent="menu_ls_pharma_root"
+              sequence="50"/>
+
+    <menuitem id="menu_ls_pharma_ctd_dossier"
+              name="CTD Dossiers"
+              parent="menu_ls_pharma_regulatory"
+              action="action_ls_pharma_ctd_dossier"
+              sequence="10"/>
+
+    <!-- ================================================================ -->
+    <!-- Reports                                                           -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_reports"
+              name="Reports"
+              parent="menu_ls_pharma_root"
+              sequence="60"/>
+
+    <menuitem id="menu_ls_pharma_report_yield"
+              name="Batch Yield Analysis"
+              parent="menu_ls_pharma_reports"
+              action="action_ls_pharma_batch_yield_analysis"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_report_stability_result"
+              name="Stability Results"
+              parent="menu_ls_pharma_reports"
+              action="action_ls_pharma_stability_result"
+              sequence="20"/>
+
+    <!-- ================================================================ -->
+    <!-- Configuration                                                     -->
+    <!-- ================================================================ -->
+
+    <menuitem id="menu_ls_pharma_configuration"
+              name="Configuration"
+              parent="menu_ls_pharma_root"
+              groups="ls_pharma.group_ls_pharma_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_ls_pharma_stability_condition"
+              name="Storage Conditions"
+              parent="menu_ls_pharma_configuration"
+              action="action_ls_pharma_stability_condition"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_pharma_ctd_section_template"
+              name="CTD Section Template"
+              parent="menu_ls_pharma_configuration"
+              action="action_ls_pharma_ctd_section_template"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_pharma_company"
+              name="Company Settings"
+              parent="menu_ls_pharma_configuration"
+              action="action_ls_pharma_res_company"
+              sequence="30"/>
+
+</odoo>

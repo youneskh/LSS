@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="ls_qms_quality_record_view_list" model="ir.ui.view">
+        <field name="name">ls.qms.quality_record.list</field>
+        <field name="model">ls.qms.quality_record</field>
+        <field name="arch" type="xml">
+            <list string="Quality Records" decoration-danger="retention_expired == True" decoration-muted="state == 'disposed'">
+                <field name="reference"/>
+                <field name="date_record"/>
+                <field name="name"/>
+                <field name="record_type"/>
+                <field name="department_id" optional="show"/>
+                <field name="author_id" widget="many2one_avatar_user"/>
+                <field name="date_retention_until"/>
+                <field name="retention_expired" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'archived'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_qms_quality_record_view_form" model="ir.ui.view">
+        <field name="name">ls.qms.quality_record.form</field>
+        <field name="model">ls.qms.quality_record</field>
+        <field name="arch" type="xml">
+            <form string="Quality Record">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_archive_record" type="object" string="Archive" invisible="state != 'confirmed'"/>
+                    <button name="action_dispose" type="object" string="Dispose" invisible="state != 'archived'" groups="ls_qms.group_ls_qms_manager" confirm="Disposal is definitive and is written to the message log. Continue?"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,archived"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_attachments" type="object" class="oe_stat_button" icon="fa-paperclip">
+                            <field name="attachment_count" widget="statinfo" string="Attachments"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Subject of the record"/></h1>
+                        <h3><field name="reference" class="oe_inline"/></h3>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="record_type" readonly="state != 'draft'"/>
+                            <field name="date_record" readonly="state != 'draft'"/>
+                            <field name="author_id" readonly="state != 'draft'"/>
+                            <field name="department_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Retention">
+                            <field name="retention_period_months" readonly="state != 'draft'"/>
+                            <field name="date_retention_until"/>
+                            <field name="retention_expired"/>
+                        </group>
+                    </group>
+                    <group string="Related Documents">
+                        <group>
+                            <field name="policy_id" readonly="state != 'draft'"/>
+                            <field name="sop_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="quality_plan_id" readonly="state != 'draft'"/>
+                            <field name="objective_id" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" readonly="state != 'draft'" placeholder="Facts observed and data collected."/>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <field name="conclusion" readonly="state != 'draft'" placeholder="Outcome, decisions taken and actions requested."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_qms_quality_record_view_search" model="ir.ui.view">
+        <field name="name">ls.qms.quality_record.search</field>
+        <field name="model">ls.qms.quality_record</field>
+        <field name="arch" type="xml">
+            <search string="Quality Records">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="author_id"/>
+                <field name="record_type"/>
+                <field name="department_id"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_confirmed" string="Confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter name="filter_archived_state" string="Archived" domain="[('state', '=', 'archived')]"/>
+                <separator/>
+                <filter name="filter_retention_expired" string="Retention Elapsed" domain="[('date_retention_until', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'in', ('confirmed', 'archived'))]"/>
+                <filter name="filter_my_records" string="My Records" domain="[('author_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_this_year" string="This Year" domain="[('date_record', '&gt;=', (context_today() + relativedelta(month=1, day=1)).strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_type" string="Record Type" context="{'group_by': 'record_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_date" string="Record Date" context="{'group_by': 'date_record'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_qms_quality_record_action" model="ir.actions.act_window">
+        <field name="name">Quality Records</field>
+        <field name="res_model">ls.qms.quality_record</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_qms_quality_record_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register the first quality record</p>
+            <p>Quality records are the evidence retained by the quality management system. Once confirmed they are protected from modification and kept until the end of their retention period.</p>
+        </field>
+    </record>
+
+    <record id="ls_qms_quality_record_action_retention" model="ir.actions.act_window">
+        <field name="name">Records Past Retention</field>
+        <field name="res_model">ls.qms.quality_record</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_qms_quality_record_view_search"/>
+        <field name="context">{'search_default_filter_retention_expired': 1}</field>
+    </record>
+
+</odoo>

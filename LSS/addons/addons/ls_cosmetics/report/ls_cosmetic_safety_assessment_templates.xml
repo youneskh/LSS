@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_ls_cosmetic_safety_assessment_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    Cosmetic Product Safety Report
+                    <span t-field="doc.code"/> v<span t-field="doc.version"/>
+                </h2>
+                <h4 t-field="doc.name"/>
+                <p class="text-muted">
+                    Drawn up in accordance with Annex I of Regulation (EC)
+                    No 1223/2009, as required by Article 10(1).
+                </p>
+                <div class="row mt16 mb32">
+                    <div class="col-6">
+                        <strong>Formulation:</strong>
+                        <span t-field="doc.formulation_id"/>
+                        <br/>
+                        <strong>Product:</strong>
+                        <span t-field="doc.product_tmpl_id"/>
+                        <br/>
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Approved on:</strong>
+                        <span t-field="doc.approval_date"/>
+                        <br/>
+                        <strong>Next review:</strong>
+                        <span t-field="doc.review_date"/>
+                    </div>
+                </div>
+
+                <h3>Part A - Cosmetic Product Safety Information</h3>
+                <h5>A1. Quantitative and Qualitative Composition</h5>
+                <p t-field="doc.part_a_1_composition"/>
+                <h5>A2. Physical/Chemical Characteristics and Stability</h5>
+                <p t-field="doc.part_a_2_physchem"/>
+                <h5>A3. Microbiological Quality</h5>
+                <p t-field="doc.part_a_3_microbiology"/>
+                <h5>A4. Impurities, Traces, Packaging Material</h5>
+                <p t-field="doc.part_a_4_impurities"/>
+                <h5>A5. Normal and Reasonably Foreseeable Use</h5>
+                <p t-field="doc.part_a_5_use"/>
+                <h5>A6. Exposure to the Cosmetic Product</h5>
+                <p t-field="doc.part_a_6_product_exposure"/>
+                <h5>A7. Exposure to the Substances</h5>
+                <p t-field="doc.part_a_7_substance_exposure"/>
+                <h5>A8. Toxicological Profile of the Substances</h5>
+                <p t-field="doc.part_a_8_toxicological"/>
+                <p t-if="doc.margin_of_safety">
+                    <strong>Lowest margin of safety:</strong>
+                    <span t-field="doc.margin_of_safety"/>
+                    (<span t-field="doc.margin_of_safety_basis"/>)
+                </p>
+                <h5>A9. Undesirable and Serious Undesirable Effects</h5>
+                <p t-field="doc.part_a_9_undesirable_effects"/>
+                <h5>A10. Other Information on the Cosmetic Product</h5>
+                <p t-field="doc.part_a_10_other_information"/>
+                <h5 t-if="doc.non_clinical_glp_statement">Non-Clinical Studies</h5>
+                <p t-if="doc.non_clinical_glp_statement"
+                   t-field="doc.non_clinical_glp_statement"/>
+
+                <h3 class="mt32">Part B - Cosmetic Product Safety Assessment</h3>
+                <h5>B1. Assessment Conclusion</h5>
+                <p><strong t-field="doc.conclusion"/></p>
+                <p t-field="doc.conclusion_statement"/>
+                <h5>B2. Labelled Warnings and Instructions of Use</h5>
+                <p t-field="doc.labelled_warnings"/>
+                <h5>B3. Reasoning</h5>
+                <p t-field="doc.reasoning"/>
+                <div t-if="doc.reasoning_interactions">
+                    <h6>Interactions Between Substances</h6>
+                    <p t-field="doc.reasoning_interactions"/>
+                </div>
+                <div t-if="doc.reasoning_stability_impact">
+                    <h6>Impact of Stability on Safety</h6>
+                    <p t-field="doc.reasoning_stability_impact"/>
+                </div>
+                <div t-if="doc.reasoning_toxicological_scope">
+                    <h6>Justification of Toxicological Profiles Considered</h6>
+                    <p t-field="doc.reasoning_toxicological_scope"/>
+                </div>
+                <div t-if="doc.reasoning_children">
+                    <h6>Specific Assessment - Children Under Three</h6>
+                    <p t-field="doc.reasoning_children"/>
+                </div>
+                <div t-if="doc.reasoning_intimate_hygiene">
+                    <h6>Specific Assessment - External Intimate Hygiene</h6>
+                    <p t-field="doc.reasoning_intimate_hygiene"/>
+                </div>
+                <h5>B4. Assessor's Credentials and Approval of Part B</h5>
+                <p>
+                    <strong>Name:</strong> <span t-field="doc.assessor_partner_id"/>
+                    <br/>
+                    <strong>Address:</strong> <span t-field="doc.assessor_address"/>
+                    <br/>
+                    <strong>Qualification:</strong>
+                    <span t-field="doc.assessor_qualification"/>
+                    <br/>
+                    <strong>Date of approval:</strong>
+                    <span t-field="doc.approval_date"/>
+                </p>
+                <p class="text-muted">
+                    Article 10(2) requires the Part B assessment to be carried out by a
+                    person in possession of a diploma or other evidence of formal
+                    qualifications awarded on completion of a university course of
+                    theoretical and practical study in pharmacy, toxicology, medicine or
+                    a similar discipline, or a course recognised as equivalent.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_cosmetic_safety_assessment">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_cosmetics.report_ls_cosmetic_safety_assessment_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

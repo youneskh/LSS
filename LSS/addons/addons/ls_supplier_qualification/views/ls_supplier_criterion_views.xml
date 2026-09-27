@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_criterion_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.criterion.list</field>
+        <field name="model">ls.supplier.criterion</field>
+        <field name="arch" type="xml">
+            <list string="Assessment Criteria">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="domain"/>
+                <field name="default_weight"/>
+                <field name="is_mandatory"/>
+                <field name="standard_ids" widget="many2many_tags" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_criterion_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.criterion.form</field>
+        <field name="model">ls.supplier.criterion</field>
+        <field name="arch" type="xml">
+            <form string="Assessment Criterion">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="domain"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="default_weight"/>
+                            <field name="is_mandatory"/>
+                            <field name="internal_reference"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Related Frameworks">
+                        <field name="standard_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                    <group string="Assessor Guidance">
+                        <field name="description" nolabel="1"
+                               placeholder="What evidence to look for and how to score this criterion."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_criterion_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.criterion.search</field>
+        <field name="model">ls.supplier.criterion</field>
+        <field name="arch" type="xml">
+            <search string="Assessment Criteria">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="standard_ids"/>
+                <filter name="filter_mandatory" string="Mandatory"
+                        domain="[('is_mandatory', '=', True)]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_domain" string="Domain"
+                        context="{'group_by': 'domain'}"/>
+                    <filter name="group_mandatory" string="Mandatory"
+                        context="{'group_by': 'is_mandatory'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_criterion" model="ir.actions.act_window">
+        <field name="name">Assessment Criteria</field>
+        <field name="res_model">ls.supplier.criterion</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_domain': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create an assessment criterion</p>
+            <p>
+                Criteria are the reusable questions of your supplier
+                questionnaires. Write them in your own words and link them to
+                the frameworks you apply.
+            </p>
+        </field>
+    </record>
+
+</odoo>

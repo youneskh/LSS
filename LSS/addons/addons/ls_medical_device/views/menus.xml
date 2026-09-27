@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Menu structure. This file is loaded last so that every action it
+        references has already been created.
+
+        Access is granted through the four groups of this module. The viewer
+        group is implied by the user group, which is implied by the regulatory
+        group, which is implied by the manager group, so attaching a menu to
+        the viewer group makes it visible to all four levels.
+    -->
+
+    <menuitem id="menu_ls_md_root"
+              name="Medical Devices"
+              web_icon="ls_medical_device,static/description/icon.png"
+              sequence="55"
+              groups="group_ls_md_viewer"/>
+
+    <!-- Devices -->
+    <menuitem id="menu_ls_md_devices"
+              name="Devices"
+              parent="menu_ls_md_root"
+              sequence="10"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_device_register"
+              name="Device Register"
+              parent="menu_ls_md_devices"
+              action="action_ls_md_device"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_udi"
+              name="UDI Assignments"
+              parent="menu_ls_md_devices"
+              action="action_ls_md_udi"
+              sequence="20"/>
+
+    <!-- Risk Management -->
+    <menuitem id="menu_ls_md_risk"
+              name="Risk Management"
+              parent="menu_ls_md_root"
+              sequence="20"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_risk_files"
+              name="Risk Management Files"
+              parent="menu_ls_md_risk"
+              action="action_ls_md_risk_assessment"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_risk_items"
+              name="Risks"
+              parent="menu_ls_md_risk"
+              action="action_ls_md_risk_item"
+              sequence="20"/>
+
+    <!-- Clinical -->
+    <menuitem id="menu_ls_md_clinical"
+              name="Clinical"
+              parent="menu_ls_md_root"
+              sequence="30"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_clinical_evaluations"
+              name="Clinical Evaluations"
+              parent="menu_ls_md_clinical"
+              action="action_ls_md_clinical_evaluation"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_pmcf_evaluations"
+              name="PMCF Evaluation Reports"
+              parent="menu_ls_md_clinical"
+              action="action_ls_md_pmcf_evaluation"
+              sequence="20"/>
+
+    <!-- Regulatory -->
+    <menuitem id="menu_ls_md_regulatory"
+              name="Regulatory"
+              parent="menu_ls_md_root"
+              sequence="40"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_technical_files"
+              name="Technical Documentation"
+              parent="menu_ls_md_regulatory"
+              action="action_ls_md_technical_file"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_technical_file_sections"
+              name="Documentation Sections"
+              parent="menu_ls_md_regulatory"
+              action="action_ls_md_technical_file_section"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_md_ce_marking"
+              name="CE Marking"
+              parent="menu_ls_md_regulatory"
+              action="action_ls_md_ce_marking"
+              sequence="30"/>
+
+    <!-- Post-Market Surveillance -->
+    <menuitem id="menu_ls_md_pms_root"
+              name="Post-Market Surveillance"
+              parent="menu_ls_md_root"
+              sequence="50"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_pms_plans"
+              name="Surveillance Plans"
+              parent="menu_ls_md_pms_root"
+              action="action_ls_md_pms"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_pms_reports"
+              name="Periodic Reports"
+              parent="menu_ls_md_pms_root"
+              action="action_ls_md_pms_report"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_md_pms_report_wizard"
+              name="Open Reporting Period"
+              parent="menu_ls_md_pms_root"
+              action="action_ls_md_pms_report_wizard"
+              sequence="30"
+              groups="group_ls_md_user"/>
+
+    <!-- Monitoring -->
+    <menuitem id="menu_ls_md_monitoring"
+              name="Monitoring"
+              parent="menu_ls_md_root"
+              sequence="60"
+              groups="group_ls_md_viewer"/>
+
+    <menuitem id="menu_ls_md_monitoring_overdue_reports"
+              name="Overdue Post-Market Reports"
+              parent="menu_ls_md_monitoring"
+              action="action_ls_md_device_overdue"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_monitoring_expired_certificates"
+              name="Expired Certificates"
+              parent="menu_ls_md_monitoring"
+              action="action_ls_md_ce_marking_expiring"
+              sequence="20"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_ls_md_configuration"
+              name="Configuration"
+              parent="menu_ls_md_root"
+              sequence="90"
+              groups="group_ls_md_manager"/>
+
+    <menuitem id="menu_ls_md_config_device_classes"
+              name="Risk Classes"
+              parent="menu_ls_md_configuration"
+              action="action_ls_md_device_class"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_md_config_notified_bodies"
+              name="Notified Bodies"
+              parent="menu_ls_md_configuration"
+              action="action_ls_md_notified_body"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_md_config_evidence_sources"
+              name="Clinical Evidence Sources"
+              parent="menu_ls_md_configuration"
+              action="action_ls_md_clinical_evidence_source"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_md_config_section_templates"
+              name="Documentation Section Templates"
+              parent="menu_ls_md_configuration"
+              action="action_ls_md_technical_file_section_template"
+              sequence="40"/>
+
+</odoo>

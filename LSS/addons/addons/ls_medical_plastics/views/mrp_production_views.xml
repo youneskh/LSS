@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+      Manufacturing order extension.
+
+      The access restriction is expressed with the groups attribute on the
+      button node rather than with a group field on the ir.ui.view record. The
+      name of the field holding group links on ir.ui.view in Odoo 19 could not
+      be verified from official documentation, whereas the groups attribute on
+      view nodes is documented view-arch syntax.
+
+      Stripping the node for users without the viewer role also prevents the
+      moulding run counter from being evaluated for them, which would otherwise
+      raise an access error on a model they cannot read.
+    -->
+
+    <record id="view_mrp_production_form_mp" model="ir.ui.view">
+        <field name="name">mrp.production.form.medical.plastics</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_mp_runs" type="object"
+                        class="oe_stat_button" icon="fa-industry"
+                        groups="ls_medical_plastics.group_mp_viewer"
+                        invisible="mp_run_count == 0">
+                    <field name="mp_run_count" widget="statinfo" string="Moulding Runs"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

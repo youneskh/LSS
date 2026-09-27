@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Demo records are created in the Draft state only. They are never created
+     directly in an advanced state, because that would bypass the workflow
+     and produce records that do not exist in reality. -->
+<odoo>
+
+    <record id="demo_request_hplc_column" model="ls.change_control.request">
+        <field name="title">Replace the HPLC column of the assay method for Product A</field>
+        <field name="category_id" ref="category_analytical"/>
+        <field name="change_type">permanent</field>
+        <field name="classification">major</field>
+        <field name="requester_id" ref="base.user_admin"/>
+        <field name="current_situation">The assay of Product A is performed on a C18 column, 250 mm x 4.6 mm, 5 micrometre, which is announced as discontinued by the manufacturer.</field>
+        <field name="proposed_change">Replace the column by an equivalent C18 column, 250 mm x 4.6 mm, 5 micrometre, from a second supplier, and demonstrate the equivalence of the two columns.</field>
+        <field name="justification">The current column is discontinued. Continuity of the routine testing of Product A must be secured before the remaining stock is consumed.</field>
+        <field name="gmp_impact" eval="True"/>
+        <field name="product_quality_impact">low</field>
+        <field name="regulatory_impact">notification</field>
+        <field name="validation_impact" eval="True"/>
+        <field name="documentation_impact" eval="True"/>
+        <field name="training_impact" eval="False"/>
+    </record>
+
+    <record id="demo_request_blister_artwork" model="ls.change_control.request">
+        <field name="title">Update the blister artwork of Product B after a leaflet revision</field>
+        <field name="category_id" ref="category_packaging"/>
+        <field name="change_type">permanent</field>
+        <field name="classification">minor</field>
+        <field name="requester_id" ref="base.user_admin"/>
+        <field name="current_situation">The blister artwork of Product B refers to revision 3 of the patient leaflet.</field>
+        <field name="proposed_change">Update the blister artwork so that it refers to revision 4 of the patient leaflet, with no other modification of the artwork.</field>
+        <field name="justification">The patient leaflet has been revised. The artwork must remain consistent with the approved leaflet.</field>
+        <field name="gmp_impact" eval="True"/>
+        <field name="product_quality_impact">none</field>
+        <field name="regulatory_impact">notification</field>
+        <field name="documentation_impact" eval="True"/>
+    </record>
+
+    <record id="demo_request_tablet_press" model="ls.change_control.request">
+        <field name="title">Install a new tablet press in the solid dosage form area</field>
+        <field name="category_id" ref="category_equipment"/>
+        <field name="change_type">permanent</field>
+        <field name="classification">critical</field>
+        <field name="requester_id" ref="base.user_admin"/>
+        <field name="current_situation">The solid dosage form area operates one tablet press with a capacity that limits the production plan of Product C.</field>
+        <field name="proposed_change">Install a second tablet press of the same model in the same room, with its own dust extraction connection, and qualify it before routine use.</field>
+        <field name="justification">The current capacity does not allow the approved production plan of Product C to be met.</field>
+        <field name="gmp_impact" eval="True"/>
+        <field name="product_quality_impact">medium</field>
+        <field name="regulatory_impact">variation</field>
+        <field name="validation_impact" eval="True"/>
+        <field name="training_impact" eval="True"/>
+        <field name="documentation_impact" eval="True"/>
+    </record>
+
+    <record id="demo_implementation_tablet_press_iq" model="ls.change_control.implementation">
+        <field name="request_id" ref="demo_request_tablet_press"/>
+        <field name="sequence">10</field>
+        <field name="name">Perform the installation qualification of the tablet press</field>
+        <field name="action_type">qualification</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="date_planned" eval="(DateTime.today() + relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_implementation_tablet_press_sop" model="ls.change_control.implementation">
+        <field name="request_id" ref="demo_request_tablet_press"/>
+        <field name="sequence">20</field>
+        <field name="name">Revise the operating procedure of the tabletting step</field>
+        <field name="action_type">document_update</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="date_planned" eval="(DateTime.today() + relativedelta(days=60)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_implementation_tablet_press_training" model="ls.change_control.implementation">
+        <field name="request_id" ref="demo_request_tablet_press"/>
+        <field name="sequence">30</field>
+        <field name="name">Train the operators on the second tablet press</field>
+        <field name="action_type">training</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="date_planned" eval="(DateTime.today() + relativedelta(days=75)).strftime('%Y-%m-%d')"/>
+    </record>
+
+</odoo>

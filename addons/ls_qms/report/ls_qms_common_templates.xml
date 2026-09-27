@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!-- Document control block shared by every printed quality document.
+         It expects a variable named "doc" in the rendering context. -->
+    <template id="report_ls_qms_document_control_block">
+        <table class="table table-sm table-bordered" style="font-size: 10px;">
+            <tbody>
+                <tr>
+                    <td><strong>Reference</strong></td>
+                    <td><span t-field="doc.reference"/></td>
+                    <td><strong>Version</strong></td>
+                    <td><span t-field="doc.version"/></td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td><span t-field="doc.state"/></td>
+                    <td><strong>Effective Date</strong></td>
+                    <td><span t-field="doc.date_effective"/></td>
+                </tr>
+                <tr>
+                    <td><strong>Author</strong></td>
+                    <td><span t-field="doc.author_id"/></td>
+                    <td><strong>Approved By</strong></td>
+                    <td><span t-field="doc.approver_id"/></td>
+                </tr>
+                <tr>
+                    <td><strong>Approved On</strong></td>
+                    <td><span t-field="doc.date_approved"/></td>
+                    <td><strong>Next Review</strong></td>
+                    <td><span t-field="doc.date_next_review"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </template>
+
+    <!-- Notice printed at the bottom of every quality document. -->
+    <template id="report_ls_qms_uncontrolled_copy_notice">
+        <div class="mt-4 pt-2" style="border-top: 1px solid #000; font-size: 9px;">
+            <p>
+                <strong>Document control notice.</strong>
+                This document is controlled in the quality management system.
+                A printed copy is an uncontrolled copy unless it carries a
+                controlled distribution stamp. Before use, verify that the
+                version above is the version currently published.
+            </p>
+        </div>
+    </template>
+
+</odoo>

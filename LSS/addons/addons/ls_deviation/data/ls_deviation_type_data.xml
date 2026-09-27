@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+        <record id="type_procedural" model="ls.deviation.type">
+            <field name="name">Procedural Deviation</field>
+            <field name="code">PROC</field>
+            <field name="sequence">10</field>
+            <field name="description">A departure from an approved written procedure. 21 CFR 211.100(b) requires any deviation from written production and process control procedures to be recorded and justified.</field>
+        </record>
+        <record id="type_process_parameter" model="ls.deviation.type">
+            <field name="name">Process Parameter Excursion</field>
+            <field name="code">PARAM</field>
+            <field name="sequence">20</field>
+            <field name="requires_disposition" eval="True"/>
+            <field name="description">A process parameter outside its validated or registered range.</field>
+        </record>
+        <record id="type_yield" model="ls.deviation.type">
+            <field name="name">Yield Discrepancy</field>
+            <field name="code">YIELD</field>
+            <field name="sequence">30</field>
+            <field name="requires_disposition" eval="True"/>
+            <field name="description">A percentage of theoretical yield outside the limits established in the master production and control records, expressly named in 21 CFR 211.192.</field>
+        </record>
+        <record id="type_equipment_failure" model="ls.deviation.type">
+            <field name="name">Equipment Failure</field>
+            <field name="code">EQFAIL</field>
+            <field name="sequence">40</field>
+            <field name="description">Malfunction or unavailability of equipment during a GxP operation.</field>
+        </record>
+        <record id="type_environmental" model="ls.deviation.type">
+            <field name="name">Environmental Excursion</field>
+            <field name="code">ENV</field>
+            <field name="sequence">50</field>
+            <field name="description">An environmental monitoring result exceeding an alert or action limit.</field>
+        </record>
+        <record id="type_material" model="ls.deviation.type">
+            <field name="name">Material Discrepancy</field>
+            <field name="code">MAT</field>
+            <field name="sequence">60</field>
+            <field name="requires_disposition" eval="True"/>
+            <field name="description">A discrepancy in the identity, quantity or condition of a material.</field>
+        </record>
+        <record id="type_documentation" model="ls.deviation.type">
+            <field name="name">Documentation Error</field>
+            <field name="code">DOCERR</field>
+            <field name="sequence">70</field>
+            <field name="description">An error or omission in the completion of a GxP record.</field>
+        </record>
+        <record id="type_planned" model="ls.deviation.type">
+            <field name="name">Planned Deviation</field>
+            <field name="code">PLAN</field>
+            <field name="sequence">80</field>
+            <field name="description">A pre-approved and justified departure authorised before execution.</field>
+        </record>
+    </data>
+</odoo>

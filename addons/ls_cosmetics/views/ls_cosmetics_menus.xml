@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Design note. No group is assigned to any menu. The Many2many field
+     linking ir.ui.menu to res.groups is reported to have been renamed from
+     groups_id to group_ids in Odoo 19, and this could not be confirmed from
+     official Odoo 19 documentation; writing the wrong field name would make
+     the module fail to install. Menu visibility therefore follows from the
+     access control list: Odoo hides a menu whose action targets a model the
+     user cannot read, and hides a parent menu with no visible child. The
+     administrator guide records the one-line change to add explicit menu
+     groups once the field name is confirmed on the target server. -->
+<odoo>
+
+    <menuitem id="menu_ls_cosmetics_root"
+              name="Cosmetics"
+              sequence="76"
+              web_icon="ls_cosmetics,static/description/icon.png"/>
+
+    <!-- 1. Products -->
+    <menuitem id="menu_ls_cosmetics_products"
+              name="Products"
+              parent="menu_ls_cosmetics_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_cosmetic_formulation"
+              name="Product Formulations"
+              parent="menu_ls_cosmetics_products"
+              action="action_ls_cosmetic_formulation"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_cosmetic_finished_product"
+              name="Finished Products"
+              parent="menu_ls_cosmetics_products"
+              action="action_ls_cosmetic_finished_product"
+              sequence="20"/>
+
+    <!-- 2. Ingredients -->
+    <menuitem id="menu_ls_cosmetics_ingredients"
+              name="Ingredients"
+              parent="menu_ls_cosmetics_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_cosmetic_ingredient"
+              name="Ingredient Register"
+              parent="menu_ls_cosmetics_ingredients"
+              action="action_ls_cosmetic_ingredient"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_cosmetic_restriction"
+              name="Annex Restrictions"
+              parent="menu_ls_cosmetics_ingredients"
+              action="action_ls_cosmetic_restriction"
+              sequence="20"/>
+
+    <!-- 3. Safety -->
+    <menuitem id="menu_ls_cosmetics_safety"
+              name="Safety"
+              parent="menu_ls_cosmetics_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_cosmetic_safety_assessment"
+              name="Safety Assessments"
+              parent="menu_ls_cosmetics_safety"
+              action="action_ls_cosmetic_safety_assessment"
+              sequence="10"/>
+
+    <!-- 4. Regulatory -->
+    <menuitem id="menu_ls_cosmetics_regulatory"
+              name="Regulatory"
+              parent="menu_ls_cosmetics_root"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_cosmetic_pif"
+              name="Product Information Files"
+              parent="menu_ls_cosmetics_regulatory"
+              action="action_ls_cosmetic_pif"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_cosmetic_label"
+              name="Labelling"
+              parent="menu_ls_cosmetics_regulatory"
+              action="action_ls_cosmetic_label"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_cosmetic_claim"
+              name="Product Claims"
+              parent="menu_ls_cosmetics_regulatory"
+              action="action_ls_cosmetic_claim"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_cosmetic_dz_authorization"
+              name="Algerian Prior Authorisations"
+              parent="menu_ls_cosmetics_regulatory"
+              action="action_ls_cosmetic_dz_authorization"
+              sequence="40"/>
+
+    <!-- 5. Reports -->
+    <menuitem id="menu_ls_cosmetics_reports"
+              name="Reports"
+              parent="menu_ls_cosmetics_root"
+              sequence="50"/>
+
+    <menuitem id="menu_ls_cosmetic_pif_retention"
+              name="Retention Status"
+              parent="menu_ls_cosmetics_reports"
+              action="action_ls_cosmetic_pif_retention"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_cosmetic_assessment_review_due"
+              name="Safety Reports Due for Review"
+              parent="menu_ls_cosmetics_reports"
+              action="action_ls_cosmetic_assessment_review_due"
+              sequence="20"/>
+
+</odoo>

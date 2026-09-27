@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- Application category shown in Settings > Users & Companies -->
+    <record id="module_category_ls_training" model="ir.module.category">
+        <field name="name">Life Sciences Training</field>
+        <field name="description">Training, certification and competency
+            management for regulated Life Sciences environments.</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <!-- Odoo 19 attaches groups to a privilege, which itself carries the
+         module category. -->
+    <record id="res_groups_privilege_ls_training"
+            model="res.groups.privilege">
+        <field name="name">Training Management</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_ls_training"/>
+    </record>
+
+    <record id="group_ls_training_learner" model="res.groups">
+        <field name="name">Learner</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id"
+               ref="res_groups_privilege_ls_training"/>
+        <field name="comment">Read-only access limited to the user's own
+            training records.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_training_viewer" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id"
+               ref="res_groups_privilege_ls_training"/>
+        <field name="implied_ids"
+               eval="[Command.link(ref('group_ls_training_learner'))]"/>
+        <field name="comment">Read-only access to all training records of
+            the allowed companies.</field>
+    </record>
+
+    <record id="group_ls_training_trainer" model="res.groups">
+        <field name="name">Trainer</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id"
+               ref="res_groups_privilege_ls_training"/>
+        <field name="implied_ids"
+               eval="[Command.link(ref('group_ls_training_viewer'))]"/>
+        <field name="comment">Schedules sessions, registers attendees,
+            records outcomes and issues certifications.</field>
+    </record>
+
+    <record id="group_ls_training_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id"
+               ref="res_groups_privilege_ls_training"/>
+        <field name="implied_ids"
+               eval="[Command.link(ref('group_ls_training_trainer'))]"/>
+        <field name="comment">Full control, including course approval,
+            training requirements and competency master data.</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!--
+        Root menu. The functional specification places CAPA under a shared
+        "Quality" root owned by ls_qms. Because ls_qms is not a dependency of
+        this module (see README, Architectural Decision AD-01), this module
+        creates its own root menu. A bridge module can reparent it later.
+    -->
+    <menuitem id="menu_ls_capa_root"
+              name="Quality"
+              sequence="70"
+              web_icon="ls_capa,static/description/icon.png"
+              groups="ls_capa.group_ls_capa_viewer"/>
+
+    <menuitem id="menu_ls_capa_main"
+              name="CAPA"
+              parent="menu_ls_capa_root"
+              sequence="10"
+              groups="ls_capa.group_ls_capa_viewer"/>
+
+    <menuitem id="menu_ls_capa_issue"
+              name="CAPA Records"
+              parent="menu_ls_capa_main"
+              action="action_ls_capa_issue"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_capa_issue_my"
+              name="My CAPA Records"
+              parent="menu_ls_capa_main"
+              action="action_ls_capa_issue_my"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_capa_root_cause"
+              name="Root Cause Analyses"
+              parent="menu_ls_capa_main"
+              action="action_ls_capa_root_cause"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_capa_action"
+              name="Actions"
+              parent="menu_ls_capa_main"
+              action="action_ls_capa_action"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_capa_effectiveness"
+              name="Effectiveness Verification"
+              parent="menu_ls_capa_main"
+              action="action_ls_capa_effectiveness"
+              sequence="50"/>
+
+    <menuitem id="menu_ls_capa_configuration"
+              name="Configuration"
+              parent="menu_ls_capa_root"
+              sequence="90"
+              groups="ls_capa.group_ls_capa_manager"/>
+
+    <menuitem id="menu_ls_capa_category"
+              name="CAPA Categories"
+              parent="menu_ls_capa_configuration"
+              action="action_ls_capa_category"
+              sequence="10"/>
+
+</odoo>

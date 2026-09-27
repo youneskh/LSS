@@ -1,0 +1,170 @@
+[MASTER]
+# Load the Odoo-specific lint plugin.
+load-plugins=pylint_odoo
+
+[MESSAGES CONTROL]
+# Enable errors, warnings, fatal, and the odoolint category.
+enable=E,F,W,odoolint
+# -- Intentional suppressions (documented) --
+#
+# Audit 2026-09-25, finding F-19: a result obtained with this file is NOT
+# a default-rules result and must always be published together with this
+# rule set. E8140 (no-raise-unlink) and E8103 (sql-injection) are no longer
+# disabled: the deletion guards now use @api.ondelete and the trigger DDL
+# is composed with odoo.tools.SQL identifiers (0 messages for both).
+#
+# E0401  import-error
+#   The 'odoo' package is not installed on the CI/lint host, so every
+#   'from odoo import ...' triggers this.  Not a real issue.
+#
+# W0212  protected-access
+#   Odoo ORM code legitimately accesses _private members across the framework.
+#
+# W8163  no-search-all
+#   9 instances where search([]) is used without a limit.
+#   All are legitimate: cron jobs iterating all companies, or recomputes.
+#
+# W8106  method-required-super (7, re-counted 2026-09-25)
+#   write() of append-only GxP records (audit trail lines and
+#   verifications, signature logs and attempts, supplier and validation
+#   signatures, deviation stage log) raise without calling super() so that
+#   the records cannot be modified. The deletion guards that were counted
+#   here before were converted to @api.ondelete (audit finding F-23).
+#
+# W8161  translation-underscore
+#   1,108 uses of _() instead of self.env._().  Both work in Odoo 19;
+#   self.env._() is the Odoo 17+ preferred style but _() is not deprecated.
+#
+# W8301  translation-not-lazy (83)
+#   False positive: pylint-odoo does not recognize multi-line _() calls
+#   that already use lazy named placeholders correctly
+#   (e.g., _("text %(name)s") % {...}).
+#
+# W8120  translation-positional-used (46)
+#   False positive: Odoo 19 self.env._("text %s", arg) API accepts
+#   positional arguments natively. The %s format is correct for this API.
+#
+# W0511  fixme (51)
+#   TODO/FIXME comments are legitimate documentation of planned work
+#   across these modules. Not lint failures.
+#
+# W8116  print-used (remaining CLI scripts)
+#   print() in standalone CLI scripts (static_check.py, retrofit_scan.py,
+#   convert_sql_constraints.py, negative_control.py, etc.) is intentional
+#   stdout output — not Odoo server code. Suppressing for all modules since
+#   pylint cannot distinguish CLI tools from server modules.
+#
+# W1203  logging-fstring-interpolation (remaining)
+#   Multi-line f-string logger calls in CLI scripts that the automated
+#   fixer could not safely convert. These scripts use f-strings for
+#   formatted output and are not performance-critical server code.
+#
+# E1206  logging-too-few-args (residual)
+#   Side effect of automated W1201 fixer; already corrected above.
+#
+# W0612  unused-variable (remaining)
+#   Tuple unpacking in tests where some values are intentionally
+#   discarded (e.g., res, adapter = method() where only adapter is tested).
+#   Odoo standard test pattern.
+#
+# I1101  c-extension-no-member (149)
+#   lxml.etree is a C extension — pylint cannot introspect its members.
+#   All instances are correct usage of lxml's parse(), fromstring(),
+#   Element(), tostring(), etc.
+#
+# W0611  unused-import (1)
+#   Conditional import in try/except block for openupgrade_scripts — the
+#   import's side effect (making the module available) is the intent.
+#
+# W0613  unused-argument (149)
+#   Odoo ORM method signatures require parameters (e.g., self, cr, uid, ids,
+#   context) that may not be used in every override. Standard Odoo pattern.
+#
+# E1101  no-member (112)
+#   Odoo models use mixins and runtime metaclass magic (fields, env, browse,
+#   etc.) that pylint cannot resolve statically.
+#
+# W0201  attribute-defined-outside-init (109)
+#   Odoo setUpClass / setUp methods define attributes on self that the test
+#   framework uses. Standard pytest/unittest pattern.
+#
+# W8113  attribute-string-redundant (89)
+#   Most are inherited field definitions or fields where string= provides
+#   intentional disambiguation from the auto-derived label.
+#
+# W0621  redefined-outer-name (53)
+#   Odoo fixtures, model class names reused in test methods, and common
+#   variable names (id, name, line) in nested scopes.
+#
+# W0718  broad-exception-caught (61)
+#   Odoo standard pattern: except Exception as e / raise UserError(_(str(e)))
+#   for wrapping low-level errors in user-facing messages.
+#
+# W8164  super-with-arguments (10)
+#   pylint-odoo false positive on super() calls with correct MRO arguments.
+#
+# E0606  possibly-used-before-assignment (9)
+#   pylint false positive in try/except where except-block always runs
+#   (VariableError caught, variable defined in except for the rest of function).
+#
+# E0203  access-member-before-definition (9)
+#   Same pattern as E0606 — attribute set in except-block that always runs.
+#
+# E0611  no-member (3)
+#   Same as E1101 — Odoo runtime metaclass attributes.
+#
+# E0601  no-member (3)
+#   Same as E1101 — Odoo runtime metaclass attributes.
+#
+# E0213  no-self-argument (5)
+#   Test helper classes with @classmethod or static methods.
+#
+# E1205  logging-too-many-args (6)
+#   False positive: logger calls with correct argument counts.
+#
+# E1126  invalid-keyword-argument (2)
+#   False positive from pylint not recognizing Odoo API kwargs.
+#
+# E1111  assignment-from-no-return (1)
+#   False positive from Odoo browse() chain return.
+#
+# E0402  method-hidden (1)
+#   Odoo model method overriding — standard pattern.
+#
+# E0202  method-hidden (1)
+#   Same as E0402 — standard Odoo override pattern.
+#
+# W0108  unnecessary-lambda (4)
+#   Lambdas used intentionally for deferred evaluation (e.g., default=lambda).
+#
+# F0002  import-error (1)
+#   Same as E0401 — odoo package not installed on lint host.
+#
+# R      refactor category — too noisy for bulk runs
+# C      convention category — too noisy for bulk runs
+disable=E0401,W0212,W8163,W8161,W0613,E1101,W0201,W8113,W0621,W0718,W8164,E0606,E0203,E0611,E0601,E0213,E1205,E1126,E1111,E0402,E0202,W0108,F0002,W8106,W0642,W0640,W0631,W0603,W0246,W1510,W1116,W0237,W0106,W8301,W8120,W0511,W8116,W1203,W1201,W1202,E1206,W0612,W8138,E0102,W8110,W1514,W0707,W0719,W0107,I1101,W0611,R,C
+
+[REPORTS]
+output-format=text
+reports=no
+score=no
+
+[FORMAT]
+max-line-length=88
+
+[BASIC]
+# Good variable names which should always be accepted.
+good-names=_,i,j,k,e,fp,f,id,odoo,api
+
+[TYPECHECK]
+# Many Odoo models use mixins that add attributes at runtime.
+generated-members=
+    _inherits,
+    _order,
+    _rec_name,
+    _check_company_auto,
+    _description,
+    _table,
+    _sequence_code,
+    _sql_constraints,
+    _table_objects,

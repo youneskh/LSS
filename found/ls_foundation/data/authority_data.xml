@@ -1,0 +1,33 @@
+<odoo>
+    <record id="authority_anpp" model="lss.foundation.authority">
+        <field name="name">ANPP - Agence Nationale des Produits Pharmaceutiques</field>
+        <field name="code">ANPP</field>
+        <field name="type">national</field>
+        <field name="jurisdiction">Pharmaceutical products regulation</field>
+        <field name="website">https://www.anpp.dz</field>
+    </record>
+    <record id="authority_mip" model="lss.foundation.authority">
+        <field name="name">Ministère de l'Industrie Pharmaceutique</field>
+        <field name="code">MIP</field>
+        <field name="type">national</field>
+        <field name="jurisdiction">Pharmaceutical industry policy</field>
+    </record>
+    <record id="authority_customs" model="lss.foundation.authority">
+        <field name="name">Douanes Algériennes</field>
+        <field name="code">CUSTOMS</field>
+        <field name="type">national</field>
+        <field name="jurisdiction">Customs clearance and tariffs</field>
+    </record>
+    <record id="authority_bank_algeria" model="lss.foundation.authority">
+        <field name="name">Banque d'Algérie</field>
+        <field name="code">BA</field>
+        <field name="type">national</field>
+        <field name="jurisdiction">Banking and foreign exchange</field>
+    </record>
+    <record id="authority_ms" model="lss.foundation.authority">
+        <field name="name">Ministère de la Santé</field>
+        <field name="code">MS</field>
+        <field name="type">national</field>
+        <field name="jurisdiction">Public health policy</field>
+    </record>
+</odoo>

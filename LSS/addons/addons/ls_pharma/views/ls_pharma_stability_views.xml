@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ================================================================ -->
+    <!-- Storage conditions                                                -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_stability_condition_list" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.condition.list</field>
+        <field name="model">ls.pharma.stability.condition</field>
+        <field name="arch" type="xml">
+            <list string="Storage Conditions" editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="condition_type"/>
+                <field name="temperature_celsius"/>
+                <field name="temperature_tolerance"/>
+                <field name="relative_humidity"/>
+                <field name="humidity_tolerance"/>
+                <field name="default_duration_months"/>
+                <field name="reference" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_condition_form" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.condition.form</field>
+        <field name="model">ls.pharma.stability.condition</field>
+        <field name="arch" type="xml">
+            <form string="Storage Condition">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <label for="code"/>
+                        <h2>
+                            <field name="code"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Condition">
+                            <field name="condition_type"/>
+                            <field name="temperature_celsius"/>
+                            <field name="temperature_tolerance"/>
+                            <field name="relative_humidity"/>
+                            <field name="humidity_tolerance"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Use">
+                            <field name="default_duration_months"/>
+                            <field name="reference"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_stability_condition" model="ir.actions.act_window">
+        <field name="name">Storage Conditions</field>
+        <field name="res_model">ls.pharma.stability.condition</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define a storage condition
+            </p>
+            <p>
+                The general case conditions of ICH Q1A(R2) are installed with
+                this module. Conditions for other climatic zones or for
+                refrigerated and frozen products are added here.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Results                                                           -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_stability_result_list" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.result.list</field>
+        <field name="model">ls.pharma.stability.result</field>
+        <field name="arch" type="xml">
+            <list string="Stability Results"
+                  decoration-danger="not is_conform"
+                  decoration-warning="is_significant_change">
+                <field name="study_id" optional="show"/>
+                <field name="timepoint_id"/>
+                <field name="name"/>
+                <field name="method_reference" optional="hide"/>
+                <field name="result_type"/>
+                <field name="specification_text" optional="show"/>
+                <field name="result_value"/>
+                <field name="result_text"/>
+                <field name="result_uom"/>
+                <field name="is_conform"/>
+                <field name="is_significant_change"/>
+                <field name="tested_by_user_id" optional="hide"/>
+                <field name="date_tested"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_result_search" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.result.search</field>
+        <field name="model">ls.pharma.stability.result</field>
+        <field name="arch" type="xml">
+            <search string="Stability Results">
+                <field name="name" string="Attribute"/>
+                <field name="study_id"/>
+                <field name="timepoint_id"/>
+                <field name="tested_by_user_id"/>
+                <filter name="filter_nonconforming" string="Out of Specification"
+                        domain="[('is_conform', '=', False)]"/>
+                <filter name="filter_significant_change" string="Significant Change"
+                        domain="[('is_significant_change', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_study" string="Study"
+                            context="{'group_by': 'study_id'}"/>
+                    <filter name="group_timepoint" string="Time Point"
+                            context="{'group_by': 'timepoint_id'}"/>
+                    <filter name="group_attribute" string="Attribute"
+                            context="{'group_by': 'name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_stability_result" model="ir.actions.act_window">
+        <field name="name">Stability Results</field>
+        <field name="res_model">ls.pharma.stability.result</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_ls_pharma_stability_result_search"/>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Time points                                                       -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_stability_timepoint_list" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.timepoint.list</field>
+        <field name="model">ls.pharma.stability.timepoint</field>
+        <field name="arch" type="xml">
+            <list string="Time Points"
+                  decoration-danger="is_overdue or state == 'out_of_specification'"
+                  decoration-muted="state == 'missed'"
+                  decoration-success="state == 'completed'">
+                <field name="study_id" optional="show"/>
+                <field name="condition_id"/>
+                <field name="month"/>
+                <field name="date_scheduled"/>
+                <field name="date_pulled" optional="show"/>
+                <field name="date_tested" optional="show"/>
+                <field name="pulled_by_user_id" optional="hide"/>
+                <field name="result_count" optional="hide"/>
+                <field name="nonconforming_count" optional="show"/>
+                <field name="is_overdue"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_timepoint_form" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.timepoint.form</field>
+        <field name="model">ls.pharma.stability.timepoint</field>
+        <field name="arch" type="xml">
+            <form string="Time Point">
+                <header>
+                    <button name="action_pull" string="Pull Samples"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'scheduled'"/>
+                    <button name="action_record_tested" string="Mark Tested"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'pulled'"/>
+                    <button name="action_complete" string="Complete"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'tested'"/>
+                    <button name="action_mark_missed" string="Mark Missed"
+                            type="object"
+                            invisible="state not in ['scheduled', 'pulled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="scheduled,pulled,tested,completed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Schedule">
+                            <field name="study_id" options="{'no_create': True}"/>
+                            <field name="condition_id" options="{'no_create': True}"/>
+                            <field name="month"/>
+                            <field name="date_scheduled"/>
+                            <field name="is_overdue"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Execution">
+                            <field name="date_pulled"/>
+                            <field name="pulled_by_user_id"/>
+                            <field name="date_tested"/>
+                            <field name="result_count"/>
+                            <field name="nonconforming_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Results" name="results">
+                            <field name="result_ids">
+                                <list string="Results" editable="bottom"
+                                      decoration-danger="not is_conform"
+                                      decoration-warning="is_significant_change">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="method_reference" optional="hide"/>
+                                    <field name="result_type"/>
+                                    <field name="specification_text" optional="show"/>
+                                    <field name="has_minimum" optional="hide"/>
+                                    <field name="specification_min" optional="show"/>
+                                    <field name="has_maximum" optional="hide"/>
+                                    <field name="specification_max" optional="show"/>
+                                    <field name="result_value"/>
+                                    <field name="result_text"/>
+                                    <field name="result_uom"/>
+                                    <field name="is_conform"/>
+                                    <field name="is_significant_change"/>
+                                    <field name="tested_by_user_id"/>
+                                    <field name="date_tested"/>
+                                    <field name="remark" optional="hide"/>
+                                    <field name="study_id" column_invisible="True"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Samples" name="samples">
+                            <field name="sample_ids">
+                                <list string="Samples">
+                                    <field name="name"/>
+                                    <field name="condition_id"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"/>
+                                    <field name="chamber_reference"/>
+                                    <field name="position_reference" optional="hide"/>
+                                    <field name="date_placed"/>
+                                    <field name="date_removed"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Remark" name="remark">
+                            <field name="remark" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_timepoint_search" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.timepoint.search</field>
+        <field name="model">ls.pharma.stability.timepoint</field>
+        <field name="arch" type="xml">
+            <search string="Time Points">
+                <field name="study_id"/>
+                <field name="condition_id"/>
+                <field name="pulled_by_user_id"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('is_overdue', '=', True)]"/>
+                <filter name="filter_scheduled" string="Scheduled"
+                        domain="[('state', '=', 'scheduled')]"/>
+                <filter name="filter_out_of_specification" string="Out of Specification"
+                        domain="[('state', '=', 'out_of_specification')]"/>
+                <filter name="filter_missed" string="Missed"
+                        domain="[('state', '=', 'missed')]"/>
+                <separator/>
+                <filter name="filter_scheduled_date" string="Scheduled Date"
+                        date="date_scheduled"/>
+                <group name="group_by">
+                    <filter name="group_study" string="Study"
+                            context="{'group_by': 'study_id'}"/>
+                    <filter name="group_condition" string="Condition"
+                            context="{'group_by': 'condition_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_scheduled_month" string="Scheduled Month"
+                            context="{'group_by': 'date_scheduled:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_stability_timepoint" model="ir.actions.act_window">
+        <field name="name">Stability Time Points</field>
+        <field name="res_model">ls.pharma.stability.timepoint</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_stability_timepoint_search"/>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Samples                                                           -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_stability_sample_list" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.sample.list</field>
+        <field name="model">ls.pharma.stability.sample</field>
+        <field name="arch" type="xml">
+            <list string="Stability Samples"
+                  decoration-muted="state in ['consumed', 'discarded']">
+                <field name="name"/>
+                <field name="study_id"/>
+                <field name="condition_id"/>
+                <field name="timepoint_id" optional="show"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="chamber_reference"/>
+                <field name="position_reference" optional="hide"/>
+                <field name="date_placed"/>
+                <field name="date_removed" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_sample_form" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.sample.form</field>
+        <field name="model">ls.pharma.stability.sample</field>
+        <field name="arch" type="xml">
+            <form string="Stability Sample">
+                <header>
+                    <button name="action_pull" string="Pull"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'stored'"/>
+                    <button name="action_consume" string="Consume"
+                            type="object"
+                            invisible="state != 'pulled'"/>
+                    <button name="action_discard" string="Discard"
+                            type="object"
+                            invisible="state in ['consumed', 'discarded']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="stored,pulled,consumed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Study">
+                            <field name="study_id" options="{'no_create': True}"/>
+                            <field name="timepoint_id" options="{'no_create': True}"/>
+                            <field name="condition_id" options="{'no_create': True}"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Storage">
+                            <field name="quantity"/>
+                            <field name="uom_id" options="{'no_create': True}"/>
+                            <field name="chamber_reference"/>
+                            <field name="position_reference"/>
+                            <field name="date_placed"/>
+                            <field name="date_removed"/>
+                        </group>
+                    </group>
+                    <group string="Remark">
+                        <field name="remark" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_sample_search" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.sample.search</field>
+        <field name="model">ls.pharma.stability.sample</field>
+        <field name="arch" type="xml">
+            <search string="Stability Samples">
+                <field name="name" string="Sample"/>
+                <field name="study_id"/>
+                <field name="condition_id"/>
+                <field name="chamber_reference"/>
+                <filter name="filter_stored" string="In Storage"
+                        domain="[('state', '=', 'stored')]"/>
+                <filter name="filter_pulled" string="Pulled"
+                        domain="[('state', '=', 'pulled')]"/>
+                <group name="group_by">
+                    <filter name="group_study" string="Study"
+                            context="{'group_by': 'study_id'}"/>
+                    <filter name="group_condition" string="Condition"
+                            context="{'group_by': 'condition_id'}"/>
+                    <filter name="group_chamber" string="Chamber"
+                            context="{'group_by': 'chamber_reference'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_stability_sample" model="ir.actions.act_window">
+        <field name="name">Stability Samples</field>
+        <field name="res_model">ls.pharma.stability.sample</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_stability_sample_search"/>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Studies                                                           -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_stability_study_list" model="ir.ui.view">
+        <field name="name">ls.pharma.stability_study.list</field>
+        <field name="model">ls.pharma.stability_study</field>
+        <field name="arch" type="xml">
+            <list string="Stability Studies"
+                  decoration-danger="timepoint_overdue_count &gt; 0 or has_significant_change"
+                  decoration-muted="state == 'terminated'"
+                  decoration-success="state == 'completed'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="product_id"/>
+                <field name="batch_id" optional="show"/>
+                <field name="study_type"/>
+                <field name="date_start"/>
+                <field name="duration_months" optional="hide"/>
+                <field name="date_planned_end" optional="show"/>
+                <field name="timepoint_count" optional="hide"/>
+                <field name="timepoint_overdue_count" optional="show"/>
+                <field name="has_significant_change" optional="show"/>
+                <field name="proposed_shelf_life_months" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_study_form" model="ir.ui.view">
+        <field name="name">ls.pharma.stability_study.form</field>
+        <field name="model">ls.pharma.stability_study</field>
+        <field name="arch" type="xml">
+            <form string="Stability Study">
+                <header>
+                    <button name="action_open_schedule_wizard"
+                            string="Generate Schedule"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state not in ['draft', 'scheduled']"/>
+                    <button name="action_start"
+                            string="Start Study"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'scheduled'"/>
+                    <button name="action_complete"
+                            string="Complete Study"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'ongoing'"/>
+                    <button name="action_terminate"
+                            string="Terminate Study"
+                            type="object"
+                            invisible="state not in ['scheduled', 'ongoing']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,scheduled,ongoing,completed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Significant Change"
+                            bg_color="text-bg-danger"
+                            invisible="not has_significant_change"/>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="text-bg-secondary"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <label for="title"/>
+                        <h2>
+                            <field name="title" placeholder="Study title"
+                                   readonly="state not in ['draft', 'scheduled']"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="product_id"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="batch_id"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="study_type" readonly="state != 'draft'"/>
+                            <field name="packaging_description"
+                                   readonly="state in ['completed', 'terminated']"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Protocol">
+                            <field name="protocol_reference"
+                                   readonly="state in ['completed', 'terminated']"/>
+                            <field name="date_start"
+                                   readonly="state not in ['draft', 'scheduled']"/>
+                            <field name="duration_months"
+                                   readonly="state not in ['draft', 'scheduled']"/>
+                            <field name="date_planned_end"/>
+                            <field name="condition_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   readonly="state not in ['draft', 'scheduled']"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Progress">
+                            <field name="timepoint_count"/>
+                            <field name="timepoint_overdue_count"/>
+                            <field name="sample_count"/>
+                        </group>
+                        <group string="Outcome">
+                            <field name="has_significant_change"/>
+                            <field name="proposed_shelf_life_months"
+                                   readonly="state in ['completed', 'terminated']"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Time Points" name="timepoints">
+                            <field name="timepoint_ids">
+                                <list string="Time Points"
+                                      decoration-danger="is_overdue or state == 'out_of_specification'"
+                                      decoration-muted="state == 'missed'"
+                                      decoration-success="state == 'completed'">
+                                    <field name="condition_id"/>
+                                    <field name="month"/>
+                                    <field name="date_scheduled"/>
+                                    <field name="date_pulled"/>
+                                    <field name="date_tested"/>
+                                    <field name="pulled_by_user_id" optional="hide"/>
+                                    <field name="result_count"/>
+                                    <field name="nonconforming_count"/>
+                                    <field name="is_overdue"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Samples" name="samples">
+                            <field name="sample_ids">
+                                <list string="Samples" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="condition_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="timepoint_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="chamber_reference"/>
+                                    <field name="position_reference" optional="hide"/>
+                                    <field name="date_placed"/>
+                                    <field name="date_removed" optional="hide"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <field name="conclusion" nolabel="1"
+                                   readonly="state in ['completed', 'terminated']"
+                                   placeholder="Conclusion of the study"/>
+                        </page>
+                    </notebook>
+                    <div class="text-muted">
+                        The proposed testing frequencies follow ICH Q1A(R2):
+                        every three months over the first year, every six months
+                        over the second year and annually thereafter for the
+                        long term condition; a minimum of three time points for
+                        the accelerated condition; a minimum of four time points
+                        for the intermediate condition.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_stability_study_search" model="ir.ui.view">
+        <field name="name">ls.pharma.stability_study.search</field>
+        <field name="model">ls.pharma.stability_study</field>
+        <field name="arch" type="xml">
+            <search string="Stability Studies">
+                <field name="name" string="Study"/>
+                <field name="title"/>
+                <field name="product_id"/>
+                <field name="batch_id"/>
+                <field name="protocol_reference"/>
+                <filter name="filter_ongoing" string="Ongoing"
+                        domain="[('state', '=', 'ongoing')]"/>
+                <filter name="filter_scheduled" string="Scheduled"
+                        domain="[('state', '=', 'scheduled')]"/>
+                <filter name="filter_completed" string="Completed"
+                        domain="[('state', '=', 'completed')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Has Overdue Time Points"
+                        domain="[('timepoint_overdue_count', '&gt;', 0)]"/>
+                <filter name="filter_significant_change" string="Significant Change"
+                        domain="[('has_significant_change', '=', True)]"/>
+                <separator/>
+                <filter name="filter_start_date" string="Start Date" date="date_start"/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_study_type" string="Study Type"
+                            context="{'group_by': 'study_type'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_start_month" string="Start Month"
+                            context="{'group_by': 'date_start:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_stability_study" model="ir.actions.act_window">
+        <field name="name">Stability Studies</field>
+        <field name="res_model">ls.pharma.stability_study</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_stability_study_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first stability study
+            </p>
+            <p>
+                A study holds its storage conditions, its generated testing
+                schedule, its samples and the results recorded at each time
+                point.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ================================================================ -->
+    <!-- Sections                                                          -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_ctd_section_list" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd.section.list</field>
+        <field name="model">ls.pharma.ctd.section</field>
+        <field name="arch" type="xml">
+            <list string="CTD Sections"
+                  decoration-danger="state == 'deficiency'"
+                  decoration-success="state == 'complete'">
+                <field name="dossier_id" optional="show"/>
+                <field name="module"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="responsible_user_id" optional="show"/>
+                <field name="date_due" optional="show"/>
+                <field name="document_reference" optional="show"/>
+                <field name="is_template" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_ctd_section_form" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd.section.form</field>
+        <field name="model">ls.pharma.ctd.section</field>
+        <field name="arch" type="xml">
+            <form string="CTD Section">
+                <header>
+                    <button name="action_start" string="Start Preparation"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'not_started'"/>
+                    <button name="action_mark_ready" string="Mark Ready"
+                            type="object" class="oe_highlight"
+                            invisible="state not in ['in_preparation', 'deficiency']"/>
+                    <button name="action_mark_complete" string="Mark Complete"
+                            type="object"
+                            invisible="state not in ['ready', 'submitted']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="not_started,in_preparation,ready,submitted,complete"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1>
+                            <field name="code"/>
+                        </h1>
+                        <label for="name"/>
+                        <h2>
+                            <field name="name"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Position">
+                            <field name="module"/>
+                            <field name="dossier_id" options="{'no_create': True}"/>
+                            <field name="is_template"/>
+                            <field name="sequence"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Preparation">
+                            <field name="responsible_user_id"/>
+                            <field name="date_due"/>
+                            <field name="document_reference"/>
+                        </group>
+                    </group>
+                    <group string="Deficiency"
+                           invisible="state != 'deficiency'">
+                        <field name="deficiency_note" nolabel="1"
+                               required="state == 'deficiency'"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_ctd_section_search" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd.section.search</field>
+        <field name="model">ls.pharma.ctd.section</field>
+        <field name="arch" type="xml">
+            <search string="CTD Sections">
+                <field name="name" string="Section"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="dossier_id"/>
+                <field name="responsible_user_id"/>
+                <field name="document_reference"/>
+                <filter name="filter_not_started" string="Not Started"
+                        domain="[('state', '=', 'not_started')]"/>
+                <filter name="filter_in_preparation" string="In Preparation"
+                        domain="[('state', '=', 'in_preparation')]"/>
+                <filter name="filter_deficiency" string="Deficiency"
+                        domain="[('state', '=', 'deficiency')]"/>
+                <separator/>
+                <filter name="filter_template" string="Template Sections"
+                        domain="[('is_template', '=', True)]"/>
+                <filter name="filter_dossier_sections" string="Dossier Sections"
+                        domain="[('is_template', '=', False)]"/>
+                <separator/>
+                <filter name="filter_due" string="Due Date" date="date_due"/>
+                <group name="group_by">
+                    <filter name="group_module" string="CTD Module"
+                            context="{'group_by': 'module'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_dossier" string="Dossier"
+                            context="{'group_by': 'dossier_id'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                            context="{'group_by': 'responsible_user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_ctd_section_template" model="ir.actions.act_window">
+        <field name="name">CTD Section Template</field>
+        <field name="res_model">ls.pharma.ctd.section</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_ctd_section_search"/>
+        <field name="domain">[('is_template', '=', True)]</field>
+        <field name="context">{'default_is_template': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                The template structure is empty
+            </p>
+            <p>
+                The template holds the reusable Common Technical Document
+                structure that is copied into a new dossier. The structure
+                published in ICH M4(R4) and ICH M4Q is installed with this
+                module.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Dossiers                                                          -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_ctd_dossier_list" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd_dossier.list</field>
+        <field name="model">ls.pharma.ctd_dossier</field>
+        <field name="arch" type="xml">
+            <list string="CTD Dossiers"
+                  decoration-danger="deficiency_count &gt; 0"
+                  decoration-success="state == 'approved'"
+                  decoration-muted="state == 'withdrawn'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="product_id"/>
+                <field name="dossier_type"/>
+                <field name="authority_name"/>
+                <field name="dossier_version" optional="hide"/>
+                <field name="section_complete_count" optional="hide"/>
+                <field name="section_count" optional="hide"/>
+                <field name="completion_percentage" optional="show"/>
+                <field name="deficiency_count" optional="show"/>
+                <field name="date_submission" optional="show"/>
+                <field name="authorisation_number" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_ctd_dossier_form" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd_dossier.form</field>
+        <field name="model">ls.pharma.ctd_dossier</field>
+        <field name="arch" type="xml">
+            <form string="CTD Dossier">
+                <header>
+                    <button name="action_load_template"
+                            string="Load CTD Structure"
+                            type="object"
+                            invisible="state not in ['draft', 'in_preparation']"/>
+                    <button name="action_start_preparation"
+                            string="Start Preparation"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_mark_ready"
+                            string="Mark Ready"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'in_preparation'"/>
+                    <button name="action_submit"
+                            string="Record Submission"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'ready'"/>
+                    <button name="action_record_deficiency"
+                            string="Record Deficiency"
+                            type="object"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_approve"
+                            string="Record Approval"
+                            type="object" class="oe_highlight"
+                            invisible="state not in ['submitted', 'deficiency']"/>
+                    <button name="action_withdraw"
+                            string="Withdraw"
+                            type="object"
+                            invisible="state in ['approved', 'withdrawn']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_preparation,ready,submitted,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Withdrawn"
+                            bg_color="text-bg-danger"
+                            invisible="state != 'withdrawn'"/>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="text-bg-secondary"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <label for="title"/>
+                        <h2>
+                            <field name="title" placeholder="Dossier title"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="product_id" options="{'no_create': True}"/>
+                            <field name="dossier_type"/>
+                            <field name="dossier_version"/>
+                            <field name="marketing_auth_holder_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Authority">
+                            <field name="authority_name"/>
+                            <field name="authority_partner_id"/>
+                            <field name="date_submission"/>
+                            <field name="date_decision"/>
+                            <field name="authorisation_number"/>
+                        </group>
+                    </group>
+                    <group string="Progress">
+                        <group>
+                            <field name="section_complete_count"/>
+                            <field name="section_count"/>
+                        </group>
+                        <group>
+                            <field name="completion_percentage"/>
+                            <field name="deficiency_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sections" name="sections">
+                            <field name="section_ids"
+                                   context="{'default_is_template': False}">
+                                <list string="Sections" editable="bottom"
+                                      decoration-danger="state == 'deficiency'"
+                                      decoration-success="state == 'complete'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="module"/>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="responsible_user_id"/>
+                                    <field name="date_due"/>
+                                    <field name="document_reference"/>
+                                    <field name="deficiency_note" optional="hide"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="is_template" column_invisible="True"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                    <div class="text-muted">
+                        This model tracks the preparation status of the
+                        sections of a dossier. It does not generate, validate
+                        or transmit an electronic submission sequence.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_ctd_dossier_search" model="ir.ui.view">
+        <field name="name">ls.pharma.ctd_dossier.search</field>
+        <field name="model">ls.pharma.ctd_dossier</field>
+        <field name="arch" type="xml">
+            <search string="CTD Dossiers">
+                <field name="name" string="Dossier"/>
+                <field name="title"/>
+                <field name="product_id"/>
+                <field name="authority_name"/>
+                <field name="authorisation_number"/>
+                <filter name="filter_in_preparation" string="In Preparation"
+                        domain="[('state', '=', 'in_preparation')]"/>
+                <filter name="filter_submitted" string="Submitted"
+                        domain="[('state', '=', 'submitted')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_deficiency" string="Has Deficiencies"
+                        domain="[('deficiency_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_submission_date" string="Submission Date"
+                        date="date_submission"/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Dossier Type"
+                            context="{'group_by': 'dossier_type'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_authority" string="Authority"
+                            context="{'group_by': 'authority_name'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_ctd_dossier" model="ir.actions.act_window">
+        <field name="name">CTD Dossiers</field>
+        <field name="res_model">ls.pharma.ctd_dossier</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_ctd_dossier_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first dossier
+            </p>
+            <p>
+                A dossier is organised in the five modules of the Common
+                Technical Document. Loading the structure copies the shipped
+                template sections into the dossier.
+            </p>
+        </field>
+    </record>
+
+</odoo>

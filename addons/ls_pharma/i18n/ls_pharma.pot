@@ -1,0 +1,4535 @@
+# Translation template of the Odoo module ls_pharma.
+# This file contains the translatable strings of the following module:
+# 	* ls_pharma
+#
+# This template was produced by tools/generate_pot.py, an offline extractor
+# that reads the module sources with the Python "ast" module and with "lxml".
+# It was NOT produced by the canonical Odoo export, because the environment in
+# which the module was written carries no Odoo runtime. It therefore covers
+# the model descriptions, the field labels and help texts, the selection
+# labels, the "string" attributes of the views, the menu and action names, and
+# the messages passed to self.env._(). It does not claim to be exhaustive: a
+# deployment that needs a complete catalogue regenerates this file from a live
+# instance with odoo-bin --i18n-export.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-01 06:26+0000\n"
+"PO-Revision-Date: 2026-08-01 06:26+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "%(condition)s: months %(months)s (new: %(new)s)"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A batch release decision cannot be deleted. It is the evidence that the quality unit reviewed and approved the batch production and control records before release, as required by 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A batch release decision cannot be duplicated."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A batch release decision is an append-only record. The fields %(fields)s can never be modified. Record a new decision instead."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__batch_type
+msgid "A bulk batch carries the manufactured intermediate. A packaging batch carries the primary and secondary packaging operation and is linked to its bulk batch through the parent batch field."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A component cannot be linked to an active ingredient and to an excipient at the same time."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A conclusion is required before study %(name)s can be completed, because 21 CFR 211.166 requires that the results of stability testing be used in assigning storage conditions and expiration dates."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A deficiency can only be recorded on a submitted dossier. Dossier %(name)s is in state %(state)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A remark is required to justify the discarding of sample %(name)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A remark is required to justify why step %(name)s is not applicable to this batch."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A remark is required to justify why time point %(name)s was missed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A serial number that is not already in use for product code %(gtin)s could not be drawn after %(attempts)s attempts. Increase the configured serial number length."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_step__is_significant
+msgid "A significant step requires attribution and a date under 21 CFR 211.188(b). Steps that are not significant may be recorded for completeness without attribution."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_ctd_section__is_template
+msgid "A template section belongs to the reusable structure of ICH M4(R4) and is copied into a dossier when the template is loaded."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A template section cannot belong to a dossier."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A time point cannot be tested before its samples have been pulled."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A written conclusion is required before batch record %(name)s can be rejected."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "A written justification is required in the conclusion before study %(name)s can be terminated."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_api
+msgid "APIs"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_labeling__tolerance
+msgid "Absolute difference below which the reconciliation is considered acceptable. A tolerance is only meaningful where the written procedures of the manufacturer establish one."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_condition
+msgid "Accelerated"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ls.pharma.stability.condition,name:ls_pharma.stability_condition_accelerated_40_75
+msgid "Accelerated 40 C / 75% RH"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__specification_text
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__specification_text
+msgid "Acceptance Criterion"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_control__specification_text
+msgid "Acceptance criterion as written in the approved specification."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__active
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__active
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__active
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__active
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__active
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__active
+msgid "Active"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__api_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__is_active_ingredient
+msgid "Active Ingredient"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__active_moiety
+msgid "Active Moiety"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_api
+msgid "Active Moiety Basis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_api
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Active Pharmaceutical Ingredient"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_api
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Active Pharmaceutical Ingredients"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__api_id
+msgid "Active ingredient master record, completed when the component is an active pharmaceutical ingredient."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__actual_yield_qty
+msgid "Actual Yield"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__yield_percentage
+msgid "Actual yield expressed as a percentage of the theoretical yield. This field holds a percentage between 0 and 100 and is therefore displayed without the ratio widget."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__coproduct_ids
+msgid "Additional products obtained from the same manufacturing run."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_clearance
+msgid "After Use"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Aggregated"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_aggregation
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_aggregation
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Aggregation"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Alerts"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__timepoint_id
+msgid "Allocated Time Point"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_api
+msgid "Anhydrous Basis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Antioxidant"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Approve"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Approved"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__manufacturer_partner_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Approved Manufacturers"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Archived"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__clearance_ids
+msgid "Area Inspections"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__area
+msgid "Area or Line"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_api
+msgid "As Is"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__assay_percentage
+msgid "Assay (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__label_assay_percentage
+msgid "Assay declared on the approved specification, expressed as a percentage. It is used as the reference against which the assay of an individual consignment is compensated."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__assay_percentage
+msgid "Assay of the consignment actually used. It is compared with the label assay of the active ingredient to compute the potency-compensated quantity."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Attribute"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__authorisation_number
+msgid "Authorisation Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Authority"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__authority_partner_id
+msgid "Authority Contact"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_ctd_dossier__authority_name
+msgid "Authority to which the dossier is submitted. The field is free text so that any national authority can be recorded without the module presuming a list of authorities."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Awaiting QA Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__potency_basis
+msgid "Basis on which the assay of the ingredient is expressed. The batch component lines use this value together with the assay to compute the potency-compensated charge quantity."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__batch_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__batch_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__batch_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__batch_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__batch_id
+msgid "Batch"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(batch)s does not carry product %(product)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s already carries the release decision %(decision)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s cannot be its own ancestor."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s cannot be released because %(count)s batch record(s) have not been approved by the quality unit, contrary to 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s cannot be released because the following checks have not been confirmed: %(missing)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s cannot be released without an expiry date."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s has left the draft state and can no longer be deleted. Cancel it instead so that the record is retained."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s has no batch record. 21 CFR 211.188 requires that batch production and control records be prepared for each batch produced."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s is in state %(state)s and the action %(action)s is not permitted from that state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s is in state %(state)s. A release decision may only be recorded while the batch is under quality assurance review."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s is in state %(state)s. The fields %(fields)s can no longer be modified because a quality decision has been recorded against them."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch %(name)s was manufactured by %(user)s, who cannot also take the release decision. The quality unit is independent of production."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Analysis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_coproduct
+msgid "Batch Co-Product"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_component
+msgid "Batch Component Charge"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_equipment
+msgid "Batch Equipment and Line Usage"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__batch_number
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__batch_number
+msgid "Batch Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.report,name:ls_pharma.action_report_ls_pharma_batch_record
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Production and Control Record"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Production and Control Records"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__record_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__record_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__record_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__record_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__record_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__record_id
+msgid "Batch Record"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_clearance
+msgid "Batch Record Area Inspection"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_control
+msgid "Batch Record Control Result"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__batch_record_count
+msgid "Batch Record Count"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_discrepancy
+msgid "Batch Record Discrepancy and Investigation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_labeling
+msgid "Batch Record Labelling Control"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_step
+msgid "Batch Record Manufacturing Step"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_record_sample
+msgid "Batch Record Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_batch_record
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__batch_record_ids
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_batch_record
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Records"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_record_reviewed
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_record_reviewed
+msgid "Batch Records Reviewed and Approved"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__name
+msgid "Batch Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_batch_release
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_batch_release
+msgid "Batch Release"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.report,name:ls_pharma.action_report_ls_pharma_release_certificate
+msgid "Batch Release Certificate"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_release
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Release Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch_release_wizard
+msgid "Batch Release Decision Wizard"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Release Decisions"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__batch_state
+msgid "Batch Status"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__batch_type
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Batch Yield"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_batch_yield_analysis
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_report_yield
+msgid "Batch Yield Analysis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__batch_number
+msgid "Batch number carried by GS1 Application Identifier (10)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__batch_id
+msgid "Batch placed on stability. A study may be created before the batch exists, in which case the field is completed later."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s cannot be executed until the reproduction of the master production and control record has been checked, dated and attributed, as required by 21 CFR 211.188(a)."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s has been closed by the quality unit. The fields %(fields)s can no longer be modified."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s has left the draft state and can no longer be deleted."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s is in state %(state)s and the action %(action)s is not permitted from that state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s still carries %(count)s open discrepancy or discrepancies. 21 CFR 211.192 requires that every unexplained discrepancy be thoroughly investigated before release."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s still has %(count)s step(s) that are neither completed nor marked as not applicable."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch record %(name)s was executed by the current user. The review required by 21 CFR 211.192 is carried out by the quality control unit and must be performed by a different user."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Batch records approved by the quality unit: %(done)s of %(total)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_aggregation__batch_id
+msgid "Batch to which the container belongs. It is empty for a mixed container that holds units of more than one batch."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_batches
+msgid "Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_clearance
+msgid "Before Use"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__bom_id
+msgid "Bill of Materials"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__bom_id
+msgid "Bill of materials used as the formulation reference."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Binder"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "British Pharmacopoeia (BP)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Buffering Agent"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Bulk / Intermediate"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__parent_batch_id
+msgid "Bulk Batch"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__parent_batch_id
+msgid "Bulk batch from which this packaging batch was produced. It establishes the genealogy between a bulk batch and every packaging batch derived from it."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+msgid "Bundle"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__cas_number
+msgid "CAS Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "CTD Dossier"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_ctd_section
+msgid "CTD Dossier Section"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_ctd_dossier
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_ctd_dossier
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "CTD Dossiers"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__module
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "CTD Module"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "CTD Section"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_ctd_section_template
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_ctd_section_template
+msgid "CTD Section Template"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "CTD Sections"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Cancel"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Cancelled"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+msgid "Case / Shipper"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Chamber"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__chamber_reference
+msgid "Chamber Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__date_charged
+msgid "Charge Date and Time"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__charged_by_user_id
+msgid "Charged By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__is_automated_charge
+msgid "Charged by Automated Equipment"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__checked_by_user_id
+msgid "Checked or Supervised By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__checklist_complete
+msgid "Checklist Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Checklist Confirmed at the Time of the Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Checklist Not Fully Confirmed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__cas_number
+msgid "Chemical Abstracts Service registry number, where one exists."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Child Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__child_count
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__child_ids
+msgid "Child Containers"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__classification
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Classification"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__cleaning_record_reference
+msgid "Cleaning Record Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__cleaning_verified_by_user_id
+msgid "Cleaning Verified By"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Close"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Closed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__date_closed
+msgid "Closed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Closure"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__product_id
+msgid "Co-Product"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__coproduct_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Co-Products"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Coating Agent"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__code
+msgid "Code"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Colorant"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Commission"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Commissioned"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__date_commissioned
+msgid "Commissioned On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_ctd_dossier
+msgid "Common Technical Document Dossier"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__company_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__company_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__company_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__company_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__company_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_res_company
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_company
+msgid "Company Settings"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Complete Execution"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Complete Manufacturing"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Complete Study"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_step
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Completed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__completion_percentage
+msgid "Completion (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__product_id
+msgid "Component"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Component %(name)s was charged and verified by the same user. 21 CFR 211.101(d) requires that a component added by one person be verified by a second person."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_components_verified
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_components_verified
+msgid "Component Charge-In Verified by a Second Person"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__component_lot_id
+msgid "Component Lot"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__component_lot_reference
+msgid "Component Lot Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Component charges without a second-person verification: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__component_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Components"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__conclusion
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__conclusion
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Conclusion"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__name
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Condition"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__condition_ids
+msgid "Conditions under which samples of this study are stored."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_configuration
+msgid "Configuration"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_control__is_conform
+msgid "Conformity of the result against its acceptance criterion. For a numeric result the value is computed from the minimum and maximum; for a textual result it is set manually by the analyst."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__is_conform
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__is_conform
+msgid "Conforms"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Consume"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_sample
+msgid "Consumed"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Contained Containers"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__serialization_ids
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__unit_count
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Contained Units"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Container"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s cannot contain itself."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s has been shipped and can no longer be disaggregated in this system."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s holds %(count)s unit(s) that have not been commissioned."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s is empty and cannot be packed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s is not in the draft state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Container %(sscc)s must be packed before it can be shipped."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__level
+msgid "Container Level"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__examination_result
+msgid "Container and Closure Examination"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__packaging_description
+msgid "Container closure system in which the samples are stored. ICH Q1A(R2) requires that stability studies be conducted in the container closure system proposed for marketing."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__container_closure_description
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Containers and Closures"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Content"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Context"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__control_type
+msgid "Control Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__is_controlled_substance
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Controlled Substance"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__controlled_schedule
+msgid "Controlled Substance Schedule"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Controls"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_stability_programme
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_stability_programme
+msgid "Covered by the Stability Programme"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+msgid "Critical"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__date_performed
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__date_performed
+msgid "Date Performed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__date_retest
+msgid "Date on which the batch must be re-examined, where applicable."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_step__date_performed
+msgid "Date required by 21 CFR 211.188(b)(1)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_sample__retention_until
+msgid "Date until which a reserve sample is retained under 21 CFR 211.170. The retention period itself is established by the written procedures of the manufacturer."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Dates"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__decided_by_user_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decided By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__decision
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__decision
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__decision_date
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__date_decision
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decision Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decision Month"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__name
+msgid "Decision Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__statement
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__statement
+msgid "Decision Statement"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Declare Obsolete"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decommission"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__decommission_reason
+msgid "Decommission Reason"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Decommissioned"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__date_decommissioned
+msgid "Decommissioned On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__default_duration_months
+msgid "Default Duration (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__deficiency_note
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Deficiency"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Deficiency Received"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__child_batch_count
+msgid "Derived Batch Count"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__child_batch_ids
+msgid "Derived Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__description
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Description"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__container_closure_description
+msgid "Description of the drug product containers and closures, as required by 21 CFR 211.188(b)(9)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_destroyed
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+msgid "Destroyed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__detected_by_user_id
+msgid "Detected By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__date_detected
+msgid "Detected On"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Detection"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_difference
+msgid "Difference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__integrity_verified
+msgid "Digest Verified"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_release__integrity_hash
+msgid "Digest computed over the canonical representation of this decision. It makes an alteration made outside the application detectable. It is not an electronic signature."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Diluent / Filler"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Disaggregate"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+msgid "Disaggregated"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Discard"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_sample
+msgid "Discarded"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_discrepancy
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Discrepancies"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_discrepancies_closed
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_discrepancies_closed
+msgid "Discrepancies Investigated and Closed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__discrepancy_ids
+msgid "Discrepancies and Investigations"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__name
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Discrepancy"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Discrepancy %(name)s cannot be closed because %(missing)s is missing. 21 CFR 211.192 requires a written record of the investigation including its conclusions and follow-up."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Discrepancy %(name)s is already closed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Discrepancy %(name)s is not open."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Disintegrant"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__document_reference
+msgid "Document Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Done"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Dosage Form"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__dossier_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Dossier"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s cannot be approved from state %(state)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s has been submitted and can no longer be deleted."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s is not in preparation."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s is not in the draft state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s must be ready before it can be submitted."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Dossier %(name)s still has %(count)s section(s) that are not ready."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__name
+msgid "Dossier Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Dossier Sections"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__dossier_type
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Dossier Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Draft"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_api
+msgid "Dried Basis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__date_due
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Due Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_schedule_wizard__duration_months
+msgid "Duration (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_condition__default_duration_months
+msgid "Duration used by the schedule wizard when it proposes time points."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+msgid "Environmental Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Equipment"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__equipment_identifier
+msgid "Equipment Identifier"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Equipment Used"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__equipment_ids
+msgid "Equipment and Lines"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__name
+msgid "Equipment or Line"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "European Pharmacopoeia (Ph. Eur.)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_excipient
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__excipient_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Excipient"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__excipient_id
+msgid "Excipient master record, completed when the component is an excipient."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_excipient
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_excipient
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Excipients"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Execution"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+msgid "Execution Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__executed_by_user_id
+msgid "Execution Completed By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__date_executed
+msgid "Execution Completed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__completion_percentage
+msgid "Execution Progress (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Execution and Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Expired"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__date_expiry
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__expiry_date
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__expiry_date
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Expiry Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__expiry_date
+msgid "Expiry date carried by GS1 Application Identifier (17)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__extended_to_other_batches
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Extended to Other Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__extension_scope
+msgid "Extension Scope"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Extension to Other Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__external_reference
+msgid "External Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_clearance
+msgid "Fail"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__findings
+msgid "Findings"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Finished Product"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+msgid "Finished Product Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Flavour / Sweetener"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__follow_up
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Follow-Up"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+msgid "Follow-Up Stability"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__component_lot_reference
+msgid "Free-text lot reference, used when the component lot is not held as an inventory lot in this database."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_excipient__excipient_function
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Function"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__element_string
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__element_string
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "GS1 Element String"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "GS1 Identification"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Generate"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Generate Schedule"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_serial_generate_wizard
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_serial_generate
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Generate Serial Numbers"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Generate Stability Schedule"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Generated"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Glidant"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Group By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_condition__reference
+msgid "Guideline from which this condition is taken."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Handling"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Has Deficiencies"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Has Overdue Time Points"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__element_string
+msgid "Human-readable interpretation of the unique identifier. It is the data content that a barcode encoder consumes; this module does not render the symbol itself."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Identification"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Identification and Authorisation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_discrepancy__extension_scope
+msgid "Identification of the other batches and products examined."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_control__method_reference
+msgid "Identifier of the approved analytical or in-process method applied."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__monograph_reference
+msgid "Identifier of the monograph or in-house specification applied."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_sample__chamber_reference
+msgid "Identifier of the stability chamber in which the sample is held."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__equipment_ids
+msgid "Identity of the individual major equipment and lines used, as required by 21 CFR 211.188(b)(2)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "In Execution"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "In Preparation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "In Production"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_step
+msgid "In Progress"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_sample
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "In Storage"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "In-House Specification"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_control
+msgid "In-Process Control"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+msgid "In-Process Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__control_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "In-Process and Laboratory Controls"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_excipient__is_novel
+msgid "Indicates an excipient that has no established use in an authorised medicinal product by the intended route of administration and therefore requires additional justification."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__is_controlled_substance
+msgid "Indicates that national legislation subjects this ingredient to controlled substance requirements."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_excipient__requires_declaration
+msgid "Indicates that the excipient must be declared on the product labelling because of a known effect."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__is_sterile
+msgid "Indicates that the ingredient is supplied in a sterile state."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__of_animal_origin
+msgid "Indicates that the material is derived from animal sources and therefore requires a transmissible spongiform encephalopathy statement before use."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Ingredient %(name)s is a controlled substance and cannot be qualified until its schedule has been recorded."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__instruction
+msgid "Instruction"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_step__instruction
+msgid "Instruction reproduced from the master production and control record."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Integrity"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__integrity_hash
+msgid "Integrity Digest"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Integrity verification failed. The stored digest does not match the current content of the decision. The record has been altered outside the application."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Integrity verification passed. The stored digest matches the current content of the decision."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_condition
+msgid "Intermediate"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ls.pharma.stability.condition,name:ls_pharma.stability_condition_intermediate_30_65
+msgid "Intermediate 30 C / 65% RH"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__code
+msgid "Internal Code"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__note
+msgid "Internal Notes"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__inn_name
+msgid "International Nonproprietary Name"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__inn_name
+msgid "International Nonproprietary Name assigned by the World Health Organization, where one has been assigned."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "International Pharmacopoeia (Ph. Int.)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__product_id
+msgid "Inventory Item"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__lot_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__lot_id
+msgid "Inventory Lot"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__component_lot_id
+msgid "Inventory lot of the component consumed. It provides the specific identification required by 21 CFR 211.188(b)(3)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__lot_id
+msgid "Inventory lot that carries the physical stock of this batch. The field is optional so that a batch can be recorded before the lot exists."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__investigated_by_user_id
+msgid "Investigated By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__investigation
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Investigation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_issued
+msgid "Issued"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__label_code
+msgid "Item Code"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "Japanese Pharmacopoeia (JP)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__label_assay_percentage
+msgid "Label Assay (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Labelling"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__labeling_ids
+msgid "Labelling Control"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__name
+msgid "Labelling Item"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_labeling_reconciled
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_labeling_reconciled
+msgid "Labelling Reconciled"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Labelling Reconciliation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_control
+msgid "Laboratory Control"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_qc_conform
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_qc_conform
+msgid "Laboratory Results Conform"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Level"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Life Cycle"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Line Clearance"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Load CTD Structure"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_sample__sampling_point
+msgid "Location or process stage at which the sample was drawn."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_condition
+msgid "Long Term"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ls.pharma.stability.condition,name:ls_pharma.stability_condition_long_term_25_60
+msgid "Long Term 25 C / 60% RH"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ls.pharma.stability.condition,name:ls_pharma.stability_condition_long_term_30_65
+msgid "Long Term 30 C / 65% RH"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__yield_min_percentage
+msgid "Lower percentage of theoretical yield beyond which an investigation is required. Defaulted from the product."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Lubricant"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+msgid "Major"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__user_manufactured_id
+msgid "Manufactured By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+msgid "Manufacturing"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Manufacturing Batch"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_batch
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_batch
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Manufacturing Batches"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Manufacturing Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__date_manufacture
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Manufacturing Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Manufacturing Month"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__production_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__warehouse_id
+msgid "Manufacturing Site"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__step_ids
+msgid "Manufacturing Steps"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_equipment__operation
+msgid "Manufacturing operation for which the equipment was used."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__production_id
+msgid "Manufacturing order that executed this batch. The link is informational: the state of this batch is never derived from the state of the manufacturing order."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__manufacturer_partner_ids
+msgid "Manufacturing sites approved for this material. Qualification evidence is maintained outside this module."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Mark Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Mark Missed"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Mark Ready"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Mark Shipped"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Mark Tested"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__marketing_auth_holder_id
+msgid "Marketing Authorisation Holder"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Master Production Record"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__master_checked_by_user_id
+msgid "Master Record Checked By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__master_checked_date
+msgid "Master Record Checked On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__master_record_reference
+msgid "Master Record Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__master_record_version
+msgid "Master Record Version"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Material %(name)s is already qualified."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Material %(name)s is obsolete and cannot be returned to draft."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Material %(name)s is of animal origin and cannot be qualified until the reference of its TSE/BSE statement has been recorded."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__name
+msgid "Material Name"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_materials
+msgid "Materials"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__specification_max
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__specification_max
+msgid "Maximum"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__has_maximum
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__has_maximum
+msgid "Maximum Applies"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_excipient__maximum_daily_intake_mg
+msgid "Maximum Daily Intake (mg)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__yield_max_percentage
+msgid "Maximum Yield (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_excipient__maximum_daily_intake_mg
+msgid "Maximum daily intake established for this excipient. A value of zero means that no limit has been established in this system."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__reviewed_by_user_id
+msgid "Member of the quality unit who reviewed the record under 21 CFR 211.192. This user may not be the user who completed the execution."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__method_reference
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__method_reference
+msgid "Method Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+msgid "Microbiological Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__specification_min
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__specification_min
+msgid "Minimum"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__has_minimum
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__has_minimum
+msgid "Minimum Applies"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__yield_min_percentage
+msgid "Minimum Yield (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+msgid "Minor"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Missed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Module 1 - Administrative Information and Prescribing Information"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Module 2 - Common Technical Document Summaries"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Module 3 - Quality"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Module 4 - Nonclinical Study Reports"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Module 5 - Clinical Study Reports"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__active_moiety
+msgid "Molecule or ion responsible for the pharmacological activity, recorded when the ingredient is supplied as a salt, ester or other derivative."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__moment
+msgid "Moment"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__monograph_reference
+msgid "Monograph Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__month
+msgid "Month"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_schedule_wizard__preview
+msgid "Months at which testing would be scheduled for each condition, following the frequencies published in ICH Q1A(R2). Time points that already exist are not repeated."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_equipment__name
+msgid "Name of the individual item of major equipment or of the line."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__national_number
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__national_number
+msgid "National Reimbursement Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__national_number
+msgid "National reimbursement or identification number, where the Member State of destination requires one. The Application Identifier that carries it varies by Member State, so the value is stored separately and is not appended to the element string built by this module."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "New"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "New Marketing Authorisation Application"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__nonconforming_control_count
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Non-Conforming Controls"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__nonconforming_count
+msgid "Non-Conforming Results"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Non-conforming control results: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_step
+msgid "Not Applicable"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Not Started"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__note
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Notes"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_excipient__is_novel
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Novel Excipient"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__quantity
+msgid "Number of Units"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_control
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_result
+msgid "Numeric"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "Obsolete"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__of_animal_origin
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Of Animal Origin"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Ongoing"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+msgid "Ongoing (On-Going) Stability"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Open"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Open Batch"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__open_discrepancy_count
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_discrepancy
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Open Discrepancies"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Open Items"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Open discrepancies: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__operation
+msgid "Operation"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Origin"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_condition
+msgid "Other"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Out of Specification"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Outcome"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__is_overdue
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Overdue"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__timepoint_overdue_count
+msgid "Overdue Time Points"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pack"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Packaging"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__packaging_description
+msgid "Packaging Configuration"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+msgid "Packaging and Labelling"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Packed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__date_packed
+msgid "Packed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+msgid "Pallet"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__parent_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__aggregation_id
+msgid "Parent Container"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_clearance
+msgid "Pass"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_step
+msgid "Pending"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__completion_percentage
+msgid "Percentage of manufacturing steps that have been completed. The value ranges from 0 to 100."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_ctd_dossier__completion_percentage
+msgid "Percentage of sections marked complete. The value ranges from 0 to 100."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__performed_by_user_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__performed_by_user_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__performed_by_user_id
+msgid "Performed By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__date_performed
+msgid "Performed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__is_automated
+msgid "Performed by Automated Equipment"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__retest_period_months
+msgid "Period after which a released consignment of this material must be re-examined before use. A value of zero means that no retest period has been established."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_root
+msgid "Pharmaceutical"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_manager
+msgid "Pharmaceutical / Manager"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_production_manager
+msgid "Pharmaceutical / Production Manager"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_operator
+msgid "Pharmaceutical / Production Operator"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_qa
+msgid "Pharmaceutical / Quality Assurance"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_regulatory
+msgid "Pharmaceutical / Regulatory Affairs"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups,name:ls_pharma.group_ls_pharma_viewer
+msgid "Pharmaceutical / Viewer"
+msgstr ""
+
+#. module: ls_pharma
+#: model:res.groups.privilege,name:ls_pharma.privilege_ls_pharma
+msgid "Pharmaceutical Manufacturing"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_batch
+msgid "Pharmaceutical Manufacturing Batch"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_material_mixin
+msgid "Pharmaceutical Material Master Data Mixin"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pharmaceutical Product"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_product_template
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_product_template
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pharmaceutical Products"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pharmaceutical Settings"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pharmacopoeia"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Place in Quarantine"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__date_placed
+msgid "Placed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "Planned"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__duration_months
+msgid "Planned Duration (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__date_planned_end
+msgid "Planned End"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__planned_qty
+msgid "Planned Quantity"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Plasticiser"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Position"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__position_reference
+msgid "Position in Chamber"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+msgid "Post-Change Stability"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__potency_basis
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Potency Basis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__compensated_quantity
+msgid "Potency-Compensated Quantity"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Preparation"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Presentation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Preservative"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__previous_product
+msgid "Previous Product"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_step__recorded_value
+msgid "Process value read at this step, such as a temperature or a duration."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Processing Steps"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__product_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__product_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__product_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__product_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__product_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__product_id
+msgid "Product"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Product %(name)s requires serialisation and must therefore carry a product code."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__gtin
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__gtin
+msgid "Product Code (GTIN-14)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__gtin
+msgid "Product code carried by GS1 Application Identifier (01)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_clearance__previous_product
+msgid "Product processed on the line before this batch, where applicable."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Production"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__date_end
+msgid "Production End"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__date_start
+msgid "Production Start"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Progress"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_schedule_wizard__preview
+msgid "Proposed Schedule"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__proposed_shelf_life_months
+msgid "Proposed Shelf Life (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Proposed Time Points"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Protocol"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__protocol_reference
+msgid "Protocol Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pull"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pull Samples"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_sample
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Pulled"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__pulled_by_user_id
+msgid "Pulled By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__date_pulled
+msgid "Pulled On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__purpose
+msgid "Purpose"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+msgid "QA Record Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Qualified"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Qualify"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Quality Assurance"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Quality Assurance Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Quality Standard"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Quantities and Yield"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__quantity
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__quantity
+msgid "Quantity Charged"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__quantity
+msgid "Quantity Obtained"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_difference
+msgid "Quantity issued less the quantities used, returned and destroyed. A non-zero difference is an unexplained discrepancy within the meaning of 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__theoretical_yield_qty
+msgid "Quantity that would be obtained if no material were lost. It is the denominator of the percentage of theoretical yield."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__compensated_quantity
+msgid "Quantity that would deliver the same amount of active ingredient at the label assay. It is computed only when both the assay of the consignment and the label assay of the ingredient are known."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Quarantine"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+msgid "Ready"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Ready for Submission"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_release__integrity_verified
+msgid "Recomputes the digest and compares it with the stored value."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__is_reconciled
+msgid "Reconciled"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__checked_by_user_id
+msgid "Reconciled By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__date_checked
+msgid "Reconciled On"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Approval"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Deficiency"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__name
+msgid "Record Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Release Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Submission"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__record_type
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Record Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__recorded_value
+msgid "Recorded Value"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_discrepancy__extended_to_other_batches
+msgid "Records that the investigation was extended to other batches of the same drug product and to other drug products that may have been associated with the failure, as required by 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__protocol_reference
+msgid "Reference of the approved stability protocol."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_discrepancy__external_reference
+msgid "Reference of the deviation or corrective and preventive action record raised in another system for this discrepancy."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_ctd_section__document_reference
+msgid "Reference of the document that satisfies this section."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_equipment__cleaning_record_reference
+msgid "Reference of the equipment cleaning and use record required by 21 CFR 211.182."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_sample__result_reference
+msgid "Reference of the laboratory record that carries the result."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__master_record_reference
+msgid "Reference of the master production and control record of which this record is a reproduction, as required by 21 CFR 211.188(a)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__tse_statement_reference
+msgid "Reference of the supplier statement on transmissible spongiform encephalopathy and bovine spongiform encephalopathy risk."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__yield_investigation_reference
+msgid "Reference of the written record of the investigation opened because the yield fell outside its limits."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+msgid "Registration / Primary Stability"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_regulatory
+msgid "Regulatory"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__authority_name
+msgid "Regulatory Authority"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Regulatory Status"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Reject"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_release
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_release_wizard
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Rejected"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__relative_humidity
+msgid "Relative Humidity (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__humidity_tolerance
+msgid "Relative Humidity Tolerance (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_condition__relative_humidity
+msgid "Relative humidity of the condition, expressed as a percentage between 0 and 100. A value of zero means that no relative humidity is specified for this condition."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Release Checklist"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__release_id
+msgid "Release Decision"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Release decision %(reference)s recorded by %(user)s: %(decision)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Released"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Released batch %(name)s expires on %(date)s, which is within the configured alert horizon of %(days)s days."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_release
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_release_wizard
+msgid "Released for Distribution"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__note
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__remark
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__remark
+msgid "Remark"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__date_removed
+msgid "Removed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Renewal"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Reopen"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_reports
+msgid "Reports"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_excipient__requires_declaration
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Requires Label Declaration"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Requires Serialisation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+msgid "Reserve Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__reserve_sample_count
+msgid "Reserve Samples"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_reserve_samples
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_reserve_samples
+msgid "Reserve Samples Retained"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Reserve sample %(name)s must carry a retention date, because 21 CFR 211.170 establishes a retention period for reserve samples."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Reserve samples recorded: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Reset to Planned"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Responsibility"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__responsible_user_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Responsible"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Restrict"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Restricted"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__result
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__result_value
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__result_value
+msgid "Result"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__result_text
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__result_text
+msgid "Result (Text)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__result_reference
+msgid "Result Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__result_type
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__result_type
+msgid "Result Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__result_uom
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__result_uom
+msgid "Result Unit"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_release_wizard__system_evaluation
+msgid "Result of the checks that the system can evaluate from the data it holds. It is advisory: the person taking the decision remains responsible for confirming every entry of the checklist."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__result_count
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__result_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Results"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__examination_result
+msgid "Results of the examinations made in accordance with 21 CFR 211.134, as required by 21 CFR 211.188(b)(13)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__retention_until
+msgid "Retain Until"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__date_retest
+msgid "Retest Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__retest_period_months
+msgid "Retest Period (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Return for Completion"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Return to Execution"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_returned
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+msgid "Returned"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__review_conclusion
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Review Conclusion"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__reviewed_by_user_id
+msgid "Reviewed By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__date_reviewed
+msgid "Reviewed On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_excipient__excipient_function
+msgid "Role played by the excipient in the formulation."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__sscc
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "SSCC"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Safety and Labelling"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Sample %(name)s cannot be allocated to a time point of another study."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Sample %(name)s cannot be removed before it was placed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Sample %(name)s is not in storage."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Sample %(name)s is stored under a condition that differs from the condition of its time point."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__name
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__name
+msgid "Sample Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__sample_type
+msgid "Sample Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+msgid "Sampled"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__sample_count
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__sample_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Samples"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__sample_ids
+msgid "Samples Taken"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__sampling_point
+msgid "Sampling Point"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Schedule"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_api__controlled_schedule
+msgid "Schedule or table under which the ingredient is controlled, as designated by the applicable national authority."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Scheduled"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__date_scheduled
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Scheduled Month"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__verified_by_user_id
+msgid "Second user who verified the charge, as required by 21 CFR 211.101(d)."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Section"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Section %(code)s cannot be declared ready without a document reference."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Section %(code)s is in deficiency and the deficiency must be described."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Section %(code)s must belong to a dossier or be marked as a template section."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__code
+msgid "Section Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__name
+msgid "Section Title"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_ctd_section__code
+msgid "Section number as it appears in the Common Technical Document."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__section_count
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__section_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Sections"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__section_complete_count
+msgid "Sections Complete"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__deficiency_count
+msgid "Sections in Deficiency"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__sequence
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__sequence
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__sequence
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__sequence
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__sequence
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serialization__serial_number
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Serial Number"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_serial_generate_wizard__serial_length
+msgid "Serial Number Length"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_serialization
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Serial Numbers"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_aggregation__sscc
+msgid "Serial Shipping Container Code carried by Application Identifier (00)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_serialization__serial_number
+msgid "Serial number carried by GS1 Application Identifier (21)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_aggregation
+msgid "Serialisation Aggregation Container"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_serialization
+msgid "Serialised Saleable Unit"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__serialization_count
+msgid "Serialised Unit Count"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_serial_generate_wizard
+msgid "Serialised Unit Generation Wizard"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__serialization_ids
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Serialised Units"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_serialization_root
+msgid "Serialization"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__has_significant_change
+msgid "Set when at least one result of this study has been marked as a significant change. ICH Q1A(R2) requires testing at the intermediate storage condition when a significant change occurs at the accelerated storage condition."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__is_automated_charge
+msgid "Set when the component was added by automated equipment. 21 CFR 211.101(d) then requires verification by one person only."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__yield_investigation_required
+msgid "Set when the percentage of theoretical yield falls outside the established limits. 21 CFR 211.192 requires that such a discrepancy be thoroughly investigated."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_result__is_significant_change
+msgid "Set when the result constitutes a significant change within the meaning of ICH Q1A(R2). A non-conforming result is proposed as a significant change; the analyst confirms or overrides the proposal."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_timepoint__is_overdue
+msgid "Set when the scheduled date has passed and the time point has not yet been pulled."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__shelf_life_months
+msgid "Shelf Life (Months)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_stability_study__proposed_shelf_life_months
+msgid "Shelf life proposed on the basis of the data generated by this study."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__shelf_life_months
+msgid "Shelf life used to compute the expiry date from the manufacturing date."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_aggregation
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_serialization
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Shipped"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__is_significant_change
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Significant Change"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__has_significant_change
+msgid "Significant Change Observed"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__is_significant
+msgid "Significant Step"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Solvent / Vehicle"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__reference
+msgid "Source Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__component_ids
+msgid "Specific identification of each batch of component or in-process material used, with its weight or measure, as required by 21 CFR 211.188(b)(3) and 21 CFR 211.188(b)(4)."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__pharmacopoeia
+msgid "Specification Basis"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_stability
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_stability_result
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_report_stability_result
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability Results"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_sample
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_sample
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability Sample"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_stability_sample
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__sample_ids
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_stability_sample
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability Samples"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_schedule_wizard
+msgid "Stability Schedule Generation Wizard"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_condition
+msgid "Stability Storage Condition"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_stability_study
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__stability_study_ids
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_stability_study
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability Studies"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_study
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Stability Study"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__stability_study_count
+msgid "Stability Study Count"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_timepoint
+msgid "Stability Study Time Point"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model,name:ls_pharma.model_ls_pharma_stability_result
+msgid "Stability Test Result"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_stability_timepoint
+msgid "Stability Time Points"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Stability studies covering this batch: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Date"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Execution"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Investigation"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Month"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Preparation"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Production"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Start Study"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Statement"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_aggregation__state
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__state
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__state
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_discrepancy__state
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__state
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__state
+msgid "Status"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__name
+msgid "Step"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Step %(name)s cannot be completed without a date. 21 CFR 211.188(b)(1) requires that dates be documented."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Step %(name)s cannot be completed without identifying the person who performed it, as required by 21 CFR 211.188(b)(11)."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Step %(name)s was performed by automated equipment. 21 CFR 211.188(b)(11) requires the identification of the person checking that step."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__step_count
+msgid "Steps"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__step_done_count
+msgid "Steps Completed"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Sterile"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__product_id
+msgid "Stockable item that represents this material in inventory. Leaving the field empty is permitted for materials that are registered for regulatory purposes only and are not held in stock."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Storage"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__storage_condition
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__condition_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__condition_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Storage Condition"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.actions.act_window,name:ls_pharma.action_ls_pharma_stability_condition
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_schedule_wizard__condition_ids
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__condition_ids
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_stability_condition
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Storage Conditions"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__storage_location
+msgid "Storage Location"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__storage_condition
+msgid "Storage condition stated on the approved specification."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__study_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__study_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_schedule_wizard__study_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__study_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Study"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s cannot be started from state %(state)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s carries %(count)s overdue time point(s). The earliest was scheduled for %(date)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s has left the draft state and can no longer be deleted."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s has no storage condition. At least one condition is required to generate a schedule."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s has no time point and cannot be started."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s is not ongoing and cannot be completed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Study %(name)s still has %(count)s time point(s) that have not reached a final state."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__name
+msgid "Study Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__date_start
+msgid "Study Start"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__study_type
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Study Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Subject"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__date_submission
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Submission Date"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Submit for QA Review"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Submit for Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_section
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Submitted"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__user_reviewed_id
+msgid "Submitted for Review By"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Substance"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_api__is_sterile
+msgid "Supplied Sterile"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Surfactant"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__system_evaluation
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "System Evaluation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_material_mixin__tse_statement_reference
+msgid "TSE/BSE Statement Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__taken_by_user_id
+msgid "Taken By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__date_taken
+msgid "Taken On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__temperature_celsius
+msgid "Temperature (Celsius)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__temperature_tolerance
+msgid "Temperature Tolerance (Celsius)"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_section__is_template
+msgid "Template Section"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Template Sections"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Terminate Study"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_study
+msgid "Terminated"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_control__name
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__name
+msgid "Test"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Test %(name)s has been performed but carries no result."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_timepoint
+msgid "Tested"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__tested_by_user_id
+msgid "Tested By"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__date_tested
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_timepoint__date_tested
+msgid "Tested On"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_control
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_stability_result
+msgid "Text or Attribute"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The GS1 Company Prefix is too long to leave room for a serial reference inside an eighteen digit SSCC."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The GS1 Company Prefix must consist of decimal digits only."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The SSCC extension digit must be exactly one decimal digit."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The actual yield of batch %(name)s must be recorded before manufacturing can be declared complete. 21 CFR 211.103 requires that actual yields be determined at the conclusion of each appropriate phase of manufacturing."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The alert horizon cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The assay cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The authorisation number must be recorded before dossier %(name)s can be approved."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The decision on dossier %(name)s cannot predate its submission."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The default duration of %(name)s must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The duration must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The expiry date must be later than today for units that are being generated."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The expiry date of batch %(name)s must be later than its manufacturing date."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The following checks must be confirmed before batch %(name)s can be released: %(missing)s."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The generated serial number length must lie between 1 and 20 characters."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The humidity tolerance cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The inspection of area %(area)s cannot be verified by the person who performed it."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The inspection of area %(area)s failed. The findings must be recorded."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The label assay of %(name)s must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The labelling quantities of %(name)s cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The maximum daily intake of %(name)s cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The minimum of test %(name)s cannot exceed its maximum."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The minimum yield of %(name)s cannot exceed its maximum yield."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The minimum yield of batch %(name)s cannot exceed its maximum yield."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The month of a time point cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The number of units to generate must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The parent of batch %(name)s must be a bulk batch."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The percentage of theoretical yield is %(value).2f%% and falls outside the established limits. 21 CFR 211.192 requires a thorough investigation before the batch is released."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The planned duration of study %(name)s must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The product code %(gtin)s is not a valid GTIN-14."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The product code %(gtin)s is not a valid GTIN-14. A GTIN-14 has fourteen digits and ends with a modulo-10 check digit."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The product code %(gtin)s of %(name)s is not a valid GTIN-14."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The production end of batch %(name)s cannot precede its production start."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The proposed shelf life cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The quantities of batch %(name)s cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The quantity charged for component %(name)s must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The quantity obtained for co-product %(name)s must be strictly positive."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The quantity of sample %(name)s cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The relative humidity of %(name)s must lie between 0 and 100 per cent."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The retention date of reserve sample %(name)s must be later than the date on which it was taken."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The retest period cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The shelf life cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The template can only be loaded while dossier %(name)s is in preparation."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The usage of %(name)s cannot end before it starts."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The value %(sscc)s is not a valid SSCC. An SSCC has eighteen digits and ends with a modulo-10 check digit."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The yield of %(value).2f%% falls outside the established limits and requires an investigation under 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "The yield of batch %(name)s falls outside its established limits and no investigation reference has been recorded. 21 CFR 211.192 requires that such a discrepancy be thoroughly investigated before release."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__theoretical_yield_qty
+msgid "Theoretical Yield"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_result__timepoint_id
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Time Point"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__timepoint_count
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__timepoint_ids
+#: model:ir.ui.menu,name:ls_pharma.menu_ls_pharma_stability_timepoint
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Time Points"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time point %(name)s carries %(count)s non-conforming result(s) and has been closed as out of specification."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time point %(name)s carries no result."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time point %(name)s is not scheduled and cannot be pulled."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time point %(name)s must be pulled before it can be declared tested."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time point %(name)s must be tested before it can be closed."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Time points can only be generated while study %(name)s is in the draft or scheduled state."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__title
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_study__title
+msgid "Title"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__tolerance
+msgid "Tolerance"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_excipient
+msgid "Tonicity Agent"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Top Level"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Transfer of Marketing Authorisation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_condition__condition_type
+msgid "Type"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record_discrepancy
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Under Investigation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_batch_record
+msgid "Under QA Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Under Review"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Unique Identifier"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_equipment__equipment_identifier
+msgid "Unique identifier engraved on or assigned to the equipment, so that the individual item, and not merely its type, is recorded."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_material_mixin__code
+msgid "Unique internal identifier of the material within the company."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unit %(name)s has already reached a terminal state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unit %(name)s has been commissioned and can no longer be deleted. Decommission it instead so that the record is retained."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unit %(name)s has been commissioned. Its unique identifier can no longer be modified."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unit %(name)s is not in the generated state."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unit %(name)s must be commissioned before it can be shipped."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__uom_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__uom_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_coproduct__uom_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_sample__uom_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_stability_sample__uom_id
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_material_mixin
+msgid "United States Pharmacopeia / National Formulary (USP-NF)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Unreconciled Labelling"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record__unreconciled_label_count
+msgid "Unreconciled Labels"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Unreconciled labelling items: %(count)s."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__yield_max_percentage
+msgid "Upper percentage of theoretical yield beyond which an investigation is required. Defaulted from the product."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Use"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__quantity_used
+msgid "Used"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__date_used_start
+msgid "Used From"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_equipment__date_used_end
+msgid "Used Until"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_component__charged_by_user_id
+msgid "User who added the component to the batch."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record__master_checked_by_user_id
+msgid "User who checked that this record accurately reproduces the master production and control record."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch__user_manufactured_id
+msgid "User who declared the manufacturing complete. This user may not take the release decision, so that the independence of the quality unit is preserved."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_step__recorded_uom
+msgid "Value Unit"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Variation"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_component__verified_by_user_id
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_clearance__verified_by_user_id
+msgid "Verified By"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Verify Integrity"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_record_labeling__label_version
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_ctd_dossier__dossier_version
+msgid "Version"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_step__is_automated
+msgid "When set, 21 CFR 211.188(b)(11) requires the identification of the person checking the step rather than of the person performing it."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Withdraw"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields.selection,name:ls_pharma.selection__ls_pharma_ctd_dossier
+msgid "Withdrawn"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Written Conclusion"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_record_discrepancy__investigation
+msgid "Written record of the investigation required by 21 CFR 211.192."
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,help:ls_pharma.field_ls_pharma_batch_release__statement
+msgid "Written statement supporting the decision. It is retained verbatim in the release certificate."
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Yield"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__yield_percentage
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__yield_percentage
+msgid "Yield (%)"
+msgstr ""
+
+#. module: ls_pharma
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Yield Expectations"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__yield_investigation_reference
+msgid "Yield Investigation Reference"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch__yield_investigation_required
+#: model_terms:ir.ui.view,arch_db:ls_pharma
+msgid "Yield Investigation Required"
+msgstr ""
+
+#. module: ls_pharma
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release__check_yield_within_limits
+#: model:ir.model.fields,field_description:ls_pharma.field_ls_pharma_batch_release_wizard__check_yield_within_limits
+msgid "Yield Within Limits"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "Yield limits cannot be negative."
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "the conclusion"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "the follow-up"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "the scope of the extension"
+msgstr ""
+
+#. module: ls_pharma
+#: code:ls_pharma
+msgid "the written investigation"
+msgstr ""

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_auditor_list" model="ir.ui.view">
+        <field name="name">ls.audit.auditor.list</field>
+        <field name="model">ls.audit.auditor</field>
+        <field name="arch" type="xml">
+            <list string="Auditor Qualifications" decoration-danger="qualification_state == 'expired'" decoration-warning="qualification_state == 'expiring'">
+                <field name="user_id"/>
+                <field name="employee_id" optional="show"/>
+                <field name="is_lead_auditor"/>
+                <field name="qualification_date"/>
+                <field name="expiry_date"/>
+                <field name="days_to_expiry" optional="hide"/>
+                <field name="qualification_state" widget="badge" decoration-success="qualification_state == 'valid'" decoration-warning="qualification_state == 'expiring'" decoration-danger="qualification_state == 'expired'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_auditor_form" model="ir.ui.view">
+        <field name="name">ls.audit.auditor.form</field>
+        <field name="model">ls.audit.auditor</field>
+        <field name="arch" type="xml">
+            <form string="Auditor Qualification">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="user_id"/>
+                        <h1><field name="user_id"/></h1>
+                    </div>
+                    <group>
+                        <group string="Qualification">
+                            <field name="is_lead_auditor"/>
+                            <field name="qualification_date"/>
+                            <field name="expiry_date"/>
+                            <field name="qualification_state"/>
+                            <field name="days_to_expiry"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Evidence">
+                            <field name="employee_id"/>
+                            <field name="certificate_reference"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Qualified Scope" name="scope">
+                            <p class="text-muted">Leave empty when the auditor is qualified for every area.</p>
+                            <field name="scope_ids" nolabel="1" widget="many2many_tags"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_auditor_search" model="ir.ui.view">
+        <field name="name">ls.audit.auditor.search</field>
+        <field name="model">ls.audit.auditor</field>
+        <field name="arch" type="xml">
+            <search string="Auditor Qualifications">
+                <field name="user_id"/>
+                <field name="scope_ids"/>
+                <filter name="filter_lead" string="Lead Auditors" domain="[('is_lead_auditor', '=', True)]"/>
+                <separator/>
+                <filter name="filter_valid" string="Valid" domain="[('qualification_state', '=', 'valid')]"/>
+                <filter name="filter_expiring" string="Expiring Soon" domain="[('qualification_state', '=', 'expiring')]"/>
+                <filter name="filter_expired" string="Expired" domain="[('qualification_state', '=', 'expired')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Qualification Status" context="{'group_by': 'qualification_state'}"/>
+                    <filter name="group_lead" string="Lead Auditor" context="{'group_by': 'is_lead_auditor'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_auditor" model="ir.actions.act_window">
+        <field name="name">Auditor Qualifications</field>
+        <field name="res_model">ls.audit.auditor</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_auditor_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your qualified auditors</p>
+            <p>An audit cannot be scheduled unless every team member holds a valid qualification covering the audited areas.</p>
+        </field>
+    </record>
+
+</odoo>

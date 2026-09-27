@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_item_list" model="ir.ui.view">
+        <field name="name">ls.validation.item.list</field>
+        <field name="model">ls.validation.item</field>
+        <field name="arch" type="xml">
+            <list string="Validation Items"
+                  decoration-danger="validation_state in ('expired', 'not_validated')"
+                  decoration-warning="validation_state == 'expiring'"
+                  decoration-success="validation_state == 'validated'"
+                  decoration-muted="validation_state == 'retired'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="item_type"/>
+                <field name="gxp_impact"/>
+                <field name="criticality"/>
+                <field name="location" optional="show"/>
+                <field name="responsible_user_id" optional="show"/>
+                <field name="valid_until"/>
+                <field name="days_to_expiry" optional="hide"/>
+                <field name="validation_state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_item_form" model="ir.ui.view">
+        <field name="name">ls.validation.item.form</field>
+        <field name="model">ls.validation.item</field>
+        <field name="arch" type="xml">
+            <form string="Validation Item">
+                <header>
+                    <button name="action_plan_revalidation" type="object"
+                            string="Plan Revalidation" class="btn-primary"
+                            invisible="retired"/>
+                    <button name="action_retire" type="object"
+                            string="Retire" invisible="retired"
+                            confirm="Retiring the item ends its validated status. Continue?"/>
+                    <button name="action_reinstate" type="object"
+                            string="Cancel Retirement" invisible="not retired"
+                            groups="ls_validation.group_ls_validation_manager"/>
+                    <field name="validation_state" widget="statusbar"
+                           statusbar_visible="not_validated,in_validation,validated"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_protocols" type="object"
+                                class="oe_stat_button" icon="fa-tasks">
+                            <field name="protocol_count" widget="statinfo"
+                                   string="Protocols"/>
+                        </button>
+                        <button name="action_view_reports" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="report_count" widget="statinfo"
+                                   string="Reports"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Retired" bg_color="text-bg-danger"
+                            invisible="not retired"/>
+                    <div class="oe_title">
+                        <label for="code" string="Identification"/>
+                        <h1>
+                            <field name="code" placeholder="EQ-0001"/>
+                        </h1>
+                        <h2>
+                            <field name="name" placeholder="Designation"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="classification" string="Classification">
+                            <field name="item_type"/>
+                            <field name="gxp_impact"/>
+                            <field name="criticality"/>
+                            <field name="responsible_user_id"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group name="identification" string="Identification">
+                            <field name="manufacturer"/>
+                            <field name="model_reference"/>
+                            <field name="serial_number"/>
+                            <field name="location"/>
+                            <field name="department"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group name="validity" string="Validation Status">
+                            <field name="current_report_id"/>
+                            <field name="valid_from"/>
+                            <field name="valid_until"/>
+                            <field name="days_to_expiry"/>
+                            <field name="revalidation_interval_months"/>
+                        </group>
+                        <group name="retirement" string="Retirement"
+                               invisible="not retired">
+                            <field name="retired"/>
+                            <field name="retirement_date"/>
+                            <field name="retirement_reason"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description"
+                                   placeholder="Functional description of the item."/>
+                        </page>
+                        <page string="Protocols" name="protocols">
+                            <field name="protocol_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="version"/>
+                                    <field name="name"/>
+                                    <field name="protocol_type"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Validation Reports" name="reports">
+                            <field name="report_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="report_date"/>
+                                    <field name="conclusion"/>
+                                    <field name="valid_until"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_item_search" model="ir.ui.view">
+        <field name="name">ls.validation.item.search</field>
+        <field name="model">ls.validation.item</field>
+        <field name="arch" type="xml">
+            <search string="Validation Items">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="serial_number"/>
+                <field name="location"/>
+                <field name="responsible_user_id"/>
+                <filter name="filter_validated" string="Validated"
+                        domain="[('validation_state', '=', 'validated')]"/>
+                <filter name="filter_expiring" string="Expiring Soon"
+                        domain="[('validation_state', '=', 'expiring')]"/>
+                <filter name="filter_expired" string="Expired"
+                        domain="[('validation_state', '=', 'expired')]"/>
+                <filter name="filter_not_validated" string="Not Validated"
+                        domain="[('validation_state', '=', 'not_validated')]"/>
+                <separator/>
+                <filter name="filter_direct_impact" string="Direct GxP Impact"
+                        domain="[('gxp_impact', '=', 'direct')]"/>
+                <filter name="filter_my_items" string="My Items"
+                        domain="[('responsible_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_retired" string="Retired"
+                        domain="[('retired', '=', True)]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_by_state" string="Validation Status"
+                        context="{'group_by': 'validation_state'}"/>
+                    <filter name="group_by_type" string="Item Type"
+                        context="{'group_by': 'item_type'}"/>
+                    <filter name="group_by_impact" string="GxP Impact"
+                        context="{'group_by': 'gxp_impact'}"/>
+                    <filter name="group_by_owner" string="System Owner"
+                        context="{'group_by': 'responsible_user_id'}"/>
+                    <filter name="group_by_expiry" string="Expiry Month"
+                        context="{'group_by': 'valid_until:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_item" model="ir.actions.act_window">
+        <field name="name">Validation Items</field>
+        <field name="res_model">ls.validation.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_validation_item_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register the first validation item
+            </p>
+            <p>
+                A validation item is the equipment, utility, process, cleaning
+                procedure, computerised system or analytical method whose
+                validated status is tracked by the system.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_item_expiring" model="ir.actions.act_window">
+        <field name="name">Expiring or Expired</field>
+        <field name="res_model">ls.validation.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('validation_state', 'in', ('expiring', 'expired'))]</field>
+        <field name="search_view_id" ref="view_ls_validation_item_search"/>
+    </record>
+
+</odoo>

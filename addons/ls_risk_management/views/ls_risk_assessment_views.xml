@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_assessment_list" model="ir.ui.view">
+        <field name="name">ls.risk.assessment.list</field>
+        <field name="model">ls.risk.assessment</field>
+        <field name="arch" type="xml">
+            <list string="Risk Assessments"
+                  decoration-danger="acceptability == 'not_acceptable'"
+                  decoration-warning="acceptability == 'acceptable_with_control'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="risk_id"/>
+                <field name="assessment_type"/>
+                <field name="assessment_date"/>
+                <field name="severity_level_id"/>
+                <field name="probability_level_id"/>
+                <field name="ordinal_index" optional="hide"/>
+                <field name="risk_level"/>
+                <field name="acceptability"/>
+                <field name="assessed_by_id" widget="many2one_avatar_user"/>
+                <field name="approved_by_id" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'confirmed'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_assessment_form" model="ir.ui.view">
+        <field name="name">ls.risk.assessment.form</field>
+        <field name="model">ls.risk.assessment</field>
+        <field name="arch" type="xml">
+            <form string="Risk Assessment">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'confirmed'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'confirmed'"/>
+                    <button name="action_open_cancel_wizard" type="object"
+                            string="Cancel" invisible="state == 'cancelled'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="risk_id" readonly="state != 'draft'"/>
+                            <field name="assessment_type" readonly="state != 'draft'"/>
+                            <field name="matrix_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="assessed_by_id" readonly="state != 'draft'"/>
+                            <field name="assessment_date" readonly="state != 'draft'"/>
+                            <field name="approved_by_id" invisible="state != 'approved'"/>
+                            <field name="approval_date" invisible="state != 'approved'"/>
+                        </group>
+                    </group>
+                    <group string="Risk Estimation">
+                        <group>
+                            <field name="severity_level_id" readonly="state != 'draft'"/>
+                            <field name="probability_level_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="risk_level"/>
+                            <field name="acceptability"/>
+                            <field name="ordinal_index"/>
+                            <field name="matrix_cell_id"/>
+                        </group>
+                    </group>
+                    <group string="Estimation Rationale">
+                        <field name="estimation_rationale" nolabel="1"
+                               readonly="state != 'draft'"
+                               placeholder="Objective basis for the severity and probability selected"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                    <group string="Cancellation" invisible="state != 'cancelled'">
+                        <field name="cancel_reason" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_assessment_search" model="ir.ui.view">
+        <field name="name">ls.risk.assessment.search</field>
+        <field name="model">ls.risk.assessment</field>
+        <field name="arch" type="xml">
+            <search string="Search Risk Assessments">
+                <field name="name"/>
+                <field name="risk_id"/>
+                <field name="assessed_by_id"/>
+                <field name="approved_by_id"/>
+                <separator/>
+                <filter name="filter_to_approve" string="To Approve"
+                        domain="[('state', '=', 'confirmed')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_mine" string="Assessed by Me"
+                        domain="[('assessed_by_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_not_acceptable" string="Not Acceptable"
+                        domain="[('acceptability', '=', 'not_acceptable')]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Assessment Type"
+                        context="{'group_by': 'assessment_type'}"/>
+                    <filter name="group_risk_level" string="Risk Level"
+                        context="{'group_by': 'risk_level'}"/>
+                    <filter name="group_acceptability" string="Acceptability"
+                        context="{'group_by': 'acceptability'}"/>
+                    <filter name="group_date" string="Assessment Date"
+                        context="{'group_by': 'assessment_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_assessment" model="ir.actions.act_window">
+        <field name="name">Risk Assessments</field>
+        <field name="res_model">ls.risk.assessment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_assessment_search"/>
+    </record>
+
+</odoo>

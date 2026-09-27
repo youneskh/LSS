@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_signature_list" model="ir.ui.view">
+        <field name="name">ls.validation.signature.list</field>
+        <field name="model">ls.validation.signature</field>
+        <field name="arch" type="xml">
+            <list string="Electronic Signatures" create="false" edit="false"
+                  delete="false">
+                <field name="signed_on"/>
+                <field name="user_id"/>
+                <field name="login_used" optional="hide"/>
+                <field name="meaning"/>
+                <field name="res_model"/>
+                <field name="record_label"/>
+                <field name="reason" optional="show"/>
+                <field name="signature_hash" optional="hide"/>
+                <field name="previous_hash" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_signature_form" model="ir.ui.view">
+        <field name="name">ls.validation.signature.form</field>
+        <field name="model">ls.validation.signature</field>
+        <field name="arch" type="xml">
+            <form string="Electronic Signature" create="false" edit="false"
+                  delete="false">
+                <sheet>
+                    <group>
+                        <group string="Signature">
+                            <field name="user_id"/>
+                            <field name="login_used"/>
+                            <field name="meaning"/>
+                            <field name="signed_on"/>
+                            <field name="reason"/>
+                        </group>
+                        <group string="Signed Record">
+                            <field name="res_model"/>
+                            <field name="res_id"/>
+                            <field name="record_label"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Integrity">
+                        <field name="previous_hash"/>
+                        <field name="signature_hash"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_signature_search" model="ir.ui.view">
+        <field name="name">ls.validation.signature.search</field>
+        <field name="model">ls.validation.signature</field>
+        <field name="arch" type="xml">
+            <search string="Electronic Signatures">
+                <field name="user_id"/>
+                <field name="res_model"/>
+                <field name="meaning"/>
+                <field name="signature_hash"/>
+                <filter name="filter_approvals" string="Approvals"
+                        domain="[('meaning', '=', 'approved')]"/>
+                <filter name="filter_mine" string="My Signatures"
+                        domain="[('user_id', '=', uid)]"/>
+                                    <filter name="group_by_user" string="Signatory"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_by_meaning" string="Meaning"
+                        context="{'group_by': 'meaning'}"/>
+                    <filter name="group_by_model" string="Model"
+                        context="{'group_by': 'res_model'}"/>
+                    <filter name="group_by_date" string="Signature Month"
+                        context="{'group_by': 'signed_on:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_signature" model="ir.actions.act_window">
+        <field name="name">Electronic Signatures</field>
+        <field name="res_model">ls.validation.signature</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_validation_signature_search"/>
+        <field name="context">{'create': False}</field>
+    </record>
+
+</odoo>

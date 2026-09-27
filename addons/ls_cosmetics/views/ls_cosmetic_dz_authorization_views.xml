@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_dz_authorization_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.dz_authorization.list</field>
+        <field name="model">ls.cosmetic.dz_authorization</field>
+        <field name="arch" type="xml">
+            <list string="Prior Authorisations"
+                  decoration-muted="state in ('refused', 'withdrawn')"
+                  decoration-success="state == 'granted'"
+                  decoration-danger="decision_overdue">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="authorization_type"/>
+                <field name="operator_partner_id" optional="show"/>
+                <field name="dossier_item_count"/>
+                <field name="receipt_date" optional="show"/>
+                <field name="decision_due_date" optional="show"/>
+                <field name="decision_date" optional="hide"/>
+                <field name="authorization_reference" optional="show"/>
+                <field name="decision_overdue" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'granted'"
+                       decoration-info="state in ('submitted', 'receipt')"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_dz_authorization_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.dz_authorization.form</field>
+        <field name="model">ls.cosmetic.dz_authorization</field>
+        <field name="arch" type="xml">
+            <form string="Algerian Prior Authorisation">
+                <header>
+                    <button name="action_submit" type="object"
+                            string="Submit Dossier" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_register_receipt" type="object"
+                            string="Register Deposit Receipt" class="btn-primary"
+                            invisible="state != 'submitted'"/>
+                    <button name="action_grant" type="object"
+                            string="Record Authorisation" class="btn-primary"
+                            invisible="state != 'receipt'"/>
+                    <button name="action_refuse" type="object"
+                            string="Record Refusal"
+                            invisible="state != 'receipt'"/>
+                    <button name="action_register_notice" type="object"
+                            string="Register Formal Notice"
+                            invisible="state != 'granted'"/>
+                    <button name="action_resolve_notice" type="object"
+                            string="Resolve Formal Notice" class="btn-primary"
+                            invisible="state != 'notice'"/>
+                    <button name="action_withdraw" type="object"
+                            string="Record Withdrawal"
+                            invisible="state not in ('granted', 'notice')"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'submitted'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,submitted,receipt,granted"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Refused" bg_color="text-bg-danger"
+                            invisible="state != 'refused'"/>
+                    <widget name="web_ribbon" title="Withdrawn" bg_color="text-bg-secondary"
+                            invisible="state != 'withdrawn'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1><field name="code" readonly="1"/></h1>
+                        <label for="name" class="oe_edit_only" string="Product Denomination"/>
+                        <h2><field name="name" placeholder="Denomination and designation of the product"/></h2>
+                    </div>
+                    <group>
+                        <group string="Application">
+                            <field name="authorization_type"/>
+                            <field name="operator_partner_id"/>
+                            <field name="wilaya_direction"/>
+                            <field name="submission_mode"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Linked Records">
+                            <field name="product_tmpl_id"/>
+                            <field name="formulation_id"/>
+                            <field name="pif_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="state != 'draft'">
+                        The dossier comprises sixteen items. The application is filed
+                        with the territorially competent Direction de Wilaya du
+                        Commerce; a deposit receipt is issued when it is filed in
+                        person and cannot in any case be treated as an authorisation.
+                    </div>
+                    <notebook>
+                        <page string="Dossier Items" name="dossier">
+                            <group>
+                                <field name="dossier_item_count"/>
+                                <field name="dossier_complete"/>
+                            </group>
+                            <group>
+                                <group string="Operator Documents">
+                                    <field name="doc_rc"/>
+                                    <field name="doc_fiscal"/>
+                                    <field name="doc_statutes"/>
+                                    <field name="doc_accounts"/>
+                                    <field name="doc_tax_roll"/>
+                                    <field name="doc_social"/>
+                                    <field name="doc_responsible"/>
+                                    <field name="doc_trademark"/>
+                                </group>
+                                <group string="Product Documents">
+                                    <field name="doc_denomination"/>
+                                    <field name="doc_usage"/>
+                                    <field name="doc_composition"/>
+                                    <field name="doc_analyses"/>
+                                    <field name="doc_toxicity"/>
+                                    <field name="doc_batch_id"/>
+                                    <field name="doc_precautions"/>
+                                    <field name="doc_label_model"/>
+                                </group>
+                            </group>
+                            <separator string="Attachments"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Procedure" name="procedure">
+                            <group>
+                                <group string="Filing">
+                                    <field name="submission_date"/>
+                                    <field name="receipt_reference"/>
+                                    <field name="receipt_date"/>
+                                </group>
+                                <group string="Decision">
+                                    <field name="decision_due_date"/>
+                                    <field name="decision_overdue"/>
+                                    <field name="decision_date"/>
+                                    <field name="authorization_reference"/>
+                                </group>
+                            </group>
+                            <separator string="Opinion of the Scientific and Technical Commission"/>
+                            <field name="scientific_commission_opinion"
+                                   placeholder="Opinion of the Scientific and Technical Commission of the CACQE"/>
+                            <separator string="Reasoned Refusal"/>
+                            <field name="refusal_reason" invisible="state != 'refused'"/>
+                        </page>
+                        <page string="Formal Notice" name="notice">
+                            <group>
+                                <group>
+                                    <field name="notice_date"/>
+                                    <field name="notice_deadline"/>
+                                </group>
+                                <group>
+                                    <field name="withdrawal_date"/>
+                                </group>
+                            </group>
+                            <separator string="Subject of the Formal Notice"/>
+                            <field name="notice_subject"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_dz_authorization_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.dz_authorization.search</field>
+        <field name="model">ls.cosmetic.dz_authorization</field>
+        <field name="arch" type="xml">
+            <search string="Prior Authorisations">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="authorization_reference"/>
+                <field name="operator_partner_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_pending" string="Awaiting Decision"
+                        domain="[('state', 'in', ('submitted', 'receipt'))]"/>
+                <filter name="filter_granted" string="Granted"
+                        domain="[('state', '=', 'granted')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Decision Overdue"
+                        domain="[('decision_overdue', '=', True)]"/>
+                <filter name="filter_notice" string="Under Formal Notice"
+                        domain="[('state', '=', 'notice')]"/>
+                <filter name="filter_incomplete" string="Incomplete Dossier"
+                        domain="[('dossier_complete', '=', False)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Authorisation Type"
+                            context="{'group_by': 'authorization_type'}"/>
+                    <filter name="group_operator" string="Operator"
+                            context="{'group_by': 'operator_partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_dz_authorization" model="ir.actions.act_window">
+        <field name="name">Algerian Prior Authorisations</field>
+        <field name="res_model">ls.cosmetic.dz_authorization</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_dz_authorization_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Track your prior authorisation dossiers</p>
+            <p>
+                Cosmetic and body hygiene products placed on the Algerian national
+                market are governed by decret executif n° 97-37 of 14 January 1997 as
+                modified and completed by decret executif n° 10-114 of 18 April 2010,
+                which requires a prior authorisation issued by the Minister of
+                Commerce after the opinion of the Scientific and Technical Commission
+                of the CACQE.
+            </p>
+        </field>
+    </record>
+
+</odoo>

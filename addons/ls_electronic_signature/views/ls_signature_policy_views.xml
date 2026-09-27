@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_ls_signature_policy_list" model="ir.ui.view">
+        <field name="name">ls.signature.policy.list</field>
+        <field name="model">ls.signature.policy</field>
+        <field name="arch" type="xml">
+            <list string="Signature Policies">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="trigger"/>
+                <field name="field_name"/>
+                <field name="value_to"/>
+                <field name="meaning_id"/>
+                <field name="required_signature_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_policy_form" model="ir.ui.view">
+        <field name="name">ls.signature.policy.form</field>
+        <field name="model">ls.signature.policy</field>
+        <field name="arch" type="xml">
+            <form string="Signature Policy">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Batch release requires QA approval"/></h1>
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="applicability_domain" widget="domain"
+                                   options="{'model': 'model_name'}"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Signature">
+                            <field name="meaning_id"/>
+                            <field name="required_signature_count"/>
+                            <field name="distinct_signers"
+                                   invisible="required_signature_count &lt; 2"/>
+                            <field name="require_full_credentials"/>
+                        </group>
+                    </group>
+                    <group string="Trigger">
+                        <field name="trigger" widget="radio"/>
+                        <field name="field_name"
+                               invisible="trigger != 'transition'"
+                               required="trigger == 'transition'"
+                               placeholder="state"/>
+                        <field name="value_from"
+                               invisible="trigger != 'transition'"
+                               placeholder="Leave empty for any origin value"/>
+                        <field name="value_to"
+                               invisible="trigger != 'transition'"
+                               required="trigger == 'transition'"
+                               placeholder="released"/>
+                    </group>
+                    <group string="Authorised Signers">
+                        <field name="signer_group_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_policy_search" model="ir.ui.view">
+        <field name="name">ls.signature.policy.search</field>
+        <field name="model">ls.signature.policy</field>
+        <field name="arch" type="xml">
+            <search string="Signature Policies">
+                <field name="name"/>
+                <field name="model_name"/>
+                <field name="meaning_id"/>
+                <filter name="filter_transition" string="Field Transition"
+                        domain="[('trigger', '=', 'transition')]"/>
+                <filter name="filter_manual" string="Manual"
+                        domain="[('trigger', '=', 'manual')]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_model" string="Model"
+                        context="{'group_by': 'model_name'}"/>
+                    <filter name="group_meaning" string="Meaning"
+                        context="{'group_by': 'meaning_id'}"/>
+                    <filter name="group_trigger" string="Trigger"
+                        context="{'group_by': 'trigger'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_signature_policy" model="ir.actions.act_window">
+        <field name="name">Signature Policies</field>
+        <field name="res_model">ls.signature.policy</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_signature_policy_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define where signatures are required</p>
+            <p>
+                A policy states which meaning applies, how many signatures are needed,
+                and whether a field transition is blocked until they are present.
+            </p>
+        </field>
+    </record>
+
+</odoo>

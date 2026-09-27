@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="ls_lab_sequence_test_method" model="ir.sequence">
+            <field name="name">Laboratory Test Method</field>
+            <field name="code">ls.lab.test_method</field>
+            <field name="prefix">LAB/MTH/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ls_lab_sequence_specification" model="ir.sequence">
+            <field name="name">Laboratory Specification</field>
+            <field name="code">ls.lab.specification</field>
+            <field name="prefix">LAB/SPC/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ls_lab_sequence_sample" model="ir.sequence">
+            <field name="name">Laboratory Sample</field>
+            <field name="code">ls.lab.sample</field>
+            <field name="prefix">LAB/SMP/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ls_lab_sequence_oos" model="ir.sequence">
+            <field name="name">Laboratory OOS / OOT Investigation</field>
+            <field name="code">ls.lab.oos</field>
+            <field name="prefix">LAB/OOS/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ls_lab_sequence_stability_study" model="ir.sequence">
+            <field name="name">Laboratory Stability Study</field>
+            <field name="code">ls.lab.stability_study</field>
+            <field name="prefix">LAB/STB/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="ls_lab_sequence_coa" model="ir.sequence">
+            <field name="name">Certificate of Analysis</field>
+            <field name="code">ls.lab.coa</field>
+            <field name="prefix">LAB/COA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

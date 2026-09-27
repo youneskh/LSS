@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!--
+        Both scheduled actions only create activities; neither changes
+        the state of a recall. Automatic state changes are deliberately
+        avoided so that every transition in the record is attributable
+        to a named person.
+    -->
+
+    <record id="cron_ls_recall_monitor_open" model="ir.cron">
+        <field name="name">Recall: monitor open field actions</field>
+        <field name="model_id" ref="model_ls_recall_execution"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_monitor_open_recalls()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_ls_recall_mock_due" model="ir.cron">
+        <field name="name">Recall: monitor mock recall due dates</field>
+        <field name="model_id" ref="model_ls_recall_plan"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_mock_recall_due()</field>
+        <field name="interval_number">7</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

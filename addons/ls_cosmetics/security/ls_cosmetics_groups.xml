@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="0">
+
+        <!-- Odoo 19 replaces res.groups.category_id with privilege_id, a
+             many2one to the new res.groups.privilege model. Verified against
+             the official Odoo 19 tutorial "Restrict access to data". -->
+        <record id="module_category_ls_cosmetics" model="ir.module.category">
+            <field name="name">Life Sciences Cosmetics</field>
+            <field name="description">Cosmetic formulation, safety assessment and regulatory dossier management.</field>
+            <field name="sequence">50</field>
+        </record>
+
+        <record id="privilege_ls_cosmetics" model="res.groups.privilege">
+            <field name="name">Cosmetics</field>
+            <field name="sequence">10</field>
+            <field name="category_id" ref="module_category_ls_cosmetics"/>
+        </record>
+
+        <record id="group_ls_cosmetics_user" model="res.groups">
+            <field name="name">Cosmetics: Read Only</field>
+            <field name="sequence">10</field>
+            <field name="privilege_id" ref="privilege_ls_cosmetics"/>
+            <!-- Every group in this module is an internal-user group. Without
+                 implying base.group_user, a user holding only a Cosmetics
+                 group is not an internal user: they cannot read res.company
+                 or create mail.message, so any create() on a mail.thread
+                 model raises AccessError. Confirmed by live test run on
+                 Odoo 19, 2026-08-06. -->
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Read access to the cosmetic ingredient register, formulations, safety reports, claims, labels, product information files and Algerian authorisation dossiers.</field>
+        </record>
+
+        <record id="group_ls_cosmetics_formulator" model="res.groups">
+            <field name="name">Cosmetics: Formulator</field>
+            <field name="sequence">20</field>
+            <field name="privilege_id" ref="privilege_ls_cosmetics"/>
+            <field name="implied_ids" eval="[(4, ref('group_ls_cosmetics_user'))]"/>
+            <field name="comment">Maintains the ingredient register and creates, edits and submits formulations for review. Cannot approve a formulation submitted by the same user, and cannot approve a safety report.</field>
+        </record>
+
+        <record id="group_ls_cosmetics_safety_assessor" model="res.groups">
+            <field name="name">Cosmetics: Safety Assessor</field>
+            <field name="sequence">30</field>
+            <field name="privilege_id" ref="privilege_ls_cosmetics"/>
+            <field name="implied_ids" eval="[(4, ref('group_ls_cosmetics_user'))]"/>
+            <field name="comment">Prepares and approves cosmetic product safety reports. Article 10(2) of Regulation (EC) No 1223/2009 requires the Part B assessment to be carried out by a person holding a qualification in pharmacy, toxicology, medicine or a similar discipline; assigning a user to this group does not establish that qualification, which is evidenced on the report itself.</field>
+        </record>
+
+        <record id="group_ls_cosmetics_regulatory_manager" model="res.groups">
+            <field name="name">Cosmetics: Regulatory Manager</field>
+            <field name="sequence">40</field>
+            <field name="privilege_id" ref="privilege_ls_cosmetics"/>
+            <field name="implied_ids" eval="[(4, ref('group_ls_cosmetics_formulator')), (4, ref('group_ls_cosmetics_safety_assessor'))]"/>
+            <field name="comment">Approves formulations, claims and labels, manages product information files and Algerian prior authorisation dossiers, and maintains the annex restriction data.</field>
+        </record>
+
+    </data>
+</odoo>

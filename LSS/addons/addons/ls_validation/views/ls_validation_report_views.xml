@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_report_list" model="ir.ui.view">
+        <field name="name">ls.validation.report.list</field>
+        <field name="model">ls.validation.report</field>
+        <field name="arch" type="xml">
+            <list string="Validation Summary Reports"
+                  decoration-success="state == 'approved' and conclusion == 'validated'"
+                  decoration-warning="conclusion == 'validated_restricted'"
+                  decoration-danger="conclusion == 'not_validated'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="item_id"/>
+                <field name="report_date"/>
+                <field name="conclusion" widget="badge"/>
+                <field name="valid_from" optional="show"/>
+                <field name="valid_until"/>
+                <field name="approver_id" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_report_form" model="ir.ui.view">
+        <field name="name">ls.validation.report.form</field>
+        <field name="model">ls.validation.report</field>
+        <field name="arch" type="xml">
+            <form string="Validation Summary Report">
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_back_to_draft" type="object"
+                            string="Back to Draft"
+                            invisible="state != 'review'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve and Sign" class="btn-primary"
+                            invisible="state != 'review'"
+                            groups="ls_validation.group_ls_validation_approver"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('approved', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_executions" type="object"
+                                class="oe_stat_button" icon="fa-flask"
+                                string="Executions"/>
+                        <button name="action_open_signatures" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="signature_count" widget="statinfo"
+                                   string="Signatures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                        <h2>
+                            <field name="name" placeholder="Title of the report"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="subject" string="Subject">
+                            <field name="item_id"/>
+                            <field name="master_plan_id"/>
+                            <field name="report_date"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group name="conclusion" string="Conclusion">
+                            <field name="conclusion"/>
+                            <field name="restrictions"
+                                   required="conclusion == 'validated_restricted'"
+                                   invisible="conclusion == 'validated'"/>
+                            <field name="valid_from"/>
+                            <field name="validity_months"/>
+                            <field name="valid_until"/>
+                        </group>
+                    </group>
+                    <group name="control" string="Document Control">
+                        <group>
+                            <field name="author_id"/>
+                            <field name="reviewer_id"/>
+                        </group>
+                        <group>
+                            <field name="approver_id"
+                                   invisible="not approver_id"/>
+                            <field name="approval_date"
+                                   invisible="not approval_date"/>
+                            <field name="open_discrepancy_count"/>
+                            <field name="failed_test_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Summary" name="summary">
+                            <field name="summary"
+                                   placeholder="Summary of the executions, deviations and conclusions."/>
+                        </page>
+                        <page string="Execution Records" name="executions">
+                            <field name="execution_ids"
+                                   readonly="state == 'approved'">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="protocol_id"/>
+                                    <field name="protocol_type"/>
+                                    <field name="overall_result"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                            <field name="protocol_ids" readonly="1"
+                                   string="Protocols Covered" widget="many2many_tags"/>
+                        </page>
+                        <page string="Electronic Signatures" name="signatures">
+                            <field name="signature_ids" readonly="1" nolabel="1">
+                                <list>
+                                    <field name="signed_on"/>
+                                    <field name="user_id"/>
+                                    <field name="meaning"/>
+                                    <field name="reason"/>
+                                    <field name="signature_hash"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_report_search" model="ir.ui.view">
+        <field name="name">ls.validation.report.search</field>
+        <field name="model">ls.validation.report</field>
+        <field name="arch" type="xml">
+            <search string="Validation Summary Reports">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="item_id"/>
+                <field name="author_id"/>
+                <filter name="filter_to_approve" string="To Approve"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_restricted" string="With Restrictions"
+                        domain="[('conclusion', '=', 'validated_restricted')]"/>
+                <separator/>
+                <filter name="filter_expiring" string="Expiring in 90 Days"
+                        domain="[('valid_until', '&lt;=', (context_today() + datetime.timedelta(days=90)).strftime('%Y-%m-%d')), ('valid_until', '!=', False)]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_conclusion" string="Conclusion"
+                        context="{'group_by': 'conclusion'}"/>
+                    <filter name="group_by_item" string="Validation Item"
+                        context="{'group_by': 'item_id'}"/>
+                    <filter name="group_by_expiry" string="Expiry Month"
+                        context="{'group_by': 'valid_until:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_report" model="ir.actions.act_window">
+        <field name="name">Validation Summary Reports</field>
+        <field name="res_model">ls.validation.report</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_validation_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No validation summary report yet
+            </p>
+            <p>
+                Approving a summary report is the only way to grant a validated
+                status to an item.
+            </p>
+        </field>
+    </record>
+
+</odoo>

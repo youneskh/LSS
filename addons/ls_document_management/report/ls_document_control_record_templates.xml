@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_document_control_record_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Document Control Record</h2>
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Document Number:</strong> <span t-field="doc.reference"/><br/>
+                        <strong>Title:</strong> <span t-field="doc.name"/><br/>
+                        <strong>Folder:</strong> <span t-field="doc.folder_id.complete_name"/><br/>
+                        <strong>Owner:</strong> <span t-field="doc.owner_id.name"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Status:</strong> <span t-field="doc.state"/><br/>
+                        <strong>Effective Version:</strong>
+                        <span t-if="doc.current_version_id" t-field="doc.current_version_id.version_number"/>
+                        <span t-if="not doc.current_version_id">Not published</span><br/>
+                        <strong>Effective Date:</strong> <span t-field="doc.effective_date"/><br/>
+                        <strong>Retention Due Date:</strong> <span t-field="doc.retention_due_date"/>
+                    </div>
+                </div>
+
+                <h3>Version History</h3>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>File</th>
+                            <th>Author</th>
+                            <th>Created On</th>
+                            <th>Summary of Change</th>
+                            <th>SHA-256 Checksum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.version_ids.sorted(key=lambda v: v.version_number)" t-as="version">
+                            <td><span t-field="version.version_number"/></td>
+                            <td><span t-field="version.filename"/></td>
+                            <td><span t-field="version.author_id.name"/></td>
+                            <td><span t-field="version.create_date"/></td>
+                            <td><span t-field="version.change_summary"/></td>
+                            <td style="word-break: break-all;"><span t-field="version.checksum_sha256"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Approval History</h3>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Approver</th>
+                            <th>Decision</th>
+                            <th>Decision Date</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.approval_ids" t-as="approval">
+                            <td><span t-field="approval.version_id.version_number"/></td>
+                            <td><span t-field="approval.approver_id.name"/></td>
+                            <td><span t-field="approval.state"/></td>
+                            <td><span t-field="approval.decision_date"/></td>
+                            <td><span t-field="approval.comment"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="mt32 text-muted">
+                    This record is generated from the Life Sciences Document Management module.
+                    It reports the recorded control data of the document. It does not by itself
+                    constitute evidence of regulatory compliance.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_document_control_record">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_document_management.report_ls_document_control_record_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

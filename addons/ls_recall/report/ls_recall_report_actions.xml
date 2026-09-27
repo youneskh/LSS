@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="action_report_ls_recall_notice" model="ir.actions.report">
+        <field name="name">Recall Notice</field>
+        <field name="model">ls.recall.communication</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_recall.report_ls_recall_notice</field>
+        <field name="report_file">ls_recall.report_ls_recall_notice</field>
+        <field name="binding_model_id" ref="model_ls_recall_communication"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Recall Notice - %s' % (object.name)</field>
+    </record>
+
+    <record id="action_report_ls_recall_summary" model="ir.actions.report">
+        <field name="name">Recall Report</field>
+        <field name="model">ls.recall.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_recall.report_ls_recall_summary</field>
+        <field name="report_file">ls_recall.report_ls_recall_summary</field>
+        <field name="binding_model_id" ref="model_ls_recall_report"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Recall Report - %s' % (object.name)</field>
+    </record>
+
+</odoo>

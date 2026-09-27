@@ -1,0 +1,19 @@
+<odoo>
+    <record id="view_lss_foundation_document_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.document.tree</field>
+        <field name="model">lss.foundation.document</field>
+        <field name="arch" type="xml">
+            <tree><field name="name"/><field name="document_type_id"/><field name="reference_number"/><field name="issue_date"/><field name="status" widget="badge"/></tree>
+        </field>
+    </record>
+    <record id="action_lss_foundation_document" model="ir.actions.act_window">
+        <field name="name">Foundation Documents</field>
+        <field name="res_model">lss.foundation.document</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="action_lss_foundation_document_type" model="ir.actions.act_window">
+        <field name="name">Document Types</field>
+        <field name="res_model">lss.foundation.document.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Declared deviation: no view of the "product" module is inherited.
+
+     Extending the standard product views would require referring to the XML
+     identifiers of views that this module does not own, for example
+     "product.product_template_form_view". Those identifiers could not be
+     verified against the Odoo 19 source, and an unresolved "ref" attribute
+     aborts the installation of the whole module. The pharmaceutical fields
+     are therefore exposed through views that this module owns entirely,
+     reached from Pharmaceutical / Materials / Pharmaceutical Products.
+
+     The fields remain ordinary fields of "product.template". A deployment
+     that has verified the identifiers of the standard product views for its
+     own Odoo build can add an inheriting view in a local module without any
+     change to this one. -->
+<odoo>
+
+    <record id="view_ls_pharma_product_template_list" model="ir.ui.view">
+        <field name="name">product.template.list.ls.pharma</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <list string="Pharmaceutical Products">
+                <field name="default_code" optional="show"/>
+                <field name="name"/>
+                <field name="is_pharmaceutical"/>
+                <field name="pharma_dosage_form"/>
+                <field name="pharma_strength"/>
+                <field name="pharma_gtin14" optional="show"/>
+                <field name="pharma_national_number" optional="hide"/>
+                <field name="pharma_marketing_auth_number" optional="show"/>
+                <field name="pharma_shelf_life_months" optional="show"/>
+                <field name="pharma_requires_serialization" optional="show"/>
+                <field name="pharma_theoretical_yield_qty" optional="hide"/>
+                <field name="pharma_yield_min_percentage" optional="hide"/>
+                <field name="pharma_yield_max_percentage" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_product_template_form" model="ir.ui.view">
+        <field name="name">product.template.form.ls.pharma</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <form string="Pharmaceutical Product">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <label for="default_code"/>
+                        <h2>
+                            <field name="default_code" readonly="1"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Presentation">
+                            <field name="is_pharmaceutical"/>
+                            <field name="pharma_dosage_form"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_strength"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_shelf_life_months"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_storage_condition"
+                                   invisible="not is_pharmaceutical"/>
+                        </group>
+                        <group string="Identification and Authorisation">
+                            <field name="pharma_marketing_auth_number"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_marketing_auth_holder_id"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_gtin14"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_national_number"
+                                   invisible="not is_pharmaceutical"/>
+                            <field name="pharma_requires_serialization"
+                                   invisible="not is_pharmaceutical"/>
+                        </group>
+                    </group>
+                    <group string="Yield Expectations"
+                           invisible="not is_pharmaceutical">
+                        <group>
+                            <field name="pharma_theoretical_yield_qty"/>
+                        </group>
+                        <group>
+                            <field name="pharma_yield_min_percentage"/>
+                            <field name="pharma_yield_max_percentage"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        21 CFR 211.186(b)(6) requires the master production and
+                        control record to state the theoretical yield together
+                        with the maximum and minimum percentages of it, and
+                        21 CFR 211.103 requires the actual yield to be compared
+                        against that theoretical yield. The values recorded here
+                        are proposed as defaults on a new batch of this product.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_product_template_search" model="ir.ui.view">
+        <field name="name">product.template.search.ls.pharma</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Pharmaceutical Products">
+                <field name="name" string="Product"/>
+                <field name="default_code"/>
+                <field name="pharma_gtin14"/>
+                <field name="pharma_marketing_auth_number"/>
+                <filter name="filter_pharmaceutical" string="Pharmaceutical Product"
+                        domain="[('is_pharmaceutical', '=', True)]"/>
+                <filter name="filter_serialised" string="Requires Serialisation"
+                        domain="[('pharma_requires_serialization', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_dosage_form" string="Dosage Form"
+                            context="{'group_by': 'pharma_dosage_form'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_product_template" model="ir.actions.act_window">
+        <field name="name">Pharmaceutical Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_product_template_search"/>
+        <field name="context">{'search_default_filter_pharmaceutical': 1}</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'list', 'view_id': ref('view_ls_pharma_product_template_list')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('view_ls_pharma_product_template_form')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No product has been marked as pharmaceutical yet
+            </p>
+            <p>
+                Marking a product as pharmaceutical makes its dosage form, its
+                marketing authorisation, its Global Trade Item Number and its
+                yield expectations available to batches of that product.
+            </p>
+        </field>
+    </record>
+
+</odoo>

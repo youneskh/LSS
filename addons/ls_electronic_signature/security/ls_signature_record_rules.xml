@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <!-- Multi-company isolation. These rules are global: they intersect with
+         every group specific rule below. -->
+    <record id="rule_meaning_company" model="ir.rule">
+        <field name="name">Signature meaning: own companies</field>
+        <field name="model_id" ref="model_ls_signature_meaning"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_policy_company" model="ir.rule">
+        <field name="name">Signature policy: own companies</field>
+        <field name="model_id" ref="model_ls_signature_policy"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_log_company" model="ir.rule">
+        <field name="name">Signature log: own companies</field>
+        <field name="model_id" ref="model_ls_signature_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_attempt_company" model="ir.rule">
+        <field name="name">Signature attempt: own companies</field>
+        <field name="model_id" ref="model_ls_signature_attempt"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_session_company" model="ir.rule">
+        <field name="name">Signature session: own companies</field>
+        <field name="model_id" ref="model_ls_signature_session"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_request_company" model="ir.rule">
+        <field name="name">Signature request: own companies</field>
+        <field name="model_id" ref="model_ls_signature_request"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_integrity_company" model="ir.rule">
+        <field name="name">Integrity check: own companies</field>
+        <field name="model_id" ref="model_ls_signature_integrity_check"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Visibility of signatures. Group specific rules are combined with OR,
+         so a Viewer keeps full visibility while a plain Signer is restricted
+         to their own signatures. -->
+    <record id="rule_log_own_signer" model="ir.rule">
+        <field name="name">Signature log: own signatures</field>
+        <field name="model_id" ref="model_ls_signature_log"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_signer'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_log_all_viewer" model="ir.rule">
+        <field name="name">Signature log: all signatures</field>
+        <field name="model_id" ref="model_ls_signature_log"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_session_own_signer" model="ir.rule">
+        <field name="name">Signature session: own sessions</field>
+        <field name="model_id" ref="model_ls_signature_session"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_signer'))]"/>
+        <field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_session_all_auditor" model="ir.rule">
+        <field name="name">Signature session: all sessions</field>
+        <field name="model_id" ref="model_ls_signature_session"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_auditor'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_request_involved_signer" model="ir.rule">
+        <field name="name">Signature request: requested by or addressed to me</field>
+        <field name="model_id" ref="model_ls_signature_request"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_signer'))]"/>
+        <field name="domain_force">['|', ('signer_ids', 'in', [user.id]), ('requested_by_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_request_all_viewer" model="ir.rule">
+        <field name="name">Signature request: all requests</field>
+        <field name="model_id" ref="model_ls_signature_request"/>
+        <field name="groups" eval="[(4, ref('group_ls_signature_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

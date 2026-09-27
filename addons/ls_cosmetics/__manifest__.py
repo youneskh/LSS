@@ -1,0 +1,45 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+{
+    "name": "Life Sciences - Cosmetics Manufacturing",
+    "version": "19.0.1.0.3",
+    "category": "Manufacturing/Life Sciences",
+    "summary": "Cosmetic formulations, safety assessments, Product Information "
+               "Files, claims, labelling particulars and Algerian prior "
+               "authorisation dossiers.",
+    "author": "Life Sciences Suite Architecture Team",
+    "website": "https://github.com/life-sciences-suite/ls_cosmetics",
+    "license": "AGPL-3",
+    "depends": [
+        "base",
+        "mail",
+        "product",
+        "stock",
+        "mrp",
+    ],
+    "data": [
+        "security/ls_cosmetics_groups.xml",
+        "security/ir.model.access.csv",
+        "security/ls_cosmetics_record_rules.xml",
+        "data/ir_sequence_data.xml",
+        "data/ir_cron_data.xml",
+        "views/ls_cosmetic_restriction_views.xml",
+        "views/ls_cosmetic_ingredient_views.xml",
+        "views/ls_cosmetic_formulation_views.xml",
+        "views/ls_cosmetic_safety_assessment_views.xml",
+        "views/ls_cosmetic_claim_views.xml",
+        "views/ls_cosmetic_label_views.xml",
+        "views/ls_cosmetic_pif_views.xml",
+        "views/ls_cosmetic_dz_authorization_views.xml",
+        "views/product_template_views.xml",
+        "wizards/ls_cosmetic_formulation_revise_views.xml",
+        "wizards/ls_cosmetic_label_generate_views.xml",
+        "report/ls_cosmetic_report_actions.xml",
+        "report/ls_cosmetic_formulation_templates.xml",
+        "report/ls_cosmetic_safety_assessment_templates.xml",
+        "report/ls_cosmetic_pif_templates.xml",
+        "report/ls_cosmetic_label_templates.xml",
+        "views/ls_cosmetics_menus.xml",
+    ],
+    "application": True,
+}

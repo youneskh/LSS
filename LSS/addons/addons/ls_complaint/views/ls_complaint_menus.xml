@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <menuitem id="menu_ls_complaint_root"
+              name="Complaints"
+              web_icon="ls_complaint,static/description/icon.png"
+              sequence="90"
+              groups="ls_complaint.group_ls_complaint_viewer"/>
+
+    <menuitem id="menu_ls_complaint_handling"
+              name="Complaint Handling"
+              parent="menu_ls_complaint_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_complaint_all"
+              name="All Complaints"
+              parent="menu_ls_complaint_handling"
+              action="ls_complaint_action"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_complaint_my"
+              name="My Complaints"
+              parent="menu_ls_complaint_handling"
+              action="ls_complaint_action_my"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_complaint_investigations"
+              name="Investigations"
+              parent="menu_ls_complaint_handling"
+              action="ls_complaint_investigation_action"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_complaint_resolutions"
+              name="Resolutions"
+              parent="menu_ls_complaint_handling"
+              action="ls_complaint_resolution_action"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_complaint_vigilance"
+              name="Vigilance"
+              parent="menu_ls_complaint_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_complaint_adverse_events"
+              name="Adverse Events"
+              parent="menu_ls_complaint_vigilance"
+              action="ls_complaint_adverse_event_action"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_complaint_reporting"
+              name="Reporting"
+              parent="menu_ls_complaint_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_complaint_analysis"
+              name="Complaint Analysis"
+              parent="menu_ls_complaint_reporting"
+              action="ls_complaint_action_analysis"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_complaint_configuration"
+              name="Configuration"
+              parent="menu_ls_complaint_root"
+              sequence="90"
+              groups="ls_complaint.group_ls_complaint_manager"/>
+
+    <menuitem id="menu_ls_complaint_categories"
+              name="Complaint Categories"
+              parent="menu_ls_complaint_configuration"
+              action="ls_complaint_category_action"
+              sequence="10"/>
+
+</odoo>

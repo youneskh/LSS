@@ -1,0 +1,1749 @@
+# Translation template for ls_calibration.
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#: models/calibration_record.py:846
+msgid "A cancellation reason is required before record %(record)s can be cancelled."
+msgstr ""
+
+#: models/calibration_instrument_category.py:136
+msgid "A category cannot be its own ancestor."
+msgstr ""
+
+#: models/calibration_plan.py:448
+msgid "A closure reason is required before calibration plan '%(plan)s' can be closed."
+msgstr ""
+
+#: models/calibration_record.py:828
+msgid "A rejection reason is required."
+msgstr ""
+
+#: models/calibration_plan.py:422
+msgid "A suspension reason is required before calibration plan '%(plan)s' can be suspended."
+msgstr ""
+
+#: models/calibration_point.py:62
+msgid "Absolute Tolerance"
+msgstr ""
+
+#: views/calibration_point_views.xml:44
+msgid "Acceptance Criteria"
+msgstr ""
+
+#: models/calibration_certificate.py:75
+#: models/calibration_standard.py:46
+msgid "Accreditation Reference"
+msgstr ""
+
+#: models/calibration_standard.py:46
+msgid "Accreditation number quoted by the issuing laboratory. Recorded as supplied; this module performs no verification against any accreditation register."
+msgstr ""
+
+#: models/calibration_certificate.py:75
+msgid "Accreditation number quoted on the certificate. Recorded as supplied; this module performs no verification against any accreditation register."
+msgstr ""
+
+#: models/calibration_instrument.py:106
+msgid "Accuracy Class"
+msgstr ""
+
+#: models/calibration_certificate.py:104
+#: models/calibration_instrument.py:267
+#: models/calibration_instrument_category.py:88
+msgid "Active"
+msgstr ""
+
+#: views/calibration_record_views.xml:169
+msgid "Adjustment"
+msgstr ""
+
+#: models/calibration_record.py:176
+msgid "Adjustment Performed"
+msgstr ""
+
+#: models/calibration_oot.py:93
+msgid "Affected Batches / Data Sets"
+msgstr ""
+
+#: views/calibration_oot_views.xml:108
+msgid "Affected Batches or Data Sets"
+msgstr ""
+
+#: models/calibration_oot.py:65
+msgid "Affected From"
+msgstr ""
+
+#: views/calibration_oot_views.xml:76
+msgid "Affected Period"
+msgstr ""
+
+#: models/calibration_oot.py:72
+msgid "Affected To"
+msgstr ""
+
+#: views/calibration_menus.xml:71
+msgid "All Calibration Records"
+msgstr ""
+
+#: models/calibration_record.py:131
+msgid "Ambient Temperature"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:97
+msgid "Analytical balance, laboratory 2"
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:38
+msgid "Analytical balances"
+msgstr ""
+
+#: views/calibration_plan_views.xml:96
+msgid "Approval"
+msgstr ""
+
+#: views/calibration_plan_views.xml:42
+#: views/calibration_record_views.xml:62
+msgid "Approve"
+msgstr ""
+
+#: views/calibration_plan_views.xml:134
+#: views/calibration_record_views.xml:85
+#: views/calibration_record_views.xml:243
+msgid "Approved"
+msgstr ""
+
+#: models/calibration_plan.py:132
+#: models/calibration_record.py:221
+msgid "Approved By"
+msgstr ""
+
+#: models/calibration_plan.py:139
+#: models/calibration_record.py:228
+msgid "Approved On"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:88
+#: views/calibration_instrument_category_views.xml:75
+#: views/calibration_instrument_views.xml:232
+msgid "Archived"
+msgstr ""
+
+#: models/calibration_reading.py:88
+msgid "As Found"
+msgstr ""
+
+#: models/calibration_reading.py:124
+msgid "As Found In Tolerance"
+msgstr ""
+
+#: models/calibration_reading.py:98
+msgid "As Left"
+msgstr ""
+
+#: models/calibration_reading.py:129
+msgid "As Left In Tolerance"
+msgstr ""
+
+#: models/calibration_reading.py:112
+msgid "As-Found Deviation"
+msgstr ""
+
+#: views/calibration_record_views.xml:250
+msgid "As-Found Out of Tolerance"
+msgstr ""
+
+#: models/calibration_reading.py:92
+msgid "As-Found Recorded"
+msgstr ""
+
+#: models/calibration_record.py:155
+msgid "As-Found Result"
+msgstr ""
+
+#: models/calibration_reading.py:118
+msgid "As-Left Deviation"
+msgstr ""
+
+#: models/calibration_reading.py:102
+msgid "As-Left Recorded"
+msgstr ""
+
+#: models/calibration_record.py:162
+msgid "As-Left Result"
+msgstr ""
+
+#: models/calibration_record.py:573
+msgid "As-found measurement outside tolerance on %(count)s calibration point(s)."
+msgstr ""
+
+#: views/calibration_oot_views.xml:150
+msgid "Assessed"
+msgstr ""
+
+#: models/calibration_oot.py:126
+msgid "Assessed By"
+msgstr ""
+
+#: models/calibration_oot.py:133
+msgid "Assessed On"
+msgstr ""
+
+#: views/calibration_oot_views.xml:104
+msgid "Assessment"
+msgstr ""
+
+#: views/calibration_oot_views.xml:84
+msgid "Assessment Sign-Off"
+msgstr ""
+
+#: models/calibration_oot.py:83
+msgid "Assessment of the consequence of the out-of-tolerance condition on product, process and data generated during the affected period."
+msgstr ""
+
+#: models/calibration_instrument.py:59
+msgid "Asset Tag"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:114
+msgid "Assignment"
+msgstr ""
+
+#: models/calibration_oot.py:246
+msgid "Automatic quarantine on out-of-tolerance event %(event)s."
+msgstr ""
+
+#: views/calibration_record_views.xml:241
+msgid "Awaiting Approval"
+msgstr ""
+
+#: models/calibration_oot.py:105
+msgid "CAPA Reference"
+msgstr ""
+
+#: views/calibration_menus.xml:10
+msgid "Calibration"
+msgstr ""
+
+#: views/calibration_record_views.xml:281
+#: views/calibration_record_views.xml:292
+msgid "Calibration Analysis"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:31
+msgid "Calibration Certificate"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:10
+#: views/calibration_certificate_views.xml:78
+msgid "Calibration Certificates"
+msgstr ""
+
+#: models/calibration_instrument.py:141
+#: views/calibration_instrument_views.xml:129
+msgid "Calibration Interval"
+msgstr ""
+
+#: models/calibration_record.py:75
+#: views/calibration_plan_views.xml:38
+msgid "Calibration Plan"
+msgstr ""
+
+#: models/calibration_instrument.py:217
+#: views/calibration_menus.xml:46
+#: views/calibration_plan_views.xml:12
+msgid "Calibration Plans"
+msgstr ""
+
+#: models/calibration_reading.py:30
+#: views/calibration_point_views.xml:30
+msgid "Calibration Point"
+msgstr ""
+
+#: models/calibration_instrument.py:211
+#: views/calibration_instrument_views.xml:148
+#: views/calibration_menus.xml:34
+msgid "Calibration Points"
+msgstr ""
+
+#: models/calibration_certificate.py:36
+#: models/calibration_oot.py:33
+#: models/calibration_oot.py:372
+msgid "Calibration Record"
+msgstr ""
+
+#: models/calibration_instrument.py:222
+#: models/calibration_plan.py:145
+#: models/calibration_standard.py:74
+msgid "Calibration Records"
+msgstr ""
+
+#: views/calibration_record_views.xml:304
+msgid "Calibration Schedule"
+msgstr ""
+
+#: models/calibration_instrument.py:185
+#: views/calibration_instrument_views.xml:237
+#: views/calibration_menus.xml:28
+msgid "Calibration Status"
+msgstr ""
+
+#: models/calibration_certificate.py:193
+msgid "Calibration certificates cannot be deleted. Archive the certificate instead."
+msgstr ""
+
+#: models/calibration_instrument.py:651
+msgid "Calibration is overdue. Due date was %(due)s."
+msgstr ""
+
+#: models/calibration_record.py:908
+msgid "Calibration of instrument %(instrument)s is %(status)s. Due date: %(due)s."
+msgstr ""
+
+#: models/calibration_plan.py:312
+msgid "Calibration plan '%(plan)s' cannot move from '%(current)s' to '%(target)s'."
+msgstr ""
+
+#: models/calibration_plan.py:479
+msgid "Calibration plan '%(plan)s' has generated %(count)s record(s) and cannot be deleted. Close it instead."
+msgstr ""
+
+#: models/calibration_plan.py:242
+msgid "Calibration plan '%(plan)s' is performed externally and must name an external provider."
+msgstr ""
+
+#: models/calibration_plan.py:226
+msgid "Calibration plan '%(plan)s': the effective-to date cannot precede the effective-from date."
+msgstr ""
+
+#: models/calibration_point.py:262
+msgid "Calibration point '%(point)s' carries recorded readings and cannot be deleted. Archive it instead."
+msgstr ""
+
+#: models/calibration_reading.py:228
+msgid "Calibration point '%(point)s' does not belong to instrument %(instrument)s."
+msgstr ""
+
+#: models/calibration_point.py:177
+msgid "Calibration point '%(point)s' has a nominal value of %(nominal)s, which lies outside the range %(low)s to %(high)s declared for instrument %(instrument)s."
+msgstr ""
+
+#: models/calibration_point.py:244
+msgid "Calibration point '%(point)s' has been used in %(count)s committed calibration record(s). Its acceptance criteria can no longer be changed. Archive this point and create a new one instead. Field(s) refused: %(fields)s."
+msgstr ""
+
+#: models/calibration_point.py:198
+msgid "Calibration point '%(point)s' uses a percent-of-span tolerance but instrument %(instrument)s declares a zero span. Enter the instrument range first."
+msgstr ""
+
+#: models/calibration_record.py:521
+msgid "Calibration record %(record)s cannot move from '%(current)s' to '%(target)s'."
+msgstr ""
+
+#: models/calibration_record.py:619
+msgid "Calibration record %(record)s is %(state)s and can no longer be modified. Field(s) refused: %(fields)s."
+msgstr ""
+
+#: models/calibration_record.py:639
+msgid "Calibration record %(record)s is in state '%(state)s' and cannot be deleted. Cancel it instead."
+msgstr ""
+
+#: models/calibration_reading.py:254
+msgid "Calibration record %(record)s is in state '%(state)s'. Readings can no longer be %(operation)s."
+msgstr ""
+
+#: models/calibration_certificate.py:162
+msgid "Calibration record %(record)s is not approved. A certificate can only be issued for an approved calibration."
+msgstr ""
+
+#: wizards/calibration_record_reject.py:43
+msgid "Calibration record rejected. Reason: %(reason)s"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:82
+#: views/calibration_menus.xml:59
+#: views/calibration_plan_views.xml:60
+msgid "Calibrations"
+msgstr ""
+
+#: views/calibration_record_views.xml:69
+#: views/calibration_wizard_views.xml:32
+#: views/calibration_wizard_views.xml:61
+msgid "Cancel"
+msgstr ""
+
+#: views/calibration_record_views.xml:213
+msgid "Cancellation"
+msgstr ""
+
+#: models/calibration_record.py:232
+msgid "Cancellation Reason"
+msgstr ""
+
+#: views/calibration_record_views.xml:87
+msgid "Cancelled"
+msgstr ""
+
+#: views/calibration_record_views.xml:69
+msgid "Cancelling a calibration record is permanent. A cancellation reason is required. Continue?"
+msgstr ""
+
+#: models/calibration_instrument.py:48
+#: models/calibration_plan.py:50
+#: models/calibration_record.py:62
+msgid "Category"
+msgstr ""
+
+#: models/calibration_instrument_category.py:26
+msgid "Category Name"
+msgstr ""
+
+#: models/calibration_certificate.py:132
+msgid "Certificate %(certificate)s is dated before the calibration was performed on %(performed)s."
+msgstr ""
+
+#: models/calibration_certificate.py:207
+msgid "Certificate %(certificate)s is external. Open the stored document instead of printing an internal certificate."
+msgstr ""
+
+#: models/calibration_instrument.py:240
+#: models/calibration_record.py:243
+msgid "Certificate Count"
+msgstr ""
+
+#: models/calibration_standard.py:52
+msgid "Certificate Date"
+msgstr ""
+
+#: models/calibration_certificate.py:87
+#: models/calibration_standard.py:60
+#: views/calibration_standard_views.xml:62
+msgid "Certificate Document"
+msgstr ""
+
+#: models/calibration_standard.py:64
+msgid "Certificate Filename"
+msgstr ""
+
+#: models/calibration_certificate.py:25
+msgid "Certificate Number"
+msgstr ""
+
+#: models/calibration_certificate.py:52
+#: views/calibration_certificate_views.xml:93
+msgid "Certificate Type"
+msgstr ""
+
+#: models/calibration_certificate.py:25
+msgid "Certificate number. For an external certificate, enter the number issued by the calibration laboratory. Left as '/' an internal number is drawn from the certificate sequence."
+msgstr ""
+
+#: models/calibration_instrument.py:227
+#: models/calibration_record.py:238
+#: views/calibration_instrument_views.xml:86
+msgid "Certificates"
+msgstr ""
+
+#: models/calibration_instrument_category.py:50
+msgid "Child Categories"
+msgstr ""
+
+#: views/calibration_standard_views.xml:37
+msgid "Class E2 mass set, 1 mg to 200 g"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:124
+msgid "Classification"
+msgstr ""
+
+#: views/calibration_oot_views.xml:52
+#: views/calibration_plan_views.xml:52
+msgid "Close"
+msgstr ""
+
+#: models/calibration_oot.py:136
+msgid "Closed By"
+msgstr ""
+
+#: models/calibration_oot.py:143
+msgid "Closed On"
+msgstr ""
+
+#: views/calibration_plan_views.xml:52
+msgid "Closing a calibration plan is permanent. Continue?"
+msgstr ""
+
+#: views/calibration_plan_views.xml:112
+msgid "Closure"
+msgstr ""
+
+#: models/calibration_plan.py:143
+msgid "Closure Reason"
+msgstr ""
+
+#: views/calibration_oot_views.xml:88
+msgid "Closure Sign-Off"
+msgstr ""
+
+#: models/calibration_instrument_category.py:38
+msgid "Code"
+msgstr ""
+
+#: models/calibration_instrument.py:204
+msgid "Commissioning Date"
+msgstr ""
+
+#: models/calibration_certificate.py:96
+#: models/calibration_instrument.py:260
+#: models/calibration_instrument_category.py:81
+msgid "Company"
+msgstr ""
+
+#: views/calibration_oot_views.xml:49
+msgid "Complete Assessment"
+msgstr ""
+
+#: models/calibration_instrument_category.py:32
+msgid "Complete Name"
+msgstr ""
+
+#: models/calibration_standard.py:54
+msgid "Computed from the Valid Until date against the current date."
+msgstr ""
+
+#: models/calibration_record.py:189
+msgid "Computed from the performed date and the applicable interval. May be overridden by an authorised user; the override is tracked."
+msgstr ""
+
+#: views/calibration_record_views.xml:192
+msgid "Conditions"
+msgstr ""
+
+#: views/calibration_menus.xml:96
+msgid "Configuration"
+msgstr ""
+
+#: views/calibration_oot_views.xml:107
+msgid "Consequence of the out-of-tolerance condition on product, process and data generated during the affected period."
+msgstr ""
+
+#: views/calibration_oot_views.xml:155
+msgid "Critical Instrument"
+msgstr ""
+
+#: models/calibration_instrument.py:111
+#: models/calibration_record.py:69
+#: views/calibration_instrument_views.xml:241
+msgid "Criticality"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:221
+msgid "Criticality: Critical"
+msgstr ""
+
+#: models/calibration_standard.py:54
+#: views/calibration_standard_views.xml:90
+msgid "Currently Valid"
+msgstr ""
+
+#: models/calibration_oot.py:72
+msgid "Date at which the out-of-tolerance condition was detected."
+msgstr ""
+
+#: models/calibration_oot.py:65
+msgid "Date of the last calibration at which the instrument was found within tolerance. Empty when the instrument has no previous approved calibration, in which case the whole period of use is affected."
+msgstr ""
+
+#: models/calibration_plan.py:81
+msgid "Date of the next calibration this plan will generate. Derived from the latest scheduled or approved record, or from the plan start date when no record exists yet."
+msgstr ""
+
+#: models/calibration_instrument.py:179
+msgid "Days to Due"
+msgstr ""
+
+#: models/calibration_instrument_category.py:66
+#: views/calibration_instrument_category_views.xml:78
+msgid "Default Criticality"
+msgstr ""
+
+#: models/calibration_instrument_category.py:55
+msgid "Default Interval"
+msgstr ""
+
+#: models/calibration_instrument_category.py:61
+msgid "Default Interval Unit"
+msgstr ""
+
+#: models/calibration_instrument_category.py:55
+msgid "Default calibration interval proposed for instruments created in this category."
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:48
+msgid "Defaults for New Instruments"
+msgstr ""
+
+#: models/calibration_instrument.py:259
+#: models/calibration_instrument_category.py:71
+#: models/calibration_standard.py:34
+msgid "Description"
+msgstr ""
+
+#: models/calibration_oot.py:78
+msgid "Description of the Finding"
+msgstr ""
+
+#: models/calibration_oot.py:55
+msgid "Detected On"
+msgstr ""
+
+#: views/calibration_oot_views.xml:169
+msgid "Detection Month"
+msgstr ""
+
+#: models/calibration_oot.py:99
+#: views/calibration_oot_views.xml:113
+#: views/calibration_oot_views.xml:167
+msgid "Disposition"
+msgstr ""
+
+#: models/calibration_oot.py:104
+msgid "Disposition Justification"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:60
+msgid "Document"
+msgstr ""
+
+#: models/calibration_certificate.py:88
+msgid "Document Filename"
+msgstr ""
+
+#: views/calibration_plan_views.xml:135
+msgid "Draft"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:214
+msgid "Due Soon"
+msgstr ""
+
+#: models/calibration_instrument.py:154
+msgid "Due Soon Threshold (days)"
+msgstr ""
+
+#: models/calibration_plan.py:74
+msgid "Effective From"
+msgstr ""
+
+#: models/calibration_plan.py:80
+msgid "Effective To"
+msgstr ""
+
+#: views/calibration_record_views.xml:194
+msgid "Environmental Conditions"
+msgstr ""
+
+#: models/calibration_oot.py:343
+msgid "Event %(event)s reports a product impact and requires a corrective action reference before it can be closed."
+msgstr ""
+
+#: models/calibration_oot.py:306
+msgid "Event %(event)s requires a disposition."
+msgstr ""
+
+#: models/calibration_oot.py:290
+msgid "Event %(event)s requires a documented impact assessment."
+msgstr ""
+
+#: models/calibration_oot.py:313
+msgid "Event %(event)s requires a justification for the disposition."
+msgstr ""
+
+#: models/calibration_oot.py:298
+msgid "Event %(event)s requires a product impact classification."
+msgstr ""
+
+#: models/calibration_oot.py:352
+msgid "Event %(event)s was assessed by you and must be closed by a different user."
+msgstr ""
+
+#: models/calibration_oot.py:186
+msgid "Event %(event)s: the affected period cannot end before it starts."
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:93
+msgid "Every selected plan is already scheduled up to %(horizon)s. No record was created."
+msgstr ""
+
+#: views/calibration_plan_views.xml:87
+msgid "Execution"
+msgstr ""
+
+#: models/calibration_standard.py:66
+msgid "Expanded measurement uncertainty of the standard, expressed in the unit recorded below."
+msgstr ""
+
+#: views/calibration_standard_views.xml:34
+#: views/calibration_standard_views.xml:91
+msgid "Expired"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:86
+#: views/calibration_plan_views.xml:139
+msgid "External"
+msgstr ""
+
+#: models/calibration_instrument.py:251
+msgid "External Equipment Reference"
+msgstr ""
+
+#: models/calibration_plan.py:100
+#: models/calibration_record.py:114
+msgid "External Provider"
+msgstr ""
+
+#: models/calibration_certificate.py:149
+msgid "External certificate %(certificate)s must carry the document received from the issuing laboratory."
+msgstr ""
+
+#: views/calibration_record_views.xml:248
+msgid "Failed"
+msgstr ""
+
+#: models/calibration_record.py:182
+msgid "Failed Points"
+msgstr ""
+
+#: views/calibration_oot_views.xml:68
+msgid "Finding"
+msgstr ""
+
+#: views/calibration_record_views.xml:152
+msgid "Found?"
+msgstr ""
+
+#: models/calibration_oot.py:93
+msgid "Free-text identification of the batches, lots or data sets generated during the affected period. Recorded as text; this module declares no dependency on a manufacturing application."
+msgstr ""
+
+#: models/calibration_instrument.py:60
+msgid "Free-text physical location. This module does not depend on the Inventory application, so locations are recorded as text."
+msgstr ""
+
+#: models/calibration_instrument.py:251
+msgid "Free-text reference to the same physical asset in another application (for example a maintenance or asset management system). This module declares no dependency on such an application; a separate bridge module may replace this field with a relational link."
+msgstr ""
+
+#: views/calibration_wizard_views.xml:31
+msgid "Generate"
+msgstr ""
+
+#: views/calibration_menus.xml:53
+#: views/calibration_wizard_views.xml:10
+msgid "Generate Scheduled Calibrations"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:17
+msgid "Generate Up To"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:45
+msgid "Generated Records"
+msgstr ""
+
+#: models/calibration_plan.py:364
+msgid "Generating calibrations for plan '%(plan)s' would create more than %(limit)s records. Reduce the horizon date or review the interval."
+msgstr ""
+
+#: views/calibration_certificate_views.xml:89
+#: views/calibration_instrument_category_views.xml:76
+#: views/calibration_instrument_views.xml:233
+msgid "Group By"
+msgstr ""
+
+#: models/calibration_instrument.py:121
+#: views/calibration_instrument_views.xml:219
+msgid "GxP Critical"
+msgstr ""
+
+#: models/calibration_point.py:54
+msgid "Half-width of the acceptance interval. For a percentage tolerance type the value is expressed in percent, so 0.5 means 0.5 %, not 50 %."
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:41
+#: views/calibration_instrument_views.xml:106
+#: views/calibration_standard_views.xml:41
+msgid "Identification"
+msgstr ""
+
+#: views/calibration_oot_views.xml:111
+msgid "Identification of the batches, lots or data sets generated during the affected period."
+msgstr ""
+
+#: models/calibration_standard.py:36
+msgid "Identifier of the calibration certificate that establishes the traceability of this standard."
+msgstr ""
+
+#: models/calibration_plan.py:112
+msgid "Identifier of the written calibration procedure or SOP applied. Recorded as text; this module declares no dependency on a document management application."
+msgstr ""
+
+#: models/calibration_oot.py:83
+#: views/calibration_oot_views.xml:99
+msgid "Impact Assessment"
+msgstr ""
+
+#: models/calibration_instrument.py:111
+msgid "Impact of an inaccurate measurement from this instrument on product quality, patient safety or data integrity. The classification is established by the organisation's own risk assessment."
+msgstr ""
+
+#: views/calibration_instrument_views.xml:224
+msgid "In Service"
+msgstr ""
+
+#: models/calibration_certificate.py:44
+#: models/calibration_oot.py:41
+#: models/calibration_plan.py:36
+msgid "Instrument"
+msgstr ""
+
+#: models/calibration_instrument.py:467
+msgid "Instrument %(code)s cannot move from '%(current)s' to '%(target)s'."
+msgstr ""
+
+#: models/calibration_instrument.py:505
+msgid "Instrument %(code)s carries %(count)s calibration record(s) and cannot be deleted. Retire it instead."
+msgstr ""
+
+#: models/calibration_instrument.py:571
+msgid "Instrument %(code)s has calibration history and cannot be reset to draft."
+msgstr ""
+
+#: models/calibration_instrument.py:523
+msgid "Instrument %(code)s has no calibration point defined. At least one calibration point is required before the instrument can be placed in service."
+msgstr ""
+
+#: models/calibration_instrument.py:408
+msgid "Instrument %(code)s: the range maximum (%(maximum)s) cannot be lower than the range minimum (%(minimum)s)."
+msgstr ""
+
+#: models/calibration_instrument.py:427
+msgid "Instrument %(code)s: the retirement date cannot precede the commissioning date."
+msgstr ""
+
+#: models/calibration_plan.py:276
+msgid "Instrument %(instrument)s already has an approved calibration plan (%(other)s) whose effective period overlaps this one."
+msgstr ""
+
+#: models/calibration_plan.py:400
+msgid "Instrument %(instrument)s has no calibration point defined. Define at least one point before approving the plan."
+msgstr ""
+
+#: models/calibration_plan.py:392
+msgid "Instrument %(instrument)s is retired; its calibration plan cannot be approved."
+msgstr ""
+
+#: models/calibration_record.py:668
+msgid "Instrument %(instrument)s is retired; no further calibration can be started."
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:10
+#: views/calibration_instrument_category_views.xml:69
+#: views/calibration_menus.xml:102
+msgid "Instrument Categories"
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:26
+msgid "Instrument Category"
+msgstr ""
+
+#: models/calibration_instrument_category.py:77
+msgid "Instrument Count"
+msgstr ""
+
+#: models/calibration_oot.py:49
+msgid "Instrument Criticality"
+msgstr ""
+
+#: models/calibration_instrument.py:37
+#: models/calibration_plan.py:44
+#: models/calibration_record.py:56
+msgid "Instrument ID"
+msgstr ""
+
+#: models/calibration_instrument.py:31
+msgid "Instrument Name"
+msgstr ""
+
+#: views/calibration_menus.xml:22
+msgid "Instrument Register"
+msgstr ""
+
+#: models/calibration_instrument.py:541
+msgid "Instrument placed in quarantine."
+msgstr ""
+
+#: models/calibration_instrument_category.py:72
+#: views/calibration_instrument_category_views.xml:33
+#: views/calibration_instrument_views.xml:13
+msgid "Instruments"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:182
+msgid "Integration"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:180
+msgid "Intended use, installation details and any handling precaution."
+msgstr ""
+
+#: views/calibration_certificate_views.xml:84
+#: views/calibration_plan_views.xml:138
+msgid "Internal"
+msgstr ""
+
+#: models/calibration_plan.py:61
+msgid "Interval"
+msgstr ""
+
+#: models/calibration_instrument.py:147
+#: models/calibration_plan.py:67
+msgid "Interval Unit"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:49
+msgid "Issue"
+msgstr ""
+
+#: models/calibration_certificate.py:59
+msgid "Issue Date"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:95
+msgid "Issue Month"
+msgstr ""
+
+#: models/calibration_certificate.py:65
+msgid "Issued By"
+msgstr ""
+
+#: models/calibration_standard.py:42
+#: views/calibration_standard_views.xml:96
+msgid "Issuing Laboratory"
+msgstr ""
+
+#: models/calibration_certificate.py:71
+msgid "Issuing Organisation"
+msgstr ""
+
+#: views/calibration_oot_views.xml:120
+msgid "Justification"
+msgstr ""
+
+#: models/calibration_point.py:24
+msgid "Label of the calibration point, for example 'Zero', 'Mid-scale' or 'Full scale'."
+msgstr ""
+
+#: models/calibration_standard.py:42
+msgid "Laboratory that issued the traceability certificate."
+msgstr ""
+
+#: models/calibration_instrument.py:167
+msgid "Last Approved Record"
+msgstr ""
+
+#: models/calibration_instrument.py:161
+msgid "Last Calibration"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:17
+msgid "Latest scheduled date for which calibration records are created. Every approved plan effective on or before this date contributes."
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:25
+msgid "Leave empty to consider every approved plan of the company."
+msgstr ""
+
+#: views/calibration_record_views.xml:156
+msgid "Left?"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:239
+msgid "Lifecycle Status"
+msgstr ""
+
+#: models/calibration_instrument.py:60
+msgid "Location"
+msgstr ""
+
+#: models/calibration_point.py:70
+#: models/calibration_reading.py:67
+msgid "Lower Limit"
+msgstr ""
+
+#: models/calibration_instrument.py:56
+#: models/calibration_standard.py:31
+msgid "Manufacturer"
+msgstr ""
+
+#: views/calibration_record_views.xml:53
+msgid "Mark Performed"
+msgstr ""
+
+#: models/calibration_standard.py:66
+#: views/calibration_standard_views.xml:58
+msgid "Measurement Uncertainty"
+msgstr ""
+
+#: models/calibration_instrument.py:81
+msgid "Measurement Unit"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:166
+msgid "Measuring Range"
+msgstr ""
+
+#: views/calibration_plan_views.xml:102
+msgid "Method"
+msgstr ""
+
+#: models/calibration_plan.py:119
+msgid "Method Description"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:164
+msgid "Metrology"
+msgstr ""
+
+#: views/calibration_point_views.xml:34
+msgid "Mid-scale"
+msgstr ""
+
+#: models/calibration_instrument.py:57
+#: models/calibration_standard.py:32
+msgid "Model"
+msgstr ""
+
+#: views/calibration_oot_views.xml:158
+msgid "My Events"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:229
+msgid "My Instruments"
+msgstr ""
+
+#: views/calibration_plan_views.xml:141
+msgid "My Plans"
+msgstr ""
+
+#: models/calibration_record.py:107
+msgid "Name of the external technician when the calibration is performed by a service provider."
+msgstr ""
+
+#: models/calibration_certificate.py:65
+msgid "Name of the issuing laboratory or of the internal function that issued the certificate."
+msgstr ""
+
+#: views/calibration_oot_views.xml:97
+msgid "Nature and magnitude of the out-of-tolerance condition."
+msgstr ""
+
+#: views/calibration_instrument_views.xml:216
+msgid "Never Calibrated"
+msgstr ""
+
+#: models/calibration_instrument.py:173
+msgid "Next Due"
+msgstr ""
+
+#: models/calibration_record.py:189
+msgid "Next Due Date"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:245
+msgid "Next Due Month"
+msgstr ""
+
+#: models/calibration_plan.py:81
+msgid "Next Scheduled Calibration"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:85
+msgid "No approved calibration plan matches the selected criteria."
+msgstr ""
+
+#: models/calibration_reading.py:60
+msgid "Nominal"
+msgstr ""
+
+#: models/calibration_point.py:38
+msgid "Nominal Value"
+msgstr ""
+
+#: views/calibration_oot_views.xml:147
+msgid "Not Closed"
+msgstr ""
+
+#: models/calibration_certificate.py:95
+#: views/calibration_certificate_views.xml:65
+msgid "Notes"
+msgstr ""
+
+#: models/calibration_instrument.py:154
+msgid "Number of days before the next due date at which the instrument is reported as Due Soon."
+msgstr ""
+
+#: models/calibration_instrument.py:243
+#: models/calibration_record.py:251
+msgid "OOT Count"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:90
+#: views/calibration_menus.xml:89
+#: views/calibration_record_views.xml:81
+msgid "OOT Events"
+msgstr ""
+
+#: models/calibration_oot.py:25
+msgid "OOT Reference"
+msgstr ""
+
+#: views/calibration_record_views.xml:207
+msgid "Observations made during the calibration."
+msgstr ""
+
+#: views/calibration_oot_views.xml:148
+#: views/calibration_record_views.xml:239
+msgid "Open"
+msgstr ""
+
+#: views/calibration_oot_views.xml:54
+msgid "Open Calibration Record"
+msgstr ""
+
+#: views/calibration_menus.xml:65
+msgid "Open Calibrations"
+msgstr ""
+
+#: models/calibration_instrument.py:244
+msgid "Open OOT Count"
+msgstr ""
+
+#: views/calibration_menus.xml:83
+msgid "Out of Tolerance"
+msgstr ""
+
+#: views/calibration_oot_views.xml:40
+msgid "Out-of-Tolerance Event"
+msgstr ""
+
+#: models/calibration_instrument.py:232
+#: models/calibration_record.py:246
+#: views/calibration_oot_views.xml:13
+msgid "Out-of-Tolerance Events"
+msgstr ""
+
+#: models/calibration_oot.py:202
+msgid "Out-of-tolerance event %(event)s cannot move from '%(current)s' to '%(target)s'."
+msgstr ""
+
+#: models/calibration_oot.py:266
+msgid "Out-of-tolerance event %(event)s is in state '%(state)s' and cannot be deleted."
+msgstr ""
+
+#: models/calibration_record.py:774
+msgid "Out-of-tolerance event %(event)s raised on approval."
+msgstr ""
+
+#: models/calibration_record.py:169
+#: views/calibration_record_views.xml:265
+msgid "Overall Result"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:212
+msgid "Overdue"
+msgstr ""
+
+#: models/calibration_instrument_category.py:43
+#: views/calibration_instrument_category_views.xml:77
+msgid "Parent Category"
+msgstr ""
+
+#: models/calibration_instrument.py:72
+msgid "Partner from which the instrument was procured."
+msgstr ""
+
+#: views/calibration_instrument_views.xml:172
+msgid "Performance"
+msgstr ""
+
+#: models/calibration_plan.py:93
+#: models/calibration_record.py:94
+#: views/calibration_plan_views.xml:148
+msgid "Performed By"
+msgstr ""
+
+#: models/calibration_record.py:107
+msgid "Performed By (Name)"
+msgstr ""
+
+#: models/calibration_record.py:101
+msgid "Performed By (User)"
+msgstr ""
+
+#: views/calibration_record_views.xml:271
+msgid "Performed Month"
+msgstr ""
+
+#: models/calibration_record.py:93
+msgid "Performed On"
+msgstr ""
+
+#: views/calibration_record_views.xml:253
+msgid "Performed by Me"
+msgstr ""
+
+#: views/calibration_plan_views.xml:75
+msgid "Periodicity"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:45
+msgid "Place in Service"
+msgstr ""
+
+#: models/calibration_oot.py:254
+msgid "Placed in quarantine following out-of-tolerance event %(event)s."
+msgstr ""
+
+#: views/calibration_plan_views.xml:129
+msgid "Plan"
+msgstr ""
+
+#: models/calibration_instrument.py:238
+msgid "Plan Count"
+msgstr ""
+
+#: models/calibration_plan.py:29
+msgid "Plan Reference"
+msgstr ""
+
+#: views/calibration_menus.xml:40
+msgid "Planning"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:78
+msgid "Plans"
+msgstr ""
+
+#: views/calibration_point_views.xml:37
+msgid "Point"
+msgstr ""
+
+#: models/calibration_instrument.py:237
+msgid "Point Count"
+msgstr ""
+
+#: models/calibration_point.py:24
+msgid "Point Name"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:74
+msgid "Points"
+msgstr ""
+
+#: models/calibration_instrument.py:179
+msgid "Positive when the due date is in the future, negative when the instrument is overdue."
+msgstr ""
+
+#: views/calibration_certificate_views.xml:34
+msgid "Print Certificate"
+msgstr ""
+
+#: models/calibration_plan.py:112
+#: models/calibration_record.py:119
+msgid "Procedure Reference"
+msgstr ""
+
+#: models/calibration_oot.py:88
+#: views/calibration_oot_views.xml:153
+#: views/calibration_oot_views.xml:165
+msgid "Product Impact"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:50
+#: views/calibration_instrument_views.xml:143
+msgid "Quarantine"
+msgstr ""
+
+#: models/calibration_instrument.py:206
+msgid "Quarantine Reason"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:226
+msgid "Quarantined"
+msgstr ""
+
+#: models/calibration_instrument.py:90
+msgid "Range Maximum"
+msgstr ""
+
+#: models/calibration_instrument.py:94
+msgid "Range Maximum minus Range Minimum. Used to evaluate tolerances expressed as a percentage of span."
+msgstr ""
+
+#: models/calibration_instrument.py:86
+msgid "Range Minimum"
+msgstr ""
+
+#: views/calibration_oot_views.xml:123
+msgid "Rationale supporting the disposition decision."
+msgstr ""
+
+#: models/calibration_record.py:152
+msgid "Reading Count"
+msgstr ""
+
+#: models/calibration_point.py:82
+#: models/calibration_record.py:146
+#: views/calibration_record_views.xml:139
+msgid "Readings"
+msgstr ""
+
+#: views/calibration_record_views.xml:216
+msgid "Reason the calibration record is cancelled. Required before cancellation."
+msgstr ""
+
+#: wizards/calibration_record_reject.py:27
+msgid "Reason the calibration record is returned. The reason is stored on the record and appears in its tracked history."
+msgstr ""
+
+#: views/calibration_instrument_views.xml:145
+msgid "Reason the instrument is withdrawn from use."
+msgstr ""
+
+#: views/calibration_plan_views.xml:114
+msgid "Reason the plan is closed."
+msgstr ""
+
+#: views/calibration_plan_views.xml:109
+msgid "Reason the plan is suspended."
+msgstr ""
+
+#: views/calibration_record_views.xml:231
+msgid "Record"
+msgstr ""
+
+#: models/calibration_record.py:738
+msgid "Record %(record)s already carries an approval."
+msgstr ""
+
+#: models/calibration_record.py:703
+msgid "Record %(record)s carries no as-found value. At least one as-found measurement is required."
+msgstr ""
+
+#: models/calibration_record.py:695
+msgid "Record %(record)s carries no reading. Enter the measurement results before marking it as performed."
+msgstr ""
+
+#: models/calibration_record.py:786
+msgid "Record %(record)s is not under review."
+msgstr ""
+
+#: models/calibration_record.py:506
+msgid "Record %(record)s must carry a performed date."
+msgstr ""
+
+#: models/calibration_record.py:498
+msgid "Record %(record)s must cite at least one reference standard before it can be marked as performed."
+msgstr ""
+
+#: models/calibration_record.py:424
+msgid "Record %(record)s references calibration plan '%(plan)s', which belongs to a different instrument."
+msgstr ""
+
+#: models/calibration_record.py:745
+msgid "Record %(record)s was performed by you and must be approved by a different user."
+msgstr ""
+
+#: models/calibration_record.py:793
+msgid "Record %(record)s was performed by you and must be reviewed by a different user."
+msgstr ""
+
+#: models/calibration_record.py:753
+msgid "Record %(record)s was reviewed by you and must be approved by a different user."
+msgstr ""
+
+#: models/calibration_record.py:439
+msgid "Record %(record)s: the performed date cannot be in the future."
+msgstr ""
+
+#: models/calibration_record.py:470
+msgid "Record %(record)s: the user who performed the calibration cannot also approve it."
+msgstr ""
+
+#: models/calibration_record.py:462
+msgid "Record %(record)s: the user who performed the calibration cannot also review it."
+msgstr ""
+
+#: models/calibration_record.py:478
+msgid "Record %(record)s: the user who reviewed the calibration cannot also approve it."
+msgstr ""
+
+#: models/calibration_instrument.py:239
+#: models/calibration_plan.py:150
+#: models/calibration_standard.py:81
+msgid "Record Count"
+msgstr ""
+
+#: models/calibration_record.py:40
+msgid "Record Reference"
+msgstr ""
+
+#: views/calibration_record_views.xml:59
+msgid "Record Review"
+msgstr ""
+
+#: models/calibration_reading.py:51
+msgid "Record Status"
+msgstr ""
+
+#: views/calibration_standard_views.xml:31
+msgid "Reference Standard"
+msgstr ""
+
+#: models/calibration_record.py:120
+#: views/calibration_menus.xml:108
+#: views/calibration_record_views.xml:175
+msgid "Reference Standards"
+msgstr ""
+
+#: models/calibration_plan.py:29
+msgid "Reference of the calibration plan, for example the number of the governing procedure or plan document."
+msgstr ""
+
+#: models/calibration_oot.py:105
+msgid "Reference of the corrective and preventive action raised for this event, recorded as text. This module declares no dependency on a CAPA application; a separate bridge module may replace this field with a relational link."
+msgstr ""
+
+#: models/calibration_standard.py:124
+msgid "Reference standard %(code)s is cited by %(count)s calibration record(s) and cannot be deleted. Archive it instead."
+msgstr ""
+
+#: views/calibration_record_views.xml:65
+#: views/calibration_wizard_views.xml:60
+msgid "Reject"
+msgstr ""
+
+#: models/calibration_record.py:813
+#: views/calibration_wizard_views.xml:49
+msgid "Reject Calibration Record"
+msgstr ""
+
+#: views/calibration_record_views.xml:245
+msgid "Rejected"
+msgstr ""
+
+#: views/calibration_record_views.xml:209
+msgid "Rejection"
+msgstr ""
+
+#: models/calibration_record.py:231
+#: wizards/calibration_record_reject.py:27
+#: views/calibration_wizard_views.xml:54
+msgid "Rejection Reason"
+msgstr ""
+
+#: models/calibration_record.py:138
+msgid "Relative Humidity (%)"
+msgstr ""
+
+#: models/calibration_record.py:233
+#: views/calibration_record_views.xml:204
+msgid "Remarks"
+msgstr ""
+
+#: models/calibration_instrument.py:131
+msgid "Requires OOT Impact Assessment"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:66
+msgid "Reset to Draft"
+msgstr ""
+
+#: models/calibration_instrument.py:102
+msgid "Resolution"
+msgstr ""
+
+#: models/calibration_instrument.py:66
+#: models/calibration_oot.py:146
+#: models/calibration_plan.py:105
+msgid "Responsible"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:31
+msgid "Restrict to Category"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:35
+msgid "Restrict to Criticality"
+msgstr ""
+
+#: wizards/calibration_plan_generate.py:25
+msgid "Restrict to Plans"
+msgstr ""
+
+#: views/calibration_wizard_views.xml:21
+msgid "Restrict to Specific Plans"
+msgstr ""
+
+#: models/calibration_certificate.py:89
+#: views/calibration_record_views.xml:162
+msgid "Result"
+msgstr ""
+
+#: views/calibration_plan_views.xml:48
+msgid "Resume"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:61
+msgid "Retire"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:94
+msgid "Retired"
+msgstr ""
+
+#: models/calibration_instrument.py:205
+msgid "Retirement Date"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:61
+msgid "Retiring an instrument archives it and prevents any further calibration. Continue?"
+msgstr ""
+
+#: views/calibration_record_views.xml:131
+msgid "Review and Approval"
+msgstr ""
+
+#: models/calibration_record.py:211
+msgid "Reviewed By"
+msgstr ""
+
+#: models/calibration_record.py:218
+msgid "Reviewed On"
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:73
+msgid "Root Categories"
+msgstr ""
+
+#: views/calibration_plan_views.xml:65
+msgid "SOP-CAL-014 annual balance calibration"
+msgstr ""
+
+#: views/calibration_record_views.xml:110
+msgid "Schedule"
+msgstr ""
+
+#: models/calibration_record.py:86
+msgid "Scheduled Date"
+msgstr ""
+
+#: views/calibration_record_views.xml:269
+msgid "Scheduled Month"
+msgstr ""
+
+#: views/calibration_record_views.xml:256
+msgid "Scheduled This Month"
+msgstr ""
+
+#: views/calibration_certificate_views.xml:42
+#: views/calibration_plan_views.xml:68
+msgid "Scope"
+msgstr ""
+
+#: views/calibration_instrument_category_views.xml:58
+msgid "Scope of the category and the instrument families it covers."
+msgstr ""
+
+#: models/calibration_point.py:30
+#: models/calibration_reading.py:37
+msgid "Sequence"
+msgstr ""
+
+#: models/calibration_instrument.py:58
+#: models/calibration_standard.py:33
+msgid "Serial Number"
+msgstr ""
+
+#: models/calibration_reading.py:92
+msgid "Set explicitly when an as-found value has been entered. A separate flag is required because zero is a legitimate measurement."
+msgstr ""
+
+#: models/calibration_reading.py:102
+msgid "Set explicitly when an as-left value has been entered. A separate flag is required because zero is a legitimate measurement."
+msgstr ""
+
+#: models/calibration_instrument.py:121
+msgid "Set when the instrument is used to generate or control data subject to Good Practice requirements. Defaults from the criticality but may be overridden."
+msgstr ""
+
+#: models/calibration_record.py:176
+msgid "Set when the instrument was adjusted between the as-found and the as-left measurement series."
+msgstr ""
+
+#: models/calibration_instrument_category.py:38
+msgid "Short unique code used in reports and exports."
+msgstr ""
+
+#: models/calibration_instrument.py:94
+msgid "Span"
+msgstr ""
+
+#: views/calibration_standard_views.xml:87
+msgid "Standard"
+msgstr ""
+
+#: models/calibration_standard.py:25
+msgid "Standard ID"
+msgstr ""
+
+#: models/calibration_standard.py:24
+msgid "Standard Name"
+msgstr ""
+
+#: views/calibration_record_views.xml:50
+msgid "Start"
+msgstr ""
+
+#: views/calibration_oot_views.xml:45
+msgid "Start Assessment"
+msgstr ""
+
+#: views/calibration_wizard_views.xml:56
+msgid "State why the calibration record is returned for correction."
+msgstr ""
+
+#: models/calibration_instrument.py:196
+#: models/calibration_oot.py:117
+#: models/calibration_plan.py:124
+msgid "Status"
+msgstr ""
+
+#: views/calibration_record_views.xml:56
+msgid "Submit for Review"
+msgstr ""
+
+#: views/calibration_plan_views.xml:104
+msgid "Summary of the calibration method, the points verified and the reference standards required."
+msgstr ""
+
+#: models/calibration_instrument.py:72
+msgid "Supplier"
+msgstr ""
+
+#: views/calibration_plan_views.xml:45
+msgid "Suspend"
+msgstr ""
+
+#: views/calibration_plan_views.xml:136
+msgid "Suspended"
+msgstr ""
+
+#: views/calibration_plan_views.xml:107
+msgid "Suspension"
+msgstr ""
+
+#: models/calibration_plan.py:142
+msgid "Suspension Reason"
+msgstr ""
+
+#: views/calibration_instrument_views.xml:55
+msgid "Take Out of Service"
+msgstr ""
+
+#: models/calibration_record.py:135
+msgid "Temperature Unit"
+msgstr ""
+
+#: wizards/calibration_record_reject.py:39
+msgid "The rejection reason cannot be blank."
+msgstr ""
+
+#: models/calibration_point.py:54
+msgid "Tolerance"
+msgstr ""
+
+#: models/calibration_point.py:48
+#: views/calibration_point_views.xml:76
+msgid "Tolerance Type"
+msgstr ""
+
+#: models/calibration_point.py:62
+msgid "Tolerance converted into the measurement unit of the instrument."
+msgstr ""
+
+#: views/calibration_standard_views.xml:48
+msgid "Traceability"
+msgstr ""
+
+#: models/calibration_standard.py:36
+msgid "Traceability Certificate No."
+msgstr ""
+
+#: models/calibration_standard.py:72
+msgid "Uncertainty Unit"
+msgstr ""
+
+#: models/calibration_instrument.py:37
+msgid "Unique asset identifier of the instrument. Left as '/' the code is drawn from the instrument sequence on creation."
+msgstr ""
+
+#: models/calibration_point.py:43
+#: models/calibration_reading.py:81
+msgid "Unit"
+msgstr ""
+
+#: models/calibration_instrument.py:81
+msgid "Unit of measurement of the instrument indication, entered as free text (for example 'g', 'degC', 'bar', 'mL')."
+msgstr ""
+
+#: models/calibration_point.py:143
+msgid "Unsupported tolerance type '%(tolerance_type)s'."
+msgstr ""
+
+#: models/calibration_point.py:76
+#: models/calibration_reading.py:74
+msgid "Upper Limit"
+msgstr ""
+
+#: models/calibration_certificate.py:81
+#: models/calibration_standard.py:53
+msgid "Valid Until"
+msgstr ""
+
+#: views/calibration_standard_views.xml:98
+msgid "Valid Until Month"
+msgstr ""
+
+#: models/calibration_instrument.py:131
+msgid "When set, an out-of-tolerance as-found result on this instrument raises an OOT event that must be assessed and closed."
+msgstr ""
+
+#: models/calibration_reading.py:270
+msgid "deleted"
+msgstr ""
+
+#: models/calibration_reading.py:265
+msgid "modified"
+msgstr ""

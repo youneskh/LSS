@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_api_list" model="ir.ui.view">
+        <field name="name">ls.pharma.api.list</field>
+        <field name="model">ls.pharma.api</field>
+        <field name="arch" type="xml">
+            <list string="Active Pharmaceutical Ingredients"
+                  decoration-muted="state == 'obsolete'"
+                  decoration-warning="state == 'restricted'"
+                  decoration-success="state == 'qualified'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="inn_name"/>
+                <field name="cas_number" optional="show"/>
+                <field name="pharmacopoeia"/>
+                <field name="potency_basis" optional="hide"/>
+                <field name="label_assay_percentage" optional="hide"/>
+                <field name="retest_period_months" optional="hide"/>
+                <field name="is_controlled_substance" optional="hide"/>
+                <field name="of_animal_origin" optional="hide"/>
+                <field name="is_sterile" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_api_form" model="ir.ui.view">
+        <field name="name">ls.pharma.api.form</field>
+        <field name="model">ls.pharma.api</field>
+        <field name="arch" type="xml">
+            <form string="Active Pharmaceutical Ingredient">
+                <header>
+                    <button name="action_qualify"
+                            string="Qualify"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state not in ['draft', 'restricted']"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_restrict"
+                            string="Restrict"
+                            type="object"
+                            invisible="state != 'qualified'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_obsolete"
+                            string="Declare Obsolete"
+                            type="object"
+                            invisible="state == 'obsolete'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_set_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'obsolete'"
+                            groups="ls_pharma.group_ls_pharma_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,qualified,restricted,obsolete"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Substance name"/>
+                        </h1>
+                        <label for="code"/>
+                        <h2>
+                            <field name="code" placeholder="Internal code"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="inn_name"/>
+                            <field name="active_moiety"/>
+                            <field name="cas_number"/>
+                            <field name="product_id"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Quality Standard">
+                            <field name="pharmacopoeia"/>
+                            <field name="monograph_reference"/>
+                            <field name="potency_basis"/>
+                            <field name="label_assay_percentage"/>
+                        </group>
+                        <group string="Handling">
+                            <field name="storage_condition"/>
+                            <field name="retest_period_months"/>
+                            <field name="is_sterile"/>
+                        </group>
+                        <group string="Regulatory Status">
+                            <field name="is_controlled_substance"/>
+                            <field name="controlled_schedule"
+                                   invisible="not is_controlled_substance"
+                                   required="is_controlled_substance"/>
+                            <field name="of_animal_origin"/>
+                            <field name="tse_statement_reference"
+                                   invisible="not of_animal_origin"
+                                   required="of_animal_origin"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Approved Manufacturers" name="manufacturers">
+                            <field name="manufacturer_partner_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_api_search" model="ir.ui.view">
+        <field name="name">ls.pharma.api.search</field>
+        <field name="model">ls.pharma.api</field>
+        <field name="arch" type="xml">
+            <search string="Active Pharmaceutical Ingredients">
+                <field name="name" string="Substance"/>
+                <field name="code"/>
+                <field name="inn_name"/>
+                <field name="cas_number"/>
+                <field name="product_id"/>
+                <field name="manufacturer_partner_ids"/>
+                <filter name="filter_qualified" string="Qualified" domain="[('state', '=', 'qualified')]"/>
+                <filter name="filter_restricted" string="Restricted" domain="[('state', '=', 'restricted')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_controlled" string="Controlled Substance" domain="[('is_controlled_substance', '=', True)]"/>
+                <filter name="filter_animal_origin" string="Of Animal Origin" domain="[('of_animal_origin', '=', True)]"/>
+                <filter name="filter_sterile" string="Sterile" domain="[('is_sterile', '=', True)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_pharmacopoeia" string="Pharmacopoeia" context="{'group_by': 'pharmacopoeia'}"/>
+                    <filter name="group_potency_basis" string="Potency Basis" context="{'group_by': 'potency_basis'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_api" model="ir.actions.act_window">
+        <field name="name">Active Pharmaceutical Ingredients</field>
+        <field name="res_model">ls.pharma.api</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_api_search"/>
+        <field name="context">{'search_default_filter_qualified': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register the first active pharmaceutical ingredient
+            </p>
+            <p>
+                An active pharmaceutical ingredient carries its quality
+                standard, its potency basis and its approved manufacturers.
+                Only qualified ingredients may be charged into a batch.
+            </p>
+        </field>
+    </record>
+
+</odoo>

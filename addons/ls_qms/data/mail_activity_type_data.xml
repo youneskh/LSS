@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_activity_type_ls_qms_review" model="mail.activity.type">
+            <field name="name">QMS Document Review</field>
+            <field name="icon">fa-file-text-o</field>
+            <field name="sequence">40</field>
+        </record>
+
+        <record id="mail_activity_type_ls_qms_objective" model="mail.activity.type">
+            <field name="name">QMS Objective Follow-up</field>
+            <field name="icon">fa-bullseye</field>
+            <field name="sequence">41</field>
+        </record>
+
+        <record id="mail_activity_type_ls_qms_retention" model="mail.activity.type">
+            <field name="name">QMS Record Retention Review</field>
+            <field name="icon">fa-archive</field>
+            <field name="sequence">42</field>
+        </record>
+
+    </data>
+</odoo>

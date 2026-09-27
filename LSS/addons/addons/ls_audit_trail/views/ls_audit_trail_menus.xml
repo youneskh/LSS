@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!--
+        The functional specification places these entries under a top level
+        "Security" menu. Odoo Community has no such top level menu: the nearest
+        equivalent, Settings / Technical / Security, is visible only to system
+        administrators and would therefore hide the audit trail from the
+        auditor and viewer roles, who are deliberately not administrators.
+        A dedicated top level menu is used instead, and the deviation is
+        recorded in doc/technical_specification.md.
+    -->
+
+    <menuitem id="menu_ls_audit_trail_root"
+              name="Audit Trail"
+              web_icon="ls_audit_trail,static/description/icon.png"
+              sequence="205"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_log"
+              name="Audit Log"
+              parent="menu_ls_audit_trail_root"
+              action="action_ls_audit_trail_log"
+              sequence="10"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_dashboard"
+              name="Audit Dashboard"
+              parent="menu_ls_audit_trail_root"
+              action="action_ls_audit_trail_dashboard"
+              sequence="20"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_log_line"
+              name="Field Changes"
+              parent="menu_ls_audit_trail_root"
+              action="action_ls_audit_trail_log_line"
+              sequence="30"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_integrity"
+              name="Integrity"
+              parent="menu_ls_audit_trail_root"
+              sequence="40"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_verification"
+              name="Verifications"
+              parent="menu_ls_audit_trail_integrity"
+              action="action_ls_audit_trail_verification"
+              sequence="10"
+              groups="group_ls_audit_trail_viewer"/>
+
+    <menuitem id="menu_ls_audit_trail_verify_wizard"
+              name="Verify Now"
+              parent="menu_ls_audit_trail_integrity"
+              action="action_ls_audit_trail_verify_wizard"
+              sequence="20"
+              groups="group_ls_audit_trail_auditor"/>
+
+    <menuitem id="menu_ls_audit_trail_evidence_pack"
+              name="Evidence Packs"
+              parent="menu_ls_audit_trail_root"
+              action="action_ls_audit_trail_evidence_pack"
+              sequence="50"
+              groups="group_ls_audit_trail_auditor"/>
+
+    <menuitem id="menu_ls_audit_trail_configuration"
+              name="Configuration"
+              parent="menu_ls_audit_trail_root"
+              sequence="90"
+              groups="group_ls_audit_trail_admin"/>
+
+    <menuitem id="menu_ls_audit_trail_rule"
+              name="Audit Rules"
+              parent="menu_ls_audit_trail_configuration"
+              action="action_ls_audit_trail_rule"
+              sequence="10"
+              groups="group_ls_audit_trail_admin"/>
+
+    <menuitem id="menu_ls_audit_trail_purge_wizard"
+              name="Retention Run"
+              parent="menu_ls_audit_trail_configuration"
+              action="action_ls_audit_trail_purge_wizard"
+              sequence="20"
+              groups="group_ls_audit_trail_admin"/>
+
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_ls_validation_master_plan" model="ir.sequence">
+            <field name="name">Validation Master Plan</field>
+            <field name="code">ls.validation.master.plan</field>
+            <field name="prefix">VMP/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_validation_protocol" model="ir.sequence">
+            <field name="name">Validation Protocol</field>
+            <field name="code">ls.validation.protocol</field>
+            <field name="prefix">PROT/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_validation_execution" model="ir.sequence">
+            <field name="name">Validation Execution Record</field>
+            <field name="code">ls.validation.execution</field>
+            <field name="prefix">EXE/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_validation_discrepancy" model="ir.sequence">
+            <field name="name">Validation Discrepancy</field>
+            <field name="code">ls.validation.discrepancy</field>
+            <field name="prefix">DISC/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_validation_report" model="ir.sequence">
+            <field name="name">Validation Summary Report</field>
+            <field name="code">ls.validation.report</field>
+            <field name="prefix">VSR/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

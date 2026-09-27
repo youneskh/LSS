@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_mitigation_list" model="ir.ui.view">
+        <field name="name">ls.risk.mitigation.list</field>
+        <field name="model">ls.risk.mitigation</field>
+        <field name="arch" type="xml">
+            <list string="Risk Control Measures"
+                  decoration-danger="is_overdue"
+                  decoration-success="state == 'verified'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="risk_id"/>
+                <field name="title"/>
+                <field name="control_option"/>
+                <field name="option_priority" optional="hide"/>
+                <field name="responsible_id" widget="many2one_avatar_user"/>
+                <field name="due_date"/>
+                <field name="is_overdue" column_invisible="True"/>
+                <field name="introduces_new_risk" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_mitigation_form" model="ir.ui.view">
+        <field name="name">ls.risk.mitigation.form</field>
+        <field name="model">ls.risk.mitigation</field>
+        <field name="arch" type="xml">
+            <form string="Risk Control Measure">
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_start" type="object" string="Start"
+                            invisible="state != 'approved'"/>
+                    <button name="action_mark_implemented" type="object"
+                            string="Mark Implemented" class="oe_highlight"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_verify_effectiveness" type="object"
+                            string="Verify Effectiveness" class="oe_highlight"
+                            invisible="state != 'implemented'"/>
+                    <button name="action_create_new_risk" type="object"
+                            string="Create Risk Record for New Risk"
+                            invisible="not introduces_new_risk or new_risk_id"/>
+                    <button name="action_open_cancel_wizard" type="object"
+                            string="Cancel"
+                            invisible="state in ('verified', 'cancelled')"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,in_progress,implemented,verified"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" readonly="state in ('verified', 'cancelled')"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="risk_id" readonly="state != 'draft'"/>
+                            <field name="control_option" readonly="state != 'draft'"/>
+                            <field name="option_priority"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="sequence" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="responsible_id" readonly="state == 'cancelled'"/>
+                            <field name="due_date" readonly="state == 'cancelled'"/>
+                            <field name="is_overdue"/>
+                            <field name="approved_by_id" invisible="state == 'draft'"/>
+                            <field name="approval_date" invisible="state == 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Measure" name="measure">
+                            <group string="Description">
+                                <field name="description" nolabel="1"
+                                       readonly="state == 'verified'"/>
+                            </group>
+                            <group string="Option Analysis">
+                                <field name="option_analysis" nolabel="1"
+                                       readonly="state == 'verified'"
+                                       placeholder="Rationale for selecting this control
+option in preference to a more preferred option, where applicable"/>
+                            </group>
+                        </page>
+                        <page string="Implementation" name="implementation">
+                            <group>
+                                <field name="implementation_evidence"
+                                       readonly="state == 'verified'"/>
+                                <field name="implementation_date"/>
+                                <field name="implementation_verified_by_id"/>
+                                <field name="implementation_verification_date"/>
+                            </group>
+                        </page>
+                        <page string="Effectiveness" name="effectiveness">
+                            <group>
+                                <field name="effectiveness_evidence"
+                                       readonly="state == 'verified'"/>
+                                <field name="effectiveness_verified_by_id"/>
+                                <field name="effectiveness_verification_date"/>
+                            </group>
+                        </page>
+                        <page string="New Risk" name="new_risk">
+                            <group>
+                                <field name="introduces_new_risk"
+                                       readonly="state == 'verified'"/>
+                                <field name="new_risk_description"
+                                       invisible="not introduces_new_risk"
+                                       required="introduces_new_risk"
+                                       readonly="state == 'verified'"/>
+                                <field name="new_risk_id"
+                                       invisible="not introduces_new_risk"/>
+                            </group>
+                        </page>
+                        <page string="Cancellation" name="cancellation"
+                              invisible="state != 'cancelled'">
+                            <field name="cancel_reason" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_mitigation_search" model="ir.ui.view">
+        <field name="name">ls.risk.mitigation.search</field>
+        <field name="model">ls.risk.mitigation</field>
+        <field name="arch" type="xml">
+            <search string="Search Risk Control Measures">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="risk_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="filter_mine" string="My Measures"
+                        domain="[('responsible_id', '=', uid)]"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('draft', 'approved', 'in_progress', 'implemented'))]"/>
+                <filter name="filter_verified" string="Verified"
+                        domain="[('state', '=', 'verified')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('due_date', '&lt;', context_today().strftime('%Y-%m-%d')),
+                                 ('state', 'in', ('draft', 'approved', 'in_progress', 'implemented'))]"/>
+                <filter name="filter_new_risk" string="Introduces New Risk"
+                        domain="[('introduces_new_risk', '=', True)]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_option" string="Control Option"
+                        context="{'group_by': 'control_option'}"/>
+                    <filter name="group_risk" string="Risk"
+                        context="{'group_by': 'risk_id'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                        context="{'group_by': 'responsible_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_mitigation" model="ir.actions.act_window">
+        <field name="name">Risk Control Measures</field>
+        <field name="res_model">ls.risk.mitigation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_mitigation_search"/>
+    </record>
+
+</odoo>

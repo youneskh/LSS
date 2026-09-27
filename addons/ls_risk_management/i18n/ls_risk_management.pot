@@ -1,0 +1,1751 @@
+# Translation template for the Life Sciences Risk Management module.
+#
+# OFFLINE-GENERATED FILE.
+#
+# This template was produced by tools_generate_docs.py from the module
+# sources, because no Odoo runtime was available in the build
+# environment. It covers strings declared directly by this module. It
+# does NOT cover strings contributed by inherited views or by the base
+# model, which only Odoo's own export can resolve.
+#
+# Regenerate with Odoo's export before release:
+#   odoo-bin -d DATABASE --i18n-export=ls_risk_management.pot \
+#            --modules=ls_risk_management --stop-after-init
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-30 09:12+0000\n"
+"PO-Revision-Date: 2026-07-30 09:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: ls_risk_management/models/ls_risk_fmea.py:622
+msgid "%(item)s - %(mode)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:494
+msgid "%s (copy)"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:439
+msgid "A risk record already exists for the risk introduced by %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:598
+msgid "A risk register entry already exists for failure mode %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:273
+msgid "A verified risk control measure cannot be modified. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:616
+#: ls_risk_management/views/ls_risk_register_views.xml:56
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:46
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:68
+msgid "Accept Residual Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:108
+#: ls_risk_management/models/ls_risk_matrix.py:378
+#: ls_risk_management/views/ls_risk_assessment_views.xml:128
+#: ls_risk_management/views/ls_risk_register_views.xml:300
+msgid "Acceptability"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:378
+msgid "Acceptability decision defined by the organisation for this combination of severity and probability."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:280
+msgid "Acceptable Only With Control"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:58
+#: ls_risk_management/wizards/ls_risk_wizards.py:127
+msgid "Acceptance Justification"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:70
+msgid "Action"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:449
+msgid "Action Required"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:461
+msgid "Action Status"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:460
+msgid "Actions Taken"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:52
+#: ls_risk_management/models/ls_risk_fmea.py:103
+#: ls_risk_management/models/ls_risk_matrix.py:46
+#: ls_risk_management/models/ls_risk_register.py:84
+msgid "Active"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:196
+msgid "All Control Measures Verified"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:324
+msgid "An approved assessment cannot be modified because it forms part of the risk management file. Cancel it and record a new assessment instead. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:65
+msgid "Analysis"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:130
+msgid "Analysis Inputs"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:149
+#: ls_risk_management/models/ls_risk_fmea.py:130
+#: ls_risk_management/models/ls_risk_matrix.py:80
+#: ls_risk_management/models/ls_risk_mitigation.py:99
+msgid "Approval Date"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:43
+#: ls_risk_management/views/ls_risk_fmea_views.xml:141
+#: ls_risk_management/views/ls_risk_matrix_views.xml:63
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:38
+msgid "Approve"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:114
+#: ls_risk_management/views/ls_risk_fmea_views.xml:247
+#: ls_risk_management/views/ls_risk_matrix_views.xml:138
+msgid "Approved"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:142
+#: ls_risk_management/models/ls_risk_fmea.py:127
+#: ls_risk_management/models/ls_risk_matrix.py:73
+#: ls_risk_management/models/ls_risk_mitigation.py:96
+msgid "Approved By"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_category_views.xml:59
+#: ls_risk_management/views/ls_risk_fmea_views.xml:252
+#: ls_risk_management/views/ls_risk_matrix_views.xml:145
+#: ls_risk_management/views/ls_risk_register_views.xml:289
+msgid "Archived"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:42
+msgid "Assess"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:716
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:10
+msgid "Assess Risks"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:129
+msgid "Assessed By"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:116
+msgid "Assessed by Me"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:145
+msgid "Assessment Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:136
+#: ls_risk_management/views/ls_risk_assessment_views.xml:130
+#: ls_risk_management/wizards/ls_risk_wizards.py:54
+msgid "Assessment Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:52
+#: ls_risk_management/views/ls_risk_assessment_views.xml:124
+#: ls_risk_management/wizards/ls_risk_wizards.py:36
+msgid "Assessment Type"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:345
+msgid "Assessment cancelled. Reason: %(text)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:140
+#: ls_risk_management/models/ls_risk_register.py:732
+#: ls_risk_management/views/ls_risk_register_views.xml:141
+#: ls_risk_management/views/ls_risk_register_views.xml:80
+msgid "Assessments"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:56
+#: ls_risk_management/views/ls_risk_fmea_views.xml:198
+msgid "Assumptions and Boundaries"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:201
+#: ls_risk_management/views/ls_risk_register_views.xml:191
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:62
+#: ls_risk_management/wizards/ls_risk_wizards.py:133
+msgid "Benefit-Risk Analysis"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:48
+#: ls_risk_management/views/ls_risk_fmea_views.xml:151
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:53
+#: ls_risk_management/views/ls_risk_register_views.xml:67
+msgid "Cancel"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:447
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:120
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:129
+msgid "Cancel Assessments"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:366
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:160
+msgid "Cancel FMEA Worksheets"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:149
+msgid "Cancel Measures"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:475
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:140
+msgid "Cancel Risk Control Measures"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:686
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:100
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:109
+msgid "Cancel Risks"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:169
+msgid "Cancel Worksheets"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:92
+#: ls_risk_management/views/ls_risk_fmea_views.xml:222
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:123
+#: ls_risk_management/views/ls_risk_register_views.xml:243
+msgid "Cancellation"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:161
+#: ls_risk_management/models/ls_risk_fmea.py:131
+#: ls_risk_management/models/ls_risk_mitigation.py:162
+#: ls_risk_management/models/ls_risk_register.py:275
+msgid "Cancellation Reason"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:54
+#: ls_risk_management/views/ls_risk_fmea_views.xml:157
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:59
+#: ls_risk_management/views/ls_risk_register_views.xml:89
+msgid "Cancelled"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:54
+#: ls_risk_management/views/ls_risk_category_views.xml:11
+#: ls_risk_management/views/ls_risk_category_views.xml:56
+#: ls_risk_management/views/ls_risk_register_views.xml:296
+msgid "Category"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:120
+msgid "Category %(name)s and its parent must belong to the same company."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:105
+msgid "Category %(name)s cannot be its own ancestor."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:53
+msgid "Category of risk control option, recorded to support the risk control option analysis of ISO 14971:2019 clause 7.1. The options are applied in the order in which they are listed."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:115
+msgid "Cell Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:104
+#: ls_risk_management/views/ls_risk_matrix_views.xml:112
+#: ls_risk_management/views/ls_risk_matrix_views.xml:25
+msgid "Cells"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:219
+msgid "Cells can only be generated while the matrix is in Draft."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:103
+msgid "Characteristics Related to Safety"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:40
+msgid "Child Categories"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:112
+msgid "Circumstance in which people, property or the environment is exposed to one or more hazards. Supports ISO 14971:2019 clause 5.4."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:100
+msgid "Classification"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:144
+#: ls_risk_management/views/ls_risk_register_views.xml:64
+msgid "Close"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:671
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:79
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:89
+msgid "Close Risks"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:275
+#: ls_risk_management/views/ls_risk_register_views.xml:91
+msgid "Closed"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:271
+msgid "Closed By"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:430
+msgid "Closed or already cancelled FMEA worksheets cannot be cancelled. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:290
+msgid "Closed or already cancelled risks cannot be cancelled. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:237
+#: ls_risk_management/views/ls_risk_register_views.xml:238
+msgid "Closure"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:274
+msgid "Closure Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:270
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:83
+#: ls_risk_management/wizards/ls_risk_wizards.py:210
+msgid "Closure Reason"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:26
+#: ls_risk_management/models/ls_risk_matrix.py:39
+msgid "Code"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:44
+#: ls_risk_management/models/ls_risk_category.py:45
+#: ls_risk_management/models/ls_risk_fmea.py:41
+#: ls_risk_management/models/ls_risk_fmea.py:424
+msgid "Company"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:183
+msgid "Company %(company)s already has an active default risk matrix. Clear the existing default before setting a new one."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:614
+msgid "Company %(company)s has no approved default risk matrix. Configure one before raising risks from an FMEA."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:47
+msgid "Company owning this set of acceptability criteria."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:119
+msgid "Complete"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:27
+msgid "Complete Name"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:219
+msgid "Completeness Confirmation Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:213
+msgid "Completeness Confirmed By"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:172
+msgid "Completeness of Risk Control"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_menus.xml:76
+msgid "Configuration"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:40
+msgid "Confirm"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:52
+msgid "Confirm Control Completeness"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:639
+msgid "Confirm risk control completeness for %(name)s before moving to Monitoring."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:190
+msgid "Control Measure Count"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:159
+msgid "Control Option"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:85
+msgid "Controls"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:59
+msgid "Copied from the risk when the assessment is created, so that historical assessments remain interpretable after the risk is re-pointed at a revised matrix."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:35
+msgid "Create Assessments"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:147
+msgid "Create Revision"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:49
+msgid "Create Risk Record for New Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:174
+#: ls_risk_management/wizards/ls_risk_wizards.py:121
+msgid "Current Acceptability"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:154
+msgid "Current Assessment"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:440
+msgid "Current Controls"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:114
+msgid "Current Evaluation"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:167
+#: ls_risk_management/views/ls_risk_register_views.xml:298
+#: ls_risk_management/wizards/ls_risk_wizards.py:115
+msgid "Current Risk Level"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:432
+msgid "Declare that this measure introduces a new risk before creating a risk record for it."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:142
+msgid "Default"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:62
+msgid "Default Matrix"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:326
+msgid "Definition"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:210
+msgid "Describe the new risk introduced by measure %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:53
+#: ls_risk_management/models/ls_risk_matrix.py:72
+#: ls_risk_management/models/ls_risk_mitigation.py:52
+#: ls_risk_management/models/ls_risk_register.py:46
+msgid "Description"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:128
+msgid "Description of the risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:441
+msgid "Detection (D)"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:110
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:130
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:150
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:170
+msgid "Discard"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:140
+#: ls_risk_management/views/ls_risk_register_views.xml:271
+msgid "Draft"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:81
+msgid "Due Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:436
+msgid "Effect of Failure"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:102
+msgid "Effectiveness"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:128
+msgid "Effectiveness Evidence"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:140
+msgid "Effectiveness Verification Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:133
+msgid "Effectiveness Verified By"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:125
+#: ls_risk_management/views/ls_risk_assessment_views.xml:84
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:29
+#: ls_risk_management/wizards/ls_risk_wizards.py:57
+msgid "Estimation Rationale"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:116
+msgid "Expected Cell Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:417
+#: ls_risk_management/views/ls_risk_menus.xml:47
+msgid "FMEA"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:241
+msgid "FMEA %(name)s has no failure modes recorded."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:297
+msgid "FMEA %(name)s must be reviewed before it is approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:349
+msgid "FMEA %(name)s still has %(count)s open action(s)."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:294
+msgid "FMEA Line Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:48
+#: ls_risk_management/views/ls_risk_fmea_views.xml:257
+msgid "FMEA Type"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:128
+msgid "FMEA Worksheet"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:105
+#: ls_risk_management/views/ls_risk_menus.xml:53
+#: ls_risk_management/wizards/ls_risk_wizards.py:407
+msgid "FMEA Worksheets"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:441
+msgid "FMEA worksheet cancelled. Reason: %(text)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:59
+#: ls_risk_management/views/ls_risk_fmea_views.xml:259
+msgid "Facilitator"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:435
+#: ls_risk_management/views/ls_risk_fmea_views.xml:47
+msgid "Failure Mode"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:109
+msgid "Failure Mode Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:104
+#: ls_risk_management/views/ls_risk_fmea_views.xml:12
+#: ls_risk_management/views/ls_risk_fmea_views.xml:189
+#: ls_risk_management/views/ls_risk_menus.xml:59
+msgid "Failure Modes"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:117
+msgid "Foreseeable sequence of events leading from the hazard to the hazardous situation. Supports ISO 14971:2019 clause 5.4."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:434
+msgid "Function"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:61
+msgid "Generate Missing Cells"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:120
+#: ls_risk_management/views/ls_risk_category_views.xml:60
+#: ls_risk_management/views/ls_risk_fmea_views.xml:253
+#: ls_risk_management/views/ls_risk_matrix_views.xml:146
+msgid "Group By"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:122
+msgid "Harm"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:249
+msgid "Has Open Actions"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:286
+msgid "Has Open Controls"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:108
+msgid "Hazard"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:134
+msgid "Hazard, Hazardous Situation and Harm"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:112
+msgid "Hazardous Situation"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:112
+msgid "Highest RPN"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:79
+#: ls_risk_management/views/ls_risk_register_views.xml:304
+msgid "Identification Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:73
+msgid "Identified By"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:67
+msgid "Identifier of the controlled procedure or risk management plan that defines these acceptability criteria."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:93
+msgid "Implementation"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:106
+msgid "Implementation Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:109
+msgid "Implementation Evidence"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:121
+msgid "Implementation Verification Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:114
+msgid "Implementation Verified By"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:148
+msgid "Initial Assessment"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:161
+msgid "Initial Risk Level"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:122
+msgid "Injury or damage to the health of people, or damage to property or the environment. Supports ISO 14971:2019 clause 5.4."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:98
+msgid "Intended Use and Reasonably Foreseeable Misuse"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:147
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:154
+msgid "Introduces New Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:433
+msgid "Item"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:325
+msgid "Label"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:262
+msgid "Last Review Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:85
+#: ls_risk_management/views/ls_risk_matrix_views.xml:10
+msgid "Levels"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:115
+msgid "Lines Requiring Action"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:280
+msgid "Linked Model"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:226
+msgid "Linked Record"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:288
+msgid "Linked Record ID"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:45
+msgid "Mark Assessed"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:43
+msgid "Mark Implemented"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:307
+#: ls_risk_management/models/ls_risk_matrix.py:363
+msgid "Matrix"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:378
+msgid "Matrix %(matrix)s does not define a cell for severity %(severity)s and probability %(probability)s. Complete the matrix before confirming assessment %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:264
+msgid "Matrix %(name)s is incomplete: every severity and probability combination must have exactly one cell. Use 'Generate Missing Cells' and review each cell."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:256
+msgid "Matrix %(name)s must define at least one severity level and one probability level before approval."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:94
+msgid "Matrix Cell"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:81
+msgid "Measure"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:200
+msgid "Monitoring"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:154
+msgid "Most recent approved assessment of this risk."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:60
+msgid "Move to Monitoring"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:144
+msgid "My Measures"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:268
+msgid "My Risks"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:25
+#: ls_risk_management/models/ls_risk_matrix.py:33
+msgid "Name"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:33
+msgid "Name of the risk matrix as referenced by the risk management plan."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:110
+msgid "New Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:154
+msgid "New Risk Description"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:155
+msgid "New Risk Record"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:259
+msgid "Next Review Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:770
+msgid "No linked record is set on this risk."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:119
+#: ls_risk_management/views/ls_risk_register_views.xml:278
+msgid "Not Acceptable"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:162
+#: ls_risk_management/views/ls_risk_assessment_views.xml:89
+msgid "Notes"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:54
+msgid "Number of risk register entries directly classified in this category."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:62
+msgid "Numeric priority of the selected control option, used to order measures so that the most preferred option appears first."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:87
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:31
+msgid "Objective basis for the severity and probability selected"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:125
+msgid "Objective basis for the severity and probability selected."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:326
+msgid "Objective definition of this level, as recorded in the risk management plan."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:60
+msgid "Objective justification for accepting the residual risk"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:127
+msgid "Objective justification for accepting the residual risk, supporting ISO 14971:2019 clause 7.3."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:118
+msgid "Obsolescence"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:83
+msgid "Obsolescence Reason"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:71
+msgid "Obsolete"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:439
+msgid "Occurrence (O)"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_role_mixin.py:41
+msgid "Only a Risk Manager may %(operation)s. User %(user)s does not hold that role."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:703
+msgid "Only a cancelled risk can be reset to Draft."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:407
+msgid "Only a confirmed assessment can be approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:464
+msgid "Only a confirmed assessment can be returned to Draft. An approved assessment must be cancelled instead."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:219
+msgid "Only a draft FMEA worksheet can be started."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:366
+msgid "Only a draft assessment can be confirmed."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:538
+msgid "Only a draft risk can be moved to Assessed."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:313
+msgid "Only a draft risk control measure can be approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:252
+msgid "Only a draft risk matrix can be approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:352
+msgid "Only a risk control measure in progress can be marked as implemented."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:635
+msgid "Only a risk in Risk Control can move to Monitoring."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:234
+msgid "Only an FMEA worksheet in progress can be submitted for review."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:293
+msgid "Only an FMEA worksheet under review can be approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:261
+msgid "Only an FMEA worksheet under review can be reviewed."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:345
+msgid "Only an approved FMEA worksheet can be closed."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:387
+msgid "Only an approved or closed FMEA worksheet can be revised."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:334
+msgid "Only an approved risk control measure can be started."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:294
+msgid "Only an approved risk matrix can be made obsolete."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:567
+msgid "Only an assessed risk can enter Risk Control."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:390
+msgid "Only an implemented risk control measure can have its effectiveness verified."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:344
+msgid "Only draft assessments can be deleted. Cancel the others instead. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:201
+msgid "Only draft or cancelled FMEA worksheets can be deleted. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:291
+msgid "Only draft risk control measures can be deleted. Cancel the others instead. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:226
+msgid "Only risks in Assessed, Risk Control or Monitoring can be closed. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:245
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:146
+#: ls_risk_management/views/ls_risk_register_views.xml:273
+msgid "Open"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:120
+msgid "Open Actions"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:193
+msgid "Open Control Measures"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:23
+msgid "Open Controls"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:233
+msgid "Open Linked Record"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:69
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:86
+msgid "Option Analysis"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:62
+msgid "Option Priority"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:280
+msgid "Optional technical link to a record in another model. Provided as an extension point so that this module carries no dependency on product, stock, mrp or hr."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:116
+msgid "Ordinal Index"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:319
+msgid "Ordinal value of this level. Higher values denote higher severity or higher probability."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:215
+msgid "Originating FMEA"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:289
+msgid "Originating FMEA Lines"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:195
+msgid "Overall Residual Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:245
+msgid "Overall Residual Risk Assessment"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:91
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:152
+msgid "Overdue"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:108
+msgid "Ownership"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:33
+#: ls_risk_management/views/ls_risk_category_views.xml:62
+msgid "Parent Category"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:808
+msgid "Periodic risk review is overdue. The review was due on %(date)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:438
+msgid "Potential Cause"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:108
+msgid "Potential source of harm. Supports ISO 14971:2019 clause 5.4."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:75
+#: ls_risk_management/wizards/ls_risk_wizards.py:48
+msgid "Probability"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:112
+msgid "Probability Level Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:97
+#: ls_risk_management/views/ls_risk_matrix_views.xml:44
+msgid "Probability Levels"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:108
+msgid "Probability Scale"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:88
+#: ls_risk_management/models/ls_risk_matrix.py:371
+msgid "Probability Value"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:424
+msgid "Probability value %(value)s is not defined on matrix %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:116
+msgid "Product of the severity and probability ordinal values. This is a sorting convenience only. It is not a normative risk measure of ISO 14971:2019 and must not be used as an acceptability criterion; acceptability comes from the matrix cell."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:62
+msgid "Proposed by default on new risk register entries of this company."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:442
+msgid "RPN"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:76
+msgid "RPN Action Threshold"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:478
+msgid "RPN Reduction"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:38
+msgid "Raise a risk register entry from this failure mode"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:82
+msgid "Rating After Action"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:90
+msgid "Rationale for selecting this control option in preference to a more preferred option, where applicable"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:69
+msgid "Rationale for selecting this control option in preference to a more preferred option, where applicable."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizard_views.xml:85
+msgid "Reason for closing these risks"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:457
+msgid "Recommended Action"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:137
+msgid "Record Review"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:397
+msgid "Record the effectiveness evidence for %(name)s before verifying it."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:370
+msgid "Record the estimation rationale for %(name)s before confirming it."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:359
+msgid "Record the implementation evidence for %(name)s before marking it implemented."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:28
+#: ls_risk_management/models/ls_risk_fmea.py:32
+#: ls_risk_management/models/ls_risk_mitigation.py:26
+#: ls_risk_management/models/ls_risk_register.py:37
+msgid "Reference"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:67
+msgid "Reference Document"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:128
+msgid "Reference to the objective evidence that the measure is effective in reducing the risk."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:109
+msgid "Reference to the objective evidence that the measure was implemented, supporting ISO 14971:2019 clause 7.2."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_menus.xml:64
+msgid "Reporting"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:133
+msgid "Required when the residual risk is not judged acceptable against the criteria, supporting ISO 14971:2019 clause 7.4."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:45
+#: ls_risk_management/views/ls_risk_register_views.xml:71
+msgid "Reset to Draft"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:181
+msgid "Residual Risk"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:182
+msgid "Residual Risk Acceptance"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:239
+msgid "Residual Risk Acceptance Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:242
+msgid "Residual Risk Acceptance Justification"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:226
+msgid "Residual Risk Accepted"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:233
+msgid "Residual Risk Accepted By"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:188
+msgid "Residual risk accepted. Justification: %(text)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:458
+#: ls_risk_management/models/ls_risk_mitigation.py:74
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:163
+msgid "Responsible"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:126
+msgid "Review Date"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:254
+msgid "Review Interval (Months)"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:263
+#: ls_risk_management/views/ls_risk_register_views.xml:284
+msgid "Review Overdue"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:211
+msgid "Review and Approval"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:123
+msgid "Reviewed By"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_menus.xml:70
+msgid "Reviews Due"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:474
+msgid "Revised Detection"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:473
+msgid "Revised Occurrence"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:475
+msgid "Revised RPN"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:472
+msgid "Revised Severity"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:568
+msgid "Revised severity, occurrence and detection must all be provided together on failure mode %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:57
+#: ls_risk_management/views/ls_risk_fmea_views.xml:202
+msgid "Revision"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:58
+msgid "Revision Reason"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:36
+#: ls_risk_management/models/ls_risk_mitigation.py:34
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:161
+#: ls_risk_management/views/ls_risk_register_views.xml:38
+msgid "Risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:267
+msgid "Risk %(name)s already has an initial assessment. Record later estimations as Residual, Periodic Review or Production / Post-Production Information."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:421
+msgid "Risk %(name)s and its category must belong to the same company."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:408
+msgid "Risk %(name)s and its risk matrix must belong to the same company."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:152
+msgid "Risk %(name)s has no approved assessment, so its residual risk cannot be evaluated."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:542
+msgid "Risk %(name)s needs an approved initial assessment before it can leave Draft."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:591
+msgid "Risk %(name)s still has risk control measures that are not verified. Verify or cancel them before confirming completeness."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:125
+msgid "Risk Analysis"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:37
+msgid "Risk Assessment"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:13
+#: ls_risk_management/views/ls_risk_menus.xml:36
+msgid "Risk Assessments"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_category_views.xml:10
+#: ls_risk_management/views/ls_risk_menus.xml:88
+msgid "Risk Categories"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_category_views.xml:23
+msgid "Risk Category"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:157
+msgid "Risk Control"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:206
+msgid "Risk Control Completeness Confirmed"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:34
+msgid "Risk Control Measure"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:185
+#: ls_risk_management/models/ls_risk_register.py:748
+#: ls_risk_management/views/ls_risk_menus.xml:42
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:13
+msgid "Risk Control Measures"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:53
+msgid "Risk Control Option"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_category.py:54
+msgid "Risk Count"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:72
+msgid "Risk Estimation"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:100
+#: ls_risk_management/models/ls_risk_matrix.py:372
+#: ls_risk_management/views/ls_risk_assessment_views.xml:126
+msgid "Risk Level"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_menus.xml:19
+#: ls_risk_management/views/ls_risk_menus.xml:24
+msgid "Risk Management"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:38
+#: ls_risk_management/views/ls_risk_menus.xml:82
+msgid "Risk Matrices"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:59
+#: ls_risk_management/models/ls_risk_register.py:131
+#: ls_risk_management/views/ls_risk_matrix_views.xml:57
+#: ls_risk_management/wizards/ls_risk_wizards.py:30
+msgid "Risk Matrix"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:66
+#: ls_risk_management/views/ls_risk_register_views.xml:302
+msgid "Risk Owner"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:76
+msgid "Risk Priority Number at or above which a recommended action is required. This threshold is defined by the organisation; it is not prescribed by any standard referenced by this module."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:442
+msgid "Risk Priority Number, the product of severity, occurrence and detection."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_menus.xml:30
+#: ls_risk_management/views/ls_risk_register_views.xml:13
+msgid "Risk Register"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:481
+msgid "Risk Register Entry"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:60
+#: ls_risk_management/views/ls_risk_register_views.xml:294
+msgid "Risk Type"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:301
+msgid "Risk cancelled. Reason: %(text)s"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:254
+msgid "Risk closed. Reason: %(text)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:584
+msgid "Risk control completeness can only be confirmed while the risk is in Risk Control."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:393
+msgid "Risk control measure cancelled. Reason: %(text)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:447
+msgid "Risk introduced by control measure %s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:420
+msgid "Risk matrix %(matrix)s is not approved, so assessment %(name)s cannot be approved."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:155
+msgid "Risk register entry created for the risk introduced by this control measure."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:481
+msgid "Risk register entry raised from this failure mode."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:815
+msgid "Risk review overdue"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:202
+#: ls_risk_management/wizards/ls_risk_wizards.py:22
+#: ls_risk_management/wizards/ls_risk_wizards.py:267
+msgid "Risks"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:475
+msgid "Risks that have been assessed cannot be deleted because they form part of the risk management file. Archive them instead. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:314
+msgid "Scale"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:55
+#: ls_risk_management/views/ls_risk_fmea_views.xml:193
+#: ls_risk_management/views/ls_risk_fmea_views.xml:194
+msgid "Scope"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:237
+msgid "Search FMEA Worksheets"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:105
+msgid "Search Risk Assessments"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_category_views.xml:55
+msgid "Search Risk Categories"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:137
+msgid "Search Risk Control Measures"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:134
+msgid "Search Risk Matrices"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:258
+msgid "Search Risks"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:304
+msgid "Segregation of duties: %(user)s facilitated FMEA %(name)s and therefore cannot approve it."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:265
+msgid "Segregation of duties: %(user)s facilitated FMEA %(name)s and therefore cannot review it."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:411
+msgid "Segregation of duties: %(user)s performed assessment %(name)s and therefore cannot approve it."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:405
+msgid "Segregation of duties: %(user)s verified the implementation of %(name)s and therefore cannot verify its effectiveness."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:432
+#: ls_risk_management/models/ls_risk_matrix.py:45
+#: ls_risk_management/models/ls_risk_mitigation.py:50
+msgid "Sequence"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:117
+msgid "Sequence of Events"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:65
+msgid "Set Obsolete"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:131
+msgid "Set of acceptability criteria against which this risk is evaluated."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:449
+msgid "Set when the Risk Priority Number reaches the worksheet threshold, or when the severity reaches the worksheet severity threshold."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:147
+msgid "Set when this measure itself introduces a new hazard or increases an existing risk, as required to be considered by ISO 14971:2019 clause 7.5."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:68
+#: ls_risk_management/wizards/ls_risk_wizards.py:42
+msgid "Severity"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:437
+msgid "Severity (S)"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:85
+msgid "Severity Action Threshold"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:109
+msgid "Severity Level Count"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:90
+#: ls_risk_management/views/ls_risk_matrix_views.xml:43
+msgid "Severity Levels"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_matrix_views.xml:104
+msgid "Severity Scale"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:82
+#: ls_risk_management/models/ls_risk_matrix.py:370
+msgid "Severity Value"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:85
+msgid "Severity rating at or above which a recommended action is required regardless of the Risk Priority Number. Defined by the organisation."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:416
+msgid "Severity value %(value)s is not defined on matrix %(name)s."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:96
+msgid "Short statement of the risk"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:39
+msgid "Short unique code of the matrix within the company."
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:131
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:40
+msgid "Start"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:73
+#: ls_risk_management/views/ls_risk_fmea_views.xml:261
+msgid "Start Date"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:48
+msgid "Start Risk Control"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:152
+#: ls_risk_management/models/ls_risk_fmea.py:94
+#: ls_risk_management/models/ls_risk_matrix.py:54
+#: ls_risk_management/models/ls_risk_mitigation.py:82
+msgid "Status"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:134
+msgid "Submit for Review"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:206
+msgid "Supports ISO 14971:2019 clause 7.6."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:201
+msgid "Supports the benefit-risk analysis of ISO 14971:2019 clause 7.4, performed when a risk is not judged acceptable after risk control."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:245
+msgid "Supports the evaluation of overall residual risk of ISO 14971:2019 clause 8."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:226
+msgid "Supports the residual risk evaluation of ISO 14971:2019 clause 7.3."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:98
+msgid "Supports the risk analysis input required by ISO 14971:2019 clause 5.2."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:103
+msgid "Supports the risk analysis input required by ISO 14971:2019 clause 5.3."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:459
+msgid "Target Date"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_fmea_views.xml:207
+msgid "Team"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:66
+msgid "Team Members"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:171
+msgid "The current acceptability of %(name)s is Not Acceptable. Record a benefit-risk analysis before accepting the residual risk."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:647
+msgid "The current acceptability of %(name)s requires a recorded residual risk acceptance decision before moving to Monitoring."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:335
+msgid "The following assessments are already cancelled: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:317
+msgid "The following failure modes of %(name)s require a recommended action: %(lines)s"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:238
+msgid "The following risks require a recorded residual risk acceptance decision before closure: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:434
+msgid "The linked model and the linked record identifier must be set together on risk %(name)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:222
+msgid "The new risk introduced by measure %(name)s cannot be the risk that the measure controls."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:246
+msgid "The probability field must reference a probability level."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:233
+msgid "The probability level of %(name)s must belong to matrix %(matrix)s."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:160
+msgid "The residual risk of %(name)s has already been accepted by %(user)s."
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:77
+msgid "The selected risks use %(count)s different risk matrices. Assess risks that share one matrix at a time."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:242
+msgid "The severity field must reference a severity level."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:224
+msgid "The severity level of %(name)s must belong to matrix %(matrix)s."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:40
+#: ls_risk_management/models/ls_risk_mitigation.py:51
+#: ls_risk_management/models/ls_risk_register.py:45
+msgid "Title"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_assessment_views.xml:112
+msgid "To Approve"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_register_views.xml:214
+msgid "Traceability"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:119
+msgid "True when exactly one cell exists for every severity and probability combination."
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:319
+msgid "Value"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:148
+msgid "Verified"
+msgstr ""
+
+#: ls_risk_management/wizards/ls_risk_wizards.py:382
+msgid "Verified or already cancelled risk control measures cannot be cancelled. Blocked references: %(refs)s"
+msgstr ""
+
+#: ls_risk_management/views/ls_risk_mitigation_views.xml:46
+msgid "Verify Effectiveness"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_assessment.py:403
+msgid "approve a risk assessment"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_mitigation.py:309
+msgid "approve a risk control measure"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:248
+msgid "approve a risk matrix"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:289
+msgid "approve an FMEA worksheet"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:341
+msgid "close an FMEA worksheet"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:580
+msgid "confirm risk control completeness"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_matrix.py:290
+msgid "make a risk matrix obsolete"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_register.py:631
+msgid "move a risk to Monitoring"
+msgstr ""
+
+#: ls_risk_management/models/ls_risk_fmea.py:257
+msgid "record the review of an FMEA worksheet"
+msgstr ""

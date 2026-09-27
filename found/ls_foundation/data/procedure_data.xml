@@ -1,0 +1,22 @@
+<odoo>
+    <record id="procedure_register_commerce" model="lss.foundation.procedure">
+        <field name="name">Immatriculation au Registre du Commerce</field>
+        <field name="code">RC</field>
+        <field name="authority_id" ref="authority_customs"/>
+        <field name="procedure_type">registration</field>
+        <field name="sector">all</field>
+        <field name="activity_types">all</field>
+        <field name="is_mandatory">1</field>
+    </record>
+    <record id="procedure_anpp_amm" model="lss.foundation.procedure">
+        <field name="name">Demande d'AMM auprès de l'ANPP</field>
+        <field name="code">AMM_ANPP</field>
+        <field name="authority_id" ref="authority_anpp"/>
+        <field name="procedure_type">authorization</field>
+        <field name="sector">pharma</field>
+        <field name="activity_types">manufacturing</field>
+        <field name="is_mandatory">1</field>
+        <field name="validity_period">60</field>
+        <field name="renewal_lead_time">90</field>
+    </record>
+</odoo>

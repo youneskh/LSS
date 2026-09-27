@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The impact areas below are proposed as a starting configuration. Each
+     organisation must review and adapt them to the scope of its own quality
+     system. They are loaded with noupdate="1" so that a module upgrade never
+     overwrites a local modification. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="impact_area_facilities" model="ls.change_control.impact_area">
+            <field name="name">Facilities and Premises</field>
+            <field name="code">FAC</field>
+            <field name="sequence">10</field>
+            <field name="description">Buildings, rooms, classified areas, air handling, room layout and flows of personnel and materials.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_utilities" model="ls.change_control.impact_area">
+            <field name="name">Utilities</field>
+            <field name="code">UTL</field>
+            <field name="sequence">20</field>
+            <field name="description">Purified water, water for injection, clean steam, compressed air, nitrogen and other utilities in direct or indirect contact with the product.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_equipment" model="ls.change_control.impact_area">
+            <field name="name">Equipment</field>
+            <field name="code">EQP</field>
+            <field name="sequence">30</field>
+            <field name="description">Production, packaging and laboratory equipment, including its qualification status and its maintenance and calibration plan.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_process" model="ls.change_control.impact_area">
+            <field name="name">Manufacturing Process</field>
+            <field name="code">PRC</field>
+            <field name="sequence">40</field>
+            <field name="description">Process parameters, process steps, batch size, hold times and in-process controls.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_product" model="ls.change_control.impact_area">
+            <field name="name">Product and Formulation</field>
+            <field name="code">PRD</field>
+            <field name="sequence">50</field>
+            <field name="description">Composition, specification, shelf life and presentation of the finished product.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_material" model="ls.change_control.impact_area">
+            <field name="name">Materials and Suppliers</field>
+            <field name="code">MAT</field>
+            <field name="sequence">60</field>
+            <field name="description">Active substances, excipients, primary and secondary packaging materials, and the qualification status of their suppliers.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_analytical" model="ls.change_control.impact_area">
+            <field name="name">Analytical Methods</field>
+            <field name="code">ANA</field>
+            <field name="sequence">70</field>
+            <field name="description">Test methods, specifications, reference standards and the validation status of the methods.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_cleaning" model="ls.change_control.impact_area">
+            <field name="name">Cleaning and Sanitisation</field>
+            <field name="code">CLN</field>
+            <field name="sequence">80</field>
+            <field name="description">Cleaning procedures, cleaning agents, cleaning validation and the risk of cross contamination.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_packaging" model="ls.change_control.impact_area">
+            <field name="name">Packaging and Labelling</field>
+            <field name="code">PKG</field>
+            <field name="sequence">90</field>
+            <field name="description">Artwork, labelling text, leaflets, coding, serialisation and aggregation.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_documentation" model="ls.change_control.impact_area">
+            <field name="name">Documentation</field>
+            <field name="code">DOC</field>
+            <field name="sequence">100</field>
+            <field name="description">Standard operating procedures, work instructions, master batch records, specifications and forms.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_computerised_system" model="ls.change_control.impact_area">
+            <field name="name">Computerised Systems</field>
+            <field name="code">CSV</field>
+            <field name="sequence">110</field>
+            <field name="description">Software, configuration, interfaces, electronic records and the validation status of the system.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_personnel" model="ls.change_control.impact_area">
+            <field name="name">Personnel and Training</field>
+            <field name="code">TRN</field>
+            <field name="sequence">120</field>
+            <field name="description">Roles, responsibilities, qualification of personnel and training requirements.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_regulatory" model="ls.change_control.impact_area">
+            <field name="name">Regulatory Dossier</field>
+            <field name="code">REG</field>
+            <field name="sequence">130</field>
+            <field name="description">Registered information, marketing authorisation and the need for a notification, a variation or a prior approval.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+        <record id="impact_area_environmental_monitoring" model="ls.change_control.impact_area">
+            <field name="name">Environmental Monitoring</field>
+            <field name="code">EM</field>
+            <field name="sequence">140</field>
+            <field name="description">Sampling locations, monitoring frequency, alert and action limits of the environmental monitoring programme.</field>
+            <field name="requires_assessment" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_document_version_list" model="ir.ui.view">
+        <field name="name">ls.document.version.list</field>
+        <field name="model">ls.document.version</field>
+        <field name="arch" type="xml">
+            <list string="Document Versions" create="false" decoration-muted="is_superseded" decoration-bf="is_current">
+                <field name="document_id"/>
+                <field name="version_number"/>
+                <field name="filename"/>
+                <field name="file_size"/>
+                <field name="author_id"/>
+                <field name="create_date"/>
+                <field name="is_current"/>
+                <field name="is_superseded"/>
+                <field name="checksum_sha256" optional="hide"/>
+                <field name="content" widget="binary" filename="filename" string="Download"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_document_version_form" model="ir.ui.view">
+        <field name="name">ls.document.version.form</field>
+        <field name="model">ls.document.version</field>
+        <field name="arch" type="xml">
+            <form string="Document Version" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="document_id"/>
+                            <field name="version_number"/>
+                            <field name="author_id"/>
+                            <field name="create_date" string="Created On"/>
+                        </group>
+                        <group string="File">
+                            <field name="content" widget="binary" filename="filename"/>
+                            <field name="filename"/>
+                            <field name="file_size"/>
+                            <field name="checksum_sha256"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_current"/>
+                            <field name="is_superseded"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Summary of Change">
+                        <field name="change_summary" nolabel="1"/>
+                    </group>
+                    <group string="Reason for Change">
+                        <field name="change_reason" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_document_version_search" model="ir.ui.view">
+        <field name="name">ls.document.version.search</field>
+        <field name="model">ls.document.version</field>
+        <field name="arch" type="xml">
+            <search string="Document Versions">
+                <field name="document_id"/>
+                <field name="filename"/>
+                <field name="checksum_sha256"/>
+                <field name="author_id"/>
+                <filter name="filter_current" string="Effective Versions" domain="[('is_current', '=', True)]"/>
+                <filter name="filter_superseded" string="Superseded" domain="[('is_superseded', '=', True)]"/>
+                <group>
+                    <filter name="group_by_document" string="Document" context="{'group_by': 'document_id'}"/>
+                    <filter name="group_by_author" string="Author" context="{'group_by': 'author_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_document_version" model="ir.actions.act_window">
+        <field name="name">Versions</field>
+        <field name="res_model">ls.document.version</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_document_version_search"/>
+    </record>
+
+</odoo>

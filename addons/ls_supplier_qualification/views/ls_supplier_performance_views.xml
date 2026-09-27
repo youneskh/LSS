@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_performance_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.performance.list</field>
+        <field name="model">ls.supplier.performance</field>
+        <field name="arch" type="xml">
+            <list string="Performance Evaluations"
+                  decoration-danger="rating == 'd'"
+                  decoration-warning="rating == 'c'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="otd_percent" optional="show"/>
+                <field name="quality_percent" optional="show"/>
+                <field name="documentation_percent" optional="hide"/>
+                <field name="responsiveness_percent" optional="hide"/>
+                <field name="nonconformity_count" optional="hide"/>
+                <field name="complaint_count" optional="hide"/>
+                <field name="overall_score"/>
+                <field name="rating" widget="badge"
+                       decoration-success="rating == 'a'"
+                       decoration-info="rating == 'b'"
+                       decoration-warning="rating == 'c'"
+                       decoration-danger="rating == 'd'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'confirmed'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_performance_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.performance.form</field>
+        <field name="model">ls.supplier.performance</field>
+        <field name="arch" type="xml">
+            <form string="Performance Evaluation">
+                <header>
+                    <button name="action_compute_delivery_counters" type="object"
+                            string="Recompute Delivery Counters"
+                            invisible="state != 'draft'"/>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state == 'cancelled'"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Action Required"
+                            bg_color="text-bg-danger" invisible="not action_required"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="qualification_id" readonly="state != 'draft'"/>
+                            <field name="partner_id"/>
+                            <field name="period_start" readonly="state != 'draft'"/>
+                            <field name="period_end" readonly="state != 'draft'"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="action_required" invisible="1"/>
+                        </group>
+                        <group string="Evaluation">
+                            <field name="evaluation_date"/>
+                            <field name="evaluator_id"/>
+                            <field name="overall_score"/>
+                            <field name="rating" widget="badge"
+                                   decoration-success="rating == 'a'"
+                                   decoration-info="rating == 'b'"
+                                   decoration-warning="rating == 'c'"
+                                   decoration-danger="rating == 'd'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Indicators" name="indicators">
+                            <group>
+                                <group string="Delivery">
+                                    <field name="delivery_total_count"
+                                           readonly="state != 'draft'"/>
+                                    <field name="delivery_late_count"
+                                           readonly="state != 'draft'"/>
+                                    <field name="otd_percent"
+                                           readonly="state != 'draft'"/>
+                                </group>
+                                <group string="Quality">
+                                    <field name="lot_total_count"
+                                           readonly="state != 'draft'"/>
+                                    <field name="lot_rejected_count"
+                                           readonly="state != 'draft'"/>
+                                    <field name="quality_percent"
+                                           readonly="state != 'draft'"/>
+                                    <field name="nonconformity_count"
+                                           readonly="state != 'draft'"/>
+                                    <field name="complaint_count"
+                                           readonly="state != 'draft'"/>
+                                </group>
+                                <group string="Documentation and Service">
+                                    <field name="documentation_percent"
+                                           readonly="state != 'draft'"/>
+                                    <field name="responsiveness_percent"
+                                           readonly="state != 'draft'"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Weights and Thresholds (frozen)" name="weights">
+                            <group>
+                                <group string="Weights">
+                                    <field name="weight_otd"/>
+                                    <field name="weight_quality"/>
+                                    <field name="weight_documentation"/>
+                                    <field name="weight_responsiveness"/>
+                                </group>
+                                <group string="Rating Thresholds">
+                                    <field name="threshold_a"/>
+                                    <field name="threshold_b"/>
+                                    <field name="threshold_c"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Weights and thresholds are copied from the
+                                company configuration when the evaluation is
+                                created, so a later configuration change never
+                                alters a past evaluation.
+                            </div>
+                        </page>
+                        <page string="Comments" name="comments">
+                            <field name="comments" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_performance_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.performance.search</field>
+        <field name="model">ls.supplier.performance</field>
+        <field name="arch" type="xml">
+            <search string="Performance Evaluations">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="filter_confirmed" string="Confirmed"
+                        domain="[('state', '=', 'confirmed')]"/>
+                <filter name="filter_action_required" string="Action Required"
+                        domain="[('action_required', '=', True)]"/>
+                <separator/>
+                <filter name="filter_rating_c_d" string="Rating C or D"
+                        domain="[('rating', 'in', ['c', 'd'])]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_rating" string="Rating"
+                        context="{'group_by': 'rating'}"/>
+                    <filter name="group_period" string="Period End"
+                        context="{'group_by': 'period_end'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_supplier_performance_view_graph" model="ir.ui.view">
+        <field name="name">ls.supplier.performance.graph</field>
+        <field name="model">ls.supplier.performance</field>
+        <field name="arch" type="xml">
+            <graph string="Supplier Scorecards" type="bar" sample="1">
+                <field name="partner_id"/>
+                <field name="overall_score" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_supplier_performance_view_pivot" model="ir.ui.view">
+        <field name="name">ls.supplier.performance.pivot</field>
+        <field name="model">ls.supplier.performance</field>
+        <field name="arch" type="xml">
+            <pivot string="Performance Analysis" sample="1">
+                <field name="partner_id" type="row"/>
+                <field name="period_end" type="col" interval="year"/>
+                <field name="overall_score" type="measure"/>
+                <field name="otd_percent" type="measure"/>
+                <field name="quality_percent" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_performance" model="ir.actions.act_window">
+        <field name="name">Performance Evaluations</field>
+        <field name="res_model">ls.supplier.performance</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Evaluate supplier performance</p>
+            <p>
+                Record the indicators of a period. The overall score and the
+                rating letter are computed from the weights configured for the
+                company.
+            </p>
+        </field>
+    </record>
+
+</odoo>

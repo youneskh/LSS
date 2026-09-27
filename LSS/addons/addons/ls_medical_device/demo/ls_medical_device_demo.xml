@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Demo data. Every record below is fictitious and exists only to
+            exercise the views and workflows of this module. No device,
+            notified body, certificate number or clinical conclusion in this
+            file corresponds to a real product or a real organisation.
+
+            The notified body identification number used here is deliberately
+            outside the four-digit range used for real designations, so that a
+            demo record cannot be mistaken for a designated body.
+        -->
+
+        <record id="demo_notified_body" model="ls.md.notified_body">
+            <field name="name">Demonstration Conformity Assessment Body</field>
+            <field name="identification_number">DEMO-0000</field>
+            <field name="designation_scope">Fictitious scope used for demonstration purposes only.</field>
+            <field name="designation_reference">Not a real designation. Demo record.</field>
+        </record>
+
+        <!-- Class IIa device: infusion set -->
+        <record id="demo_device_infusion_set" model="ls.md.device">
+            <field name="name">Demo Gravity Infusion Set</field>
+            <field name="model_reference">DEMO-IS-100</field>
+            <field name="device_class_id" ref="device_class_iia"/>
+            <field name="classification_rule">Annex VIII, rule to be confirmed by the manufacturer</field>
+            <field name="classification_rationale">Fictitious classification rationale recorded for demonstration purposes.</field>
+            <field name="intended_purpose">Demonstration record. Intended purpose text is fictitious and is present only to populate the form.</field>
+            <field name="is_sterile" eval="True"/>
+            <field name="state">development</field>
+        </record>
+
+        <!-- Class III device: implantable pulse generator -->
+        <record id="demo_device_implant" model="ls.md.device">
+            <field name="name">Demo Implantable Pulse Generator</field>
+            <field name="model_reference">DEMO-IPG-200</field>
+            <field name="device_class_id" ref="device_class_iii"/>
+            <field name="classification_rule">Annex VIII, rule to be confirmed by the manufacturer</field>
+            <field name="classification_rationale">Fictitious classification rationale recorded for demonstration purposes.</field>
+            <field name="intended_purpose">Demonstration record. Intended purpose text is fictitious and is present only to populate the form.</field>
+            <field name="is_implantable" eval="True"/>
+            <field name="is_sterile" eval="True"/>
+            <field name="state">development</field>
+        </record>
+
+        <!-- Class I device: non-sterile examination aid -->
+        <record id="demo_device_class_i" model="ls.md.device">
+            <field name="name">Demo Reusable Examination Aid</field>
+            <field name="model_reference">DEMO-EA-050</field>
+            <field name="device_class_id" ref="device_class_i"/>
+            <field name="classification_rule">Annex VIII, rule to be confirmed by the manufacturer</field>
+            <field name="intended_purpose">Demonstration record. Intended purpose text is fictitious and is present only to populate the form.</field>
+            <field name="state">draft</field>
+        </record>
+
+        <!-- UDI assignments -->
+        <record id="demo_udi_infusion_basic" model="ls.md.udi">
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="udi_kind">basic_udi_di</field>
+            <field name="udi_di">DEMO-BASIC-UDI-DI-0001</field>
+            <field name="issuing_entity">other</field>
+            <field name="issuing_entity_note">Demo value. Not issued by a designated issuing entity.</field>
+            <field name="packaging_level">unit_of_use</field>
+            <field name="carrier_type">2d</field>
+        </record>
+
+        <record id="demo_udi_infusion_di" model="ls.md.udi">
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="udi_kind">udi_di</field>
+            <field name="udi_di">DEMO-UDI-DI-0001</field>
+            <field name="issuing_entity">other</field>
+            <field name="issuing_entity_note">Demo value. Not issued by a designated issuing entity.</field>
+            <field name="packaging_level">primary</field>
+            <field name="quantity_per_package">1</field>
+            <field name="carrier_type">2d</field>
+            <field name="pi_lot_number" eval="True"/>
+            <field name="pi_expiry_date" eval="True"/>
+        </record>
+
+        <!-- Risk management file -->
+        <record id="demo_risk_assessment_infusion" model="ls.md.risk_assessment">
+            <field name="title">Risk Management File - Demo Gravity Infusion Set</field>
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="standard_reference">ISO 14971:2019</field>
+            <field name="scope">Fictitious scope covering the demonstration device across its life cycle.</field>
+            <field name="risk_policy">Demonstration acceptability policy. Replace with the policy defined in the risk management plan of the organisation.</field>
+        </record>
+
+        <record id="demo_risk_item_particulate" model="ls.md.risk_item">
+            <field name="risk_assessment_id" ref="demo_risk_assessment_infusion"/>
+            <field name="reference">R-001</field>
+            <field name="hazard">Particulate contamination of the fluid path</field>
+            <field name="hazard_category">Biological and chemical</field>
+            <field name="sequence_of_events">Fictitious sequence recorded for demonstration purposes.</field>
+            <field name="hazardous_situation">Particles are introduced into the patient fluid path during administration</field>
+            <field name="harm">Vascular occlusion or inflammatory reaction</field>
+            <field name="affected_party">Patient</field>
+            <field name="initial_severity">4</field>
+            <field name="initial_probability">3</field>
+            <field name="control_option">protective_measure</field>
+            <field name="control_measure">In-line filter incorporated in the fluid path and verified during production.</field>
+            <field name="control_implementation_reference">DEMO-SPEC-001</field>
+            <field name="control_verification_reference">DEMO-TEST-001</field>
+            <field name="control_verified" eval="True"/>
+            <field name="residual_severity">4</field>
+            <field name="residual_probability">1</field>
+            <field name="residual_acceptability">acceptable</field>
+            <field name="acceptability_justification">Fictitious justification recorded for demonstration purposes.</field>
+        </record>
+
+        <record id="demo_risk_item_flow_rate" model="ls.md.risk_item">
+            <field name="risk_assessment_id" ref="demo_risk_assessment_infusion"/>
+            <field name="reference">R-002</field>
+            <field name="hazard">Incorrect flow rate delivered</field>
+            <field name="hazard_category">Functional performance</field>
+            <field name="sequence_of_events">Fictitious sequence recorded for demonstration purposes.</field>
+            <field name="hazardous_situation">The roller clamp drifts during administration and the delivered rate departs from the set rate</field>
+            <field name="harm">Under-infusion or over-infusion of the administered fluid</field>
+            <field name="affected_party">Patient</field>
+            <field name="initial_severity">3</field>
+            <field name="initial_probability">4</field>
+            <field name="control_option">inherent_safety</field>
+            <field name="control_measure">Clamp geometry revised to increase holding force, verified by design testing.</field>
+            <field name="control_implementation_reference">DEMO-SPEC-002</field>
+            <field name="control_verification_reference">DEMO-TEST-002</field>
+            <field name="control_verified" eval="True"/>
+            <field name="residual_severity">3</field>
+            <field name="residual_probability">2</field>
+            <field name="residual_acceptability">alarp</field>
+            <field name="acceptability_justification">Fictitious justification recorded for demonstration purposes.</field>
+            <field name="disclosed_to_user" eval="True"/>
+        </record>
+
+        <!-- Clinical evaluation -->
+        <record id="demo_clinical_evaluation_infusion" model="ls.md.clinical_evaluation">
+            <field name="title">Clinical Evaluation Report - Demo Gravity Infusion Set</field>
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="plan_scope">Fictitious clinical evaluation scope recorded for demonstration purposes.</field>
+            <field name="intended_clinical_benefits">Demonstration text. Replace with the intended clinical benefits and their outcome parameters.</field>
+            <field name="target_population">Demonstration text. Replace with the target population and indications.</field>
+            <field name="acceptance_criteria">Demonstration text. Replace with the acceptance criteria for the benefit-risk ratio.</field>
+            <field name="evidence_source_ids" eval="[(6, 0, [ref('clinical_evidence_source_literature'), ref('clinical_evidence_source_equivalence')])]"/>
+            <field name="equivalence_claimed" eval="True"/>
+            <field name="equivalent_device_description">Fictitious equivalent device used for demonstration purposes.</field>
+            <field name="equivalence_demonstration">Demonstration text. Replace with the demonstration of technical, biological and clinical equivalence.</field>
+            <field name="clinical_investigation_performed" eval="False"/>
+            <field name="clinical_investigation_justification">Demonstration text. Replace with the justification for not performing a clinical investigation.</field>
+            <field name="pmcf_applicable" eval="True"/>
+            <field name="pmcf_plan_summary">Demonstration text. Replace with the summary of the post-market clinical follow-up plan.</field>
+        </record>
+
+        <!-- Technical documentation -->
+        <record id="demo_technical_file_infusion" model="ls.md.technical_file">
+            <field name="title">Technical Documentation - Demo Gravity Infusion Set</field>
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="annex_reference">annex_ii</field>
+            <field name="storage_location">Demonstration location reference.</field>
+        </record>
+
+        <!-- Post-market surveillance plan -->
+        <record id="demo_pms_infusion" model="ls.md.pms">
+            <field name="title">Post-Market Surveillance Plan - Demo Gravity Infusion Set</field>
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="information_sources">Demonstration text. Replace with the information sources monitored under the plan.</field>
+            <field name="collection_process">Demonstration text. Replace with the data collection process.</field>
+            <field name="indicators_and_thresholds">Demonstration text. Replace with the indicators monitored and the thresholds applied.</field>
+            <field name="analysis_methods">Demonstration text. Replace with the analysis methods.</field>
+            <field name="communication_methods">Demonstration text. Replace with the communication methods.</field>
+            <field name="corrective_action_process">Demonstration text. Replace with the process followed when action is needed.</field>
+            <field name="pmcf_plan_included" eval="True"/>
+            <field name="pmcf_plan_reference">DEMO-PMCF-001</field>
+            <field name="review_frequency_months">12</field>
+        </record>
+
+        <!-- CE marking record -->
+        <record id="demo_ce_marking_infusion" model="ls.md.ce_marking">
+            <field name="device_id" ref="demo_device_infusion_set"/>
+            <field name="conformity_route">annex_ix</field>
+            <field name="notified_body_id" ref="demo_notified_body"/>
+            <field name="scope">Fictitious certificate scope recorded for demonstration purposes.</field>
+        </record>
+
+    </data>
+</odoo>

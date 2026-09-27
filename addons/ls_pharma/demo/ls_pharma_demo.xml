@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Demonstration data.
+
+     Scope of this file, and the reason for that scope:
+
+     This file ships only master data that can be created without naming a
+     single record outside this module. Demonstration batches, batch records,
+     stability studies, serialised units and dossiers are deliberately absent,
+     for two independent reasons.
+
+     First, each of them needs at least one external identifier that could not
+     be verified against the Odoo 19 source from the build environment: a
+     demonstration product of the "product" module, or a unit of measure of
+     the "uom" module. A "ref" attribute that does not resolve aborts the
+     installation of the whole module, so naming an unverified identifier here
+     would put installation at risk in exchange for sample data.
+
+     Second, a batch release decision must pass the guards implemented in
+     ls.pharma.batch.release, which check the state of the batch, the approval
+     of its batch records, the presence of an expiry date and the separation
+     between the person who manufactured the batch and the person who decides
+     on it. A decision written directly as an XML record would bypass exactly
+     the controls that this module exists to enforce, and would leave the
+     batch and its decision in states that contradict each other.
+
+     The full scenario, from a planned batch through execution, review,
+     release and serialisation, is built instead by the test suite in
+     ls_pharma/tests, where the records are created through the ORM and a unit
+     of measure is found by searching the database rather than by naming it.
+-->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_api_paracetamol" model="ls.pharma.api">
+            <field name="name">Paracetamol</field>
+            <field name="code">API-PARA</field>
+            <field name="inn_name">Paracetamol</field>
+            <field name="active_moiety">Paracetamol</field>
+            <field name="cas_number">103-90-2</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="potency_basis">as_is</field>
+            <field name="label_assay_percentage">99.5</field>
+            <field name="retest_period_months">36</field>
+            <field name="storage_condition">Store below 25 C, protected from light</field>
+            <field name="state">qualified</field>
+        </record>
+
+        <record id="demo_api_amoxicillin" model="ls.pharma.api">
+            <field name="name">Amoxicillin Trihydrate</field>
+            <field name="code">API-AMOX</field>
+            <field name="inn_name">Amoxicillin</field>
+            <field name="active_moiety">Amoxicillin</field>
+            <field name="cas_number">61336-70-7</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="potency_basis">anhydrous</field>
+            <field name="label_assay_percentage">95.0</field>
+            <field name="retest_period_months">24</field>
+            <field name="storage_condition">Store below 25 C in a tight container</field>
+            <field name="is_sterile" eval="False"/>
+            <field name="state">qualified</field>
+        </record>
+
+        <record id="demo_excipient_mcc" model="ls.pharma.excipient">
+            <field name="name">Microcrystalline Cellulose</field>
+            <field name="code">EXC-MCC</field>
+            <field name="excipient_function">diluent</field>
+            <field name="cas_number">9004-34-6</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="retest_period_months">36</field>
+            <field name="state">qualified</field>
+        </record>
+
+        <record id="demo_excipient_povidone" model="ls.pharma.excipient">
+            <field name="name">Povidone K30</field>
+            <field name="code">EXC-PVP</field>
+            <field name="excipient_function">binder</field>
+            <field name="cas_number">9003-39-8</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="retest_period_months">36</field>
+            <field name="state">qualified</field>
+        </record>
+
+        <record id="demo_excipient_magnesium_stearate" model="ls.pharma.excipient">
+            <field name="name">Magnesium Stearate</field>
+            <field name="code">EXC-MGST</field>
+            <field name="excipient_function">lubricant</field>
+            <field name="cas_number">557-04-0</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="of_animal_origin" eval="True"/>
+            <field name="tse_statement_reference">TSE-STMT-2026-014</field>
+            <field name="retest_period_months">24</field>
+            <field name="state">qualified</field>
+        </record>
+
+        <record id="demo_excipient_croscarmellose" model="ls.pharma.excipient">
+            <field name="name">Croscarmellose Sodium</field>
+            <field name="code">EXC-CCS</field>
+            <field name="excipient_function">disintegrant</field>
+            <field name="cas_number">74811-65-7</field>
+            <field name="pharmacopoeia">ph_eur</field>
+            <field name="retest_period_months">36</field>
+            <field name="state">qualified</field>
+        </record>
+
+    </data>
+</odoo>

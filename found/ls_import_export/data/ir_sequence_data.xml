@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!--
+        Sequences are loaded with noupdate="1" so that a module upgrade
+        never resets a counter that has already allocated references to
+        real records.
+    -->
+
+    <record id="seq_ls_import_export_provision" model="ir.sequence">
+        <field name="name">Import/Export Provision</field>
+        <field name="code">ls.import_export.provision</field>
+        <field name="prefix">IEP/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_import_export_requirement" model="ir.sequence">
+        <field name="name">Import/Export Compliance Requirement</field>
+        <field name="code">ls.import_export.compliance.requirement</field>
+        <field name="prefix">IEC/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_import_export_question" model="ir.sequence">
+        <field name="name">Import/Export Regulatory Question</field>
+        <field name="code">ls.import_export.regulatory.question</field>
+        <field name="prefix">IEQ/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

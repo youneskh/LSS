@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_ce_marking_list" model="ir.ui.view">
+        <field name="name">ls.md.ce_marking.list</field>
+        <field name="model">ls.md.ce_marking</field>
+        <field name="arch" type="xml">
+            <list string="CE Marking Records" decoration-danger="is_expired" decoration-warning="state == 'suspended'" decoration-muted="state == 'withdrawn'">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="conformity_route"/>
+                <field name="notified_body_id" optional="show"/>
+                <field name="certificate_number" optional="show"/>
+                <field name="declaration_number" optional="hide"/>
+                <field name="issue_date" optional="show"/>
+                <field name="expiry_date"/>
+                <field name="days_to_expiry" optional="show"/>
+                <field name="is_expired" column_invisible="True"/>
+                <field name="ce_marking_affixed" optional="hide"/>
+                <field name="surveillance_audit_due" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'valid'" decoration-info="state == 'issued'" decoration-warning="state == 'suspended'" decoration-danger="state == 'expired'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_ce_marking_form" model="ir.ui.view">
+        <field name="name">ls.md.ce_marking.form</field>
+        <field name="model">ls.md.ce_marking</field>
+        <field name="arch" type="xml">
+            <form string="CE Marking Record">
+                <header>
+                    <button name="action_submit" type="object" string="Submit to Notified Body" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_mark_issued" type="object" string="Record Certificate Issued" class="oe_highlight" invisible="state != 'submitted'"/>
+                    <button name="action_activate" type="object" string="Activate" class="oe_highlight" invisible="state not in ('issued', 'suspended')"/>
+                    <button name="action_suspend" type="object" string="Suspend" invisible="state != 'valid'"/>
+                    <button name="action_withdraw" type="object" string="Withdraw" invisible="state not in ('issued', 'valid', 'suspended')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,issued,valid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="not is_expired">
+                        The validity period recorded on this certificate has elapsed.
+                    </div>
+                    <group>
+                        <group string="Device">
+                            <field name="device_id"/>
+                            <field name="basic_udi_di"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Conformity Assessment">
+                            <field name="conformity_route"/>
+                            <field name="notified_body_id" invisible="conformity_route == 'self_declaration'" required="conformity_route != 'self_declaration'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Certificate">
+                            <field name="certificate_number"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                            <field name="days_to_expiry" readonly="1"/>
+                            <field name="is_expired" readonly="1"/>
+                            <field name="surveillance_audit_due"/>
+                        </group>
+                        <group string="Declaration of Conformity and CE Marking">
+                            <field name="declaration_number"/>
+                            <field name="declaration_date"/>
+                            <field name="ce_marking_affixed"/>
+                            <field name="ce_marking_date" invisible="not ce_marking_affixed"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Scope and Conditions" name="scope">
+                            <group string="Scope">
+                                <field name="scope" nolabel="1" placeholder="Scope of the certificate, including the devices and device codes covered"/>
+                            </group>
+                            <group string="Conditions and Restrictions">
+                                <field name="conditions" nolabel="1" placeholder="Conditions or restrictions imposed by the notified body"/>
+                            </group>
+                        </page>
+                        <page string="Suspension" name="suspension" invisible="state != 'suspended' and not suspension_date">
+                            <group>
+                                <field name="suspension_date"/>
+                                <field name="suspension_reason" placeholder="Reason recorded for the suspension"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_ce_marking_search" model="ir.ui.view">
+        <field name="name">ls.md.ce_marking.search</field>
+        <field name="model">ls.md.ce_marking</field>
+        <field name="arch" type="xml">
+            <search string="CE Marking Records">
+                <field name="name"/>
+                <field name="certificate_number"/>
+                <field name="declaration_number"/>
+                <field name="device_id"/>
+                <field name="notified_body_id"/>
+                <separator/>
+                <filter name="filter_valid" string="Valid" domain="[('state', '=', 'valid')]"/>
+                <filter name="filter_issued" string="Issued" domain="[('state', '=', 'issued')]"/>
+                <filter name="filter_suspended" string="Suspended" domain="[('state', '=', 'suspended')]"/>
+                <filter name="filter_withdrawn" string="Withdrawn" domain="[('state', '=', 'withdrawn')]"/>
+                <separator/>
+                <filter name="filter_expired" string="Expired" domain="[('is_expired', '=', True)]"/>
+                <filter name="filter_self_declared" string="Self-Declared" domain="[('conformity_route', '=', 'self_declaration')]"/>
+                <filter name="filter_not_affixed" string="CE Marking Not Affixed" domain="[('ce_marking_affixed', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_body" string="Notified Body" context="{'group_by': 'notified_body_id'}"/>
+                    <filter name="group_by_route" string="Conformity Route" context="{'group_by': 'conformity_route'}"/>
+                    <filter name="group_by_expiry" string="Expiry Month" context="{'group_by': 'expiry_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_ce_marking" model="ir.actions.act_window">
+        <field name="name">CE Marking Records</field>
+        <field name="res_model">ls.md.ce_marking</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_ce_marking_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a CE marking record</p>
+            <p>
+                A CE marking record holds the conformity assessment route, the notified body
+                certificate where one is required, the EU declaration of conformity reference
+                and the date on which the CE marking was affixed.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_md_ce_marking_expiring" model="ir.actions.act_window">
+        <field name="name">Expired Certificates</field>
+        <field name="res_model">ls.md.ce_marking</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_expired', '=', True)]</field>
+        <field name="search_view_id" ref="view_ls_md_ce_marking_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No certificate has expired</p>
+            <p>Certificates appear here once the validity period recorded on them has elapsed.</p>
+        </field>
+    </record>
+
+</odoo>

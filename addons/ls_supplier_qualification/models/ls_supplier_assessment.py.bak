@@ -1,0 +1,591 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+"""Supplier assessment: scored questionnaire and its result."""
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError, ValidationError
+
+ASSESSMENT_TYPE_SELECTION = [
+    ("initial", "Initial Qualification"),
+    ("periodic", "Periodic Re-Assessment"),
+    ("requalification", "Requalification"),
+    ("for_cause", "For Cause"),
+    ("desktop", "Desktop Review"),
+]
+
+ASSESSMENT_STATE_SELECTION = [
+    ("draft", "Draft"),
+    ("in_progress", "In Progress"),
+    ("done", "Completed"),
+    ("reviewed", "Reviewed"),
+    ("cancelled", "Cancelled"),
+]
+
+RESULT_SELECTION = [
+    ("pass", "Pass"),
+    ("conditional", "Conditional"),
+    ("fail", "Fail"),
+]
+
+
+class LsSupplierAssessment(models.Model):
+    """A scored evaluation of a supplier against a questionnaire.
+
+    The scoring rules (scale, thresholds, minimum score for mandatory
+    criteria) are copied from the template when the assessment is created so
+    that a later change to the template cannot alter a past result.
+    """
+
+    _name = "ls.supplier.assessment"
+    _description = "Life Sciences Supplier Assessment"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
+    _order = "date desc, id desc"
+    _check_company_auto = True
+
+    name = fields.Char(
+        required=True,
+        readonly=True,
+        copy=False,
+        default="/",
+        index=True,
+    )
+    qualification_id = fields.Many2one(
+        comodel_name="ls.supplier.qualification",
+        required=True,
+        ondelete="cascade",
+        index=True,
+        tracking=True,
+    )
+    partner_id = fields.Many2one(
+        related="qualification_id.partner_id",
+        store=True,
+        index=True,
+    )
+    company_id = fields.Many2one(
+        related="qualification_id.company_id",
+        store=True,
+        index=True,
+    )
+    template_id = fields.Many2one(
+        comodel_name="ls.supplier.assessment.template",
+        required=True,
+        ondelete="restrict",
+        check_company=True,
+        tracking=True,
+    )
+    assessment_type = fields.Selection(
+        selection=ASSESSMENT_TYPE_SELECTION,
+        required=True,
+        default="initial",
+        tracking=True,
+    )
+    date = fields.Date(
+        required=True,
+        default=fields.Date.context_today,
+        tracking=True,
+    )
+    assessor_id = fields.Many2one(
+        comodel_name="res.users",
+        required=True,
+        default=lambda self: self.env.user,
+        tracking=True,
+        domain=[("share", "=", False)],
+    )
+    reviewer_id = fields.Many2one(
+        comodel_name="res.users",
+        tracking=True,
+        readonly=True,
+        copy=False,
+        domain=[("share", "=", False)],
+    )
+    review_date = fields.Date(readonly=True, copy=False)
+    line_ids = fields.One2many(
+        comodel_name="ls.supplier.assessment.line",
+        inverse_name="assessment_id",
+        string="Scored Criteria",
+        copy=True,
+    )
+    state = fields.Selection(
+        selection=ASSESSMENT_STATE_SELECTION,
+        required=True,
+        default="draft",
+        tracking=True,
+        index=True,
+        copy=False,
+    )
+
+    # Frozen scoring rules -------------------------------------------------
+    max_score_per_criterion = fields.Integer(
+        required=True,
+        default=5,
+        readonly=True,
+        help="Scoring scale frozen from the template when the assessment was "
+             "created.",
+    )
+    mandatory_min_score = fields.Integer(required=True, default=3, readonly=True)
+    pass_threshold = fields.Float(
+        required=True, default=80.0, readonly=True, digits=(5, 2)
+    )
+    conditional_threshold = fields.Float(
+        required=True, default=60.0, readonly=True, digits=(5, 2)
+    )
+
+    # Results --------------------------------------------------------------
+    total_weighted_score = fields.Float(
+        compute="_compute_scores", store=True, digits=(10, 2)
+    )
+    total_max_weighted_score = fields.Float(
+        compute="_compute_scores", store=True, digits=(10, 2)
+    )
+    score_percent = fields.Float(
+        string="Score (%)",
+        compute="_compute_scores",
+        store=True,
+        digits=(5, 2),
+        tracking=True,
+    )
+    mandatory_failed_count = fields.Integer(
+        compute="_compute_scores", store=True
+    )
+    finding_count = fields.Integer(compute="_compute_scores", store=True)
+    result = fields.Selection(
+        selection=RESULT_SELECTION,
+        compute="_compute_scores",
+        store=True,
+        tracking=True,
+    )
+    conclusion = fields.Text(tracking=True)
+
+    _sql_constraints = [
+        (
+            "name_company_uniq",
+            "UNIQUE(name, company_id)",
+            "The assessment reference must be unique per company.",
+        ),
+    ]
+
+    # ------------------------------------------------------------------
+    # Compute
+    # ------------------------------------------------------------------
+    @api.depends(
+        "line_ids.weighted_score",
+        "line_ids.max_weighted_score",
+        "line_ids.is_mandatory",
+        "line_ids.score",
+        "line_ids.is_finding",
+        "mandatory_min_score",
+        "pass_threshold",
+        "conditional_threshold",
+    )
+    def _compute_scores(self):
+        """Aggregate the line scores and derive the assessment result."""
+        for record in self:
+            record.total_weighted_score = sum(
+                record.line_ids.mapped("weighted_score")
+            )
+            record.total_max_weighted_score = sum(
+                record.line_ids.mapped("max_weighted_score")
+            )
+            record.finding_count = len(
+                record.line_ids.filtered(lambda line: line.is_finding)
+            )
+            failed = record.line_ids.filtered(
+                lambda line: line.is_mandatory
+                and line.score < record.mandatory_min_score
+            )
+            record.mandatory_failed_count = len(failed)
+            if not record.line_ids or not record.total_max_weighted_score:
+                record.score_percent = 0.0
+                record.result = False
+                continue
+            record.score_percent = round(
+                100.0
+                * record.total_weighted_score
+                / record.total_max_weighted_score,
+                2,
+            )
+            if failed:
+                record.result = "fail"
+            elif record.score_percent >= record.pass_threshold:
+                record.result = "pass"
+            elif record.score_percent >= record.conditional_threshold:
+                record.result = "conditional"
+            else:
+                record.result = "fail"
+
+    # ------------------------------------------------------------------
+    # Constraints
+    # ------------------------------------------------------------------
+    @api.constrains(
+        "max_score_per_criterion",
+        "mandatory_min_score",
+        "pass_threshold",
+        "conditional_threshold",
+    )
+    def _check_frozen_rules(self):
+        """Validate the scoring rules frozen on the assessment."""
+        for record in self:
+            if record.max_score_per_criterion <= 0:
+                raise ValidationError(
+                    _("Assessment %s: the maximum score per criterion must be "
+                      "strictly positive.", record.name)
+                )
+            if not 0 <= record.mandatory_min_score <= record.max_score_per_criterion:
+                raise ValidationError(
+                    _("Assessment %s: the minimum score for mandatory "
+                      "criteria must be between 0 and %s.",
+                      record.name, record.max_score_per_criterion)
+                )
+            if record.conditional_threshold > record.pass_threshold:
+                raise ValidationError(
+                    _("Assessment %s: the conditional threshold cannot exceed "
+                      "the pass threshold.", record.name)
+                )
+
+    @api.constrains("state", "reviewer_id", "assessor_id")
+    def _check_reviewer_segregation(self):
+        """A reviewed assessment must be reviewed by a second person."""
+        for record in self:
+            if record.state != "reviewed":
+                continue
+            if not record.company_id.ls_enforce_sod:
+                continue
+            if record.reviewer_id == record.assessor_id:
+                raise ValidationError(
+                    _("Segregation of duties: assessment %s cannot be "
+                      "reviewed by its own assessor.", record.name)
+                )
+
+    # ------------------------------------------------------------------
+    # ORM overrides
+    # ------------------------------------------------------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Assign the reference and freeze the scoring rules."""
+        templates = self.env["ls.supplier.assessment.template"].browse(
+            [vals.get("template_id") for vals in vals_list if vals.get("template_id")]
+        )
+        template_map = {template.id: template for template in templates}
+        for vals in vals_list:
+            if vals.get("name", "/") == "/":
+                qualification = self.env["ls.supplier.qualification"].browse(
+                    vals.get("qualification_id")
+                )
+                company_id = (
+                    qualification.company_id.id or self.env.company.id
+                )
+                vals["name"] = self.env["ir.sequence"].with_company(
+                    company_id
+                ).next_by_code("ls.supplier.assessment") or "/"
+            template = template_map.get(vals.get("template_id"))
+            if template:
+                vals.setdefault(
+                    "max_score_per_criterion", template.max_score_per_criterion
+                )
+                vals.setdefault(
+                    "mandatory_min_score", template.mandatory_min_score
+                )
+                vals.setdefault("pass_threshold", template.pass_threshold)
+                vals.setdefault(
+                    "conditional_threshold", template.conditional_threshold
+                )
+        return super().create(vals_list)
+
+    def copy(self, default=None):
+        """Duplicate an assessment as a draft without review information."""
+        self.ensure_one()
+        default = dict(default or {})
+        default.update({
+            "name": "/",
+            "state": "draft",
+            "reviewer_id": False,
+            "review_date": False,
+        })
+        return super().copy(default)
+
+    def unlink(self):
+        """Only draft or cancelled assessments may be deleted."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _("Assessment %s cannot be deleted once it has been "
+                      "started. Cancel it instead.", record.name)
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+    @api.onchange("template_id")
+    def _onchange_template_id(self):
+        """Refresh the frozen scoring rules while the assessment is a draft."""
+        for record in self:
+            if not record.template_id:
+                continue
+            record.max_score_per_criterion = (
+                record.template_id.max_score_per_criterion
+            )
+            record.mandatory_min_score = record.template_id.mandatory_min_score
+            record.pass_threshold = record.template_id.pass_threshold
+            record.conditional_threshold = (
+                record.template_id.conditional_threshold
+            )
+
+    def action_load_template(self):
+        """Replace the lines with the criteria of the selected template."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    _("Criteria can only be loaded while assessment %s is a "
+                      "draft.", record.name)
+                )
+            if not record.template_id:
+                raise UserError(
+                    _("Select a template before loading its criteria.")
+                )
+            record.line_ids.unlink()
+            record.line_ids = [
+                fields.Command.create({
+                    "criterion_id": line.criterion_id.id,
+                    "sequence": line.sequence,
+                    "weight": line.weight,
+                    "is_mandatory": line.is_mandatory,
+                })
+                for line in record.template_id.line_ids
+            ]
+            record.message_post(body=_(
+                "%s criteria loaded from template %s.",
+                len(record.line_ids), record.template_id.display_name,
+            ))
+        return True
+
+    def action_start(self):
+        """Start the evaluation."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    _("Only a draft assessment can be started "
+                      "(assessment %s).", record.name)
+                )
+            if not record.line_ids:
+                raise UserError(
+                    _("Assessment %s has no criterion. Load a template "
+                      "first.", record.name)
+                )
+            record.state = "in_progress"
+            record.message_post(body=_("Assessment started."))
+        return True
+
+    def action_done(self):
+        """Complete the evaluation once every criterion is documented."""
+        for record in self:
+            if record.state != "in_progress":
+                raise UserError(
+                    _("Only an assessment in progress can be completed "
+                      "(assessment %s).", record.name)
+                )
+            unjustified = record.line_ids.filtered(
+                lambda line: line.score < line.assessment_id.mandatory_min_score
+                and not (line.comment or "").strip()
+            )
+            if unjustified:
+                raise UserError(
+                    _("Assessment %s: every criterion scored below the "
+                      "minimum acceptable score must carry a comment. "
+                      "Criteria concerned: %s.",
+                      record.name,
+                      ", ".join(unjustified.mapped("criterion_id.code")))
+                )
+            if not (record.conclusion or "").strip():
+                raise UserError(
+                    _("Assessment %s: a written conclusion is required before "
+                      "completion.", record.name)
+                )
+            record.state = "done"
+            record.message_post(body=_(
+                "Assessment completed with a weighted score of %s%% "
+                "(result: %s).",
+                record.score_percent,
+                dict(RESULT_SELECTION).get(record.result, ""),
+            ))
+            self.env["ls.supplier.signature"].sign(
+                record=record,
+                meaning="authored",
+                reason=_("Assessment completed by the assessor."),
+                payload={
+                    "score_percent": record.score_percent,
+                    "result": record.result,
+                    "mandatory_failed_count": record.mandatory_failed_count,
+                },
+            )
+        return True
+
+    def action_review(self):
+        """Record the second-person review of a completed assessment."""
+        for record in self:
+            if record.state != "done":
+                raise UserError(
+                    _("Only a completed assessment can be reviewed "
+                      "(assessment %s).", record.name)
+                )
+            if (
+                record.company_id.ls_enforce_sod
+                and self.env.user == record.assessor_id
+            ):
+                raise UserError(
+                    _("Segregation of duties: assessment %s cannot be "
+                      "reviewed by its own assessor.", record.name)
+                )
+            record.write({
+                "state": "reviewed",
+                "reviewer_id": self.env.user.id,
+                "review_date": fields.Date.context_today(record),
+            })
+            record.message_post(body=_("Assessment reviewed."))
+            self.env["ls.supplier.signature"].sign(
+                record=record,
+                meaning="reviewed",
+                reason=_("Assessment reviewed."),
+                payload={
+                    "score_percent": record.score_percent,
+                    "result": record.result,
+                },
+            )
+        return True
+
+    def action_cancel(self):
+        """Cancel an assessment that must not be used as evidence."""
+        for record in self:
+            if record.state == "reviewed":
+                raise UserError(
+                    _("A reviewed assessment cannot be cancelled "
+                      "(assessment %s).", record.name)
+                )
+            record.state = "cancelled"
+            record.message_post(body=_("Assessment cancelled."))
+        return True
+
+    def action_reset_to_draft(self):
+        """Return a cancelled assessment to draft."""
+        for record in self:
+            if record.state != "cancelled":
+                raise UserError(
+                    _("Only a cancelled assessment can be reset to draft "
+                      "(assessment %s).", record.name)
+                )
+            record.state = "draft"
+            record.message_post(body=_("Assessment reset to draft."))
+        return True
+
+    def _get_report_base_filename(self):
+        """Return the file name proposed when printing the assessment."""
+        self.ensure_one()
+        return "%s - %s" % (self.name, self.partner_id.display_name)
+
+
+class LsSupplierAssessmentLine(models.Model):
+    """One scored criterion inside an assessment."""
+
+    _name = "ls.supplier.assessment.line"
+    _description = "Life Sciences Supplier Assessment Line"
+    _order = "sequence, id"
+    _check_company_auto = True
+
+    assessment_id = fields.Many2one(
+        comodel_name="ls.supplier.assessment",
+        required=True,
+        ondelete="cascade",
+        index=True,
+    )
+    company_id = fields.Many2one(
+        related="assessment_id.company_id",
+        store=True,
+        index=True,
+    )
+    criterion_id = fields.Many2one(
+        comodel_name="ls.supplier.criterion",
+        required=True,
+        ondelete="restrict",
+        check_company=True,
+    )
+    criterion_domain = fields.Selection(
+        related="criterion_id.domain",
+        store=True,
+        string="Domain",
+    )
+    sequence = fields.Integer(default=10)
+    weight = fields.Float(required=True, default=1.0, digits=(6, 2))
+    is_mandatory = fields.Boolean(string="Mandatory")
+    score = fields.Integer(default=0)
+    max_score = fields.Integer(
+        related="assessment_id.max_score_per_criterion",
+        store=True,
+    )
+    weighted_score = fields.Float(
+        compute="_compute_weighted", store=True, digits=(10, 2)
+    )
+    max_weighted_score = fields.Float(
+        compute="_compute_weighted", store=True, digits=(10, 2)
+    )
+    is_conform = fields.Boolean(compute="_compute_weighted", store=True)
+    evidence = fields.Text(
+        help="Documents, records or observations supporting the score.",
+    )
+    comment = fields.Text(
+        help="Mandatory when the score is below the minimum acceptable score.",
+    )
+    is_finding = fields.Boolean(
+        string="Raise Finding",
+        help="Flag the criterion as a finding to be followed up outside the "
+             "assessment.",
+    )
+
+    _sql_constraints = [
+        (
+            "criterion_assessment_uniq",
+            "UNIQUE(assessment_id, criterion_id)",
+            "A criterion can only be scored once per assessment.",
+        ),
+        (
+            "weight_positive",
+            "CHECK(weight > 0)",
+            "The weight must be strictly positive.",
+        ),
+        (
+            "score_positive",
+            "CHECK(score >= 0)",
+            "The score cannot be negative.",
+        ),
+    ]
+
+    @api.depends(
+        "score",
+        "weight",
+        "max_score",
+        "is_mandatory",
+        "assessment_id.mandatory_min_score",
+    )
+    def _compute_weighted(self):
+        """Compute the weighted score and the conformity flag of the line."""
+        for record in self:
+            record.weighted_score = record.score * record.weight
+            record.max_weighted_score = record.max_score * record.weight
+            minimum = record.assessment_id.mandatory_min_score
+            record.is_conform = record.score >= minimum
+
+    @api.constrains("score", "max_score")
+    def _check_score_range(self):
+        """The score must stay inside the frozen scale."""
+        for record in self:
+            if record.score > record.max_score:
+                raise ValidationError(
+                    _("Criterion '%s': the score cannot exceed %s.",
+                      record.criterion_id.display_name, record.max_score)
+                )
+
+    @api.onchange("criterion_id")
+    def _onchange_criterion_id(self):
+        """Propose the criterion defaults when it is selected manually."""
+        for record in self:
+            if record.criterion_id:
+                record.weight = record.criterion_id.default_weight
+                record.is_mandatory = record.criterion_id.is_mandatory

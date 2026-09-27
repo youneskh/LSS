@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_verification_list" model="ir.ui.view">
+        <field name="name">ls.change_control.verification.list</field>
+        <field name="model">ls.change_control.verification</field>
+        <field name="arch" type="xml">
+            <list string="Effectiveness Verifications"
+                  decoration-muted="state == 'completed' and result == 'effective'"
+                  decoration-danger="result == 'not_effective'">
+                <field name="request_id"/>
+                <field name="name"/>
+                <field name="method"/>
+                <field name="verifier_id" widget="many2one_avatar_user"/>
+                <field name="date_planned"/>
+                <field name="date_done" optional="show"/>
+                <field name="result" widget="badge"
+                       decoration-success="result == 'effective'"
+                       decoration-danger="result == 'not_effective'"
+                       decoration-warning="result == 'pending'"/>
+                <field name="state" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_verification_form" model="ir.ui.view">
+        <field name="name">ls.change_control.verification.form</field>
+        <field name="model">ls.change_control.verification</field>
+        <field name="arch" type="xml">
+            <form string="Effectiveness Verification">
+                <header>
+                    <button name="action_complete_effective" type="object"
+                            string="Conclude: Effective" class="oe_highlight"
+                            confirm="Record this conclusion? A completed verification cannot be modified."
+                            invisible="state == 'completed' or request_state != 'implementation'"/>
+                    <button name="action_complete_not_effective" type="object"
+                            string="Conclude: Not Effective"
+                            confirm="Record this conclusion? A completed verification cannot be modified."
+                            invisible="state == 'completed' or request_state != 'implementation'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Review of 3 batches after the process change"
+                                   readonly="state == 'completed'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="request_state" invisible="1"/>
+                            <field name="method" readonly="state == 'completed'"/>
+                            <field name="verifier_id" readonly="state == 'completed'"/>
+                        </group>
+                        <group>
+                            <field name="date_planned" readonly="state == 'completed'"/>
+                            <field name="date_done" invisible="state != 'completed'"/>
+                            <field name="completed_by_id" invisible="state != 'completed'"/>
+                            <field name="result"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Acceptance Criteria">
+                        <field name="acceptance_criteria" nolabel="1"
+                               readonly="state == 'completed'"
+                               placeholder="Criteria defined before the verification is performed."/>
+                    </group>
+                    <group string="Conclusion">
+                        <field name="conclusion" nolabel="1" readonly="state == 'completed'"/>
+                    </group>
+                    <group string="Follow-up">
+                        <field name="follow_up_required" readonly="state == 'completed'"/>
+                        <field name="follow_up_reference" readonly="state == 'completed'"
+                               invisible="not follow_up_required"
+                               placeholder="Reference of the corrective action record."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_verification_search" model="ir.ui.view">
+        <field name="name">ls.change_control.verification.search</field>
+        <field name="model">ls.change_control.verification</field>
+        <field name="arch" type="xml">
+            <search string="Effectiveness Verifications">
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="verifier_id"/>
+                <filter name="filter_my_verifications" string="My Verifications"
+                        domain="[('verifier_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_planned" string="Planned"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_completed" string="Completed"
+                        domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_not_effective" string="Not Effective"
+                        domain="[('result', '=', 'not_effective')]"/>
+                <separator/>
+                <filter name="filter_due" string="Due"
+                        domain="[('state', '=', 'draft'), ('date_planned', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_request" string="Change Request"
+                        context="{'group_by': 'request_id'}"/>
+                    <filter name="group_method" string="Method"
+                        context="{'group_by': 'method'}"/>
+                    <filter name="group_verifier" string="Verifier"
+                        context="{'group_by': 'verifier_id'}"/>
+                    <filter name="group_result" string="Result"
+                        context="{'group_by': 'result'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_verification" model="ir.actions.act_window">
+        <field name="name">Effectiveness Verifications</field>
+        <field name="res_model">ls.change_control.verification</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_verification_search"/>
+        <field name="context">{'search_default_filter_planned': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No effectiveness verification to display
+            </p>
+            <p>
+                An effectiveness verification checks, after the change has
+                been implemented, that the change achieved its objective and
+                created no adverse effect.
+            </p>
+        </field>
+    </record>
+
+</odoo>

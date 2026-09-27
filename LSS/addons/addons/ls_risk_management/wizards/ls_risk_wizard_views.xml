@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_assess_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.assess.wizard.form</field>
+        <field name="model">ls.risk.assess.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Assess Risks">
+                <group>
+                    <field name="risk_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="matrix_id" readonly="1"/>
+                </group>
+                <div class="alert alert-warning" role="alert" invisible="matrix_id">
+                    The selected risks do not share a single risk matrix. Select risks
+                    that use the same matrix and try again.
+                </div>
+                <group>
+                    <group>
+                        <field name="assessment_type"/>
+                        <field name="assessment_date"/>
+                    </group>
+                    <group>
+                        <field name="severity_level_id"/>
+                        <field name="probability_level_id"/>
+                    </group>
+                </group>
+                <group string="Estimation Rationale">
+                    <field name="estimation_rationale" nolabel="1"
+                           placeholder="Objective basis for the severity and probability selected"/>
+                </group>
+                <footer>
+                    <button name="action_create_assessments" type="object"
+                            string="Create Assessments" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_residual_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.residual.wizard.form</field>
+        <field name="model">ls.risk.residual.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Accept Residual Risk">
+                <group>
+                    <field name="risk_id" readonly="1"/>
+                    <field name="current_risk_level"/>
+                    <field name="current_acceptability"/>
+                </group>
+                <div class="alert alert-danger" role="alert"
+                     invisible="current_acceptability != 'not_acceptable'">
+                    The current acceptability of this risk is Not Acceptable against the
+                    approved criteria. A benefit-risk analysis is required before the
+                    residual risk can be accepted.
+                </div>
+                <group string="Acceptance Justification">
+                    <field name="justification" nolabel="1"
+                           placeholder="Objective justification for accepting the residual risk"/>
+                </group>
+                <group string="Benefit-Risk Analysis">
+                    <field name="benefit_risk_analysis" nolabel="1"
+                           required="current_acceptability == 'not_acceptable'"/>
+                </group>
+                <footer>
+                    <button name="action_accept" type="object"
+                            string="Accept Residual Risk" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_close_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.close.wizard.form</field>
+        <field name="model">ls.risk.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Risks">
+                <group>
+                    <field name="risk_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group string="Closure Reason">
+                    <field name="closure_reason" nolabel="1"
+                           placeholder="Reason for closing these risks"/>
+                </group>
+                <footer>
+                    <button name="action_close" type="object" string="Close Risks"
+                            class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.cancel.wizard.form</field>
+        <field name="model">ls.risk.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Risks">
+                <group>
+                    <field name="risk_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="cancel_reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object" string="Cancel Risks"
+                            class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_assessment_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.assessment.cancel.wizard.form</field>
+        <field name="model">ls.risk.assessment.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Assessments">
+                <group>
+                    <field name="assessment_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="cancel_reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object"
+                            string="Cancel Assessments" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_mitigation_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.mitigation.cancel.wizard.form</field>
+        <field name="model">ls.risk.mitigation.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Risk Control Measures">
+                <group>
+                    <field name="mitigation_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="cancel_reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object"
+                            string="Cancel Measures" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_fmea_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.cancel.wizard.form</field>
+        <field name="model">ls.risk.fmea.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel FMEA Worksheets">
+                <group>
+                    <field name="fmea_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="cancel_reason" nolabel="1"/>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object"
+                            string="Cancel Worksheets" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,62 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+{
+    "name": "Life Sciences - Supplier Qualification",
+    "version": "19.0.1.0.1",
+    "category": "Life Sciences/Quality",
+    "summary": "Supplier registration, assessment, audit, approval, "
+               "performance monitoring and periodic review for regulated "
+               "life sciences organisations",
+    "author": "Life Sciences Suite Architecture Team",
+    "website": "https://github.com/OCA",
+    "license": "AGPL-3",
+    "depends": [
+        "base",
+        "mail",
+        "product",
+        "purchase",
+    ],
+    "external_dependencies": {
+        "python": [],
+        "bin": [],
+    },
+    "data": [
+        "security/ls_supplier_qualification_groups.xml",
+        "security/ir.model.access.csv",
+        "security/ls_supplier_qualification_security.xml",
+        "data/ir_sequence_data.xml",
+        "data/ls_supplier_standard_data.xml",
+        "data/ls_supplier_category_data.xml",
+        "data/ls_supplier_criterion_data.xml",
+        "data/ls_supplier_assessment_template_data.xml",
+        "data/mail_template_data.xml",
+        "data/ir_cron_data.xml",
+        "wizards/ls_supplier_approve_wizard_views.xml",
+        "wizards/ls_supplier_status_wizard_views.xml",
+        "views/ls_supplier_standard_views.xml",
+        "views/ls_supplier_category_views.xml",
+        "views/ls_supplier_criterion_views.xml",
+        "views/ls_supplier_assessment_template_views.xml",
+        "views/ls_supplier_material_views.xml",
+        "views/ls_supplier_assessment_views.xml",
+        "views/ls_supplier_audit_views.xml",
+        "views/ls_supplier_performance_views.xml",
+        "views/ls_supplier_review_views.xml",
+        "views/ls_supplier_signature_views.xml",
+        "views/ls_supplier_qualification_views.xml",
+        "views/res_partner_views.xml",
+        "views/purchase_order_views.xml",
+        "views/res_config_settings_views.xml",
+        "views/ls_supplier_qualification_menus.xml",
+        "report/ls_supplier_report_actions.xml",
+        "report/ls_supplier_qualification_templates.xml",
+        "report/ls_supplier_assessment_templates.xml",
+        "report/ls_supplier_audit_templates.xml",
+    ],
+    "demo": [
+        "demo/ls_supplier_demo.xml",
+    ],
+    "images": [
+        "static/description/banner.svg",
+    ],
+}

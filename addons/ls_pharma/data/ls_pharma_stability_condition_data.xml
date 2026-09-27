@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Storage conditions of the general case published in ICH Q1A(R2).
+
+     Source: ICH Q1A(R2) Stability Testing of New Drug Substances and
+     Products, reproduced by the United States Food and Drug Administration
+     as a Guidance for Industry, https://www.fda.gov/media/71707/download
+
+     Only the general case conditions are shipped. Conditions for drug
+     substances or products intended for storage in a refrigerator or a
+     freezer, and conditions for products in semi-permeable containers, are
+     not shipped because the guideline states them together with
+     product-specific qualifications that a data record cannot carry. They
+     are added by the manufacturer as configuration. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="stability_condition_long_term_25_60" model="ls.pharma.stability.condition">
+            <field name="name">Long Term 25 C / 60% RH</field>
+            <field name="code">ICH-LT-25-60</field>
+            <field name="condition_type">long_term</field>
+            <field name="temperature_celsius">25.0</field>
+            <field name="temperature_tolerance">2.0</field>
+            <field name="relative_humidity">60.0</field>
+            <field name="humidity_tolerance">5.0</field>
+            <field name="default_duration_months">12</field>
+            <field name="reference">ICH Q1A(R2), general case, long term</field>
+            <field name="note">Minimum period covered by data at submission: 12 months. It is for the applicant to decide whether long term studies are performed at this condition or at 30 C with 65 per cent relative humidity.</field>
+        </record>
+
+        <record id="stability_condition_long_term_30_65" model="ls.pharma.stability.condition">
+            <field name="name">Long Term 30 C / 65% RH</field>
+            <field name="code">ICH-LT-30-65</field>
+            <field name="condition_type">long_term</field>
+            <field name="temperature_celsius">30.0</field>
+            <field name="temperature_tolerance">2.0</field>
+            <field name="relative_humidity">65.0</field>
+            <field name="humidity_tolerance">5.0</field>
+            <field name="default_duration_months">12</field>
+            <field name="reference">ICH Q1A(R2), general case, long term</field>
+            <field name="note">Where this condition is used as the long term condition, ICH Q1A(R2) states that there is no intermediate condition.</field>
+        </record>
+
+        <record id="stability_condition_intermediate_30_65" model="ls.pharma.stability.condition">
+            <field name="name">Intermediate 30 C / 65% RH</field>
+            <field name="code">ICH-INT-30-65</field>
+            <field name="condition_type">intermediate</field>
+            <field name="temperature_celsius">30.0</field>
+            <field name="temperature_tolerance">2.0</field>
+            <field name="relative_humidity">65.0</field>
+            <field name="humidity_tolerance">5.0</field>
+            <field name="default_duration_months">12</field>
+            <field name="reference">ICH Q1A(R2), general case, intermediate</field>
+            <field name="note">Called for when a significant change occurs at the accelerated storage condition. Minimum of four time points including the initial and final time points from a twelve month study. Minimum period covered by data at submission: 6 months.</field>
+        </record>
+
+        <record id="stability_condition_accelerated_40_75" model="ls.pharma.stability.condition">
+            <field name="name">Accelerated 40 C / 75% RH</field>
+            <field name="code">ICH-ACC-40-75</field>
+            <field name="condition_type">accelerated</field>
+            <field name="temperature_celsius">40.0</field>
+            <field name="temperature_tolerance">2.0</field>
+            <field name="relative_humidity">75.0</field>
+            <field name="humidity_tolerance">5.0</field>
+            <field name="default_duration_months">6</field>
+            <field name="reference">ICH Q1A(R2), general case, accelerated</field>
+            <field name="note">Minimum of three time points including the initial and final time points from a six month study. Minimum period covered by data at submission: 6 months.</field>
+        </record>
+
+    </data>
+</odoo>

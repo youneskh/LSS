@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_effectiveness_form" model="ir.ui.view">
+        <field name="name">ls.recall.effectiveness.form</field>
+        <field name="model">ls.recall.effectiveness</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_perform" type="object"
+                            string="Record as Performed" class="oe_highlight"
+                            invisible="state != 'planned'"/>
+                    <button name="action_escalate" type="object"
+                            string="Escalate and Retry"
+                            invisible="state not in ['planned', 'performed']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planned,performed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="execution_id"/>
+                            <field name="line_id"/>
+                            <field name="partner_id"/>
+                            <field name="check_level"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="method"/>
+                            <field name="attempt_number"/>
+                            <field name="planned_date"/>
+                            <field name="performed_date"/>
+                            <field name="performed_by_user_id"/>
+                            <field name="outcome"/>
+                        </group>
+                    </group>
+                    <separator string="Notes"/>
+                    <field name="notes"
+                           placeholder="What the consignee reported."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_effectiveness_list" model="ir.ui.view">
+        <field name="name">ls.recall.effectiveness.list</field>
+        <field name="model">ls.recall.effectiveness</field>
+        <field name="arch" type="xml">
+            <list editable="bottom"
+                  decoration-warning="state == 'escalated'"
+                  decoration-success="outcome in ['action_taken', 'no_stock']">
+                <field name="execution_id"/>
+                <field name="partner_id"/>
+                <field name="method"/>
+                <field name="attempt_number"/>
+                <field name="planned_date"/>
+                <field name="performed_date"/>
+                <field name="outcome"/>
+                <field name="state"/>
+                <button name="action_perform" type="object"
+                        string="Performed" icon="fa-check"
+                        invisible="state != 'planned'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_effectiveness_search" model="ir.ui.view">
+        <field name="name">ls.recall.effectiveness.search</field>
+        <field name="model">ls.recall.effectiveness</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="execution_id"/>
+                <filter name="filter_planned" string="To Do"
+                        domain="[('state', '=', 'planned')]"/>
+                <filter name="filter_performed" string="Performed"
+                        domain="[('state', '=', 'performed')]"/>
+                <filter name="filter_unreachable" string="Not Reachable"
+                        domain="[('outcome', '=', 'not_reachable')]"/>
+                <group>
+                    <filter name="group_execution" string="Recall"
+                            context="{'group_by': 'execution_id'}"/>
+                    <filter name="group_outcome" string="Outcome"
+                            context="{'group_by': 'outcome'}"/>
+                    <filter name="group_method" string="Method"
+                            context="{'group_by': 'method'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_effectiveness" model="ir.actions.act_window">
+        <field name="name">Effectiveness Checks</field>
+        <field name="res_model">ls.recall.effectiveness</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

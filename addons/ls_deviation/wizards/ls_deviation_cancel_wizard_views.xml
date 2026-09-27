@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_ls_deviation_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ls.deviation.cancel.wizard.form</field>
+        <field name="model">ls.deviation.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel or Send Back Deviation">
+                <field name="deviation_id" invisible="1"/>
+                <field name="mode" invisible="1"/>
+                <div class="alert alert-warning" role="alert"
+                     invisible="mode != 'cancel'">
+                    Cancelling a deviation is traceable and permanent. The
+                    record is retained with its reference number.
+                </div>
+                <div class="alert alert-info" role="alert"
+                     invisible="mode != 'send_back'">
+                    The deviation will be returned to the previous workflow
+                    state. The reason is written to the transition log.
+                </div>
+                <separator string="Reason"/>
+                <field name="reason" nolabel="1"
+                       placeholder="Mandatory reason. This is written to the append-only transition log."/>
+                <footer>
+                    <button name="action_confirm" string="Confirm"
+                            type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

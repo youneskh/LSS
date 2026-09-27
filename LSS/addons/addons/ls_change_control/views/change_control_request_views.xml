@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_request_form" model="ir.ui.view">
+        <field name="name">ls.change_control.request.form</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <form string="Change Request">
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_start_assessment" type="object"
+                            string="Start Impact Assessment" class="oe_highlight"
+                            invisible="state != 'under_review'"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'under_review'"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <button name="action_start_implementation" type="object"
+                            string="Start Implementation" class="oe_highlight"
+                            invisible="state != 'approved'"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <button name="action_verify" type="object"
+                            string="Declare Verified" class="oe_highlight"
+                            invisible="state != 'implementation'"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <button name="action_open_close_wizard" type="object"
+                            string="Close" class="oe_highlight"
+                            invisible="state != 'verified'"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <button name="action_open_reject_wizard" type="object"
+                            string="Reject"
+                            invisible="state not in ('under_review', 'impact_assessment')"/>
+                    <button name="action_open_cancel_wizard" type="object"
+                            string="Cancel Request"
+                            invisible="state not in ('draft', 'under_review', 'impact_assessment', 'approved')"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,under_review,impact_assessment,approved,implementation,verified,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-warning"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Closed" bg_color="text-bg-success"
+                            invisible="state != 'closed'"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_assessments" type="object"
+                                class="oe_stat_button" icon="fa-check-square-o"
+                                invisible="assessment_count == 0">
+                            <field name="assessment_done_count" widget="statinfo"
+                                   string="Assessed"/>
+                        </button>
+                        <button name="action_view_approvals" type="object"
+                                class="oe_stat_button" icon="fa-thumbs-o-up"
+                                invisible="approval_count == 0">
+                            <field name="approval_done_count" widget="statinfo"
+                                   string="Approved"/>
+                        </button>
+                        <button name="action_view_implementations" type="object"
+                                class="oe_stat_button" icon="fa-tasks"
+                                invisible="implementation_count == 0">
+                            <field name="implementation_done_count" widget="statinfo"
+                                   string="Actions Closed"/>
+                        </button>
+                        <button name="action_view_verifications" type="object"
+                                class="oe_stat_button" icon="fa-search"
+                                invisible="verification_count == 0">
+                            <field name="verification_count" widget="statinfo"
+                                   string="Verifications"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="title" string="Change Request"/>
+                        <h1>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                        <h2>
+                            <field name="title" placeholder="Short title of the change"
+                                   readonly="state != 'draft'"/>
+                        </h2>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not blocking_reasons or state in ('closed', 'rejected', 'cancelled')">
+                        <strong>Outstanding items before the next step:</strong>
+                        <field name="blocking_reasons" nolabel="1" readonly="1"
+                               class="mb-0"/>
+                    </div>
+                    <group>
+                        <group string="Classification">
+                            <field name="category_id" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="change_type" readonly="state != 'draft'"/>
+                            <field name="temporary_end_date"
+                                   invisible="change_type != 'temporary'"
+                                   required="change_type == 'temporary'"
+                                   readonly="state != 'draft'"/>
+                            <field name="classification"/>
+                            <field name="priority" widget="priority"/>
+                        </group>
+                        <group string="Responsibilities">
+                            <field name="requester_id"/>
+                            <field name="department_id"/>
+                            <field name="manager_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="date_request" readonly="1"/>
+                            <field name="date_required"/>
+                            <field name="date_planned_implementation"/>
+                        </group>
+                        <group string="Execution" invisible="state in ('draft', 'under_review')">
+                            <field name="date_approved" invisible="not date_approved"/>
+                            <field name="date_actual_implementation"/>
+                            <field name="date_verification_planned"/>
+                            <field name="date_closed" invisible="not date_closed"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <group string="Current Situation">
+                                <field name="current_situation" nolabel="1"
+                                       readonly="state != 'draft'"
+                                       placeholder="Describe the situation before the change."/>
+                            </group>
+                            <group string="Proposed Change">
+                                <field name="proposed_change" nolabel="1"
+                                       readonly="state != 'draft'"
+                                       placeholder="Describe the situation after the change."/>
+                            </group>
+                            <group string="Justification">
+                                <field name="justification" nolabel="1"
+                                       readonly="state != 'draft'"
+                                       placeholder="Explain why the change is required."/>
+                            </group>
+                        </page>
+                        <page string="Impact" name="impact">
+                            <group>
+                                <group string="Impact Declaration">
+                                    <field name="gmp_impact"/>
+                                    <field name="product_quality_impact"/>
+                                    <field name="regulatory_impact"/>
+                                    <field name="risk_assessment_reference"/>
+                                </group>
+                                <group string="Consequences">
+                                    <field name="validation_impact"/>
+                                    <field name="training_impact"/>
+                                    <field name="documentation_impact"/>
+                                    <field name="customer_notification_required"/>
+                                </group>
+                            </group>
+                            <separator string="Impact Areas"/>
+                            <field name="impact_area_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                            <separator string="Impact Assessments"/>
+                            <field name="assessment_ids" readonly="state in ('closed', 'rejected', 'cancelled')">
+                                <list string="Impact Assessments">
+                                    <field name="impact_area_id"/>
+                                    <field name="assessor_id" widget="many2one_avatar_user"/>
+                                    <field name="impact"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'completed'"
+                                           decoration-info="state == 'draft'"/>
+                                    <field name="date_completed"/>
+                                    <field name="completed_by_id" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Approvals" name="approvals">
+                            <field name="approval_ids" readonly="state in ('closed', 'rejected', 'cancelled')">
+                                <list string="Approvals">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="approval_role"/>
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                    <field name="mandatory"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'approved'"
+                                           decoration-danger="state == 'rejected'"
+                                           decoration-warning="state == 'pending'"/>
+                                    <field name="date_decision"/>
+                                    <field name="decided_by_id"/>
+                                    <field name="signature_meaning" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Implementation" name="implementation">
+                            <field name="implementation_ids"
+                                   readonly="state in ('draft', 'under_review', 'closed', 'rejected', 'cancelled')"
+                                   context="{'default_request_id': id}">
+                                <list string="Implementation Actions">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="action_type"/>
+                                    <field name="responsible_id" widget="many2one_avatar_user"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_done"/>
+                                    <field name="evidence_reference"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'done'"
+                                           decoration-info="state == 'in_progress'"
+                                           decoration-warning="state == 'pending'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Verification" name="verification">
+                            <field name="verification_ids"
+                                   readonly="state in ('draft', 'under_review', 'closed', 'rejected', 'cancelled')"
+                                   context="{'default_request_id': id}">
+                                <list string="Effectiveness Verifications">
+                                    <field name="name"/>
+                                    <field name="method"/>
+                                    <field name="verifier_id" widget="many2one_avatar_user"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_done"/>
+                                    <field name="result" widget="badge"
+                                           decoration-success="result == 'effective'"
+                                           decoration-danger="result == 'not_effective'"
+                                           decoration-warning="result == 'pending'"/>
+                                    <field name="follow_up_reference" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Decision" name="decision"
+                              invisible="state not in ('closed', 'rejected', 'cancelled')">
+                            <group string="Closure Statement" invisible="state != 'closed'">
+                                <field name="closure_statement" nolabel="1" readonly="1"/>
+                            </group>
+                            <group string="Rejection Reason" invisible="state != 'rejected'">
+                                <field name="date_rejected" readonly="1"/>
+                                <field name="rejection_reason" nolabel="1" readonly="1"/>
+                            </group>
+                            <group string="Cancellation Reason" invisible="state != 'cancelled'">
+                                <field name="date_cancelled" readonly="1"/>
+                                <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_list" model="ir.ui.view">
+        <field name="name">ls.change_control.request.list</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <list string="Change Requests"
+                  decoration-muted="state in ('closed', 'cancelled')"
+                  decoration-danger="state == 'rejected'"
+                  decoration-bf="classification == 'critical'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="category_id"/>
+                <field name="classification"/>
+                <field name="requester_id" widget="many2one_avatar_user"/>
+                <field name="manager_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="date_request" optional="hide"/>
+                <field name="date_planned_implementation" optional="show"/>
+                <field name="date_actual_implementation" optional="hide"/>
+                <field name="gmp_impact" optional="hide"/>
+                <field name="regulatory_impact" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('approved', 'verified', 'closed')"
+                       decoration-info="state in ('under_review', 'impact_assessment', 'implementation')"
+                       decoration-danger="state == 'rejected'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_kanban" model="ir.ui.view">
+        <field name="name">ls.change_control.request.kanban</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false">
+                <field name="state"/>
+                <field name="classification"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="row mb4">
+                            <div class="col-8">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            <div class="col-4 text-end">
+                                <field name="priority" widget="priority"/>
+                            </div>
+                        </div>
+                        <div class="o_kanban_record_title">
+                            <field name="title"/>
+                        </div>
+                        <div class="o_kanban_record_subtitle">
+                            <field name="category_id"/>
+                        </div>
+                        <div class="mt4">
+                            <field name="classification" widget="badge"
+                                   decoration-danger="classification == 'critical'"
+                                   decoration-warning="classification == 'major'"/>
+                        </div>
+                        <div class="o_kanban_record_bottom mt8">
+                            <div class="oe_kanban_bottom_left">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <field name="requester_id" widget="many2one_avatar_user"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_search" model="ir.ui.view">
+        <field name="name">ls.change_control.request.search</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <search string="Change Requests">
+                <field name="name" string="Reference or Title"
+                       filter_domain="['|', ('name', 'ilike', self), ('title', 'ilike', self)]"/>
+                <field name="category_id"/>
+                <field name="requester_id"/>
+                <field name="manager_id"/>
+                <field name="impact_area_ids"/>
+                <filter name="filter_my_requests" string="My Requests"
+                        domain="[('requester_id', '=', uid)]"/>
+                <filter name="filter_managed_by_me" string="Managed by Me"
+                        domain="[('manager_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'not in', ('closed', 'rejected', 'cancelled'))]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review"
+                        domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_impact_assessment" string="Impact Assessment"
+                        domain="[('state', '=', 'impact_assessment')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_implementation" string="Implementation"
+                        domain="[('state', '=', 'implementation')]"/>
+                <filter name="filter_verified" string="Verified"
+                        domain="[('state', '=', 'verified')]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="filter_gmp" string="GMP Impact"
+                        domain="[('gmp_impact', '=', True)]"/>
+                <filter name="filter_regulatory" string="Regulatory Action Required"
+                        domain="[('regulatory_impact', '!=', 'none')]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('classification', '=', 'critical')]"/>
+                <separator/>
+                <filter name="filter_late_implementation" string="Implementation Late"
+                        domain="[('state', 'in', ('approved', 'implementation')), ('date_actual_implementation', '=', False), ('date_planned_implementation', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_verification_due" string="Verification Due"
+                        domain="[('state', '=', 'implementation'), ('date_verification_planned', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_category" string="Category"
+                        context="{'group_by': 'category_id'}"/>
+                    <filter name="group_classification" string="Classification"
+                        context="{'group_by': 'classification'}"/>
+                    <filter name="group_requester" string="Requester"
+                        context="{'group_by': 'requester_id'}"/>
+                    <filter name="group_manager" string="Change Control Manager"
+                        context="{'group_by': 'manager_id'}"/>
+                    <filter name="group_department" string="Department"
+                        context="{'group_by': 'department_id'}"/>
+                    <filter name="group_regulatory" string="Regulatory Impact"
+                        context="{'group_by': 'regulatory_impact'}"/>
+                    <filter name="group_request_date" string="Request Date"
+                        context="{'group_by': 'date_request'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_graph" model="ir.ui.view">
+        <field name="name">ls.change_control.request.graph</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <graph string="Change Request Analysis" type="bar" sample="1">
+                <field name="category_id"/>
+                <field name="state"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_pivot" model="ir.ui.view">
+        <field name="name">ls.change_control.request.pivot</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <pivot string="Change Request Analysis" sample="1">
+                <field name="category_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_request_activity" model="ir.ui.view">
+        <field name="name">ls.change_control.request.activity</field>
+        <field name="model">ls.change_control.request</field>
+        <field name="arch" type="xml">
+            <activity string="Change Requests">
+                <templates>
+                    <div t-name="activity-box">
+                        <div>
+                            <field name="name" display="full"/>
+                            <field name="title" muted="1" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_request" model="ir.actions.act_window">
+        <field name="name">Change Requests</field>
+        <field name="res_model">ls.change_control.request</field>
+        <field name="view_mode">list,kanban,form,activity,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_change_control_request_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Raise a change request
+            </p>
+            <p>
+                A change request describes the current situation, the proposed
+                change and its justification. Once submitted, the description
+                of the change is frozen: any modification of the change itself
+                requires a new request.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_my_requests" model="ir.actions.act_window">
+        <field name="name">My Change Requests</field>
+        <field name="res_model">ls.change_control.request</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="view_ls_change_control_request_search"/>
+        <field name="domain">[('requester_id', '=', uid)]</field>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                You have not raised any change request yet
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_request_analysis" model="ir.actions.act_window">
+        <field name="name">Change Request Analysis</field>
+        <field name="res_model">ls.change_control.request</field>
+        <field name="view_mode">graph,pivot,list</field>
+        <field name="search_view_id" ref="view_ls_change_control_request_search"/>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Odoo 19 group model note: res.groups no longer references
+     ir.module.category directly through category_id. An intermediate
+     res.groups.privilege record carries the category, and each group
+     references the privilege through privilege_id. See the Odoo 19
+     "Restrict access to data" tutorial.
+
+     User assignment note: this file deliberately assigns no users to any
+     group. In a regulated environment, role assignment is an authorisation
+     activity that must follow the site procedure for granting system access
+     and be evidenced per user. Assigning groups automatically at install
+     would create unevidenced access. See docs/09_installation_guide.md. -->
+<odoo>
+
+    <record id="module_category_ls_deviation" model="ir.module.category">
+        <field name="name">Quality Management</field>
+        <field name="description">Life Sciences quality management applications.</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="groups_privilege_ls_deviation" model="res.groups.privilege">
+        <field name="name">Deviation Management</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_ls_deviation"/>
+    </record>
+
+    <!-- Groups are strictly hierarchical:
+         Viewer < Reporter < Investigator < Manager -->
+    <record id="group_ls_deviation_viewer" model="res.groups">
+        <field name="name">Deviation Viewer</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="groups_privilege_ls_deviation"/>
+        <field name="comment">Read-only access to deviation records.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_deviation_reporter" model="res.groups">
+        <field name="name">Deviation Reporter</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="groups_privilege_ls_deviation"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_deviation_viewer'))]"/>
+        <field name="comment">May report deviations and maintain their own records while still in the Reported state.</field>
+    </record>
+
+    <record id="group_ls_deviation_investigator" model="res.groups">
+        <field name="name">Deviation Investigator</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="groups_privilege_ls_deviation"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_deviation_reporter'))]"/>
+        <field name="comment">May investigate any open deviation and record dispositions for approval.</field>
+    </record>
+
+    <record id="group_ls_deviation_manager" model="res.groups">
+        <field name="name">Deviation Manager</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="groups_privilege_ls_deviation"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_deviation_investigator'))]"/>
+        <field name="comment">Quality Assurance role. Approves dispositions, closes and cancels deviations.</field>
+    </record>
+
+    <!-- ============================================================
+         Global multi-company rules.
+         A rule with no group is global and is ANDed with every other
+         rule, so these apply to every user including managers.
+         ============================================================ -->
+    <record id="rule_ls_deviation_company" model="ir.rule">
+        <field name="name">Deviation: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_action_company" model="ir.rule">
+        <field name="name">Deviation Action: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_action"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_investigation_company" model="ir.rule">
+        <field name="name">Deviation Investigation: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_investigation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_disposition_company" model="ir.rule">
+        <field name="name">Deviation Disposition: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_disposition"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_stage_log_company" model="ir.rule">
+        <field name="name">Deviation Transition Log: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_stage_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_category_company" model="ir.rule">
+        <field name="name">Deviation Category: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_category"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_deviation_type_company" model="ir.rule">
+        <field name="name">Deviation Type: multi-company</field>
+        <field name="model_id" ref="model_ls_deviation_type"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- ============================================================
+         Group rules on ls.deviation.
+         Rules of the groups a user belongs to are ORed together.
+         Because the groups are hierarchical, a Manager holds all
+         four rules and is therefore unrestricted.
+         ============================================================ -->
+    <record id="rule_ls_deviation_read_all" model="ir.rule">
+        <field name="name">Deviation: read all within company</field>
+        <field name="model_id" ref="model_ls_deviation"/>
+        <field name="groups" eval="[(4, ref('group_ls_deviation_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_ls_deviation_write_reporter" model="ir.rule">
+        <field name="name">Deviation: reporter maintains own reported records</field>
+        <field name="model_id" ref="model_ls_deviation"/>
+        <field name="groups" eval="[(4, ref('group_ls_deviation_reporter'))]"/>
+        <field name="domain_force">['&amp;', ('state', '=', 'reported'), '|', ('reporter_id', '=', user.id), ('owner_id', '=', user.id)]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_ls_deviation_write_investigator" model="ir.rule">
+        <field name="name">Deviation: investigator maintains open records</field>
+        <field name="model_id" ref="model_ls_deviation"/>
+        <field name="groups" eval="[(4, ref('group_ls_deviation_investigator'))]"/>
+        <field name="domain_force">[('state', 'not in', ['closed', 'cancelled'])]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_ls_deviation_write_manager" model="ir.rule">
+        <field name="name">Deviation: manager unrestricted</field>
+        <field name="model_id" ref="model_ls_deviation"/>
+        <field name="groups" eval="[(4, ref('group_ls_deviation_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views2.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_sampling_point_list" model="ir.ui.view">
+            <field name="name">ls.env.sampling_point.list</field>
+            <field name="model">ls.env.sampling_point</field>
+            <field name="arch" type="xml">
+                <list string="Sampling Points" decoration-warning="approved_limit_count == 0">
+                    <field name="sequence" widget="handle"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="area_id"/>
+                    <field name="grade_id"/>
+                    <field name="is_critical"/>
+                    <field name="approved_limit_count" string="Approved Limits"/>
+                    <field name="responsible_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_sampling_point_form" model="ir.ui.view">
+            <field name="name">ls.env.sampling_point.form</field>
+            <field name="model">ls.env.sampling_point</field>
+            <field name="arch" type="xml">
+                <form string="Sampling Point">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_limits" type="object"
+                                    class="oe_stat_button" icon="fa-sliders">
+                                <field name="approved_limit_count" widget="statinfo" string="Approved Limits"/>
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Critical" bg_color="text-bg-danger"
+                                invisible="not is_critical"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Sampling point name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="area_id"/>
+                                <field name="grade_id"/>
+                            </group>
+                            <group>
+                                <field name="is_critical"/>
+                                <field name="responsible_id"/>
+                                <field name="sequence"/>
+                                <field name="active" widget="boolean_toggle"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Position" name="position">
+                                <field name="position_description" nolabel="1"
+                                       placeholder="Physical description precise enough for another operator to find this point."/>
+                            </page>
+                            <page string="Selection Rationale" name="rationale">
+                                <field name="selection_rationale" nolabel="1"
+                                       placeholder="Documented reason for monitoring at this location."/>
+                            </page>
+                            <page string="Limits" name="limits">
+                                <field name="limit_ids" nolabel="1" context="{'default_sampling_point_id': id}">
+                                    <list decoration-muted="state == 'superseded'"
+                                          decoration-info="state == 'draft'">
+                                        <field name="parameter_id"/>
+                                        <field name="occupancy_state"/>
+                                        <field name="direction"/>
+                                        <field name="alert_value" optional="show"/>
+                                        <field name="action_value" optional="show"/>
+                                        <field name="spec_value" optional="show"/>
+                                        <field name="version"/>
+                                        <field name="state" widget="badge"/>
+                                        <field name="effective_date"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_sampling_point_search" model="ir.ui.view">
+            <field name="name">ls.env.sampling_point.search</field>
+            <field name="model">ls.env.sampling_point</field>
+            <field name="arch" type="xml">
+                <search string="Sampling Points">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="area_id"/>
+                    <filter name="filter_critical" string="Critical Locations"
+                            domain="[('is_critical', '=', True)]"/>
+                    <filter name="filter_no_limits" string="Without Approved Limits"
+                            domain="[('approved_limit_count', '=', 0)]"/>
+                                            <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                    <filter name="group_grade" string="Grade" context="{'group_by': 'grade_id'}"/>
+                    <filter name="group_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_sampling_point" model="ir.actions.act_window">
+            <field name="name">Sampling Points</field>
+            <field name="res_model">ls.env.sampling_point</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Define a sampling point</p>
+                <p>Record where samples are taken and why that location was selected.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+        <record id="category_production" model="ls.deviation.category">
+            <field name="name">Production</field>
+            <field name="code">PROD</field>
+            <field name="sequence">10</field>
+            <field name="description">Deviations arising during manufacturing operations.</field>
+        </record>
+        <record id="category_packaging" model="ls.deviation.category">
+            <field name="name">Packaging and Labelling</field>
+            <field name="code">PACK</field>
+            <field name="sequence">20</field>
+            <field name="description">Deviations arising during primary or secondary packaging and labelling.</field>
+        </record>
+        <record id="category_qc_laboratory" model="ls.deviation.category">
+            <field name="name">QC Laboratory</field>
+            <field name="code">QCLAB</field>
+            <field name="sequence">30</field>
+            <field name="description">Deviations arising during quality control testing.</field>
+        </record>
+        <record id="category_warehouse" model="ls.deviation.category">
+            <field name="name">Warehouse and Storage</field>
+            <field name="code">WHSE</field>
+            <field name="sequence">40</field>
+            <field name="description">Deviations arising during receipt, storage or distribution.</field>
+        </record>
+        <record id="category_utilities" model="ls.deviation.category">
+            <field name="name">Utilities</field>
+            <field name="code">UTIL</field>
+            <field name="sequence">50</field>
+            <field name="description">Deviations affecting water systems, HVAC, compressed gases or steam.</field>
+        </record>
+        <record id="category_equipment" model="ls.deviation.category">
+            <field name="name">Equipment</field>
+            <field name="code">EQUIP</field>
+            <field name="sequence">60</field>
+            <field name="description">Deviations arising from equipment malfunction or misuse.</field>
+        </record>
+        <record id="category_documentation" model="ls.deviation.category">
+            <field name="name">Documentation</field>
+            <field name="code">DOC</field>
+            <field name="sequence">70</field>
+            <field name="description">Deviations relating to the completion or control of GxP records.</field>
+        </record>
+        <record id="category_personnel" model="ls.deviation.category">
+            <field name="name">Personnel</field>
+            <field name="code">PERS</field>
+            <field name="sequence">80</field>
+            <field name="description">Deviations relating to training, hygiene or gowning.</field>
+        </record>
+    </data>
+</odoo>

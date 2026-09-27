@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_test_method_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.test_method.list</field>
+        <field name="model">ls.lab.test_method</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'obsolete'"
+                  decoration-success="state == 'approved'"
+                  decoration-info="state == 'review'">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="technique"/>
+                <field name="result_type"/>
+                <field name="default_uom_id" optional="show"/>
+                <field name="validation_status"/>
+                <field name="specification_line_count" optional="hide"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="approval_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_method_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.test_method.form</field>
+        <field name="model">ls.lab.test_method</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="oe_highlight"
+                            invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="oe_highlight"
+                            invisible="state != 'review'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'review'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state != 'approved'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_set_obsolete" type="object"
+                            string="Set Obsolete"
+                            invisible="state != 'approved'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Assay by HPLC"/>
+                        </h1>
+                        <h3>
+                            <field name="code" class="oe_inline"/>
+                            <span class="oe_inline"> version </span>
+                            <field name="version" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Classification">
+                            <field name="technique"/>
+                            <field name="result_type"/>
+                            <field name="default_uom_id"/>
+                            <field name="decimal_precision"/>
+                        </group>
+                        <group string="Method Validation">
+                            <field name="validation_status"/>
+                            <field name="validation_reference"
+                                   placeholder="Reference held in the validation module"/>
+                            <field name="instrument_required"/>
+                            <field name="instrument_category"
+                                   invisible="not instrument_required"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Control">
+                            <field name="reference_document"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Approval">
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                            <field name="predecessor_id" invisible="not predecessor_id"/>
+                            <field name="successor_id" invisible="not successor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Procedure" name="procedure">
+                            <field name="procedure_summary"
+                                   placeholder="Summary of the analytical procedure"/>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Used In Specifications" name="usage">
+                            <field name="specification_line_ids" readonly="1">
+                                <list>
+                                    <field name="specification_id"/>
+                                    <field name="criterion_type"/>
+                                    <field name="criterion_display"/>
+                                    <field name="is_mandatory"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Obsolescence" name="obsolescence"
+                              invisible="state not in ('approved', 'obsolete')">
+                            <field name="obsolete_reason"
+                                   placeholder="Reason for making this method obsolete"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_method_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.test_method.search</field>
+        <field name="model">ls.lab.test_method</field>
+        <field name="arch" type="xml">
+            <search string="Test Methods">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="reference_document"/>
+                <field name="default_uom_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_review" string="Under Review"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_obsolete" string="Obsolete"
+                        domain="[('state', '=', 'obsolete')]"/>
+                <separator/>
+                <filter name="filter_validated" string="Validated Methods"
+                        domain="[('validation_status', '=', 'validated')]"/>
+                <filter name="filter_revalidation_due" string="Revalidation Due"
+                        domain="[('validation_status', '=', 'revalidation_due')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_technique" string="Technique"
+                            domain="[]" context="{'group_by': 'technique'}"/>
+                    <filter name="group_by_validation_status" string="Validation Status"
+                            domain="[]" context="{'group_by': 'validation_status'}"/>
+                    <filter name="group_by_result_type" string="Result Type"
+                            domain="[]" context="{'group_by': 'result_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_test_method" model="ir.actions.act_window">
+        <field name="name">Test Methods</field>
+        <field name="res_model">ls.lab.test_method</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_lab_test_method_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your first test method</p>
+            <p>
+                A test method must be approved before a specification can reference
+                it. Approved methods are frozen and are superseded by new versions
+                rather than edited.
+            </p>
+        </field>
+    </record>
+
+</odoo>

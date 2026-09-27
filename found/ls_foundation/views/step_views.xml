@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_lss_foundation_step_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.step.tree</field>
+        <field name="model">lss.foundation.step</field>
+        <field name="arch" type="xml">
+            <tree><field name="name"/><field name="project_id"/><field name="authority_id"/><field name="state" widget="badge"/><field name="start_date"/><field name="approval_date"/></tree>
+        </field>
+    </record>
+    <record id="action_lss_foundation_step" model="ir.actions.act_window">
+        <field name="name">Steps</field>
+        <field name="res_model">lss.foundation.step</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     These records carry the DESIGNATION of a framework and the name of its
+     issuing body only. No clause, requirement or interpretation of any
+     standard is reproduced here. The normative text must be obtained from
+     the issuing body. The `scope_note` field is deliberately left empty:
+     it is for the quality department to complete.
+-->
+<odoo noupdate="1">
+
+    <record id="standard_iso_9001" model="ls.supplier.standard">
+        <field name="name">ISO 9001:2015</field>
+        <field name="code">ISO9001</field>
+        <field name="issuing_body">International Organization for Standardization (ISO)</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="standard_iso_13485" model="ls.supplier.standard">
+        <field name="name">ISO 13485:2016</field>
+        <field name="code">ISO13485</field>
+        <field name="issuing_body">International Organization for Standardization (ISO)</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="standard_iso_14971" model="ls.supplier.standard">
+        <field name="name">ISO 14971:2019</field>
+        <field name="code">ISO14971</field>
+        <field name="issuing_body">International Organization for Standardization (ISO)</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="standard_iso_15378" model="ls.supplier.standard">
+        <field name="name">ISO 15378:2017</field>
+        <field name="code">ISO15378</field>
+        <field name="issuing_body">International Organization for Standardization (ISO)</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="standard_iso_22716" model="ls.supplier.standard">
+        <field name="name">ISO 22716:2007</field>
+        <field name="code">ISO22716</field>
+        <field name="issuing_body">International Organization for Standardization (ISO)</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="standard_cfr_11" model="ls.supplier.standard">
+        <field name="name">21 CFR Part 11</field>
+        <field name="code">21CFR11</field>
+        <field name="issuing_body">United States Food and Drug Administration (FDA)</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="standard_cfr_211" model="ls.supplier.standard">
+        <field name="name">21 CFR Part 211</field>
+        <field name="code">21CFR211</field>
+        <field name="issuing_body">United States Food and Drug Administration (FDA)</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="standard_cfr_820" model="ls.supplier.standard">
+        <field name="name">21 CFR Part 820</field>
+        <field name="code">21CFR820</field>
+        <field name="issuing_body">United States Food and Drug Administration (FDA)</field>
+        <field name="sequence">80</field>
+    </record>
+
+    <record id="standard_eu_mdr" model="ls.supplier.standard">
+        <field name="name">Regulation (EU) 2017/745 (MDR)</field>
+        <field name="code">EUMDR</field>
+        <field name="issuing_body">European Parliament and Council of the European Union</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record id="standard_eu_cosmetics" model="ls.supplier.standard">
+        <field name="name">Regulation (EC) 1223/2009 (Cosmetic Products)</field>
+        <field name="code">EU1223</field>
+        <field name="issuing_body">European Parliament and Council of the European Union</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <record id="standard_who_gmp" model="ls.supplier.standard">
+        <field name="name">WHO Good Manufacturing Practices</field>
+        <field name="code">WHOGMP</field>
+        <field name="issuing_body">World Health Organization (WHO)</field>
+        <field name="sequence">110</field>
+    </record>
+
+    <record id="standard_anpp" model="ls.supplier.standard">
+        <field name="name">ANPP requirements (Algeria)</field>
+        <field name="code">ANPP</field>
+        <field name="issuing_body">Agence Nationale des Produits Pharmaceutiques (Algeria)</field>
+        <field name="sequence">120</field>
+    </record>
+
+    <record id="standard_gs1" model="ls.supplier.standard">
+        <field name="name">GS1 General Specifications</field>
+        <field name="code">GS1</field>
+        <field name="issuing_body">GS1</field>
+        <field name="sequence">130</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_schedule_list" model="ir.ui.view">
+        <field name="name">ls.audit.schedule.list</field>
+        <field name="model">ls.audit.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Audits"
+                  decoration-danger="is_overdue"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="audit_type_id"/>
+                <field name="program_id" optional="show"/>
+                <field name="date_planned"/>
+                <field name="lead_auditor_id"/>
+                <field name="finding_count" optional="show"/>
+                <field name="open_finding_count" optional="show"/>
+                <field name="critical_finding_count" optional="hide"/>
+                <field name="conformity_rate" widget="percentage" optional="hide"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'in_progress'"
+                       decoration-warning="state == 'follow_up'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_schedule_form" model="ir.ui.view">
+        <field name="name">ls.audit.schedule.form</field>
+        <field name="model">ls.audit.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Audit">
+                <header>
+                    <button name="action_load_checklist" type="object" string="Load Checklist"
+                            invisible="state not in ('planned', 'scheduled')"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_schedule" type="object" string="Schedule"
+                            class="btn-primary" invisible="state != 'planned'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_start" type="object" string="Start Fieldwork"
+                            class="btn-primary" invisible="state != 'scheduled'"
+                            groups="ls_audit.group_ls_audit_auditor"/>
+                    <button name="action_complete" type="object" string="Complete Fieldwork"
+                            class="btn-primary" invisible="state != 'in_progress'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_follow_up" type="object" string="Move to Follow-up"
+                            class="btn-primary" invisible="state != 'completed'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_close" type="object" string="Close Audit"
+                            class="btn-primary" invisible="state != 'follow_up'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="planned,scheduled,in_progress,completed,follow_up,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Overdue" bg_color="text-bg-warning"
+                            invisible="not is_overdue"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_findings" type="object" class="oe_stat_button"
+                                icon="fa-exclamation-triangle">
+                            <field name="finding_count" widget="statinfo" string="Findings"/>
+                        </button>
+                        <button name="action_view_reports" type="object" class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="report_count" widget="statinfo" string="Reports"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h2><field name="reference" readonly="1"/></h2>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Q1 Internal Audit - Sterile Filling"/></h1>
+                    </div>
+                    <group>
+                        <group string="Planning">
+                            <field name="program_id"/>
+                            <field name="audit_type_id"/>
+                            <field name="date_planned"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="duration_hours" widget="float_time"/>
+                            <field name="is_overdue" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Audit Team">
+                            <field name="lead_auditor_id"/>
+                            <field name="auditor_ids" widget="many2many_tags"/>
+                            <field name="auditee_ids" widget="many2many_tags"/>
+                            <field name="audited_partner_id"/>
+                            <field name="checklist_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="area_ids" widget="many2many_tags"
+                               readonly="state not in ('planned', 'scheduled')"/>
+                    </group>
+                    <notebook>
+                        <page string="Objective, Scope and Criteria" name="scope">
+                            <group string="Objective">
+                                <field name="objective" nolabel="1"
+                                       placeholder="What the audit is intended to determine."/>
+                            </group>
+                            <group string="Scope">
+                                <field name="scope" nolabel="1"
+                                       placeholder="Sites, processes, products and periods covered, and explicit exclusions."/>
+                            </group>
+                            <group string="Audit Criteria">
+                                <field name="criteria" nolabel="1"
+                                       placeholder="Requirements used as the reference against which evidence is compared."/>
+                            </group>
+                        </page>
+                        <page string="Checklist" name="checklist">
+                            <field name="response_ids" nolabel="1"
+                                   context="{'hide_audit': True}"
+                                   readonly="state not in ('scheduled', 'in_progress')"/>
+                            <group class="oe_subtotal_footer">
+                                <field name="response_count"/>
+                                <field name="assessed_count"/>
+                                <field name="conformity_rate" widget="percentage"/>
+                            </group>
+                        </page>
+                        <page string="Findings" name="findings">
+                            <field name="finding_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="category_id"/>
+                                    <field name="auditee_id"/>
+                                    <field name="response_due_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="critical_finding_count"/>
+                                <field name="major_finding_count"/>
+                                <field name="open_finding_count"/>
+                            </group>
+                        </page>
+                        <page string="Reports" name="reports">
+                            <field name="report_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="report_date"/>
+                                    <field name="prepared_by_id"/>
+                                    <field name="approved_by_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Closure" name="closure" invisible="state not in ('closed', 'cancelled')">
+                            <group>
+                                <field name="closed_by_id" invisible="state != 'closed'"/>
+                                <field name="closure_date" invisible="state != 'closed'"/>
+                            </group>
+                            <group string="Cancellation Reason" invisible="state != 'cancelled'">
+                                <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_schedule_calendar" model="ir.ui.view">
+        <field name="name">ls.audit.schedule.calendar</field>
+        <field name="model">ls.audit.schedule</field>
+        <field name="arch" type="xml">
+            <calendar string="Audit Calendar" date_start="date_planned"
+                      color="lead_auditor_id" mode="month">
+                <field name="name"/>
+                <field name="audit_type_id"/>
+                <field name="lead_auditor_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_schedule_search" model="ir.ui.view">
+        <field name="name">ls.audit.schedule.search</field>
+        <field name="model">ls.audit.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Audits">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="program_id"/>
+                <field name="audit_type_id"/>
+                <field name="area_ids"/>
+                <field name="lead_auditor_id"/>
+                <field name="auditor_ids"/>
+                <filter name="filter_my_audits" string="My Audits"
+                        domain="['|', ('lead_auditor_id', '=', uid), ('auditor_ids', 'in', uid)]"/>
+                <filter name="filter_as_auditee" string="Audits of My Areas"
+                        domain="[('auditee_ids', 'in', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'not in', ('closed', 'cancelled'))]"/>
+                <filter name="filter_in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter name="filter_follow_up" string="Follow-up" domain="[('state', '=', 'follow_up')]"/>
+                <filter name="filter_overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="filter_with_open_findings" string="With Open Findings"
+                        domain="[('open_finding_count', '&gt;', 0)]"/>
+                <filter name="filter_with_critical" string="With Critical Findings"
+                        domain="[('critical_finding_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_planned_date" string="Planned Date" date="date_planned"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Audit Type" context="{'group_by': 'audit_type_id'}"/>
+                    <filter name="group_program" string="Programme" context="{'group_by': 'program_id'}"/>
+                    <filter name="group_lead" string="Lead Auditor" context="{'group_by': 'lead_auditor_id'}"/>
+                    <filter name="group_planned" string="Planned Date" context="{'group_by': 'date_planned'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_schedule_graph" model="ir.ui.view">
+        <field name="name">ls.audit.schedule.graph</field>
+        <field name="model">ls.audit.schedule</field>
+        <field name="arch" type="xml">
+            <graph string="Audit Analysis" type="bar" sample="1">
+                <field name="audit_type_id" type="row"/>
+                <field name="finding_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_schedule" model="ir.actions.act_window">
+        <field name="name">Audits</field>
+        <field name="res_model">ls.audit.schedule</field>
+        <field name="view_mode">list,form,calendar,graph</field>
+        <field name="search_view_id" ref="view_ls_audit_schedule_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Schedule your first audit</p>
+            <p>An audit moves from planned to scheduled, in progress, completed, follow-up and finally closed. It can only be closed once an audit report has been issued and every finding has been resolved.</p>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_schedule_calendar" model="ir.actions.act_window">
+        <field name="name">Audit Calendar</field>
+        <field name="res_model">ls.audit.schedule</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_schedule_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No audit planned</p>
+            <p>Planned audits appear on this calendar so that workload and coverage can be balanced across the period.</p>
+        </field>
+    </record>
+
+</odoo>

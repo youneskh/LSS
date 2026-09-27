@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Multi-company isolation.
+        These rules are global: they have no group and therefore apply to
+        every user. A user never sees a change record of a company that is
+        not part of their allowed companies.
+    -->
+    <record id="rule_ls_cc_request_company" model="ir.rule">
+        <field name="name">Change request: multi-company</field>
+        <field name="model_id" ref="model_ls_change_control_request"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_cc_assessment_company" model="ir.rule">
+        <field name="name">Change impact assessment: multi-company</field>
+        <field name="model_id" ref="model_ls_change_control_assessment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_cc_approval_company" model="ir.rule">
+        <field name="name">Change approval: multi-company</field>
+        <field name="model_id" ref="model_ls_change_control_approval"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_cc_implementation_company" model="ir.rule">
+        <field name="name">Change implementation action: multi-company</field>
+        <field name="model_id" ref="model_ls_change_control_implementation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_cc_verification_company" model="ir.rule">
+        <field name="name">Change verification: multi-company</field>
+        <field name="model_id" ref="model_ls_change_control_verification"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!--
+        Ownership of change requests.
+        A requester may only modify the requests they raised or that they
+        manage. A change control manager may modify any request of the
+        companies they are allowed to access. Record rules of different
+        groups are combined with a logical OR, so a manager is not affected
+        by the restriction of the requester group.
+    -->
+    <record id="rule_ls_cc_request_requester_write" model="ir.rule">
+        <field name="name">Change request: own requests only</field>
+        <field name="model_id" ref="model_ls_change_control_request"/>
+        <field name="groups" eval="[(4, ref('group_ls_change_control_requester'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('requester_id', '=', user.id), ('manager_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_ls_cc_request_manager_write" model="ir.rule">
+        <field name="name">Change request: manager full write</field>
+        <field name="model_id" ref="model_ls_change_control_request"/>
+        <field name="groups" eval="[(4, ref('group_ls_change_control_manager'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

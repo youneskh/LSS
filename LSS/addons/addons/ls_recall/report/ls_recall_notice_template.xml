@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        The layout follows the elements listed in 21 CFR 7.49(a): the
+        product is identified, the reason and the hazard are stated, the
+        instructions are given and a response is requested. The wording
+        of the message itself is entered by the user; this template
+        supplies the structure around it.
+    -->
+
+    <template id="report_ls_recall_notice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div t-if="doc.urgent"
+                             class="alert alert-danger text-center">
+                            <strong>URGENT</strong>
+                        </div>
+                        <h2 class="text-center">
+                            <span t-field="doc.communication_type"/>
+                        </h2>
+                        <p class="text-center">
+                            <strong>Reference: </strong>
+                            <span t-field="doc.name"/>
+                            <strong> | Recall: </strong>
+                            <span t-field="doc.execution_id.name"/>
+                        </p>
+
+                        <h3>Product Identification</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Product</th>
+                                <td><span t-field="doc.execution_id.product_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Lots / Serial Numbers</th>
+                                <td>
+                                    <span t-esc="', '.join(doc.execution_id.lot_ids.mapped('name'))"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Type of Action</th>
+                                <td><span t-field="doc.execution_id.action_type"/></td>
+                            </tr>
+                            <tr>
+                                <th>Classification</th>
+                                <td><span t-field="doc.execution_id.classification"/></td>
+                            </tr>
+                            <tr>
+                                <th>Depth</th>
+                                <td><span t-field="doc.execution_id.depth"/></td>
+                            </tr>
+                        </table>
+
+                        <h3>Reason for the Action</h3>
+                        <p><span t-field="doc.execution_id.reason"/></p>
+
+                        <h3><span t-field="doc.subject"/></h3>
+                        <div t-field="doc.body"/>
+
+                        <h3>Response Requested</h3>
+                        <p>
+                            Please confirm receipt of this notice and
+                            report the quantity you hold to the contact
+                            named above. A response is required even if
+                            you hold none of the affected product.
+                        </p>
+
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Issued on</th>
+                                <td><span t-field="doc.sent_date"/></td>
+                            </tr>
+                            <tr>
+                                <th>Issued by</th>
+                                <td><span t-field="doc.sent_by_user_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Recall coordinator</th>
+                                <td><span t-field="doc.execution_id.responsible_user_id"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

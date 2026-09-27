@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_standard_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.standard.list</field>
+        <field name="model">ls.supplier.standard</field>
+        <field name="arch" type="xml">
+            <list string="Reference Standards" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="issuing_body"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_standard_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.standard.form</field>
+        <field name="model">ls.supplier.standard</field>
+        <field name="arch" type="xml">
+            <form string="Reference Standard">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="issuing_body"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Internal Scope Note">
+                        <field name="scope_note" nolabel="1"
+                               placeholder="Why the organisation applies this framework to its suppliers. The module stores the designation only and does not reproduce the normative text."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_standard_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.standard.search</field>
+        <field name="model">ls.supplier.standard</field>
+        <field name="arch" type="xml">
+            <search string="Reference Standards">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="issuing_body"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_issuing_body" string="Issuing Body"
+                        context="{'group_by': 'issuing_body'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_standard" model="ir.actions.act_window">
+        <field name="name">Reference Standards</field>
+        <field name="res_model">ls.supplier.standard</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a reference standard</p>
+            <p>
+                Records here carry the designation of a framework and its
+                issuing body. The normative text is not stored in Odoo.
+            </p>
+        </field>
+    </record>
+
+</odoo>

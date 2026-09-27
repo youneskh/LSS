@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_device_regulatory_summary_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Device Regulatory Summary</h2>
+                <h3>
+                    <span t-field="doc.reference"/>
+                    <span> - </span>
+                    <span t-field="doc.name"/>
+                </h3>
+
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Model or Catalogue Reference</strong>
+                        <p t-field="doc.model_reference"/>
+                        <strong>Basic UDI-DI</strong>
+                        <p t-field="doc.basic_udi_di"/>
+                        <strong>Nomenclature Code</strong>
+                        <p t-field="doc.gmdn_code"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Risk Class</strong>
+                        <p t-field="doc.device_class_id"/>
+                        <strong>Classification Rule</strong>
+                        <p t-field="doc.classification_rule"/>
+                        <strong>Market Status</strong>
+                        <p t-field="doc.state"/>
+                    </div>
+                </div>
+
+                <h4>Intended Purpose</h4>
+                <p t-field="doc.intended_purpose"/>
+
+                <h4>Device Characteristics</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Implantable</td>
+                            <td><span t-field="doc.is_implantable"/></td>
+                            <td>Sterile</td>
+                            <td><span t-field="doc.is_sterile"/></td>
+                        </tr>
+                        <tr>
+                            <td>Measuring Function</td>
+                            <td><span t-field="doc.is_measuring"/></td>
+                            <td>Reusable Surgical</td>
+                            <td><span t-field="doc.is_reusable_surgical"/></td>
+                        </tr>
+                        <tr>
+                            <td>Software</td>
+                            <td><span t-field="doc.is_software"/></td>
+                            <td>Custom-Made</td>
+                            <td><span t-field="doc.is_custom_made"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Market Dates and Retention</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Placed on the Market</td>
+                            <td><span t-field="doc.market_placement_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Withdrawn From the Market</td>
+                            <td><span t-field="doc.market_withdrawal_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Documentation Retention Period (Years)</td>
+                            <td><span t-field="doc.documentation_retention_years"/></td>
+                        </tr>
+                        <tr>
+                            <td>Documentation Retained Until</td>
+                            <td><span t-field="doc.documentation_retention_until"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>UDI Assignments</h4>
+                <table class="table table-sm" t-if="doc.udi_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Kind</th>
+                            <th>Identifier</th>
+                            <th>Issuing Entity</th>
+                            <th>Packaging Level</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.udi_ids" t-as="udi">
+                            <td><span t-field="udi.name"/></td>
+                            <td><span t-field="udi.udi_kind"/></td>
+                            <td><span t-field="udi.udi_di"/></td>
+                            <td><span t-field="udi.issuing_entity"/></td>
+                            <td><span t-field="udi.packaging_level"/></td>
+                            <td><span t-field="udi.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.udi_ids">No UDI assignment is recorded for this device.</p>
+
+                <h4>Certificates and Declarations</h4>
+                <table class="table table-sm" t-if="doc.ce_marking_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Route</th>
+                            <th>Notified Body</th>
+                            <th>Certificate</th>
+                            <th>Issued</th>
+                            <th>Expires</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.ce_marking_ids" t-as="marking">
+                            <td><span t-field="marking.name"/></td>
+                            <td><span t-field="marking.conformity_route"/></td>
+                            <td><span t-field="marking.notified_body_id"/></td>
+                            <td><span t-field="marking.certificate_number"/></td>
+                            <td><span t-field="marking.issue_date"/></td>
+                            <td><span t-field="marking.expiry_date"/></td>
+                            <td><span t-field="marking.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.ce_marking_ids">No certificate or declaration is recorded for this device.</p>
+
+                <h4>Regulatory Records</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Record Type</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Risk Management Files</td>
+                            <td><span t-field="doc.risk_assessment_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Clinical Evaluations</td>
+                            <td><span t-field="doc.clinical_evaluation_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Technical Documentation Records</td>
+                            <td><span t-field="doc.technical_file_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Periodic Post-Market Reports</td>
+                            <td><span t-field="doc.pms_report_count"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Post-Market Reporting Obligation</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Periodic Report Type</td>
+                            <td><span t-field="doc.periodic_report_type"/></td>
+                        </tr>
+                        <tr>
+                            <td>Report Interval (Months)</td>
+                            <td><span t-field="doc.periodic_report_interval_months"/></td>
+                        </tr>
+                        <tr>
+                            <td>Last Approved Report Period End</td>
+                            <td><span t-field="doc.last_periodic_report_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Next Report Due</td>
+                            <td><span t-field="doc.next_periodic_report_due"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mt32">
+                    <p class="text-muted">
+                        This summary reproduces data recorded in the device register. It is not a
+                        declaration of conformity and does not certify compliance with any
+                        regulatory framework.
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_device_regulatory_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_medical_device.report_device_regulatory_summary_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

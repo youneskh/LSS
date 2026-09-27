@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_cancel_form" model="ir.ui.view">
+        <field name="name">ls.audit.cancel.form</field>
+        <field name="model">ls.audit.cancel</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Record">
+                <group>
+                    <field name="res_model" invisible="1"/>
+                    <field name="res_id" invisible="1"/>
+                    <field name="record_name"/>
+                </group>
+                <group string="Cancellation Reason">
+                    <field name="reason" nolabel="1"
+                           placeholder="Explain why this record is being cancelled. This justification is written onto the record and posted to its message thread."/>
+                </group>
+                <div class="alert alert-warning" role="alert">
+                    Cancellation is final. The record is retained together with its full
+                    history so that the decision remains traceable.
+                </div>
+                <footer>
+                    <button name="action_cancel" type="object" string="Confirm Cancellation" class="btn-danger"/>
+                    <button string="Back" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

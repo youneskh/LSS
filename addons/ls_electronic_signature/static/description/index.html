@@ -1,0 +1,80 @@
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">Electronic Signatures for Life Sciences</h2>
+    <h3 class="oe_slogan">Append-only signature evidence for Odoo 19 Community</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32" style="text-align:center;">
+        Designed to <strong>support</strong> an organisation's implementation of
+        FDA 21 CFR Part 11 Subpart B and Subpart C.
+        <br/>
+        <em>No compliance with, or certification against, any regulatory
+        framework is claimed. Compliance depends on your procedures, your
+        computer system validation, your training and your monitoring.</em>
+      </p>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Evidence that cannot be rewritten</h3>
+      <p>
+        A signature is an append-only row. It cannot be modified or deleted
+        through the ORM, by any security group, or by direct SQL: a PostgreSQL
+        trigger refuses UPDATE and DELETE on the table. Even a superuser who
+        disables the trigger is detected, because each entry is chained to its
+        predecessor with a SHA-256 digest.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Bound to what was actually signed</h3>
+      <p>
+        Each signature stores a canonical serialisation of the exact content it
+        attests to, together with its digest. Edit the record afterwards and the
+        signature is marked superseded and stops satisfying any requirement — so
+        nobody obtains an approval and then quietly changes the figures.
+      </p>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Two components, every time</h3>
+      <p>
+        Signing requires the identification code and the password. Signing under
+        somebody else's code is refused, recorded, and reported to your security
+        unit within seconds. Repeated failures lock the code out.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <h3 class="oe_slogan">Signatures where your procedures need them</h3>
+      <p>
+        Configure which state transition requires which meaning, how many
+        signatures, by which roles, and whether two different people are needed.
+        The transition is refused until they are present and still current.
+      </p>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span12">
+      <h3 class="oe_slogan">Any model can be signable</h3>
+      <pre style="max-width:640px;margin:0 auto;">class LsDeviation(models.Model):
+    _name = "ls.deviation"
+    _inherit = ["ls.signature.mixin"]
+    _ls_signature_field_whitelist = ("name", "state", "disposition")</pre>
+    </div>
+  </div>
+
+  <div class="oe_row oe_spaced">
+    <div class="oe_span12">
+      <h3 class="oe_slogan">Small on purpose</h3>
+      <p style="text-align:center;">
+        Depends only on <code>base</code> and <code>mail</code>. No Enterprise
+        code. No external Python package. No HTTP controller. No custom
+        JavaScript — every control it enforces is enforced on the server, which
+        is the only place worth enforcing it, and every line of front-end code
+        would have to be re-qualified at each upgrade.
+      </p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_summary_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2 t-field="doc.reference"/>
+                <h3 t-field="doc.name"/>
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Validation Item</strong></td>
+                        <td><span t-field="doc.item_id"/></td>
+                        <td><strong>Report Date</strong></td>
+                        <td><span t-field="doc.report_date"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Master Plan</strong></td>
+                        <td><span t-field="doc.master_plan_id"/></td>
+                        <td><strong>Conclusion</strong></td>
+                        <td><span t-field="doc.conclusion"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Valid From</strong></td>
+                        <td><span t-field="doc.valid_from"/></td>
+                        <td><strong>Valid Until</strong></td>
+                        <td><span t-field="doc.valid_until"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author</strong></td>
+                        <td><span t-field="doc.author_id"/></td>
+                        <td><strong>Approved by</strong></td>
+                        <td><span t-field="doc.approver_id"/></td>
+                    </tr>
+                </table>
+
+                <h4>1. Summary</h4>
+                <div t-field="doc.summary"/>
+
+                <h4>2. Execution Records</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Protocol</th>
+                            <th>Type</th>
+                            <th>Tests</th>
+                            <th>Passed</th>
+                            <th>Failed</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.execution_ids" t-as="execution">
+                            <td t-out="execution.reference"/>
+                            <td t-out="execution.protocol_id.name"/>
+                            <td t-out="execution.protocol_type"/>
+                            <td t-out="execution.test_count"/>
+                            <td t-out="execution.passed_count"/>
+                            <td t-out="execution.failed_count"/>
+                            <td t-out="execution.overall_result"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>3. Restrictions</h4>
+                <div t-field="doc.restrictions"/>
+                <p t-if="not doc.restrictions">
+                    No restriction applies to the use of this item.
+                </p>
+
+                <h4>4. Electronic Signatures</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signatory</th>
+                            <th>Meaning</th>
+                            <th>Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.signature_ids" t-as="signature">
+                            <td t-out="signature.signed_on"/>
+                            <td t-out="signature.user_id.name"/>
+                            <td t-out="signature.meaning"/>
+                            <td t-out="signature.signature_hash"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_validation.report_summary_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

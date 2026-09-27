@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Demo records deliberately reference no product, lot or manufacturing
+     order. Demo XML identifiers for product master data differ between Odoo
+     versions and editions, and a missing reference makes the whole module
+     fail to install when demo data is enabled. Keeping demo data
+     self-contained removes that failure mode. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_deviation_yield" model="ls.deviation">
+            <field name="title">Theoretical yield below the lower limit on batch compression</field>
+            <field name="description">The compression stage of the batch produced a yield of 92.4 percent against a lower limit of 95.0 percent established in the master production and control record. The discrepancy was identified by the line supervisor during reconciliation at the end of the stage.</field>
+            <field name="deviation_type_id" ref="ls_deviation.type_yield"/>
+            <field name="category_id" ref="ls_deviation.category_production"/>
+            <field name="severity">major</field>
+            <field name="occurrence_date" eval="(DateTime.now() - relativedelta(days=6)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="detection_date" eval="(DateTime.now() - relativedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="due_date" eval="(DateTime.now() + relativedelta(days=25)).strftime('%Y-%m-%d')"/>
+            <field name="impact_product_quality" eval="True"/>
+            <field name="impact_assessment">Yield loss without an identified material diversion. Product quality of the remaining units is not presumed affected pending reconciliation of the shortfall.</field>
+        </record>
+
+        <record id="demo_deviation_temperature" model="ls.deviation">
+            <field name="title">Storage temperature excursion in the finished goods quarantine area</field>
+            <field name="description">The continuous monitoring system recorded an excursion above the upper limit for a period of three hours and ten minutes following a chiller compressor fault. The alarm was acknowledged by the warehouse operator on the same shift.</field>
+            <field name="deviation_type_id" ref="ls_deviation.type_environmental"/>
+            <field name="category_id" ref="ls_deviation.category_warehouse"/>
+            <field name="severity">critical</field>
+            <field name="occurrence_date" eval="(DateTime.now() - relativedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="detection_date" eval="(DateTime.now() - relativedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="due_date" eval="(DateTime.now() - relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="impact_product_quality" eval="True"/>
+            <field name="impact_patient_safety" eval="True"/>
+            <field name="impact_assessment">Excursion exceeded the qualified storage condition. Stability impact to be assessed against the approved mean kinetic temperature justification before any release decision.</field>
+        </record>
+
+        <record id="demo_deviation_documentation" model="ls.deviation">
+            <field name="title">Missing second-person verification signature on a dispensing record</field>
+            <field name="description">The dispensing record for a weighing operation was completed without the required second-person verification signature. The omission was identified during the review of the record by the quality control unit.</field>
+            <field name="deviation_type_id" ref="ls_deviation.type_documentation"/>
+            <field name="category_id" ref="ls_deviation.category_documentation"/>
+            <field name="severity">minor</field>
+            <field name="occurrence_date" eval="(DateTime.now() - relativedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="detection_date" eval="(DateTime.now() - relativedelta(days=8)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="due_date" eval="(DateTime.now() + relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="impact_assessment">Documentation omission only. The weighing itself was witnessed and the quantity independently confirmed against the balance printout retained with the record.</field>
+        </record>
+
+        <record id="demo_deviation_action_1" model="ls.deviation.action">
+            <field name="deviation_id" ref="demo_deviation_temperature"/>
+            <field name="name">Quarantine all pallets held in the affected area</field>
+            <field name="action_type">containment</field>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="deadline" eval="(DateTime.now() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_deviation_action_2" model="ls.deviation.action">
+            <field name="deviation_id" ref="demo_deviation_temperature"/>
+            <field name="name">Raise a maintenance request for the chiller compressor</field>
+            <field name="action_type">immediate</field>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="deadline" eval="(DateTime.now() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+        </record>
+
+    </data>
+</odoo>

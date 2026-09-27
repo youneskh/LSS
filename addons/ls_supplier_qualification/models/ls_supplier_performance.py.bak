@@ -1,0 +1,482 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+"""Periodic performance evaluation of a qualified supplier."""
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError, ValidationError
+
+PERFORMANCE_STATE_SELECTION = [
+    ("draft", "Draft"),
+    ("confirmed", "Confirmed"),
+    ("cancelled", "Cancelled"),
+]
+
+RATING_SELECTION = [
+    ("a", "A - Preferred"),
+    ("b", "B - Acceptable"),
+    ("c", "C - Improvement Required"),
+    ("d", "D - Unacceptable"),
+]
+
+
+class LsSupplierPerformance(models.Model):
+    """Scorecard of a supplier over a defined period.
+
+    Four indicators are combined with company-level weights: on-time
+    delivery, quality acceptance, documentation compliance and
+    responsiveness. The weights and the rating thresholds in force at
+    confirmation are frozen on the record.
+    """
+
+    _name = "ls.supplier.performance"
+    _description = "Life Sciences Supplier Performance Evaluation"
+    _inherit = ["mail.thread"]
+    _order = "period_end desc, id desc"
+    _check_company_auto = True
+
+    name = fields.Char(
+        required=True,
+        readonly=True,
+        copy=False,
+        default="/",
+        index=True,
+    )
+    qualification_id = fields.Many2one(
+        comodel_name="ls.supplier.qualification",
+        required=True,
+        ondelete="cascade",
+        index=True,
+        tracking=True,
+    )
+    partner_id = fields.Many2one(
+        related="qualification_id.partner_id",
+        store=True,
+        index=True,
+    )
+    company_id = fields.Many2one(
+        related="qualification_id.company_id",
+        store=True,
+        index=True,
+    )
+    period_start = fields.Date(required=True, tracking=True)
+    period_end = fields.Date(required=True, tracking=True, index=True)
+    evaluation_date = fields.Date(
+        required=True,
+        default=fields.Date.context_today,
+        tracking=True,
+    )
+    evaluator_id = fields.Many2one(
+        comodel_name="res.users",
+        required=True,
+        default=lambda self: self.env.user,
+        tracking=True,
+        domain=[("share", "=", False)],
+    )
+    state = fields.Selection(
+        selection=PERFORMANCE_STATE_SELECTION,
+        required=True,
+        default="draft",
+        tracking=True,
+        index=True,
+        copy=False,
+    )
+
+    # Raw counters ---------------------------------------------------------
+    delivery_total_count = fields.Integer(
+        string="Deliveries Received",
+        help="Number of receipt lines received from the supplier during the "
+             "period.",
+    )
+    delivery_late_count = fields.Integer(
+        string="Late Deliveries",
+        help="Number of receipt lines received after the scheduled date.",
+    )
+    lot_total_count = fields.Integer(string="Lots Inspected")
+    lot_rejected_count = fields.Integer(string="Lots Rejected")
+    nonconformity_count = fields.Integer(string="Non-Conformities")
+    complaint_count = fields.Integer(string="Complaints Raised")
+
+    # Indicators -----------------------------------------------------------
+    otd_percent = fields.Float(
+        string="On-Time Delivery (%)",
+        compute="_compute_otd_percent",
+        store=True,
+        readonly=False,
+        digits=(5, 2),
+        help="Computed from the delivery counters and editable when the "
+             "counters are not available.",
+    )
+    quality_percent = fields.Float(
+        string="Quality Acceptance (%)",
+        compute="_compute_quality_percent",
+        store=True,
+        readonly=False,
+        digits=(5, 2),
+    )
+    documentation_percent = fields.Float(
+        string="Documentation Compliance (%)",
+        default=100.0,
+        digits=(5, 2),
+        help="Percentage of deliveries received with complete and correct "
+             "documentation. Entered by the quality department.",
+    )
+    responsiveness_percent = fields.Float(
+        string="Responsiveness (%)",
+        default=100.0,
+        digits=(5, 2),
+        help="Percentage of requests answered by the supplier within the "
+             "agreed lead time. Entered by the quality department.",
+    )
+
+    # Frozen weights and thresholds ---------------------------------------
+    weight_otd = fields.Float(required=True, default=30.0, digits=(5, 2))
+    weight_quality = fields.Float(required=True, default=40.0, digits=(5, 2))
+    weight_documentation = fields.Float(
+        required=True, default=15.0, digits=(5, 2)
+    )
+    weight_responsiveness = fields.Float(
+        required=True, default=15.0, digits=(5, 2)
+    )
+    threshold_a = fields.Float(required=True, default=90.0, digits=(5, 2))
+    threshold_b = fields.Float(required=True, default=75.0, digits=(5, 2))
+    threshold_c = fields.Float(required=True, default=60.0, digits=(5, 2))
+
+    overall_score = fields.Float(
+        compute="_compute_overall_score",
+        store=True,
+        digits=(5, 2),
+        tracking=True,
+    )
+    rating = fields.Selection(
+        selection=RATING_SELECTION,
+        compute="_compute_overall_score",
+        store=True,
+        tracking=True,
+    )
+    action_required = fields.Boolean(
+        compute="_compute_overall_score",
+        store=True,
+    )
+    comments = fields.Text()
+
+    _sql_constraints = [
+        (
+            "name_company_uniq",
+            "UNIQUE(name, company_id)",
+            "The performance evaluation reference must be unique per company.",
+        ),
+    ]
+
+    # ------------------------------------------------------------------
+    # Compute
+    # ------------------------------------------------------------------
+    @api.depends("delivery_total_count", "delivery_late_count")
+    def _compute_otd_percent(self):
+        """Derive the on-time delivery rate from the delivery counters."""
+        for record in self:
+            if record.delivery_total_count > 0:
+                on_time = max(
+                    record.delivery_total_count - record.delivery_late_count, 0
+                )
+                record.otd_percent = round(
+                    100.0 * on_time / record.delivery_total_count, 2
+                )
+            else:
+                record.otd_percent = record.otd_percent or 0.0
+
+    @api.depends("lot_total_count", "lot_rejected_count")
+    def _compute_quality_percent(self):
+        """Derive the quality acceptance rate from the lot counters."""
+        for record in self:
+            if record.lot_total_count > 0:
+                accepted = max(
+                    record.lot_total_count - record.lot_rejected_count, 0
+                )
+                record.quality_percent = round(
+                    100.0 * accepted / record.lot_total_count, 2
+                )
+            else:
+                record.quality_percent = record.quality_percent or 0.0
+
+    @api.depends(
+        "otd_percent",
+        "quality_percent",
+        "documentation_percent",
+        "responsiveness_percent",
+        "weight_otd",
+        "weight_quality",
+        "weight_documentation",
+        "weight_responsiveness",
+        "threshold_a",
+        "threshold_b",
+        "threshold_c",
+    )
+    def _compute_overall_score(self):
+        """Combine the four indicators and derive the rating letter."""
+        for record in self:
+            total_weight = (
+                record.weight_otd
+                + record.weight_quality
+                + record.weight_documentation
+                + record.weight_responsiveness
+            )
+            if not total_weight:
+                record.overall_score = 0.0
+                record.rating = False
+                record.action_required = True
+                continue
+            weighted = (
+                record.otd_percent * record.weight_otd
+                + record.quality_percent * record.weight_quality
+                + record.documentation_percent * record.weight_documentation
+                + record.responsiveness_percent * record.weight_responsiveness
+            )
+            record.overall_score = round(weighted / total_weight, 2)
+            if record.overall_score >= record.threshold_a:
+                record.rating = "a"
+            elif record.overall_score >= record.threshold_b:
+                record.rating = "b"
+            elif record.overall_score >= record.threshold_c:
+                record.rating = "c"
+            else:
+                record.rating = "d"
+            record.action_required = record.rating in ("c", "d")
+
+    # ------------------------------------------------------------------
+    # Constraints
+    # ------------------------------------------------------------------
+    @api.constrains("period_start", "period_end")
+    def _check_period(self):
+        """The evaluation period must be a strictly positive interval."""
+        for record in self:
+            if record.period_end <= record.period_start:
+                raise ValidationError(
+                    _("Evaluation %s: the period end must be after the period "
+                      "start.", record.name)
+                )
+
+    @api.constrains("period_start", "period_end", "qualification_id", "state")
+    def _check_no_overlap(self):
+        """Two confirmed evaluations of a dossier cannot overlap."""
+        for record in self:
+            if record.state != "confirmed":
+                continue
+            overlapping = self.search_count([
+                ("id", "!=", record.id),
+                ("qualification_id", "=", record.qualification_id.id),
+                ("state", "=", "confirmed"),
+                ("period_start", "<=", record.period_end),
+                ("period_end", ">=", record.period_start),
+            ])
+            if overlapping:
+                raise ValidationError(
+                    _("Evaluation %s overlaps another confirmed evaluation of "
+                      "the same dossier.", record.name)
+                )
+
+    @api.constrains(
+        "otd_percent",
+        "quality_percent",
+        "documentation_percent",
+        "responsiveness_percent",
+    )
+    def _check_percentages(self):
+        """Indicators are expressed as percentages between 0 and 100."""
+        labels = {
+            "otd_percent": _("On-time delivery"),
+            "quality_percent": _("Quality acceptance"),
+            "documentation_percent": _("Documentation compliance"),
+            "responsiveness_percent": _("Responsiveness"),
+        }
+        for record in self:
+            for field_name, label in labels.items():
+                value = record[field_name]
+                if not 0 <= value <= 100:
+                    raise ValidationError(
+                        _("Evaluation %s: %s must be between 0 and 100.",
+                          record.name, label)
+                    )
+
+    @api.constrains(
+        "delivery_total_count",
+        "delivery_late_count",
+        "lot_total_count",
+        "lot_rejected_count",
+        "nonconformity_count",
+        "complaint_count",
+    )
+    def _check_counters(self):
+        """Counters must be non-negative and internally consistent."""
+        for record in self:
+            negatives = [
+                record.delivery_total_count,
+                record.delivery_late_count,
+                record.lot_total_count,
+                record.lot_rejected_count,
+                record.nonconformity_count,
+                record.complaint_count,
+            ]
+            if any(value < 0 for value in negatives):
+                raise ValidationError(
+                    _("Evaluation %s: counters cannot be negative.",
+                      record.name)
+                )
+            if record.delivery_late_count > record.delivery_total_count:
+                raise ValidationError(
+                    _("Evaluation %s: late deliveries cannot exceed total "
+                      "deliveries.", record.name)
+                )
+            if record.lot_rejected_count > record.lot_total_count:
+                raise ValidationError(
+                    _("Evaluation %s: rejected lots cannot exceed inspected "
+                      "lots.", record.name)
+                )
+
+    # ------------------------------------------------------------------
+    # ORM overrides
+    # ------------------------------------------------------------------
+    @api.model
+    def default_get(self, fields_list):
+        """Seed the weights and thresholds from the company configuration."""
+        defaults = super().default_get(fields_list)
+        company = self.env.company
+        mapping = {
+            "weight_otd": company.ls_perf_weight_otd,
+            "weight_quality": company.ls_perf_weight_quality,
+            "weight_documentation": company.ls_perf_weight_documentation,
+            "weight_responsiveness": company.ls_perf_weight_responsiveness,
+            "threshold_a": company.ls_perf_threshold_a,
+            "threshold_b": company.ls_perf_threshold_b,
+            "threshold_c": company.ls_perf_threshold_c,
+        }
+        for field_name, value in mapping.items():
+            if field_name in fields_list:
+                defaults[field_name] = value
+        return defaults
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Assign the evaluation reference from the company sequence."""
+        for vals in vals_list:
+            if vals.get("name", "/") == "/":
+                qualification = self.env["ls.supplier.qualification"].browse(
+                    vals.get("qualification_id")
+                )
+                company_id = qualification.company_id.id or self.env.company.id
+                vals["name"] = self.env["ir.sequence"].with_company(
+                    company_id
+                ).next_by_code("ls.supplier.performance") or "/"
+        return super().create(vals_list)
+
+    def unlink(self):
+        """Only draft or cancelled evaluations may be deleted."""
+        for record in self:
+            if record.state == "confirmed":
+                raise UserError(
+                    _("Confirmed evaluation %s cannot be deleted. Cancel it "
+                      "instead.", record.name)
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+    def action_confirm(self):
+        """Confirm the evaluation and raise a follow-up when required."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    _("Only a draft evaluation can be confirmed "
+                      "(evaluation %s).", record.name)
+                )
+            record.state = "confirmed"
+            record.message_post(body=_(
+                "Performance evaluation confirmed: %s%% (rating %s).",
+                record.overall_score,
+                dict(RATING_SELECTION).get(record.rating, ""),
+            ))
+            if record.action_required:
+                record.qualification_id.activity_schedule(
+                    "mail.mail_activity_data_todo",
+                    summary=_(
+                        "Supplier performance below target for %s",
+                        record.partner_id.display_name,
+                    ),
+                    user_id=record.qualification_id.responsible_id.id,
+                )
+        return True
+
+    def action_cancel(self):
+        """Cancel an evaluation."""
+        for record in self:
+            record.state = "cancelled"
+            record.message_post(body=_("Performance evaluation cancelled."))
+        return True
+
+    def action_reset_to_draft(self):
+        """Return a cancelled evaluation to draft."""
+        for record in self:
+            if record.state != "cancelled":
+                raise UserError(
+                    _("Only a cancelled evaluation can be reset to draft "
+                      "(evaluation %s).", record.name)
+                )
+            record.state = "draft"
+        return True
+
+    # ------------------------------------------------------------------
+    # Optional automatic counters
+    # ------------------------------------------------------------------
+    def action_compute_delivery_counters(self):
+        """Fill the delivery counters from received purchase order lines.
+
+        The computation reads ``stock.move`` records linked to purchase order
+        lines. Those links belong to the ``purchase_stock`` bridge module,
+        which is not a dependency of this module. When the expected fields are
+        absent the method raises a clear error instead of guessing, and the
+        counters stay manual.
+
+        A receipt is counted as late when the effective date of the stock move
+        is strictly after the scheduled date of its purchase order line.
+
+        :raise UserError: when the required fields are not available or when
+            the record is not a draft.
+        """
+        self.ensure_one()
+        if self.state != "draft":
+            raise UserError(
+                _("Counters can only be recomputed on a draft evaluation.")
+            )
+        move_model = self.env["stock.move"]
+        line_model = self.env["purchase.order.line"]
+        if (
+            "purchase_line_id" not in move_model._fields
+            or "date_planned" not in line_model._fields
+        ):
+            raise UserError(
+                _("Automatic delivery counters require the standard link "
+                  "between stock moves and purchase order lines provided by "
+                  "the 'purchase_stock' module. Install it or enter the "
+                  "counters manually.")
+            )
+        moves = move_model.search([
+            ("state", "=", "done"),
+            ("company_id", "=", self.company_id.id),
+            ("purchase_line_id", "!=", False),
+            ("purchase_line_id.order_id.partner_id", "=", self.partner_id.id),
+            ("date", ">=", fields.Datetime.to_datetime(self.period_start)),
+            ("date", "<=", fields.Datetime.to_datetime(self.period_end)),
+        ])
+        late = 0
+        for move in moves:
+            planned = move.purchase_line_id.date_planned
+            if planned and move.date > planned:
+                late += 1
+        self.write({
+            "delivery_total_count": len(moves),
+            "delivery_late_count": late,
+        })
+        self.message_post(body=_(
+            "Delivery counters recomputed from %s receipt move(s), of which "
+            "%s late.", len(moves), late,
+        ))
+        return True

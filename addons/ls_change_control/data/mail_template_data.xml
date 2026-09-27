@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_approval_requested" model="mail.template">
+            <field name="name">Change Control: Approval Requested</field>
+            <field name="model_id" ref="model_ls_change_control_approval"/>
+            <field name="subject">Approval requested: {{ object.request_id.name }} - {{ object.request_id.title }}</field>
+            <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.user_id.partner_id.id }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.user_id.name or ''"/>,</p>
+                    <p>
+                        Your approval is requested on change control request
+                        <strong><t t-out="object.request_id.name or ''"/></strong>
+                        for the role <t t-out="object.display_name or ''"/>.
+                    </p>
+                    <ul>
+                        <li>Title: <t t-out="object.request_id.title or ''"/></li>
+                        <li>Category: <t t-out="object.request_id.category_id.name or ''"/></li>
+                        <li>Classification: <t t-out="object.request_id.classification or ''"/></li>
+                        <li>Requester: <t t-out="object.request_id.requester_id.name or ''"/></li>
+                    </ul>
+                    <p>
+                        Please review the impact assessments before recording
+                        your decision.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.user_id.lang }}</field>
+        </record>
+
+        <record id="mail_template_change_approved" model="mail.template">
+            <field name="name">Change Control: Request Approved</field>
+            <field name="model_id" ref="model_ls_change_control_request"/>
+            <field name="subject">Approved: {{ object.name }} - {{ object.title }}</field>
+            <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.requester_id.partner_id.id }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.requester_id.name or ''"/>,</p>
+                    <p>
+                        Change control request
+                        <strong><t t-out="object.name or ''"/></strong>
+                        has been approved. All mandatory approvals have been
+                        granted.
+                    </p>
+                    <ul>
+                        <li>Title: <t t-out="object.title or ''"/></li>
+                        <li>Planned implementation date:
+                            <t t-out="object.date_planned_implementation or 'to be defined'"/></li>
+                    </ul>
+                    <p>
+                        The implementation may start once the change control
+                        manager releases it.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.requester_id.lang }}</field>
+        </record>
+
+        <record id="mail_template_change_rejected" model="mail.template">
+            <field name="name">Change Control: Request Rejected</field>
+            <field name="model_id" ref="model_ls_change_control_request"/>
+            <field name="subject">Rejected: {{ object.name }} - {{ object.title }}</field>
+            <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+            <field name="partner_to">{{ object.requester_id.partner_id.id }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.requester_id.name or ''"/>,</p>
+                    <p>
+                        Change control request
+                        <strong><t t-out="object.name or ''"/></strong>
+                        has been rejected.
+                    </p>
+                    <p>Reason:</p>
+                    <p style="white-space:pre-wrap;"><t t-out="object.rejection_reason or ''"/></p>
+                    <p>
+                        A rejected request is final. A new change request must
+                        be raised if the change is still required.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.requester_id.lang }}</field>
+        </record>
+
+    </data>
+</odoo>

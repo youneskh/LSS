@@ -1,0 +1,9 @@
+<odoo>
+    <record id="view_lss_foundation_investment_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.investment.tree</field>
+        <field name="model">lss.foundation.investment</field>
+        <field name="arch" type="xml">
+            <tree><field name="name"/><field name="category"/><field name="amount"/><field name="status" widget="badge"/><field name="planned_start_date"/><field name="planned_end_date"/></tree>
+        </field>
+    </record>
+</odoo>

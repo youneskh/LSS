@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_complaint_view_list" model="ir.ui.view">
+        <field name="name">ls.complaint.list</field>
+        <field name="model">ls.complaint</field>
+        <field name="arch" type="xml">
+            <list string="Complaints"
+                  decoration-danger="is_overdue"
+                  decoration-warning="severity == 'critical' and state not in ['closed', 'cancelled']"
+                  decoration-muted="state == 'cancelled'">
+                <field name="priority" widget="priority" optional="show"/>
+                <field name="name"/>
+                <field name="receipt_date"/>
+                <field name="summary"/>
+                <field name="partner_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="lot_id" optional="hide"/>
+                <field name="category_id" optional="show"/>
+                <field name="complaint_type" optional="hide"/>
+                <field name="severity" optional="show"/>
+                <field name="owner_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="closure_due_date" optional="show"/>
+                <field name="regulatory_reportable" optional="hide"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="closure_duration_days" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-muted="state == 'cancelled'"
+                       decoration-info="state in ['assessment', 'investigation']"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_complaint_view_form" model="ir.ui.view">
+        <field name="name">ls.complaint.form</field>
+        <field name="model">ls.complaint</field>
+        <field name="arch" type="xml">
+            <form string="Complaint">
+                <header>
+                    <button name="action_start_assessment" type="object"
+                            string="Start Assessment" class="btn-primary"
+                            invisible="state != 'received'"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_start_investigation" type="object"
+                            string="Start Investigation" class="btn-primary"
+                            invisible="state != 'assessment'"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_skip_investigation" type="object"
+                            string="Waive Investigation"
+                            confirm="The complaint will move directly to Resolution. The waiver justification recorded on the Assessment tab will be kept as evidence."
+                            invisible="state != 'assessment'"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <button name="action_mark_capa_required" type="object"
+                            string="CAPA Required"
+                            invisible="state != 'investigation'"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <button name="action_start_resolution" type="object"
+                            string="Start Resolution" class="btn-primary"
+                            invisible="state not in ['investigation', 'capa_required']"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <button name="action_open_close_wizard" type="object"
+                            string="Close" class="btn-primary"
+                            invisible="state != 'resolution'"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <button name="action_open_cancel_wizard" type="object"
+                            string="Cancel"
+                            invisible="state in ['closed', 'cancelled']"
+                            groups="ls_complaint.group_ls_complaint_manager"/>
+                    <button name="action_reset_to_received" type="object"
+                            string="Reset to Received"
+                            invisible="state != 'cancelled'"
+                            groups="ls_complaint.group_ls_complaint_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="received,assessment,investigation,resolution,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_investigations" type="object"
+                                class="oe_stat_button" icon="fa-search">
+                            <field name="investigation_count" widget="statinfo"
+                                   string="Investigations"/>
+                        </button>
+                        <button name="action_view_resolutions" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="resolution_count" widget="statinfo"
+                                   string="Resolutions"/>
+                        </button>
+                        <button name="action_view_adverse_events" type="object"
+                                class="oe_stat_button" icon="fa-heartbeat">
+                            <field name="adverse_event_count" widget="statinfo"
+                                   string="Adverse Events"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Overdue" bg_color="text-bg-danger"
+                            invisible="not is_overdue"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-secondary"
+                            invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="is_overdue" invisible="1"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="summary" placeholder="Short subject of the complaint"
+                                   readonly="state in ['closed', 'cancelled']"/></h2>
+                    </div>
+                    <group>
+                        <group name="reception" string="Reception">
+                            <field name="receipt_date"
+                                   readonly="state != 'received'"/>
+                            <field name="occurrence_date"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="channel"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="channel_other_description"
+                                   invisible="channel != 'other'"
+                                   required="channel == 'other'"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="received_by_id" readonly="state != 'received'"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'received'"/>
+                        </group>
+                        <group name="handling" string="Handling">
+                            <field name="owner_id"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="reviewer_id"/>
+                            <field name="priority" widget="priority"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="category_id"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="severity"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="complaint_type"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <field name="complaint_type_other_description"
+                                   invisible="complaint_type != 'other'"
+                                   required="complaint_type == 'other'"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="complaint" string="Complaint">
+                            <group>
+                                <group name="complainant" string="Complainant">
+                                    <field name="partner_id"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="complainant_type"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="contact_name"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="contact_email" widget="email"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="contact_phone" widget="phone"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                </group>
+                                <group name="targets" string="Targets">
+                                    <field name="acknowledgement_due_date"/>
+                                    <field name="investigation_due_date"/>
+                                    <field name="closure_due_date"/>
+                                    <field name="closure_duration_days"
+                                           invisible="state != 'closed'"/>
+                                </group>
+                            </group>
+                            <label for="description"/>
+                            <field name="description"
+                                   readonly="state in ['closed', 'cancelled']"
+                                   placeholder="Verbatim description as reported by the complainant"/>
+                        </page>
+                        <page name="product" string="Product">
+                            <group>
+                                <group>
+                                    <field name="product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="product_id"
+                                           invisible="not product_related"
+                                           required="product_related and state != 'received'"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="lot_id"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="lot_name"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="quantity_complained"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="product_uom_id"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                </group>
+                                <group>
+                                    <field name="manufacturing_date"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="expiry_date"
+                                           invisible="not product_related"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="market_country_id"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="sample_available"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="sample_reference"
+                                           invisible="not sample_available"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="sample_received_date"
+                                           invisible="not sample_available"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="assessment" string="Assessment">
+                            <group>
+                                <group>
+                                    <field name="assessment_date"/>
+                                    <field name="assessed_by_id"/>
+                                </group>
+                                <group>
+                                    <field name="potential_safety_impact"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="potential_regulatory_impact"
+                                           readonly="state in ['closed', 'cancelled']"/>
+                                    <field name="regulatory_reportable"/>
+                                    <field name="has_adverse_event"/>
+                                </group>
+                            </group>
+                            <label for="assessment_summary"/>
+                            <field name="assessment_summary"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                            <label for="investigation_waiver_reason"/>
+                            <field name="investigation_waiver_reason"
+                                   readonly="state in ['closed', 'cancelled']"
+                                   placeholder="Only required when the investigation is waived"/>
+                        </page>
+                        <page name="investigations" string="Investigations">
+                            <field name="investigation_ids"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="investigator_id"/>
+                                    <field name="methodology"/>
+                                    <field name="root_cause_category"/>
+                                    <field name="conclusion"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                            <label for="root_cause_summary"/>
+                            <field name="root_cause_summary"/>
+                        </page>
+                        <page name="adverse_events" string="Adverse Events">
+                            <field name="adverse_event_ids"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="awareness_date"/>
+                                    <field name="seriousness"/>
+                                    <field name="outcome"/>
+                                    <field name="reportable"/>
+                                    <field name="report_due_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="capa" string="CAPA">
+                            <group>
+                                <field name="capa_required"
+                                       readonly="state in ['closed', 'cancelled']"/>
+                                <field name="capa_reference"/>
+                            </group>
+                            <label for="capa_justification"/>
+                            <field name="capa_justification"
+                                   readonly="state in ['closed', 'cancelled']"/>
+                        </page>
+                        <page name="resolutions" string="Resolutions">
+                            <field name="resolution_ids"
+                                   readonly="state in ['closed', 'cancelled']">
+                                <list>
+                                    <field name="resolution_type"/>
+                                    <field name="description"/>
+                                    <field name="owner_id"/>
+                                    <field name="due_date"/>
+                                    <field name="completion_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="closure" string="Closure"
+                              invisible="state not in ['closed', 'cancelled']">
+                            <group>
+                                <group>
+                                    <field name="date_closed"/>
+                                    <field name="closed_by_id"/>
+                                </group>
+                                <group>
+                                    <field name="customer_notified"/>
+                                    <field name="customer_notification_date"/>
+                                </group>
+                            </group>
+                            <label for="closure_summary" invisible="state != 'closed'"/>
+                            <field name="closure_summary" invisible="state != 'closed'"/>
+                            <label for="cancellation_reason" invisible="state != 'cancelled'"/>
+                            <field name="cancellation_reason" invisible="state != 'cancelled'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_complaint_view_search" model="ir.ui.view">
+        <field name="name">ls.complaint.search</field>
+        <field name="model">ls.complaint</field>
+        <field name="arch" type="xml">
+            <search string="Complaints">
+                <field name="name"/>
+                <field name="summary"/>
+                <field name="description"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="owner_id"/>
+                <field name="category_id"/>
+                <filter name="filter_my" string="My Complaints"
+                        domain="[('owner_id', '=', uid)]"/>
+                <filter name="filter_received_by_me" string="Received by Me"
+                        domain="[('received_by_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ['received', 'assessment', 'investigation', 'capa_required', 'resolution'])]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <filter name="filter_cancelled" string="Cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('is_overdue', '=', True)]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('severity', '=', 'critical')]"/>
+                <filter name="filter_reportable" string="Regulatory Reporting Required"
+                        domain="[('regulatory_reportable', '=', True)]"/>
+                <filter name="filter_capa_required" string="CAPA Required"
+                        domain="[('capa_required', '=', True)]"/>
+                <separator/>
+                <filter name="filter_receipt_date" string="Receipt Date"
+                        date="receipt_date"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_severity" string="Severity"
+                        context="{'group_by': 'severity'}"/>
+                    <filter name="group_by_category" string="Category"
+                        context="{'group_by': 'category_id'}"/>
+                    <filter name="group_by_type" string="Complaint Type"
+                        context="{'group_by': 'complaint_type'}"/>
+                    <filter name="group_by_product" string="Product"
+                        context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_owner" string="Responsible"
+                        context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_by_channel" string="Channel"
+                        context="{'group_by': 'channel'}"/>
+                    <filter name="group_by_receipt_month" string="Receipt Month"
+                        context="{'group_by': 'receipt_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_complaint_view_graph" model="ir.ui.view">
+        <field name="name">ls.complaint.graph</field>
+        <field name="model">ls.complaint</field>
+        <field name="arch" type="xml">
+            <graph string="Complaint Trend" type="bar">
+                <field name="receipt_date" interval="month" type="row"/>
+                <field name="severity" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_complaint_view_pivot" model="ir.ui.view">
+        <field name="name">ls.complaint.pivot</field>
+        <field name="model">ls.complaint</field>
+        <field name="arch" type="xml">
+            <pivot string="Complaint Analysis">
+                <field name="product_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="closure_duration_days" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_complaint_action" model="ir.actions.act_window">
+        <field name="name">Complaints</field>
+        <field name="res_model">ls.complaint</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="ls_complaint_view_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your first complaint</p>
+            <p>
+                Complaints are handled through Received, Assessment, Investigation,
+                Resolution and Closed. Every transition is recorded in the message
+                history of the record.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_complaint_action_my" model="ir.actions.act_window">
+        <field name="name">My Complaints</field>
+        <field name="res_model">ls.complaint</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="ls_complaint_view_search"/>
+        <field name="domain">[('owner_id', '=', uid)]</field>
+        <field name="context">{'search_default_filter_open': 1}</field>
+    </record>
+
+    <record id="ls_complaint_action_analysis" model="ir.actions.act_window">
+        <field name="name">Complaint Analysis</field>
+        <field name="res_model">ls.complaint</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="ls_complaint_view_search"/>
+    </record>
+
+</odoo>

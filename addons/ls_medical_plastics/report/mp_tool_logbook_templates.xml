@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+      Tool logbook.
+
+      The logbook prints the identity of a tool, its cavity register, its
+      maintenance and requalification schedule, the complete maintenance
+      history and the closed moulding runs executed with it.
+    -->
+
+    <template id="report_mp_tool_logbook_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <h2 class="mt-0">
+                    Tool Logbook
+                    <span t-field="doc.code"/>
+                </h2>
+                <h4><span t-field="doc.name"/></h4>
+
+                <h4>Identification</h4>
+                <table class="table table-sm table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="w-25">Tool Type</th>
+                            <td><span t-field="doc.tool_type"/></td>
+                            <th class="w-25">Status</th>
+                            <td><span t-field="doc.state"/></td>
+                        </tr>
+                        <tr>
+                            <th>Tool Maker</th>
+                            <td><span t-field="doc.manufacturer_id"/></td>
+                            <th>Serial Number</th>
+                            <td><span t-field="doc.serial_no"/></td>
+                        </tr>
+                        <tr>
+                            <th>Acquisition Date</th>
+                            <td><span t-field="doc.acquisition_date"/></td>
+                            <th>Material Of Construction</th>
+                            <td><span t-field="doc.steel_grade"/></td>
+                        </tr>
+                        <tr>
+                            <th>Default Work Centre</th>
+                            <td><span t-field="doc.workcenter_id"/></td>
+                            <th>Storage Location</th>
+                            <td><span t-field="doc.storage_location"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Shot Counting And Maintenance</h4>
+                <table class="table table-sm table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="w-25">Opening Shot Count</th>
+                            <td><span t-field="doc.opening_shot_count"/></td>
+                            <th class="w-25">Recorded Shots</th>
+                            <td><span t-field="doc.recorded_shot_count"/></td>
+                        </tr>
+                        <tr>
+                            <th>Total Shot Count</th>
+                            <td><span t-field="doc.total_shot_count"/></td>
+                            <th>Shots Since Maintenance</th>
+                            <td><span t-field="doc.shots_since_maintenance"/></td>
+                        </tr>
+                        <tr>
+                            <th>Maintenance Interval (shots)</th>
+                            <td><span t-field="doc.maintenance_interval_shots"/></td>
+                            <th>Maintenance Interval (months)</th>
+                            <td><span t-field="doc.maintenance_interval_months"/></td>
+                        </tr>
+                        <tr>
+                            <th>Last Maintenance</th>
+                            <td><span t-field="doc.last_maintenance_date"/></td>
+                            <th>Next Maintenance Due</th>
+                            <td><span t-field="doc.next_maintenance_date"/></td>
+                        </tr>
+                        <tr>
+                            <th>Maintenance Status</th>
+                            <td><span t-field="doc.maintenance_status"/></td>
+                            <th>Requalification Due</th>
+                            <td><span t-field="doc.requalification_due_date"/></td>
+                        </tr>
+                        <tr>
+                            <th>Qualified On</th>
+                            <td><span t-field="doc.qualification_date"/></td>
+                            <th>Requalification Interval (months)</th>
+                            <td><span t-field="doc.requalification_interval_months"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Cavity Register</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Cavity</th>
+                            <th>Marking</th>
+                            <th>Status</th>
+                            <th>Blocking Reason</th>
+                            <th>Blocked On</th>
+                            <th>Blocked By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.cavity_ids" t-as="cavity">
+                            <td><span t-field="cavity.number"/></td>
+                            <td><span t-field="cavity.label"/></td>
+                            <td><span t-field="cavity.state"/></td>
+                            <td><span t-field="cavity.blocked_reason"/></td>
+                            <td><span t-field="cavity.blocked_date"/></td>
+                            <td><span t-field="cavity.blocked_by_id"/></td>
+                        </tr>
+                        <tr t-if="not doc.cavity_ids">
+                            <td colspan="6">No cavity registered.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Components Produced</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Component</th>
+                            <th>Category</th>
+                            <th>Criticality</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.component_ids" t-as="component">
+                            <td><span t-field="component.code"/></td>
+                            <td><span t-field="component.name"/></td>
+                            <td><span t-field="component.category"/></td>
+                            <td><span t-field="component.criticality"/></td>
+                            <td><span t-field="component.state"/></td>
+                        </tr>
+                        <tr t-if="not doc.component_ids">
+                            <td colspan="5">No component declared.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Maintenance History</h4>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Type</th>
+                            <th>Planned</th>
+                            <th>Completed</th>
+                            <th>Shots At Event</th>
+                            <th>Performed By</th>
+                            <th>Requalification</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.maintenance_ids" t-as="maintenance">
+                            <td><span t-field="maintenance.name"/></td>
+                            <td><span t-field="maintenance.maintenance_type"/></td>
+                            <td><span t-field="maintenance.date_planned"/></td>
+                            <td><span t-field="maintenance.date_end"/></td>
+                            <td><span t-field="maintenance.shot_count_at_event"/></td>
+                            <td><span t-field="maintenance.performed_by_id"/></td>
+                            <td><span t-field="maintenance.requalification_required"/></td>
+                            <td><span t-field="maintenance.state"/></td>
+                        </tr>
+                        <tr t-if="not doc.maintenance_ids">
+                            <td colspan="8">No maintenance recorded.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Closed Moulding Runs</h4>
+                <t t-set="closed_runs"
+                   t-value="doc.run_ids.filtered(lambda run: run.state == 'closed')"/>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Start</th>
+                            <th>Component</th>
+                            <th>Lot</th>
+                            <th>Shots</th>
+                            <th>Accepted</th>
+                            <th>Rejected</th>
+                            <th>Deviation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="closed_runs" t-as="run">
+                            <td><span t-field="run.name"/></td>
+                            <td><span t-field="run.date_start"/></td>
+                            <td><span t-field="run.component_id.code"/></td>
+                            <td><span t-field="run.lot_id.name"/></td>
+                            <td><span t-field="run.shot_count"/></td>
+                            <td><span t-field="run.qty_good"/></td>
+                            <td><span t-field="run.qty_rejected"/></td>
+                            <td><span t-field="run.deviation_reference"/></td>
+                        </tr>
+                        <tr t-if="not closed_runs">
+                            <td colspan="8">No closed moulding run.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="mt-4">
+                    <small>
+                        This logbook is produced by the Life Sciences Medical Plastics
+                        module and reflects the data held in the system at the time of
+                        printing. The identities shown are Odoo user accounts recorded by
+                        the application; this module does not implement electronic
+                        signatures.
+                    </small>
+                </p>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_mp_tool_logbook">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_medical_plastics.report_mp_tool_logbook_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

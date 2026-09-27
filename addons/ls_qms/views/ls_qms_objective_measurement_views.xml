@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="ls_qms_objective_measurement_view_list" model="ir.ui.view">
+        <field name="name">ls.qms.objective.measurement.list</field>
+        <field name="model">ls.qms.objective.measurement</field>
+        <field name="arch" type="xml">
+            <list string="Measurements">
+                <field name="date"/>
+                <field name="objective_id"/>
+                <field name="value"/>
+                <field name="recorded_by_id" widget="many2one_avatar_user"/>
+                <field name="comment"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_measurement_view_form" model="ir.ui.view">
+        <field name="name">ls.qms.objective.measurement.form</field>
+        <field name="model">ls.qms.objective.measurement</field>
+        <field name="arch" type="xml">
+            <form string="Measurement">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="objective_id"/>
+                            <field name="date"/>
+                            <field name="value"/>
+                        </group>
+                        <group>
+                            <field name="recorded_by_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Comment">
+                        <field name="comment" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_measurement_view_graph" model="ir.ui.view">
+        <field name="name">ls.qms.objective.measurement.graph</field>
+        <field name="model">ls.qms.objective.measurement</field>
+        <field name="arch" type="xml">
+            <graph string="Measurements" type="line" sample="1">
+                <field name="date"/>
+                <field name="value" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_measurement_action" model="ir.actions.act_window">
+        <field name="name">Measurements</field>
+        <field name="res_model">ls.qms.objective.measurement</field>
+        <field name="view_mode">list,form,graph</field>
+    </record>
+
+</odoo>

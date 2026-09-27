@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_ls_signature_request_list" model="ir.ui.view">
+        <field name="name">ls.signature.request.list</field>
+        <field name="model">ls.signature.request</field>
+        <field name="arch" type="xml">
+            <list string="Signature Requests" decoration-danger="state == 'expired'"
+                  decoration-success="state == 'signed'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="res_name"/>
+                <field name="meaning_id"/>
+                <field name="signer_ids" widget="many2many_tags"/>
+                <field name="requested_by_id" optional="show"/>
+                <field name="deadline"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_request_form" model="ir.ui.view">
+        <field name="name">ls.signature.request.form</field>
+        <field name="model">ls.signature.request</field>
+        <field name="arch" type="xml">
+            <form string="Signature Request">
+                <header>
+                    <button name="action_send" type="object" string="Send Request"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_open_wizard" type="object" string="Sign"
+                            class="btn-primary" invisible="state != 'pending'"/>
+                    <button name="action_decline" type="object" string="Decline"
+                            invisible="state != 'pending'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('signed', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending,signed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_record" type="object" class="oe_stat_button"
+                                icon="fa-external-link">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Signed Record</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="res_model" readonly="state != 'draft'"/>
+                            <field name="res_id" readonly="state != 'draft'"/>
+                            <field name="res_name"/>
+                            <field name="meaning_id" readonly="state != 'draft'"/>
+                            <field name="policy_id" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="signer_ids" widget="many2many_tags"
+                                   readonly="state != 'draft'"/>
+                            <field name="requested_by_id"/>
+                            <field name="deadline" readonly="state in ('signed', 'cancelled')"/>
+                            <field name="log_id" invisible="state != 'signed'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Instructions">
+                        <field name="instructions" nolabel="1" readonly="state != 'draft'"/>
+                    </group>
+                    <group string="Reason for Declining" invisible="state != 'declined'">
+                        <field name="decline_reason" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_request_search" model="ir.ui.view">
+        <field name="name">ls.signature.request.search</field>
+        <field name="model">ls.signature.request</field>
+        <field name="arch" type="xml">
+            <search string="Signature Requests">
+                <field name="name"/>
+                <field name="res_name"/>
+                <field name="signer_ids"/>
+                <field name="meaning_id"/>
+                <filter name="filter_to_sign" string="To Sign by Me"
+                        domain="[('state', '=', 'pending'), ('signer_ids', 'in', [uid])]"/>
+                <filter name="filter_pending" string="Awaiting Signature"
+                        domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('state', '=', 'pending'), ('deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_meaning" string="Meaning"
+                        context="{'group_by': 'meaning_id'}"/>
+                    <filter name="group_model" string="Model"
+                        context="{'group_by': 'res_model'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_signature_request" model="ir.actions.act_window">
+        <field name="name">Signature Requests</field>
+        <field name="res_model">ls.signature.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_signature_request_search"/>
+        <field name="context">{'search_default_filter_to_sign': 1}</field>
+    </record>
+
+</odoo>

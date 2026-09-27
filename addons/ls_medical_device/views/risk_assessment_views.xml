@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_risk_item_list" model="ir.ui.view">
+        <field name="name">ls.md.risk_item.list</field>
+        <field name="model">ls.md.risk_item</field>
+        <field name="arch" type="xml">
+            <list string="Risks" editable="bottom" decoration-danger="residual_acceptability == 'unacceptable'" decoration-warning="residual_acceptability == 'alarp'">
+                <field name="sequence" widget="handle"/>
+                <field name="reference"/>
+                <field name="hazard"/>
+                <field name="hazardous_situation" optional="hide"/>
+                <field name="harm"/>
+                <field name="initial_severity"/>
+                <field name="initial_probability"/>
+                <field name="initial_index"/>
+                <field name="control_option" optional="show"/>
+                <field name="control_measure" optional="hide"/>
+                <field name="control_verified" optional="show"/>
+                <field name="residual_severity"/>
+                <field name="residual_probability"/>
+                <field name="residual_index"/>
+                <field name="residual_acceptability" widget="badge" decoration-success="residual_acceptability == 'acceptable'" decoration-warning="residual_acceptability == 'alarp'" decoration-danger="residual_acceptability == 'unacceptable'"/>
+                <field name="disclosed_to_user" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_risk_item_form" model="ir.ui.view">
+        <field name="name">ls.md.risk_item.form</field>
+        <field name="model">ls.md.risk_item</field>
+        <field name="arch" type="xml">
+            <form string="Risk">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="reference" string="Reference"/>
+                        <h1><field name="reference" placeholder="R-001"/></h1>
+                    </div>
+                    <group>
+                        <group string="Context">
+                            <field name="risk_assessment_id"/>
+                            <field name="device_id" readonly="1"/>
+                            <field name="hazard_category"/>
+                            <field name="affected_party"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group string="Risk Index">
+                            <field name="initial_index" readonly="1"/>
+                            <field name="residual_index" readonly="1"/>
+                            <field name="proposed_acceptability" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Hazard Analysis" name="hazard_analysis">
+                            <group>
+                                <field name="hazard" placeholder="Potential source of harm"/>
+                                <field name="sequence_of_events" placeholder="Foreseeable sequence of events leading to the hazardous situation"/>
+                                <field name="hazardous_situation" placeholder="Circumstance in which people are exposed to the hazard"/>
+                                <field name="harm" placeholder="Injury or damage to health"/>
+                            </group>
+                            <group>
+                                <group string="Initial Risk">
+                                    <field name="initial_severity"/>
+                                    <field name="initial_probability"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Risk Control" name="risk_control">
+                            <group>
+                                <field name="control_option"/>
+                                <field name="control_measure" placeholder="Risk control measure implemented"/>
+                                <field name="control_implementation_reference" placeholder="Reference of the implementation evidence"/>
+                                <field name="control_verification_reference" placeholder="Reference of the verification evidence"/>
+                                <field name="control_verified"/>
+                            </group>
+                            <group string="New Hazards Introduced by the Control">
+                                <field name="introduces_new_hazard"/>
+                                <field name="new_hazard_description" invisible="not introduces_new_hazard" required="introduces_new_hazard"/>
+                            </group>
+                        </page>
+                        <page string="Residual Risk" name="residual_risk">
+                            <group>
+                                <group string="Residual Evaluation">
+                                    <field name="residual_severity"/>
+                                    <field name="residual_probability"/>
+                                    <field name="residual_acceptability"/>
+                                </group>
+                                <group string="Disclosure">
+                                    <field name="disclosed_to_user"/>
+                                </group>
+                            </group>
+                            <group string="Acceptability Justification">
+                                <field name="acceptability_justification" nolabel="1" placeholder="Justification of the acceptability decision for the residual risk"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_risk_item_search" model="ir.ui.view">
+        <field name="name">ls.md.risk_item.search</field>
+        <field name="model">ls.md.risk_item</field>
+        <field name="arch" type="xml">
+            <search string="Risks">
+                <field name="reference"/>
+                <field name="hazard"/>
+                <field name="harm"/>
+                <field name="device_id"/>
+                <field name="risk_assessment_id"/>
+                <separator/>
+                <filter name="filter_unacceptable" string="Unacceptable" domain="[('residual_acceptability', '=', 'unacceptable')]"/>
+                <filter name="filter_alarp" string="Acceptable After Reduction" domain="[('residual_acceptability', '=', 'alarp')]"/>
+                <filter name="filter_not_verified" string="Control Not Verified" domain="[('control_verified', '=', False)]"/>
+                <filter name="filter_new_hazard" string="Introduces New Hazard" domain="[('introduces_new_hazard', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_file" string="Risk Management File" context="{'group_by': 'risk_assessment_id'}"/>
+                    <filter name="group_by_acceptability" string="Residual Acceptability" context="{'group_by': 'residual_acceptability'}"/>
+                    <filter name="group_by_option" string="Control Option" context="{'group_by': 'control_option'}"/>
+                    <filter name="group_by_category" string="Hazard Category" context="{'group_by': 'hazard_category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_risk_item" model="ir.actions.act_window">
+        <field name="name">Risks</field>
+        <field name="res_model">ls.md.risk_item</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_risk_item_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No risk recorded yet</p>
+            <p>
+                Risks are recorded inside a risk management file. This view lists them across
+                every file so that residual risks can be reviewed for a whole portfolio.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_ls_md_risk_assessment_list" model="ir.ui.view">
+        <field name="name">ls.md.risk_assessment.list</field>
+        <field name="model">ls.md.risk_assessment</field>
+        <field name="arch" type="xml">
+            <list string="Risk Management Files" decoration-danger="unacceptable_risk_count &gt; 0" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="version"/>
+                <field name="assessment_date" optional="show"/>
+                <field name="risk_item_count"/>
+                <field name="unacceptable_risk_count"/>
+                <field name="uncontrolled_risk_count" optional="hide"/>
+                <field name="max_residual_index" optional="show"/>
+                <field name="overall_risk_acceptable" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_risk_assessment_form" model="ir.ui.view">
+        <field name="name">ls.md.risk_assessment.form</field>
+        <field name="model">ls.md.risk_assessment</field>
+        <field name="arch" type="xml">
+            <form string="Risk Management File">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <label for="title" string="Title"/>
+                        <h2><field name="title" placeholder="Risk management file title"/></h2>
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="unacceptable_risk_count == 0">
+                        This file contains residual risks evaluated as unacceptable.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="version"/>
+                            <field name="assessment_date"/>
+                            <field name="standard_reference" placeholder="e.g. ISO 14971:2019"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsibilities">
+                            <field name="responsible_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Risk Statistics">
+                            <field name="risk_item_count"/>
+                            <field name="unacceptable_risk_count"/>
+                            <field name="uncontrolled_risk_count"/>
+                            <field name="max_residual_index"/>
+                        </group>
+                        <group string="Overall Evaluation">
+                            <field name="overall_risk_acceptable"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Risks" name="risks">
+                            <field name="risk_item_ids" nolabel="1" context="{'default_device_id': device_id}">
+                                <list editable="bottom" decoration-danger="residual_acceptability == 'unacceptable'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="reference"/>
+                                    <field name="hazard"/>
+                                    <field name="hazardous_situation" optional="hide"/>
+                                    <field name="harm"/>
+                                    <field name="initial_severity"/>
+                                    <field name="initial_probability"/>
+                                    <field name="initial_index"/>
+                                    <field name="control_option"/>
+                                    <field name="control_verified"/>
+                                    <field name="residual_severity"/>
+                                    <field name="residual_probability"/>
+                                    <field name="residual_index"/>
+                                    <field name="residual_acceptability" widget="badge" decoration-success="residual_acceptability == 'acceptable'" decoration-danger="residual_acceptability == 'unacceptable'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Scope and Policy" name="scope">
+                            <group string="Scope">
+                                <field name="scope" nolabel="1" placeholder="Scope of the risk management activities"/>
+                            </group>
+                            <group string="Risk Acceptability Policy">
+                                <field name="risk_policy" nolabel="1" placeholder="Criteria for risk acceptability defined in the risk management plan"/>
+                            </group>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <group string="Overall Benefit-Risk Conclusion">
+                                <field name="overall_benefit_risk_conclusion" nolabel="1" placeholder="Conclusion of the overall residual risk evaluation"/>
+                            </group>
+                            <group string="Production and Post-Production Information">
+                                <field name="production_information_summary" nolabel="1" placeholder="Summary of the information collected in production and post-production"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_risk_assessment_search" model="ir.ui.view">
+        <field name="name">ls.md.risk_assessment.search</field>
+        <field name="model">ls.md.risk_assessment</field>
+        <field name="arch" type="xml">
+            <search string="Risk Management Files">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_unacceptable" string="With Unacceptable Risks" domain="[('unacceptable_risk_count', '&gt;', 0)]"/>
+                <filter name="filter_uncontrolled" string="With Unverified Controls" domain="[('uncontrolled_risk_count', '&gt;', 0)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_risk_assessment" model="ir.actions.act_window">
+        <field name="name">Risk Management Files</field>
+        <field name="res_model">ls.md.risk_assessment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_risk_assessment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a risk management file</p>
+            <p>
+                A risk management file records the hazards, hazardous situations, risk control
+                measures and residual risk evaluation of one device, following the process
+                described in ISO 14971:2019.
+            </p>
+        </field>
+    </record>
+
+</odoo>

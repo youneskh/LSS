@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_implementation_list" model="ir.ui.view">
+        <field name="name">ls.change_control.implementation.list</field>
+        <field name="model">ls.change_control.implementation</field>
+        <field name="arch" type="xml">
+            <list string="Implementation Actions"
+                  decoration-muted="state in ('done', 'cancelled')"
+                  decoration-info="state == 'in_progress'">
+                <field name="sequence" widget="handle"/>
+                <field name="request_id"/>
+                <field name="name"/>
+                <field name="action_type"/>
+                <field name="responsible_id" widget="many2one_avatar_user"/>
+                <field name="date_planned"/>
+                <field name="date_done" optional="show"/>
+                <field name="evidence_reference" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'in_progress'"
+                       decoration-warning="state == 'pending'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_implementation_form" model="ir.ui.view">
+        <field name="name">ls.change_control.implementation.form</field>
+        <field name="model">ls.change_control.implementation</field>
+        <field name="arch" type="xml">
+            <form string="Implementation Action">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="oe_highlight" invisible="state != 'pending'"/>
+                    <button name="action_done" type="object" string="Mark as Done"
+                            class="oe_highlight"
+                            invisible="state not in ('pending', 'in_progress')"/>
+                    <button name="action_cancel" type="object" string="Cancel Action"
+                            confirm="Cancel this implementation action? The cancellation is traced on the change request."
+                            invisible="state in ('done', 'cancelled')"
+                            groups="ls_change_control.group_ls_change_control_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Revise SOP-PROD-014"
+                                   readonly="state in ('done', 'cancelled')"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="request_state" invisible="1"/>
+                            <field name="action_type" readonly="state in ('done', 'cancelled')"/>
+                            <field name="responsible_id" readonly="state in ('done', 'cancelled')"/>
+                        </group>
+                        <group>
+                            <field name="date_planned" readonly="state in ('done', 'cancelled')"/>
+                            <field name="date_done" invisible="state != 'done'"/>
+                            <field name="done_by_id" invisible="state not in ('done', 'cancelled')"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"
+                               readonly="state in ('done', 'cancelled')"/>
+                    </group>
+                    <group string="Evidence">
+                        <field name="evidence_reference" nolabel="1"
+                               readonly="state in ('done', 'cancelled')"
+                               placeholder="e.g. SOP-PROD-014 rev. 5, effective 2026-09-01"/>
+                    </group>
+                    <group string="Cancellation Reason" invisible="state == 'done'">
+                        <field name="cancellation_reason" nolabel="1"
+                               readonly="state == 'cancelled'"
+                               placeholder="Required before the action can be cancelled."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_implementation_search" model="ir.ui.view">
+        <field name="name">ls.change_control.implementation.search</field>
+        <field name="model">ls.change_control.implementation</field>
+        <field name="arch" type="xml">
+            <search string="Implementation Actions">
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="responsible_id"/>
+                <field name="action_type"/>
+                <filter name="filter_my_actions" string="My Actions"
+                        domain="[('responsible_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('pending', 'in_progress'))]"/>
+                <filter name="filter_done" string="Done"
+                        domain="[('state', '=', 'done')]"/>
+                <filter name="filter_cancelled" string="Cancelled"
+                        domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="filter_late" string="Late"
+                        domain="[('state', 'in', ('pending', 'in_progress')), ('date_planned', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_request" string="Change Request"
+                        context="{'group_by': 'request_id'}"/>
+                    <filter name="group_type" string="Action Type"
+                        context="{'group_by': 'action_type'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                        context="{'group_by': 'responsible_id'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_planned" string="Planned Date"
+                        context="{'group_by': 'date_planned'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_implementation" model="ir.actions.act_window">
+        <field name="name">Implementation Actions</field>
+        <field name="res_model">ls.change_control.implementation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_implementation_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No implementation action to display
+            </p>
+            <p>
+                Implementation actions are planned by the change control
+                manager on an approved change request.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_plan_generate_form" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.generate.form</field>
+        <field name="model">ls.calibration.plan.generate</field>
+        <field name="arch" type="xml">
+            <form string="Generate Scheduled Calibrations">
+                <group>
+                    <group>
+                        <field name="horizon_date"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group>
+                        <field name="category_id"/>
+                        <field name="criticality"/>
+                    </group>
+                </group>
+                <group string="Restrict to Specific Plans">
+                    <field name="plan_ids" nolabel="1" widget="many2many_tags"/>
+                </group>
+                <p class="text-muted">
+                    Leave the plan and category fields empty to consider every approved
+                    calibration plan of the company. Records are created in draft with
+                    their scheduled date; nothing is marked as performed.
+                </p>
+                <footer>
+                    <button name="action_generate" type="object" string="Generate"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_plan_generate" model="ir.actions.act_window">
+        <field name="name">Generate Scheduled Calibrations</field>
+        <field name="res_model">ls.calibration.plan.generate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_ls_calibration_record_reject_form" model="ir.ui.view">
+        <field name="name">ls.calibration.record.reject.form</field>
+        <field name="model">ls.calibration.record.reject</field>
+        <field name="arch" type="xml">
+            <form string="Reject Calibration Record">
+                <group>
+                    <field name="record_id"/>
+                    <field name="instrument_id"/>
+                </group>
+                <group string="Rejection Reason">
+                    <field name="reason" nolabel="1"
+                           placeholder="State why the calibration record is returned for correction."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Reject"
+                            class="btn-danger"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_stock_lot_form_ls_recall" model="ir.ui.view">
+        <field name="name">stock.lot.form.ls.recall</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_ls_recalls" type="object"
+                        class="oe_stat_button" icon="fa-bullhorn"
+                        groups="ls_recall.group_ls_recall_viewer"
+                        invisible="ls_recall_count == 0">
+                    <field name="ls_recall_count" widget="statinfo"
+                           string="Recalls"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="before">
+                <widget name="web_ribbon" title="Under Recall"
+                        bg_color="text-bg-danger"
+                        invisible="not ls_recall_open"/>
+                <field name="ls_recall_open" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

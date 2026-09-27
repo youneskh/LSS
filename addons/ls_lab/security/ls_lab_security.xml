@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Privilege grouping for the laboratory security groups.
+        Verified against Odoo 19 source: res.groups carries privilege_id
+        (odoo/addons/base/models/res_groups.py) and res.groups.privilege is
+        declared in odoo/addons/base/models/res_groups_privilege.py.
+    -->
+    <record id="ls_lab_privilege" model="res.groups.privilege">
+        <field name="name">Laboratory</field>
+        <field name="description">Access to the Life Sciences laboratory management module.</field>
+        <field name="sequence">120</field>
+        <field name="category_id" ref="base.module_category_manufacturing"/>
+    </record>
+
+    <!-- ============================================================
+         Security groups. Hierarchy: viewer < analyst < reviewer < manager
+         ============================================================ -->
+    <record id="ls_lab_group_viewer" model="res.groups">
+        <field name="name">Laboratory Viewer</field>
+        <field name="privilege_id" ref="ls_lab_privilege"/>
+        <field name="sequence">10</field>
+        <field name="comment">Read-only access to all laboratory records.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="ls_lab_group_analyst" model="res.groups">
+        <field name="name">Laboratory Analyst</field>
+        <field name="privilege_id" ref="ls_lab_privilege"/>
+        <field name="sequence">20</field>
+        <field name="implied_ids" eval="[(4, ref('ls_lab_group_viewer'))]"/>
+        <field name="comment">Registers samples and records test results. Cannot review own results, approve samples or issue certificates.</field>
+    </record>
+
+    <record id="ls_lab_group_reviewer" model="res.groups">
+        <field name="name">Laboratory Reviewer</field>
+        <field name="privilege_id" ref="ls_lab_privilege"/>
+        <field name="sequence">30</field>
+        <field name="implied_ids" eval="[(4, ref('ls_lab_group_analyst'))]"/>
+        <field name="comment">Performs second-person review of results and samples and conducts investigations. Cannot approve samples or close investigations.</field>
+    </record>
+
+    <record id="ls_lab_group_manager" model="res.groups">
+        <field name="name">Laboratory Manager</field>
+        <field name="privilege_id" ref="ls_lab_privilege"/>
+        <field name="sequence">40</field>
+        <field name="implied_ids" eval="[(4, ref('ls_lab_group_reviewer'))]"/>
+        <field name="comment">Approves methods, specifications and samples, closes investigations, issues certificates and maintains configuration.</field>
+    </record>
+
+    <!-- ============================================================
+         Multi-company record rules.
+
+         These are global rules (no groups) so that they apply to every
+         user including administrators. The ir.rule group field name is
+         'groups' in Odoo 19 (verified: odoo/addons/base/models/ir_rule.py),
+         and is used on the role-scoped rule further below.
+         ============================================================ -->
+    <record id="ls_lab_rule_test_method_company" model="ir.rule">
+        <field name="name">Laboratory Test Method: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_test_method"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_specification_company" model="ir.rule">
+        <field name="name">Laboratory Specification: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_specification"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_specification_line_company" model="ir.rule">
+        <field name="name">Laboratory Specification Line: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_specification_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_sample_company" model="ir.rule">
+        <field name="name">Laboratory Sample: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_sample"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_test_result_company" model="ir.rule">
+        <field name="name">Laboratory Test Result: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_test_result"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_oos_company" model="ir.rule">
+        <field name="name">Laboratory Investigation: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_oos"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_stability_study_company" model="ir.rule">
+        <field name="name">Laboratory Stability Study: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_stability_study"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_stability_timepoint_company" model="ir.rule">
+        <field name="name">Laboratory Stability Time Point: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_stability_timepoint"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_coa_company" model="ir.rule">
+        <field name="name">Certificate of Analysis: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_coa"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_lab_rule_storage_condition_company" model="ir.rule">
+        <field name="name">Laboratory Storage Condition: multi-company</field>
+        <field name="model_id" ref="model_ls_lab_storage_condition"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!--
+        Role-scoped rule. Analysts see every sample of their company but the
+        rule is declared explicitly so that a deployment can narrow it without
+        touching the global multi-company rules above.
+    -->
+    <record id="ls_lab_rule_sample_analyst_scope" model="ir.rule">
+        <field name="name">Laboratory Sample: analyst scope</field>
+        <field name="model_id" ref="model_ls_lab_sample"/>
+        <field name="groups" eval="[(4, ref('ls_lab_group_analyst'))]"/>
+        <field name="domain_force">[('state', '!=', 'cancelled')]</field>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

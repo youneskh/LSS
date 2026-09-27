@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_tool_service_wizard_form" model="ir.ui.view">
+        <field name="name">ls.mp.tool.service.wizard.form</field>
+        <field name="model">ls.mp.tool.service.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Return Tool To Service">
+                <div class="alert alert-warning" role="alert"
+                     invisible="tool_state != 'quarantined'">
+                    This tool is quarantined. A recorded requalification is required before
+                    it can return to production.
+                </div>
+                <group>
+                    <group>
+                        <field name="tool_id" readonly="1"/>
+                        <field name="tool_state" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="requalification_performed"/>
+                        <field name="qualification_date"
+                               invisible="not requalification_performed"
+                               required="requalification_performed"/>
+                        <field name="reset_maintenance_baseline"/>
+                    </group>
+                </group>
+                <separator string="Cavities Confirmed Active"/>
+                <field name="cavity_ids" widget="many2many_tags"/>
+                <separator string="Cavities Remaining Blocked"/>
+                <field name="blocked_cavity_ids" widget="many2many_tags" readonly="1"/>
+                <separator string="Confirmation Note"/>
+                <field name="confirmation_note"
+                       placeholder="Basis on which the tool is returned to production"/>
+                <footer>
+                    <button name="action_return_to_service" type="object"
+                            string="Return To Service" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

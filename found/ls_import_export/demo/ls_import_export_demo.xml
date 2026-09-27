@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Phase 1 demo data is intentionally empty: the Truth Protocol
+     requires that every provision be entered by a human who has read
+     the source, cited it and dated it. No demo provision is asserted
+     as in force.
+
+     This file is a placeholder so the manifest load order is stable.
+     Demo data for operations, authorisations and shipments will be
+     added in later phases.
+-->
+<odoo>
+    <!-- intentionally empty -->
+</odoo>

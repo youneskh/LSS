@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        All rules below are global: no group is attached to any of them.
+
+        Reason: the name of the field holding the groups of an ir.rule record in
+        Odoo 19.0 could not be verified from official documentation during
+        preparation of this module. Writing an unverified field name into a data
+        file would abort the installation. Global rules do not need that field.
+
+        Consequence: the rules below implement multi-company scoping only.
+        Differentiation between the four access levels of this module is
+        implemented through ir.model.access records and through the authority
+        checks performed in Python by the business methods of each model. That
+        combination is stated in the Administrator Manual so that the design is
+        not mistaken for an omission.
+
+        The computed field ir.rule.global is never written here; it is derived
+        by Odoo from the presence or absence of groups.
+    -->
+
+    <record id="rule_ls_md_device_company" model="ir.rule">
+        <field name="name">Medical Device: multi-company</field>
+        <field name="model_id" ref="model_ls_md_device"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_udi_company" model="ir.rule">
+        <field name="name">UDI Assignment: multi-company</field>
+        <field name="model_id" ref="model_ls_md_udi"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_risk_assessment_company" model="ir.rule">
+        <field name="name">Risk Management File: multi-company</field>
+        <field name="model_id" ref="model_ls_md_risk_assessment"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_risk_item_company" model="ir.rule">
+        <field name="name">Risk: multi-company</field>
+        <field name="model_id" ref="model_ls_md_risk_item"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_clinical_evaluation_company" model="ir.rule">
+        <field name="name">Clinical Evaluation: multi-company</field>
+        <field name="model_id" ref="model_ls_md_clinical_evaluation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_pmcf_evaluation_company" model="ir.rule">
+        <field name="name">PMCF Evaluation Report: multi-company</field>
+        <field name="model_id" ref="model_ls_md_pmcf_evaluation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_technical_file_company" model="ir.rule">
+        <field name="name">Technical Documentation: multi-company</field>
+        <field name="model_id" ref="model_ls_md_technical_file"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_technical_file_section_company" model="ir.rule">
+        <field name="name">Technical Documentation Section: multi-company</field>
+        <field name="model_id" ref="model_ls_md_technical_file_section"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_ce_marking_company" model="ir.rule">
+        <field name="name">CE Marking: multi-company</field>
+        <field name="model_id" ref="model_ls_md_ce_marking"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_pms_company" model="ir.rule">
+        <field name="name">Post-Market Surveillance Plan: multi-company</field>
+        <field name="model_id" ref="model_ls_md_pms"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_md_pms_report_company" model="ir.rule">
+        <field name="name">Periodic Post-Market Report: multi-company</field>
+        <field name="model_id" ref="model_ls_md_pms_report"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

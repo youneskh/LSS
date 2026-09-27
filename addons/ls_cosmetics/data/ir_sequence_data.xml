@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_ls_cosmetic_formulation" model="ir.sequence">
+            <field name="name">Cosmetic Formulation</field>
+            <field name="code">ls.cosmetic.formulation</field>
+            <field name="prefix">CFM/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_cosmetic_safety_assessment" model="ir.sequence">
+            <field name="name">Cosmetic Product Safety Report</field>
+            <field name="code">ls.cosmetic.safety_assessment</field>
+            <field name="prefix">CPSR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_cosmetic_pif" model="ir.sequence">
+            <field name="name">Cosmetic Product Information File</field>
+            <field name="code">ls.cosmetic.pif</field>
+            <field name="prefix">PIF/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_cosmetic_claim" model="ir.sequence">
+            <field name="name">Cosmetic Product Claim</field>
+            <field name="code">ls.cosmetic.claim</field>
+            <field name="prefix">CLM/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_cosmetic_label" model="ir.sequence">
+            <field name="name">Cosmetic Label</field>
+            <field name="code">ls.cosmetic.label</field>
+            <field name="prefix">LBL/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_cosmetic_dz_authorization" model="ir.sequence">
+            <field name="name">Algerian Prior Authorisation</field>
+            <field name="code">ls.cosmetic.dz_authorization</field>
+            <field name="prefix">DZA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

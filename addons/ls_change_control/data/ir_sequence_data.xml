@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Global sequence shared by every company. A per company sequence
+            may be added by creating another ir.sequence with the same code
+            and a company_id: next_by_code selects the sequence of the
+            current company first.
+        -->
+        <record id="seq_ls_change_control_request" model="ir.sequence">
+            <field name="name">Change Control Request</field>
+            <field name="code">ls.change_control.request</field>
+            <field name="prefix">CC/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

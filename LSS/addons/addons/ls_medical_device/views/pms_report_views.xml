@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_pms_report_list" model="ir.ui.view">
+        <field name="name">ls.md.pms_report.list</field>
+        <field name="model">ls.md.pms_report</field>
+        <field name="arch" type="xml">
+            <list string="Periodic Post-Market Reports" decoration-danger="conclusion == 'not_favourable'" decoration-warning="trend_signal_identified" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="report_type"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="complaint_count" optional="hide"/>
+                <field name="serious_incident_count" optional="show"/>
+                <field name="fsca_count" optional="hide"/>
+                <field name="trend_signal_identified" optional="hide"/>
+                <field name="conclusion" optional="show"/>
+                <field name="notified_body_submission_required" optional="hide"/>
+                <field name="notified_body_submission_date" optional="hide"/>
+                <field name="next_report_due" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pms_report_form" model="ir.ui.view">
+        <field name="name">ls.md.pms_report.form</field>
+        <field name="model">ls.md.pms_report</field>
+        <field name="arch" type="xml">
+            <form string="Periodic Post-Market Report">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_record_notified_body_submission" type="object" string="Record Notified Body Submission" invisible="state != 'approved' or not notified_body_submission_required"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="conclusion != 'not_favourable'">
+                        This report concludes that the benefit-risk determination is no longer favourable.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="pms_id"/>
+                            <field name="report_type"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Reporting Period">
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="next_report_due" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Responsibilities">
+                            <field name="author_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                        <group string="Notified Body Submission">
+                            <field name="notified_body_submission_required" readonly="1"/>
+                            <field name="notified_body_submission_date" readonly="1"/>
+                            <field name="notified_body_reference"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Data and Analysis" name="analysis">
+                            <group>
+                                <group string="Signals Recorded">
+                                    <field name="complaint_count"/>
+                                    <field name="serious_incident_count"/>
+                                    <field name="non_serious_incident_count"/>
+                                    <field name="fsca_count"/>
+                                </group>
+                                <group string="Exposure">
+                                    <field name="sales_volume"/>
+                                </group>
+                            </group>
+                            <group string="Data Analysis Summary">
+                                <field name="data_analysis_summary" nolabel="1" placeholder="Summary of the results and conclusions of the analyses of the post-market surveillance data"/>
+                            </group>
+                            <group string="User Population Estimate">
+                                <field name="population_estimate" nolabel="1" placeholder="Estimate of the size and other characteristics of the population using the device, and the usage frequency where practicable"/>
+                            </group>
+                            <group string="Trend Analysis">
+                                <field name="trend_signal_identified"/>
+                                <field name="trend_signal_description" invisible="not trend_signal_identified" required="trend_signal_identified" placeholder="Description of the trend signal identified during the period"/>
+                            </group>
+                        </page>
+                        <page string="PMCF and Actions" name="pmcf_actions">
+                            <group string="Main PMCF Findings">
+                                <field name="pmcf_main_findings" nolabel="1" placeholder="Main findings of the post-market clinical follow-up during the period"/>
+                            </group>
+                            <group string="Preventive and Corrective Actions">
+                                <field name="capa_summary" nolabel="1" placeholder="Rationale and description of any preventive and corrective actions taken during the period"/>
+                            </group>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <group>
+                                <field name="conclusion"/>
+                            </group>
+                            <group string="Benefit-Risk Conclusion">
+                                <field name="benefit_risk_conclusion" nolabel="1" placeholder="Conclusions of the reassessment of the benefit-risk determination"/>
+                            </group>
+                            <group string="Downstream Updates">
+                                <field name="risk_file_update_required"/>
+                                <field name="clinical_evaluation_update_required"/>
+                                <field name="labelling_update_required"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pms_report_search" model="ir.ui.view">
+        <field name="name">ls.md.pms_report.search</field>
+        <field name="model">ls.md.pms_report</field>
+        <field name="arch" type="xml">
+            <search string="Periodic Post-Market Reports">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="pms_id"/>
+                <field name="author_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_psur" string="Periodic Safety Update Report" domain="[('report_type', '=', 'psur')]"/>
+                <filter name="filter_pmsr" string="Post-Market Surveillance Report" domain="[('report_type', '=', 'pmsr')]"/>
+                <separator/>
+                <filter name="filter_not_favourable" string="Benefit-Risk Not Favourable" domain="[('conclusion', '=', 'not_favourable')]"/>
+                <filter name="filter_trend" string="Trend Signal Identified" domain="[('trend_signal_identified', '=', True)]"/>
+                <filter name="filter_submission_pending" string="Notified Body Submission Pending" domain="[('notified_body_submission_required', '=', True), ('notified_body_submission_date', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_type" string="Report Type" context="{'group_by': 'report_type'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_conclusion" string="Conclusion" context="{'group_by': 'conclusion'}"/>
+                    <filter name="group_by_period" string="Period End" context="{'group_by': 'period_end:year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_pms_report" model="ir.actions.act_window">
+        <field name="name">Periodic Reports</field>
+        <field name="res_model">ls.md.pms_report</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_pms_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a periodic post-market report</p>
+            <p>
+                A periodic post-market report summarises the results and conclusions of the
+                analyses of the post-market surveillance data for a reporting period, together
+                with the preventive and corrective actions taken.
+            </p>
+        </field>
+    </record>
+
+</odoo>

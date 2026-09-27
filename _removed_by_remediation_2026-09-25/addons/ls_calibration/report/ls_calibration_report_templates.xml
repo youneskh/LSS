@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ============================================================
+         Internal calibration certificate, printed from a certificate
+         ============================================================ -->
+    <template id="report_ls_calibration_certificate_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
+            <div class="page">
+                <h2 class="text-center">Calibration Certificate</h2>
+                <h4 class="text-center"><span t-field="doc.name"/></h4>
+
+                <div class="row mt32 mb16">
+                    <div class="col-6">
+                        <strong>Instrument</strong>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Instrument ID</td>
+                                <td><span t-field="doc.instrument_id.code"/></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><span t-field="doc.instrument_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Manufacturer</td>
+                                <td><span t-field="doc.instrument_id.manufacturer"/></td>
+                            </tr>
+                            <tr>
+                                <td>Model</td>
+                                <td><span t-field="doc.instrument_id.model_reference"/></td>
+                            </tr>
+                            <tr>
+                                <td>Serial Number</td>
+                                <td><span t-field="doc.instrument_id.serial_number"/></td>
+                            </tr>
+                            <tr>
+                                <td>Location</td>
+                                <td><span t-field="doc.instrument_id.location"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <strong>Calibration</strong>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Record</td>
+                                <td><span t-field="doc.record_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Performed On</td>
+                                <td><span t-field="doc.record_id.performed_date"/></td>
+                            </tr>
+                            <tr>
+                                <td>Issued On</td>
+                                <td><span t-field="doc.issue_date"/></td>
+                            </tr>
+                            <tr>
+                                <td>Next Due</td>
+                                <td><span t-field="doc.valid_until"/></td>
+                            </tr>
+                            <tr>
+                                <td>Procedure</td>
+                                <td><span t-field="doc.record_id.procedure_reference"/></td>
+                            </tr>
+                            <tr>
+                                <td>Result</td>
+                                <td><strong><span t-field="doc.record_id.overall_result"/></strong></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Environmental Conditions</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td>Ambient Temperature</td>
+                        <td>
+                            <span t-field="doc.record_id.ambient_temperature"/>
+                            <span t-field="doc.record_id.ambient_temperature_unit"/>
+                        </td>
+                        <td>Relative Humidity</td>
+                        <td><span t-field="doc.record_id.ambient_humidity"/> %</td>
+                    </tr>
+                </table>
+
+                <h4>Reference Standards Used</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Standard ID</th>
+                            <th>Description</th>
+                            <th>Traceability Certificate</th>
+                            <th>Issuing Laboratory</th>
+                            <th class="text-end">Valid Until</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.record_id.standard_ids" t-as="standard">
+                            <td><span t-field="standard.code"/></td>
+                            <td><span t-field="standard.name"/></td>
+                            <td><span t-field="standard.traceability_reference"/></td>
+                            <td><span t-field="standard.issuing_body"/></td>
+                            <td class="text-end"><span t-field="standard.valid_until"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Measurement Results</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Point</th>
+                            <th class="text-end">Nominal</th>
+                            <th class="text-end">Lower Limit</th>
+                            <th class="text-end">Upper Limit</th>
+                            <th class="text-end">As Found</th>
+                            <th class="text-end">Deviation</th>
+                            <th class="text-end">As Left</th>
+                            <th class="text-end">Deviation</th>
+                            <th class="text-center">Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.record_id.reading_ids" t-as="reading">
+                            <td><span t-field="reading.point_id.name"/></td>
+                            <td class="text-end"><span t-field="reading.nominal_value"/></td>
+                            <td class="text-end"><span t-field="reading.lower_limit"/></td>
+                            <td class="text-end"><span t-field="reading.upper_limit"/></td>
+                            <td class="text-end">
+                                <t t-if="reading.as_found_recorded">
+                                    <span t-field="reading.as_found_value"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td class="text-end">
+                                <t t-if="reading.as_found_recorded">
+                                    <span t-field="reading.as_found_deviation"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td class="text-end">
+                                <t t-if="reading.as_left_recorded">
+                                    <span t-field="reading.as_left_value"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td class="text-end">
+                                <t t-if="reading.as_left_recorded">
+                                    <span t-field="reading.as_left_deviation"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td class="text-center">
+                                <t t-if="reading.as_found_recorded and not reading.as_found_in_tolerance">
+                                    OUT OF TOLERANCE
+                                </t>
+                                <t t-else="">IN TOLERANCE</t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div t-if="doc.record_id.remarks" class="mt16">
+                    <h4>Remarks</h4>
+                    <p><span t-field="doc.record_id.remarks"/></p>
+                </div>
+
+                <div t-if="doc.notes" class="mt16">
+                    <h4>Certificate Notes</h4>
+                    <p><span t-field="doc.notes"/></p>
+                </div>
+
+                <h4 class="mt32">Authorisation</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Performed by</td>
+                            <td>
+                                <t t-if="doc.record_id.provider_type == 'internal'">
+                                    <span t-field="doc.record_id.performed_by_user_id.name"/>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="doc.record_id.performed_by_name"/>
+                                    (<span t-field="doc.record_id.service_provider_id.name"/>)
+                                </t>
+                            </td>
+                            <td><span t-field="doc.record_id.performed_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Reviewed by</td>
+                            <td><span t-field="doc.record_id.reviewed_by_user_id.name"/></td>
+                            <td><span t-field="doc.record_id.reviewed_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Approved by</td>
+                            <td><span t-field="doc.record_id.approved_by_user_id.name"/></td>
+                            <td><span t-field="doc.record_id.approved_date"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="text-muted mt32">
+                    <small>
+                        This certificate reports the measurement results obtained at the
+                        stated calibration points under the stated conditions. It does
+                        not constitute a statement of conformity to any regulatory
+                        framework. The accreditation status of any external issuing
+                        laboratory is recorded as supplied and has not been verified by
+                        this system.
+                    </small>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_calibration_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="ls_calibration.report_ls_calibration_certificate_document"/>
+            </t>
+        </t>
+    </template>
+
+    <!-- ============================================================
+         Calibration record report, printed from a record
+         ============================================================ -->
+    <template id="report_ls_calibration_record_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="o.with_context(lang=o.company_id.partner_id.lang)"/>
+            <div class="page">
+                <h2 class="text-center">Calibration Record</h2>
+                <h4 class="text-center"><span t-field="doc.name"/></h4>
+
+                <div class="row mt32 mb16">
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Instrument ID</td>
+                                <td><span t-field="doc.instrument_id.code"/></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><span t-field="doc.instrument_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td><span t-field="doc.category_id.complete_name"/></td>
+                            </tr>
+                            <tr>
+                                <td>Criticality</td>
+                                <td><span t-field="doc.criticality"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Status</td>
+                                <td><span t-field="doc.state"/></td>
+                            </tr>
+                            <tr>
+                                <td>Scheduled</td>
+                                <td><span t-field="doc.scheduled_date"/></td>
+                            </tr>
+                            <tr>
+                                <td>Performed</td>
+                                <td><span t-field="doc.performed_date"/></td>
+                            </tr>
+                            <tr>
+                                <td>Next Due</td>
+                                <td><span t-field="doc.next_due_date"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4>Results</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td>As-Found Result</td>
+                        <td><strong><span t-field="doc.as_found_result"/></strong></td>
+                        <td>As-Left Result</td>
+                        <td><strong><span t-field="doc.as_left_result"/></strong></td>
+                        <td>Overall</td>
+                        <td><strong><span t-field="doc.overall_result"/></strong></td>
+                    </tr>
+                </table>
+
+                <h4>Readings</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Point</th>
+                            <th class="text-end">Nominal</th>
+                            <th class="text-end">Lower</th>
+                            <th class="text-end">Upper</th>
+                            <th class="text-end">As Found</th>
+                            <th class="text-end">As Left</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.reading_ids" t-as="reading">
+                            <td><span t-field="reading.point_id.name"/></td>
+                            <td class="text-end"><span t-field="reading.nominal_value"/></td>
+                            <td class="text-end"><span t-field="reading.lower_limit"/></td>
+                            <td class="text-end"><span t-field="reading.upper_limit"/></td>
+                            <td class="text-end">
+                                <t t-if="reading.as_found_recorded">
+                                    <span t-field="reading.as_found_value"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                            <td class="text-end">
+                                <t t-if="reading.as_left_recorded">
+                                    <span t-field="reading.as_left_value"/>
+                                </t>
+                                <t t-else="">-</t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div t-if="doc.oot_ids" class="mt16">
+                    <h4>Out-of-Tolerance Events</h4>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Detected</th>
+                                <th>Product Impact</th>
+                                <th>Disposition</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.oot_ids" t-as="event">
+                                <td><span t-field="event.name"/></td>
+                                <td><span t-field="event.detection_date"/></td>
+                                <td><span t-field="event.product_impact"/></td>
+                                <td><span t-field="event.disposition"/></td>
+                                <td><span t-field="event.state"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_calibration_record">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="ls_calibration.report_ls_calibration_record_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

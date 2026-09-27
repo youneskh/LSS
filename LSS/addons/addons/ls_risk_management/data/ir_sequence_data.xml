@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo noupdate="1">
+
+    <!--
+      Company-independent sequences (company_id left unset). Odoo resolves a
+      sequence code against sequences belonging to the active company and
+      those with no company, so an administrator can later add a
+      company-specific sequence with the same code for per-company
+      numbering without modifying this module.
+
+      Verification note: that resolution behaviour is expected from the Odoo
+      ORM but was not confirmed against official documentation for Odoo 19.
+      It is listed as an item to confirm during operational qualification.
+    -->
+
+    <record id="sequence_ls_risk_register" model="ir.sequence">
+        <field name="name">Risk Register Entry</field>
+        <field name="code">ls.risk.register</field>
+        <field name="prefix">RISK/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="sequence_ls_risk_assessment" model="ir.sequence">
+        <field name="name">Risk Assessment</field>
+        <field name="code">ls.risk.assessment</field>
+        <field name="prefix">RA/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="sequence_ls_risk_mitigation" model="ir.sequence">
+        <field name="name">Risk Control Measure</field>
+        <field name="code">ls.risk.mitigation</field>
+        <field name="prefix">RCM/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+    </record>
+
+    <record id="sequence_ls_risk_fmea" model="ir.sequence">
+        <field name="name">FMEA Worksheet</field>
+        <field name="code">ls.risk.fmea</field>
+        <field name="prefix">FMEA/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+    </record>
+
+</odoo>

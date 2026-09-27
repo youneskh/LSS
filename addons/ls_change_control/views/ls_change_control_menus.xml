@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The functional specification of the Life Sciences Suite places these
+     menus under a Quality root menu owned by the ls_qms module. That module
+     is not available, so this module creates its own root menu. When ls_qms
+     is deployed, a bridge module can re-parent menu_ls_change_control_root
+     without any change here. -->
+<odoo>
+
+    <menuitem id="menu_ls_change_control_root"
+              name="Change Control"
+              web_icon="ls_change_control,static/description/icon.png"
+              sequence="80"
+              groups="ls_change_control.group_ls_change_control_viewer"/>
+
+    <menuitem id="menu_ls_change_control_requests"
+              name="Change Requests"
+              parent="menu_ls_change_control_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_request_all"
+              name="All Change Requests"
+              parent="menu_ls_change_control_requests"
+              action="action_ls_change_control_request"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_request_mine"
+              name="My Change Requests"
+              parent="menu_ls_change_control_requests"
+              action="action_ls_change_control_my_requests"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_change_control_assessments"
+              name="Impact Assessments"
+              parent="menu_ls_change_control_requests"
+              action="action_ls_change_control_assessment"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_change_control_approvals_section"
+              name="Approvals"
+              parent="menu_ls_change_control_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_change_control_approval_mine"
+              name="My Approvals"
+              parent="menu_ls_change_control_approvals_section"
+              action="action_ls_change_control_my_approvals"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_approval_all"
+              name="All Approvals"
+              parent="menu_ls_change_control_approvals_section"
+              action="action_ls_change_control_approval"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_change_control_execution"
+              name="Execution"
+              parent="menu_ls_change_control_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_change_control_implementation"
+              name="Implementation Actions"
+              parent="menu_ls_change_control_execution"
+              action="action_ls_change_control_implementation"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_verification"
+              name="Effectiveness Verifications"
+              parent="menu_ls_change_control_execution"
+              action="action_ls_change_control_verification"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_change_control_reporting"
+              name="Reporting"
+              parent="menu_ls_change_control_root"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_change_control_analysis"
+              name="Change Request Analysis"
+              parent="menu_ls_change_control_reporting"
+              action="action_ls_change_control_request_analysis"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_configuration"
+              name="Configuration"
+              parent="menu_ls_change_control_root"
+              sequence="90"
+              groups="ls_change_control.group_ls_change_control_manager"/>
+
+    <menuitem id="menu_ls_change_control_config_category"
+              name="Change Categories"
+              parent="menu_ls_change_control_configuration"
+              action="action_ls_change_control_category"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_change_control_config_impact_area"
+              name="Impact Areas"
+              parent="menu_ls_change_control_configuration"
+              action="action_ls_change_control_impact_area"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_change_control_config_settings"
+              name="Settings"
+              parent="menu_ls_change_control_configuration"
+              action="action_ls_change_control_settings"
+              sequence="30"/>
+
+</odoo>

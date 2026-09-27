@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_ls_cosmetic_label_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    Labelling Particulars
+                    <span t-field="doc.code"/> v<span t-field="doc.version"/>
+                </h2>
+                <h4 t-field="doc.name"/>
+                <p class="text-muted">
+                    Particulars required by Article 19(1) of Regulation (EC)
+                    No 1223/2009 to appear on the container and packaging in
+                    indelible, easily legible and visible lettering.
+                </p>
+
+                <h5>(a) Responsible Person</h5>
+                <p>
+                    <span t-field="doc.responsible_person_id"/>
+                    <br/>
+                    <span t-field="doc.responsible_person_address"/>
+                    <br/>
+                    <t t-if="doc.is_imported">
+                        <strong>Country of origin:</strong>
+                        <span t-field="doc.country_of_origin_id"/>
+                    </t>
+                </p>
+
+                <h5>(b) Nominal Content</h5>
+                <p t-if="not doc.content_exempt" t-field="doc.nominal_content"/>
+                <p t-if="doc.content_exempt">
+                    Exempt: <span t-field="doc.content_exempt_reason"/>
+                </p>
+
+                <h5>(c) Durability</h5>
+                <p>
+                    <span t-field="doc.durability_mode"/>
+                    <br/>
+                    <t t-if="doc.durability_mode == 'min_durability'">
+                        <strong>Date of minimum durability:</strong>
+                        <span t-field="doc.minimum_durability_date"/>
+                        <br/>
+                        <span t-field="doc.durability_conditions"/>
+                    </t>
+                    <t t-if="doc.durability_mode == 'pao'">
+                        <strong>Period after opening:</strong>
+                        <span t-field="doc.pao_months"/> months
+                    </t>
+                </p>
+
+                <h5>(d) Particular Precautions for Use</h5>
+                <p t-field="doc.precautions"/>
+                <p t-if="doc.annex_wording">
+                    <strong>Wording required by the annexes:</strong>
+                    <br/>
+                    <span t-field="doc.annex_wording"/>
+                </p>
+                <p t-if="doc.is_professional_use">
+                    For professional use.
+                </p>
+
+                <h5>(e) Batch Identification</h5>
+                <p t-field="doc.batch_reference_rule"/>
+
+                <h5>(f) Function of the Product</h5>
+                <p t-if="not doc.function_clear_from_presentation"
+                   t-field="doc.product_function"/>
+                <p t-if="doc.function_clear_from_presentation">
+                    The function is clear from the presentation of the product.
+                </p>
+
+                <h5>(g) List of Ingredients</h5>
+                <p>
+                    <strong><span t-field="doc.ingredient_list_prefix"/>:</strong>
+                    <span t-field="doc.ingredient_list"/>
+                </p>
+                <p class="text-muted">
+                    Generated from formulation
+                    <span t-field="doc.formulation_id"/>
+                    on <span t-field="doc.ingredient_list_generated_on"/>.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_cosmetic_label">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_cosmetics.report_ls_cosmetic_label_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

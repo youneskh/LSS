@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_plan_form" model="ir.ui.view">
+        <field name="name">ls.recall.plan.form</field>
+        <field name="model">ls.recall.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="oe_highlight"
+                            invisible="state != 'under_review'"/>
+                    <button name="action_reject" type="object"
+                            string="Reject"
+                            invisible="state != 'under_review'"/>
+                    <button name="action_new_revision" type="object"
+                            string="New Revision"
+                            invisible="state != 'approved'"/>
+                    <button name="action_set_obsolete" type="object"
+                            string="Set Obsolete"
+                            invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_executions" type="object"
+                                class="oe_stat_button" icon="fa-bullhorn">
+                            <field name="execution_count" widget="statinfo"
+                                   string="Recalls"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Obsolete"
+                            bg_color="text-bg-danger"
+                            invisible="state != 'obsolete'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Recall plan title"/></h1>
+                        <h3>
+                            <field name="code" readonly="1" class="oe_inline"/>
+                            <span class="oe_inline"> version </span>
+                            <field name="version" readonly="1" class="oe_inline"/>
+                        </h3>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group string="Responsibilities">
+                            <field name="responsible_user_id"
+                                   widget="many2one_avatar_user"/>
+                            <field name="deputy_user_id"
+                                   widget="many2one_avatar_user"/>
+                            <field name="decision_member_ids"
+                                   widget="many2many_tags"/>
+                            <field name="authority_partner_ids"
+                                   widget="many2many_tags"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Scope">
+                            <field name="scope_type"/>
+                            <field name="product_ids"
+                                   widget="many2many_tags"
+                                   invisible="scope_type != 'product'"
+                                   required="scope_type == 'product'"/>
+                            <field name="product_category_ids"
+                                   widget="many2many_tags"
+                                   invisible="scope_type != 'category'"
+                                   required="scope_type == 'category'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Procedure" name="procedure">
+                            <field name="description"
+                                   placeholder="Describe the decision route, the communication route, the disposition rules and the out-of-hours arrangements."/>
+                        </page>
+                        <page string="Default Strategy" name="strategy">
+                            <group>
+                                <group string="Targets">
+                                    <field name="default_effectiveness_level"/>
+                                    <field name="target_reconciliation_rate"/>
+                                    <field name="initiation_target_hours"/>
+                                </group>
+                                <group string="Rehearsal">
+                                    <field name="mock_recall_interval_months"/>
+                                    <field name="last_mock_recall_date"/>
+                                    <field name="next_mock_recall_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Approval" name="approval">
+                            <group>
+                                <field name="approved_by_user_id"/>
+                                <field name="approval_date"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_plan_list" model="ir.ui.view">
+        <field name="name">ls.recall.plan.list</field>
+        <field name="model">ls.recall.plan</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'obsolete'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="version"/>
+                <field name="scope_type"/>
+                <field name="responsible_user_id"
+                       widget="many2one_avatar_user"/>
+                <field name="next_mock_recall_date"/>
+                <field name="execution_count" optional="show"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_plan_search" model="ir.ui.view">
+        <field name="name">ls.recall.plan.search</field>
+        <field name="model">ls.recall.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="responsible_user_id"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_draft" string="Not Yet Approved"
+                        domain="[('state', 'in', ['draft', 'under_review'])]"/>
+                <separator/>
+                <filter name="filter_mock_due" string="Mock Recall Due"
+                        domain="[('next_mock_recall_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_responsible" string="Coordinator"
+                            context="{'group_by': 'responsible_user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_plan" model="ir.actions.act_window">
+        <field name="name">Recall Plans</field>
+        <field name="res_model">ls.recall.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define the first recall plan.
+            </p>
+            <p>
+                A recall plan is the approved, standing arrangement that
+                lets a recall be started promptly at any time: who
+                decides, who is informed, which products are covered and
+                how often the arrangement is rehearsed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

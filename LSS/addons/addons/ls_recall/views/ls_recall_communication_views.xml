@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_communication_form" model="ir.ui.view">
+        <field name="name">ls.recall.communication.form</field>
+        <field name="model">ls.recall.communication</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_approve" type="object"
+                            string="Approve Text" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_mark_sent" type="object"
+                            string="Record as Sent" class="oe_highlight"
+                            invisible="state != 'approved'"/>
+                    <button name="action_acknowledge" type="object"
+                            string="Record Acknowledgement"
+                            invisible="state != 'sent'"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            invisible="state in ['sent', 'acknowledged', 'cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,sent,acknowledged"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="execution_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="communication_type"
+                                   readonly="state != 'draft'"/>
+                            <field name="channel"
+                                   readonly="state != 'draft'"/>
+                            <field name="urgent"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="planned_date"/>
+                            <field name="approved_by_user_id"/>
+                            <field name="approval_date"/>
+                            <field name="sent_date"/>
+                            <field name="sent_by_user_id"/>
+                            <field name="acknowledged_date"
+                                   invisible="state != 'acknowledged'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="partner_ids" widget="many2many_tags"
+                               readonly="state not in ['draft', 'approved']"
+                               invisible="communication_type == 'public_warning'"/>
+                        <field name="recipient_count"/>
+                    </group>
+                    <notebook>
+                        <page string="Message" name="message">
+                            <group>
+                                <field name="subject"
+                                       readonly="state not in ['draft', 'approved']"/>
+                            </group>
+                            <field name="body"
+                                   readonly="state not in ['draft', 'approved']"
+                                   placeholder="Text of the communication."/>
+                        </page>
+                        <page string="Content Confirmation" name="content">
+                            <div class="alert alert-info" role="alert">
+                                Confirm that the text contains each of the
+                                elements below. These correspond to the
+                                elements listed in 21 CFR 7.49(a). All five
+                                must be confirmed before a recall notice or
+                                a field safety notice can be recorded as
+                                sent.
+                            </div>
+                            <group>
+                                <field name="content_identifies_product"/>
+                                <field name="content_states_reason"/>
+                                <field name="content_gives_instructions"/>
+                                <field name="content_requests_response"/>
+                                <field name="content_gives_contact"/>
+                                <field name="content_complete"/>
+                            </group>
+                        </page>
+                        <page string="Acknowledgement" name="ack"
+                              invisible="state != 'acknowledged'">
+                            <field name="acknowledgement_note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_communication_list" model="ir.ui.view">
+        <field name="name">ls.recall.communication.list</field>
+        <field name="model">ls.recall.communication</field>
+        <field name="arch" type="xml">
+            <list decoration-bf="urgent == True"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="execution_id"/>
+                <field name="communication_type"/>
+                <field name="channel"/>
+                <field name="subject"/>
+                <field name="recipient_count"/>
+                <field name="planned_date"/>
+                <field name="sent_date"/>
+                <field name="urgent" optional="hide"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_communication_search" model="ir.ui.view">
+        <field name="name">ls.recall.communication.search</field>
+        <field name="model">ls.recall.communication</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="execution_id"/>
+                <field name="partner_ids"/>
+                <filter name="filter_pending" string="Not Yet Sent"
+                        domain="[('state', 'in', ['draft', 'approved'])]"/>
+                <filter name="filter_sent" string="Sent"
+                        domain="[('state', 'in', ['sent', 'acknowledged'])]"/>
+                <separator/>
+                <filter name="filter_authority" string="Authority Notifications"
+                        domain="[('communication_type', '=', 'authority_notification')]"/>
+                <group>
+                    <filter name="group_execution" string="Recall"
+                            context="{'group_by': 'execution_id'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by': 'communication_type'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_communication" model="ir.actions.act_window">
+        <field name="name">Communications</field>
+        <field name="res_model">ls.recall.communication</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

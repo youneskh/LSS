@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_document_retention_policy_list" model="ir.ui.view">
+        <field name="name">ls.document.retention_policy.list</field>
+        <field name="model">ls.document.retention_policy</field>
+        <field name="arch" type="xml">
+            <list string="Retention Policies">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="duration_value"/>
+                <field name="duration_unit"/>
+                <field name="retention_trigger"/>
+                <field name="end_of_life_action"/>
+                <field name="notice_period_days"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_document_retention_policy_form" model="ir.ui.view">
+        <field name="name">ls.document.retention_policy.form</field>
+        <field name="model">ls.document.retention_policy</field>
+        <field name="arch" type="xml">
+            <form string="Retention Policy">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Policy Name"/>
+                        <h1><field name="name" placeholder="e.g. GMP batch related records"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="code"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Retention Period">
+                            <field name="duration_value"/>
+                            <field name="duration_unit"/>
+                            <field name="retention_trigger"/>
+                            <field name="notice_period_days"/>
+                            <field name="end_of_life_action"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="Regulatory basis and scope of this retention rule"/>
+                    </group>
+                    <notebook>
+                        <page string="Documents" name="documents">
+                            <field name="document_ids" readonly="1">
+                                <list string="Documents">
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                    <field name="retention_due_date"/>
+                                    <field name="retention_state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_document_retention_policy" model="ir.actions.act_window">
+        <field name="name">Retention Policies</field>
+        <field name="res_model">ls.document.retention_policy</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define your first retention policy</p>
+            <p>A retention policy determines how long a document is retained and what happens when that period elapses. No policy deletes records.</p>
+        </field>
+    </record>
+
+</odoo>

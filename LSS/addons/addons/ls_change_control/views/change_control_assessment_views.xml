@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_assessment_list" model="ir.ui.view">
+        <field name="name">ls.change_control.assessment.list</field>
+        <field name="model">ls.change_control.assessment</field>
+        <field name="arch" type="xml">
+            <list string="Impact Assessments"
+                  decoration-muted="state == 'completed'"
+                  decoration-danger="impact == 'high'">
+                <field name="request_id"/>
+                <field name="impact_area_id"/>
+                <field name="assessor_id" widget="many2one_avatar_user"/>
+                <field name="impact"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'completed'"
+                       decoration-info="state == 'draft'"/>
+                <field name="date_completed" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_assessment_form" model="ir.ui.view">
+        <field name="name">ls.change_control.assessment.form</field>
+        <field name="model">ls.change_control.assessment</field>
+        <field name="arch" type="xml">
+            <form string="Impact Assessment">
+                <header>
+                    <button name="action_complete" type="object"
+                            string="Complete Assessment" class="oe_highlight"
+                            invisible="state == 'completed' or request_state != 'impact_assessment'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="impact_area_id" options="{'no_create': True}"
+                                   readonly="state == 'completed'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="request_state" invisible="1"/>
+                            <field name="assessor_id" readonly="state == 'completed'"/>
+                        </group>
+                        <group>
+                            <field name="impact" readonly="state == 'completed'"/>
+                            <field name="date_completed" invisible="state != 'completed'"/>
+                            <field name="completed_by_id" invisible="state != 'completed'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Assessment">
+                        <field name="assessment" nolabel="1" readonly="state == 'completed'"
+                               placeholder="Describe why the change does or does not impact this area."/>
+                    </group>
+                    <group string="Actions Required">
+                        <field name="actions_required" nolabel="1" readonly="state == 'completed'"
+                               placeholder="Describe the actions to be planned before the change becomes effective."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_assessment_search" model="ir.ui.view">
+        <field name="name">ls.change_control.assessment.search</field>
+        <field name="model">ls.change_control.assessment</field>
+        <field name="arch" type="xml">
+            <search string="Impact Assessments">
+                <field name="request_id"/>
+                <field name="impact_area_id"/>
+                <field name="assessor_id"/>
+                <filter name="filter_my_assessments" string="My Assessments"
+                        domain="[('assessor_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_draft" string="To Complete"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_completed" string="Completed"
+                        domain="[('state', '=', 'completed')]"/>
+                <separator/>
+                <filter name="filter_impacting" string="With Impact"
+                        domain="[('impact', '!=', 'none')]"/>
+                                    <filter name="group_request" string="Change Request"
+                        context="{'group_by': 'request_id'}"/>
+                    <filter name="group_area" string="Impact Area"
+                        context="{'group_by': 'impact_area_id'}"/>
+                    <filter name="group_assessor" string="Assessor"
+                        context="{'group_by': 'assessor_id'}"/>
+                    <filter name="group_impact" string="Impact Level"
+                        context="{'group_by': 'impact'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_assessment" model="ir.actions.act_window">
+        <field name="name">Impact Assessments</field>
+        <field name="res_model">ls.change_control.assessment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_assessment_search"/>
+        <field name="context">{'search_default_filter_draft': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No impact assessment to display
+            </p>
+            <p>
+                Impact assessments are generated automatically when a change
+                control manager starts the impact assessment of a change
+                request.
+            </p>
+        </field>
+    </record>
+
+</odoo>

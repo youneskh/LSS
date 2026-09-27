@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Demonstration data. All companies, people and figures below are
+     fictitious and exist only to illustrate the workflow.
+-->
+<odoo>
+
+    <record id="demo_partner_api_supplier" model="res.partner">
+        <field name="name">Demo Pharma Ingredients SARL</field>
+        <field name="is_company" eval="True"/>
+        <field name="supplier_rank">1</field>
+        <field name="street">Zone Industrielle, Lot 12</field>
+        <field name="city">Blida</field>
+        <field name="email">quality@example.invalid</field>
+    </record>
+
+    <record id="demo_partner_packaging_supplier" model="res.partner">
+        <field name="name">Demo Medical Plastics SPA</field>
+        <field name="is_company" eval="True"/>
+        <field name="supplier_rank">1</field>
+        <field name="street">Rue de l'Industrie 4</field>
+        <field name="city">Oran</field>
+        <field name="email">contact@example.invalid</field>
+    </record>
+
+    <record id="demo_qualification_api" model="ls.supplier.qualification">
+        <field name="partner_id" ref="demo_partner_api_supplier"/>
+        <field name="category_id" ref="category_api_manufacturer"/>
+        <field name="registration_date" eval="(DateTime.today() - relativedelta(days=90)).strftime('%Y-%m-%d')"/>
+        <field name="state">assessment</field>
+    </record>
+
+    <record id="demo_material_api" model="ls.supplier.material">
+        <field name="qualification_id" ref="demo_qualification_api"/>
+        <field name="name">Demo Active Substance A</field>
+        <field name="material_type">api</field>
+        <field name="specification_reference">SPEC-API-A-001</field>
+        <field name="evaluated_batches">B2601, B2602, B2603</field>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="demo_assessment_api" model="ls.supplier.assessment">
+        <field name="qualification_id" ref="demo_qualification_api"/>
+        <field name="template_id" ref="assessment_template_full"/>
+        <field name="assessment_type">initial</field>
+        <field name="date" eval="(DateTime.today() - relativedelta(days=60)).strftime('%Y-%m-%d')"/>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="demo_qualification_packaging" model="ls.supplier.qualification">
+        <field name="partner_id" ref="demo_partner_packaging_supplier"/>
+        <field name="category_id" ref="category_secondary_packaging"/>
+        <field name="registration_date" eval="(DateTime.today() - relativedelta(days=200)).strftime('%Y-%m-%d')"/>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="demo_material_packaging" model="ls.supplier.material">
+        <field name="qualification_id" ref="demo_qualification_packaging"/>
+        <field name="name">Demo Folding Carton 50 x 30 x 90 mm</field>
+        <field name="material_type">secondary_packaging</field>
+        <field name="specification_reference">SPEC-PKG-C-014</field>
+        <field name="state">draft</field>
+    </record>
+
+</odoo>

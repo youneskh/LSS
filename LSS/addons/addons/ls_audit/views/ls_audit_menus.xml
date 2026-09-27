@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Navigation follows section 7.4 of the Life Sciences Suite Functional
+     Specification (Quality > Audits > ...). Because the ls_qms module is not
+     a dependency of this module, the root "Quality" menu is created here and
+     is designed to be reused, not duplicated, by later Life Sciences modules
+     through its external identifier ls_audit.menu_ls_quality_root. -->
+<odoo>
+
+    <menuitem id="menu_ls_quality_root"
+              name="Quality"
+              sequence="70"
+              web_icon="ls_audit,static/description/icon.png"
+              groups="ls_audit.group_ls_audit_auditee"/>
+
+    <menuitem id="menu_ls_audit_root"
+              name="Audits"
+              parent="menu_ls_quality_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_audit_program"
+              name="Audit Programmes"
+              parent="menu_ls_audit_root"
+              action="action_ls_audit_program"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_audit_schedule"
+              name="Audits"
+              parent="menu_ls_audit_root"
+              action="action_ls_audit_schedule"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_audit_calendar"
+              name="Audit Calendar"
+              parent="menu_ls_audit_root"
+              action="action_ls_audit_schedule_calendar"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_audit_checklist"
+              name="Checklists"
+              parent="menu_ls_audit_root"
+              action="action_ls_audit_checklist"
+              sequence="40"
+              groups="ls_audit.group_ls_audit_lead_auditor"/>
+
+    <menuitem id="menu_ls_audit_finding_root"
+              name="Findings"
+              parent="menu_ls_quality_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_audit_finding_my"
+              name="My Findings"
+              parent="menu_ls_audit_finding_root"
+              action="action_ls_audit_finding_my"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_audit_finding_all"
+              name="All Findings"
+              parent="menu_ls_audit_finding_root"
+              action="action_ls_audit_finding"
+              sequence="20"
+              groups="ls_audit.group_ls_audit_auditor"/>
+
+    <menuitem id="menu_ls_audit_report_root"
+              name="Reports"
+              parent="menu_ls_quality_root"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_audit_report"
+              name="Audit Reports"
+              parent="menu_ls_audit_report_root"
+              action="action_ls_audit_report"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_audit_response"
+              name="Checklist Responses"
+              parent="menu_ls_audit_report_root"
+              action="action_ls_audit_response"
+              sequence="20"
+              groups="ls_audit.group_ls_audit_auditor"/>
+
+    <menuitem id="menu_ls_audit_configuration"
+              name="Configuration"
+              parent="menu_ls_quality_root"
+              sequence="90"
+              groups="ls_audit.group_ls_audit_manager"/>
+
+    <menuitem id="menu_ls_audit_type"
+              name="Audit Types"
+              parent="menu_ls_audit_configuration"
+              action="action_ls_audit_type"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_audit_area"
+              name="Auditable Areas"
+              parent="menu_ls_audit_configuration"
+              action="action_ls_audit_area"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_audit_auditor"
+              name="Auditor Qualifications"
+              parent="menu_ls_audit_configuration"
+              action="action_ls_audit_auditor"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_audit_finding_category"
+              name="Finding Categories"
+              parent="menu_ls_audit_configuration"
+              action="action_ls_audit_finding_category"
+              sequence="40"/>
+
+</odoo>

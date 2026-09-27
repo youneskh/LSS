@@ -1,0 +1,6 @@
+numpy
+pandas
+scipy
+scikit-learn
+sentry_sdk>=2.0.0,<=2.22.0
+odoorpc

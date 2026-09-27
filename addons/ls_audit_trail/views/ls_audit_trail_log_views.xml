@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Audit trail entry                                            -->
+    <!-- ============================================================ -->
+
+    <record id="view_ls_audit_trail_log_list" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.list</field>
+        <field name="model">ls.audit_trail.log</field>
+        <field name="arch" type="xml">
+            <list string="Audit Trail" create="false" edit="false" delete="false"
+                  decoration-warning="entry_type == 'anchor'">
+                <field name="sequence_number"/>
+                <field name="event_datetime"/>
+                <field name="user_login"/>
+                <field name="model_name"/>
+                <field name="res_id"/>
+                <field name="res_name"/>
+                <field name="operation"/>
+                <field name="line_count"/>
+                <field name="entry_type"/>
+                <field name="remote_addr" optional="hide"/>
+                <field name="hash_current" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_log_form" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.form</field>
+        <field name="model">ls.audit_trail.log</field>
+        <field name="arch" type="xml">
+            <form string="Audit Trail Entry" create="false" edit="false" delete="false">
+                <header>
+                    <button name="action_open_audited_record"
+                            string="Open Audited Record"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="entry_type == 'anchor'"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="res_name" readonly="1" placeholder="Record"/>
+                        </h1>
+                        <h3>
+                            Chain position
+                            <field name="sequence_number" readonly="1" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Event" name="event">
+                            <field name="event_datetime" readonly="1"/>
+                            <field name="operation" readonly="1"/>
+                            <field name="entry_type" readonly="1"/>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Attribution" name="attribution">
+                            <field name="user_id" readonly="1"/>
+                            <field name="user_login" readonly="1"/>
+                            <field name="remote_addr" readonly="1"/>
+                        </group>
+                        <group string="Audited Record" name="record">
+                            <field name="model_name" readonly="1"/>
+                            <field name="model_id" readonly="1"/>
+                            <field name="res_id" readonly="1"/>
+                        </group>
+                        <group string="Integrity" name="integrity">
+                            <field name="payload_digest" readonly="1"/>
+                            <field name="hash_prev" readonly="1"/>
+                            <field name="hash_current" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Field Changes" name="changes"
+                              invisible="entry_type == 'anchor'">
+                            <field name="line_ids" readonly="1">
+                                <list create="false" edit="false" delete="false">
+                                    <field name="field_label"/>
+                                    <field name="field_name"/>
+                                    <field name="field_type"/>
+                                    <field name="old_value_display"/>
+                                    <field name="new_value_display"/>
+                                    <field name="old_value_technical" optional="hide"/>
+                                    <field name="new_value_technical" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Retention Run" name="retention"
+                              invisible="entry_type != 'anchor'">
+                            <group>
+                                <field name="purged_from_sequence" readonly="1"/>
+                                <field name="purged_to_sequence" readonly="1"/>
+                                <field name="purged_entry_count" readonly="1"/>
+                                <field name="purged_aggregate_digest" readonly="1"/>
+                            </group>
+                            <group string="Justification">
+                                <field name="purge_reason" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_log_search" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.search</field>
+        <field name="model">ls.audit_trail.log</field>
+        <field name="arch" type="xml">
+            <search string="Audit Trail">
+                <field name="res_name"/>
+                <field name="model_name"/>
+                <field name="res_id"/>
+                <field name="user_id"/>
+                <field name="user_login"/>
+                <field name="hash_current"/>
+                <field name="sequence_number"/>
+                <filter name="filter_today" string="Today"
+                        domain="[('event_datetime', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)))]"/>
+                <filter name="filter_last_7_days" string="Last 7 Days"
+                        domain="[('event_datetime', '&gt;=', (context_today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_30_days" string="Last 30 Days"
+                        domain="[('event_datetime', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_create" string="Creations"
+                        domain="[('operation', '=', 'create')]"/>
+                <filter name="filter_write" string="Modifications"
+                        domain="[('operation', '=', 'write')]"/>
+                <filter name="filter_unlink" string="Deletions"
+                        domain="[('operation', '=', 'unlink')]"/>
+                <separator/>
+                <filter name="filter_anchor" string="Retention Anchors"
+                        domain="[('entry_type', '=', 'anchor')]"/>
+                <filter name="filter_my_operations" string="My Operations"
+                        domain="[('user_id', '=', uid)]"/>
+                                    <filter name="group_model" string="Model"
+                        context="{'group_by': 'model_name'}"/>
+                    <filter name="group_user" string="User"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_operation" string="Operation"
+                        context="{'group_by': 'operation'}"/>
+                    <filter name="group_entry_type" string="Entry Type"
+                        context="{'group_by': 'entry_type'}"/>
+                    <filter name="group_date_day" string="Event Day"
+                        context="{'group_by': 'event_datetime:day'}"/>
+                    <filter name="group_date_month" string="Event Month"
+                        context="{'group_by': 'event_datetime:month'}"/>
+                    <filter name="group_company" string="Company"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_log_graph" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.graph</field>
+        <field name="model">ls.audit_trail.log</field>
+        <field name="arch" type="xml">
+            <graph string="Audit Activity" type="bar" sample="1">
+                <field name="event_datetime" interval="day" type="row"/>
+                <field name="operation" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_log_pivot" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.pivot</field>
+        <field name="model">ls.audit_trail.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Audit Activity" sample="1">
+                <field name="model_name" type="row"/>
+                <field name="operation" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_log" model="ir.actions.act_window">
+        <field name="name">Audit Log</field>
+        <field name="res_model">ls.audit_trail.log</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_audit_trail_log_search"/>
+        <field name="context">{'search_default_filter_last_30_days': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No audit entry matches the current filter.
+            </p>
+            <p>
+                Entries appear here as soon as an audit rule is active for a
+                model and a record of that model is created, modified or
+                deleted. Entries are immutable and cannot be created by hand.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_dashboard" model="ir.actions.act_window">
+        <field name="name">Audit Dashboard</field>
+        <field name="res_model">ls.audit_trail.log</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_trail_log_search"/>
+        <field name="context">{'search_default_filter_last_30_days': 1, 'search_default_group_model': 1}</field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- Audit trail field change                                     -->
+    <!-- ============================================================ -->
+
+    <record id="view_ls_audit_trail_log_line_list" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.line.list</field>
+        <field name="model">ls.audit_trail.log.line</field>
+        <field name="arch" type="xml">
+            <list string="Field Changes" create="false" edit="false" delete="false">
+                <field name="event_datetime"/>
+                <field name="sequence_number" optional="show"/>
+                <field name="model_name"/>
+                <field name="res_name"/>
+                <field name="field_label"/>
+                <field name="field_name" optional="hide"/>
+                <field name="old_value_display"/>
+                <field name="new_value_display"/>
+                <field name="user_id"/>
+                <field name="operation" optional="hide"/>
+                <field name="log_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_log_line_search" model="ir.ui.view">
+        <field name="name">ls.audit_trail.log.line.search</field>
+        <field name="model">ls.audit_trail.log.line</field>
+        <field name="arch" type="xml">
+            <search string="Field Changes">
+                <field name="field_name"/>
+                <field name="model_name"/>
+                <field name="res_name"/>
+                <field name="user_id"/>
+                <field name="old_value_display"/>
+                <field name="new_value_display"/>
+                                    <filter name="group_line_model" string="Model"
+                        context="{'group_by': 'model_name'}"/>
+                    <filter name="group_line_field" string="Field"
+                        context="{'group_by': 'field_name'}"/>
+                    <filter name="group_line_user" string="User"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_line_operation" string="Operation"
+                        context="{'group_by': 'operation'}"/>
+                    <filter name="group_line_day" string="Event Day"
+                        context="{'group_by': 'event_datetime:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_log_line" model="ir.actions.act_window">
+        <field name="name">Field Changes</field>
+        <field name="res_model">ls.audit_trail.log.line</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_ls_audit_trail_log_line_search"/>
+    </record>
+
+</odoo>

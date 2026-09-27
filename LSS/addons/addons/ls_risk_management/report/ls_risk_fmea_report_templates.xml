@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <template id="report_ls_risk_fmea_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            FMEA Worksheet
+                            <span t-field="doc.name"/>
+                        </h2>
+                        <h4>
+                            <span t-field="doc.title"/>
+                            (revision <span t-field="doc.revision"/>)
+                        </h4>
+
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><strong>FMEA Type</strong></td>
+                                    <td><span t-field="doc.fmea_type"/></td>
+                                    <td><strong>Status</strong></td>
+                                    <td><span t-field="doc.state"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Facilitator</strong></td>
+                                    <td><span t-field="doc.facilitator_id"/></td>
+                                    <td><strong>Start Date</strong></td>
+                                    <td><span t-field="doc.start_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>RPN Action Threshold</strong></td>
+                                    <td><span t-field="doc.rpn_threshold"/></td>
+                                    <td><strong>Severity Action Threshold</strong></td>
+                                    <td><span t-field="doc.severity_action_threshold"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reviewed By</strong></td>
+                                    <td><span t-field="doc.reviewed_by_id"/></td>
+                                    <td><strong>Approved By</strong></td>
+                                    <td><span t-field="doc.approved_by_id"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Scope</h4>
+                        <p t-field="doc.scope"/>
+                        <div t-if="doc.assumptions">
+                            <h4>Assumptions and Boundaries</h4>
+                            <p t-field="doc.assumptions"/>
+                        </div>
+
+                        <h4>Team</h4>
+                        <p>
+                            <span t-field="doc.facilitator_id"/>
+                            <t t-foreach="doc.team_member_ids" t-as="member">
+                                , <span t-field="member.name"/>
+                            </t>
+                        </p>
+
+                        <h4>Failure Modes</h4>
+                        <table class="table table-sm" style="font-size:8px;">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Function</th>
+                                    <th>Failure Mode</th>
+                                    <th>Effect</th>
+                                    <th>S</th>
+                                    <th>Cause</th>
+                                    <th>O</th>
+                                    <th>Controls</th>
+                                    <th>D</th>
+                                    <th>RPN</th>
+                                    <th>Recommended Action</th>
+                                    <th>Responsible</th>
+                                    <th>Actions Taken</th>
+                                    <th>Rev. RPN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.line_ids" t-as="line">
+                                    <td><span t-field="line.item"/></td>
+                                    <td><span t-field="line.item_function"/></td>
+                                    <td><span t-field="line.failure_mode"/></td>
+                                    <td><span t-field="line.failure_effect"/></td>
+                                    <td><span t-field="line.severity"/></td>
+                                    <td><span t-field="line.failure_cause"/></td>
+                                    <td><span t-field="line.occurrence"/></td>
+                                    <td><span t-field="line.current_controls"/></td>
+                                    <td><span t-field="line.detection"/></td>
+                                    <td>
+                                        <strong t-if="line.action_required" t-field="line.rpn"/>
+                                        <span t-if="not line.action_required" t-field="line.rpn"/>
+                                    </td>
+                                    <td><span t-field="line.recommended_action"/></td>
+                                    <td><span t-field="line.responsible_id"/></td>
+                                    <td><span t-field="line.actions_taken"/></td>
+                                    <td><span t-field="line.revised_rpn"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Failure Modes</strong></td>
+                                    <td><span t-field="doc.line_count"/></td>
+                                    <td><strong>Highest RPN</strong></td>
+                                    <td><span t-field="doc.max_rpn"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Requiring Action</strong></td>
+                                    <td><span t-field="doc.action_required_count"/></td>
+                                    <td><strong>Open Actions</strong></td>
+                                    <td><span t-field="doc.open_action_count"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-muted mt-4">
+                            The 1-10 rating scales and the Risk Priority Number used in
+                            this worksheet are an industry convention. They are not a
+                            requirement of ISO 14971:2019, and the action thresholds
+                            shown were defined by this organisation. This report does not
+                            constitute a claim of compliance with, or certification
+                            against, any regulatory framework.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

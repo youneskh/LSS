@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_tool_maintenance_list" model="ir.ui.view">
+        <field name="name">ls.mp.tool.maintenance.list</field>
+        <field name="model">ls.mp.tool.maintenance</field>
+        <field name="arch" type="xml">
+            <list string="Tool Maintenance"
+                  decoration-info="state == 'in_progress'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="tool_id"/>
+                <field name="maintenance_type"/>
+                <field name="date_planned"/>
+                <field name="date_start" optional="hide"/>
+                <field name="date_end" optional="show"/>
+                <field name="shot_count_at_event" optional="show"/>
+                <field name="performed_by_id"/>
+                <field name="requalification_required"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_tool_maintenance_form" model="ir.ui.view">
+        <field name="name">ls.mp.tool.maintenance.form</field>
+        <field name="model">ls.mp.tool.maintenance</field>
+        <field name="arch" type="xml">
+            <form string="Tool Maintenance">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Complete"
+                            class="btn-primary" invisible="state != 'in_progress'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('done', 'cancelled')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="tool_id" readonly="state != 'draft'"/>
+                            <field name="maintenance_type" readonly="state == 'done'"/>
+                            <field name="requalification_required" readonly="state == 'done'"/>
+                            <field name="resets_maintenance_counter" readonly="state == 'done'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Execution">
+                            <field name="date_planned" readonly="state == 'done'"/>
+                            <field name="date_start" readonly="1"/>
+                            <field name="date_end" readonly="1"/>
+                            <field name="shot_count_at_event" readonly="1"/>
+                            <field name="performed_by_id" readonly="state == 'done'"/>
+                            <field name="external_provider_id" readonly="state == 'done'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Findings and Actions" name="findings">
+                            <separator string="Findings"/>
+                            <field name="findings" readonly="state == 'done'"
+                                   placeholder="Condition of the tool as found"/>
+                            <separator string="Actions Taken"/>
+                            <field name="actions_taken" readonly="state == 'done'"
+                                   placeholder="Work carried out on the tool"/>
+                        </page>
+                        <page string="Cavities Affected" name="cavities">
+                            <field name="cavity_ids" widget="many2many_tags"
+                                   readonly="state == 'done'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_tool_maintenance_search" model="ir.ui.view">
+        <field name="name">ls.mp.tool.maintenance.search</field>
+        <field name="model">ls.mp.tool.maintenance</field>
+        <field name="arch" type="xml">
+            <search string="Tool Maintenance">
+                <field name="name"/>
+                <field name="tool_id"/>
+                <field name="performed_by_id"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('draft', 'in_progress'))]"/>
+                <filter name="filter_done" string="Completed" domain="[('state', '=', 'done')]"/>
+                <filter name="filter_requalification" string="Requalification Required"
+                        domain="[('requalification_required', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_tool" string="Tool" context="{'group_by': 'tool_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'maintenance_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_date" string="Planned Date" context="{'group_by': 'date_planned'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mp_tool_maintenance" model="ir.actions.act_window">
+        <field name="name">Tool Maintenance</field>
+        <field name="res_model">ls.mp.tool.maintenance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_tool_maintenance_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a maintenance intervention</p>
+            <p>Completing a preventive intervention resets the shots-since-maintenance
+               baseline of the tool. Interventions flagged as requiring requalification
+               place the tool in quarantine until it is requalified.</p>
+        </field>
+    </record>
+
+</odoo>

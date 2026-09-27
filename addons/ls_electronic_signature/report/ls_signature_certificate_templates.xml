@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <template id="report_signature_certificate_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Electronic Signature Certificate</h2>
+                <h4><span t-field="doc.name"/></h4>
+
+                <h5 class="mt-4">Signature Manifestation (21 CFR 11.50)</h5>
+                <table class="table table-sm">
+                    <tr>
+                        <th style="width:35%;">Printed name of the signer</th>
+                        <td><span t-field="doc.signer_name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Identification code</th>
+                        <td><span t-field="doc.signer_login"/></td>
+                    </tr>
+                    <tr>
+                        <th>Date and time of execution (UTC)</th>
+                        <td><span t-field="doc.signed_at"/></td>
+                    </tr>
+                    <tr>
+                        <th>Meaning of the signature</th>
+                        <td><span t-field="doc.meaning_name"/> (<span t-field="doc.meaning_code"/>)</td>
+                    </tr>
+                    <tr t-if="doc.reason">
+                        <th>Reason recorded</th>
+                        <td><span t-field="doc.reason"/></td>
+                    </tr>
+                </table>
+
+                <h5 class="mt-4">Signed Record (21 CFR 11.70)</h5>
+                <table class="table table-sm">
+                    <tr>
+                        <th style="width:35%;">Model</th>
+                        <td><span t-field="doc.res_model_name"/> (<span t-field="doc.res_model"/>)</td>
+                    </tr>
+                    <tr>
+                        <th>Record</th>
+                        <td><span t-field="doc.res_name"/> (id <span t-field="doc.res_id"/>)</td>
+                    </tr>
+                    <tr>
+                        <th>Signature covers current content</th>
+                        <td>
+                            <span t-if="doc.is_current">Yes</span>
+                            <span t-else="">No, the record changed after signing</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <h5 class="mt-4">Integrity Evidence</h5>
+                <table class="table table-sm" style="font-size:10px; word-break:break-all;">
+                    <tr>
+                        <th style="width:35%;">Digest algorithm</th>
+                        <td><span t-field="doc.hash_algorithm"/></td>
+                    </tr>
+                    <tr>
+                        <th>Chain sequence</th>
+                        <td><span t-field="doc.chain_sequence"/></td>
+                    </tr>
+                    <tr>
+                        <th>Previous chain hash</th>
+                        <td><span t-field="doc.previous_hash"/></td>
+                    </tr>
+                    <tr>
+                        <th>Record hash</th>
+                        <td><span t-field="doc.record_hash"/></td>
+                    </tr>
+                    <tr>
+                        <th>Chain hash</th>
+                        <td><span t-field="doc.chain_hash"/></td>
+                    </tr>
+                    <tr>
+                        <th>Components presented</th>
+                        <td><span t-field="doc.authentication_method"/></td>
+                    </tr>
+                </table>
+
+                <h5 class="mt-4">Signed Payload</h5>
+                <pre style="font-size:8px; white-space:pre-wrap; word-break:break-all;"
+                     t-out="doc.payload_json"/>
+
+                <p class="mt-4" style="font-size:9px;">
+                    This certificate reproduces a record of the electronic signature log.
+                    The log is append only. It does not by itself establish compliance with
+                    any regulation; compliance depends on the organisation's procedures,
+                    validation and training.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_signature_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_electronic_signature.report_signature_certificate_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

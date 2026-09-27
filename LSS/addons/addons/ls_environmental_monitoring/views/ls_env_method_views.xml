@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_method_list" model="ir.ui.view">
+            <field name="name">ls.env.method.list</field>
+            <field name="model">ls.env.method</field>
+            <field name="arch" type="xml">
+                <list string="Methods">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="parameter_id"/>
+                    <field name="media_type"/>
+                    <field name="exposure_duration_minutes"/>
+                    <field name="reference_document"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_method_form" model="ir.ui.view">
+            <field name="name">ls.env.method.form</field>
+            <field name="model">ls.env.method</field>
+            <field name="arch" type="xml">
+                <form string="Method">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Method name"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="parameter_id"/>
+                                <field name="reference_document"/>
+                                <field name="active" widget="boolean_toggle"/>
+                            </group>
+                            <group>
+                                <field name="media_type"/>
+                                <field name="exposure_duration_minutes"/>
+                                <field name="sample_volume"/>
+                                <field name="sample_volume_uom_label"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group string="Incubation Conditions">
+                            <field name="incubation_conditions" nolabel="1"/>
+                        </group>
+                        <group string="Description">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ls_env_method" model="ir.actions.act_window">
+            <field name="name">Methods</field>
+            <field name="res_model">ls.env.method</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Define a sampling or test method</p>
+                <p>Recording the method against each result keeps the result attributable to a defined procedure.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

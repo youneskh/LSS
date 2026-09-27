@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_oot_list" model="ir.ui.view">
+        <field name="name">ls.calibration.oot.list</field>
+        <field name="model">ls.calibration.oot</field>
+        <field name="arch" type="xml">
+            <list string="Out-of-Tolerance Events"
+                  decoration-danger="product_impact == 'confirmed'"
+                  decoration-warning="product_impact == 'potential'"
+                  decoration-muted="state == 'closed'">
+                <field name="name"/>
+                <field name="instrument_id"/>
+                <field name="criticality" optional="show"/>
+                <field name="record_id"/>
+                <field name="detection_date"/>
+                <field name="affected_period_start" optional="show"/>
+                <field name="affected_period_end" optional="hide"/>
+                <field name="product_impact" widget="badge"
+                       decoration-danger="product_impact == 'confirmed'"
+                       decoration-warning="product_impact == 'potential'"
+                       decoration-success="product_impact == 'none'"/>
+                <field name="disposition" optional="show"/>
+                <field name="capa_reference" optional="show"/>
+                <field name="responsible_user_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-danger="state == 'open'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_oot_form" model="ir.ui.view">
+        <field name="name">ls.calibration.oot.form</field>
+        <field name="model">ls.calibration.oot</field>
+        <field name="arch" type="xml">
+            <form string="Out-of-Tolerance Event">
+                <header>
+                    <button name="action_start_assessment" type="object"
+                            string="Start Assessment" class="oe_highlight"
+                            invisible="state != 'open'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_complete_assessment" type="object"
+                            string="Complete Assessment" class="oe_highlight"
+                            invisible="state != 'under_assessment'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="oe_highlight" invisible="state != 'assessed'"
+                            groups="ls_calibration.group_ls_calibration_manager"/>
+                    <button name="action_open_record" type="object"
+                            string="Open Calibration Record"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="open,under_assessment,assessed,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="product_impact != 'confirmed'">
+                        A confirmed product impact has been recorded. A corrective action
+                        reference is required before this event can be closed.
+                    </div>
+                    <group>
+                        <group string="Finding">
+                            <field name="record_id" readonly="state != 'open'"/>
+                            <field name="instrument_id" readonly="1"/>
+                            <field name="criticality" readonly="1"/>
+                            <field name="detection_date" readonly="state != 'open'"/>
+                            <field name="responsible_user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Affected Period">
+                            <field name="affected_period_start"
+                                   readonly="state not in ('open', 'under_assessment')"/>
+                            <field name="affected_period_end"
+                                   readonly="state not in ('open', 'under_assessment')"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Assessment Sign-Off">
+                            <field name="assessed_by_user_id" readonly="1"/>
+                            <field name="assessed_date" readonly="1"/>
+                        </group>
+                        <group string="Closure Sign-Off">
+                            <field name="closed_by_user_id" readonly="1"/>
+                            <field name="closed_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"
+                                   readonly="state not in ('open', 'under_assessment')"
+                                   placeholder="Nature and magnitude of the out-of-tolerance condition."/>
+                        </page>
+                        <page string="Impact Assessment" name="assessment">
+                            <group>
+                                <field name="product_impact"
+                                       readonly="state not in ('open', 'under_assessment')"/>
+                            </group>
+                            <separator string="Assessment"/>
+                            <field name="impact_assessment" nolabel="1"
+                                   readonly="state not in ('open', 'under_assessment')"
+                                   placeholder="Consequence of the out-of-tolerance condition on product, process and data generated during the affected period."/>
+                            <separator string="Affected Batches or Data Sets"/>
+                            <field name="affected_batches" nolabel="1"
+                                   readonly="state not in ('open', 'under_assessment')"
+                                   placeholder="Identification of the batches, lots or data sets generated during the affected period."/>
+                        </page>
+                        <page string="Disposition" name="disposition">
+                            <group>
+                                <field name="disposition"
+                                       readonly="state not in ('open', 'under_assessment')"/>
+                                <field name="capa_reference"
+                                       readonly="state == 'closed'"/>
+                            </group>
+                            <separator string="Justification"/>
+                            <field name="disposition_justification" nolabel="1"
+                                   readonly="state not in ('open', 'under_assessment')"
+                                   placeholder="Rationale supporting the disposition decision."/>
+                            <p class="text-muted">
+                                The corrective action reference is recorded as text. This module
+                                declares no dependency on a CAPA application.
+                            </p>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_oot_search" model="ir.ui.view">
+        <field name="name">ls.calibration.oot.search</field>
+        <field name="model">ls.calibration.oot</field>
+        <field name="arch" type="xml">
+            <search string="Out-of-Tolerance Events">
+                <field name="name"/>
+                <field name="instrument_id"/>
+                <field name="record_id"/>
+                <field name="capa_reference"/>
+                <field name="responsible_user_id"/>
+                <filter name="filter_open" string="Not Closed"
+                        domain="[('state', '!=', 'closed')]"/>
+                <filter name="filter_new" string="Open" domain="[('state', '=', 'open')]"/>
+                <filter name="filter_assessed" string="Assessed"
+                        domain="[('state', '=', 'assessed')]"/>
+                <separator/>
+                <filter name="filter_impact" string="Product Impact"
+                        domain="[('product_impact', 'in', ('potential', 'confirmed'))]"/>
+                <filter name="filter_critical" string="Critical Instrument"
+                        domain="[('criticality', '=', 'critical')]"/>
+                <separator/>
+                <filter name="filter_mine" string="My Events"
+                        domain="[('responsible_user_id', '=', uid)]"/>
+                                    <filter name="group_instrument" string="Instrument"
+                        context="{'group_by': 'instrument_id'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_impact" string="Product Impact"
+                        context="{'group_by': 'product_impact'}"/>
+                    <filter name="group_disposition" string="Disposition"
+                        context="{'group_by': 'disposition'}"/>
+                    <filter name="group_detection" string="Detection Month"
+                        context="{'group_by': 'detection_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_oot" model="ir.actions.act_window">
+        <field name="name">Out-of-Tolerance Events</field>
+        <field name="res_model">ls.calibration.oot</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_oot_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No out-of-tolerance event is open</p>
+            <p>
+                An out-of-tolerance event is raised when an instrument is found outside
+                its acceptance limits, so that the impact on measurements taken since
+                the previous calibration can be assessed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

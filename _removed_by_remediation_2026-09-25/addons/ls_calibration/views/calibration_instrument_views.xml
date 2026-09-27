@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_instrument_list" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.list</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <list string="Instruments"
+                  decoration-danger="calibration_status == 'overdue'"
+                  decoration-warning="calibration_status == 'due_soon'"
+                  decoration-muted="state in ('retired', 'out_of_service')">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="serial_number" optional="show"/>
+                <field name="location" optional="show"/>
+                <field name="criticality"/>
+                <field name="is_gxp_critical" optional="hide"/>
+                <field name="last_calibration_date"/>
+                <field name="next_due_date"/>
+                <field name="calibration_status" widget="badge"
+                       decoration-danger="calibration_status == 'overdue'"
+                       decoration-warning="calibration_status == 'due_soon'"
+                       decoration-success="calibration_status == 'ok'"/>
+                <field name="state" widget="badge"/>
+                <field name="responsible_user_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_instrument_form" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.form</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <form string="Instrument">
+                <header>
+                    <button name="action_place_in_service"
+                            type="object"
+                            string="Place in Service"
+                            class="oe_highlight"
+                            invisible="state not in ('draft', 'quarantined', 'out_of_service')"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_quarantine"
+                            type="object"
+                            string="Quarantine"
+                            invisible="state != 'in_service'"
+                            groups="ls_calibration.group_ls_calibration_technician"/>
+                    <button name="action_take_out_of_service"
+                            type="object"
+                            string="Take Out of Service"
+                            invisible="state not in ('in_service', 'quarantined')"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_retire"
+                            type="object"
+                            string="Retire"
+                            invisible="state == 'retired'"
+                            groups="ls_calibration.group_ls_calibration_manager"
+                            confirm="Retiring an instrument archives it and prevents any further calibration. Continue?"/>
+                    <button name="action_reset_to_draft"
+                            type="object"
+                            string="Reset to Draft"
+                            invisible="state == 'draft'"
+                            groups="ls_calibration.group_ls_calibration_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_service,out_of_service,retired"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_points" type="object"
+                                class="oe_stat_button" icon="fa-crosshairs">
+                            <field name="point_count" widget="statinfo" string="Points"/>
+                        </button>
+                        <button name="action_open_plans" type="object"
+                                class="oe_stat_button" icon="fa-calendar">
+                            <field name="plan_count" widget="statinfo" string="Plans"/>
+                        </button>
+                        <button name="action_open_records" type="object"
+                                class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="record_count" widget="statinfo" string="Calibrations"/>
+                        </button>
+                        <button name="action_open_certificates" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="certificate_count" widget="statinfo" string="Certificates"/>
+                        </button>
+                        <button name="action_open_oot" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="oot_count" widget="statinfo" string="OOT Events"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Retired" bg_color="text-bg-danger"
+                            invisible="state != 'retired'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Analytical balance, laboratory 2"/></h1>
+                        <h2><field name="code" readonly="1"/></h2>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="open_oot_count == 0">
+                        This instrument has <field name="open_oot_count" readonly="1" class="oe_inline"/>
+                        open out-of-tolerance event(s) awaiting assessment.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="category_id"/>
+                            <field name="manufacturer"/>
+                            <field name="model_reference"/>
+                            <field name="serial_number"/>
+                            <field name="asset_tag"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group string="Assignment">
+                            <field name="location"/>
+                            <field name="responsible_user_id"/>
+                            <field name="commissioning_date"/>
+                            <field name="retirement_date" invisible="state != 'retired'"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Classification">
+                            <field name="criticality"/>
+                            <field name="is_gxp_critical"/>
+                            <field name="requires_oot_assessment"/>
+                        </group>
+                        <group string="Calibration Interval">
+                            <label for="calibration_interval_value"/>
+                            <div class="o_row">
+                                <field name="calibration_interval_value"/>
+                                <field name="calibration_interval_uom"/>
+                            </div>
+                            <field name="due_soon_threshold_days"/>
+                            <field name="last_calibration_date" readonly="1"/>
+                            <field name="next_due_date" readonly="1"/>
+                            <field name="calibration_status" readonly="1" widget="badge"/>
+                            <field name="days_to_due" readonly="1"/>
+                            <field name="last_record_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Quarantine" invisible="state != 'quarantined'">
+                        <field name="quarantine_reason" nolabel="1"
+                               placeholder="Reason the instrument is withdrawn from use."/>
+                    </group>
+                    <notebook>
+                        <page string="Calibration Points" name="points">
+                            <field name="point_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="nominal_value"/>
+                                    <field name="unit_label" readonly="1"/>
+                                    <field name="tolerance_type"/>
+                                    <field name="tolerance_value"/>
+                                    <field name="tolerance_absolute" readonly="1"/>
+                                    <field name="lower_limit" readonly="1"/>
+                                    <field name="upper_limit" readonly="1"/>
+                                    <field name="active" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Metrology" name="metrology">
+                            <group>
+                                <group string="Measuring Range">
+                                    <field name="unit_label"/>
+                                    <field name="range_min"/>
+                                    <field name="range_max"/>
+                                    <field name="span" readonly="1"/>
+                                </group>
+                                <group string="Performance">
+                                    <field name="resolution"/>
+                                    <field name="accuracy_class"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"
+                                   placeholder="Intended use, installation details and any handling precaution."/>
+                        </page>
+                        <page string="Integration" name="integration">
+                            <group>
+                                <field name="external_equipment_reference"/>
+                            </group>
+                            <p class="text-muted">
+                                This module declares no dependency on a maintenance or asset
+                                management application. Use this reference to correlate the
+                                instrument with the same physical asset held elsewhere.
+                            </p>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_instrument_search" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.search</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <search string="Instruments">
+                <field name="name" string="Instrument"
+                       filter_domain="['|', '|', ('name', 'ilike', self), ('code', 'ilike', self), ('serial_number', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="serial_number"/>
+                <field name="category_id"/>
+                <field name="responsible_user_id"/>
+                <field name="location"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('calibration_status', '=', 'overdue')]"/>
+                <filter name="filter_due_soon" string="Due Soon"
+                        domain="[('calibration_status', '=', 'due_soon')]"/>
+                <filter name="filter_never" string="Never Calibrated"
+                        domain="[('calibration_status', '=', 'never')]"/>
+                <separator/>
+                <filter name="filter_gxp" string="GxP Critical"
+                        domain="[('is_gxp_critical', '=', True)]"/>
+                <filter name="filter_critical" string="Criticality: Critical"
+                        domain="[('criticality', '=', 'critical')]"/>
+                <separator/>
+                <filter name="filter_in_service" string="In Service"
+                        domain="[('state', '=', 'in_service')]"/>
+                <filter name="filter_quarantined" string="Quarantined"
+                        domain="[('state', '=', 'quarantined')]"/>
+                <separator/>
+                <filter name="filter_my" string="My Instruments"
+                        domain="[('responsible_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_category" string="Category"
+                        context="{'group_by': 'category_id'}"/>
+                    <filter name="group_status" string="Calibration Status"
+                        context="{'group_by': 'calibration_status'}"/>
+                    <filter name="group_state" string="Lifecycle Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_criticality" string="Criticality"
+                        context="{'group_by': 'criticality'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                        context="{'group_by': 'responsible_user_id'}"/>
+                    <filter name="group_due" string="Next Due Month"
+                        context="{'group_by': 'next_due_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_instrument" model="ir.actions.act_window">
+        <field name="name">Instruments</field>
+        <field name="res_model">ls.calibration.instrument</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_instrument_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a measuring instrument</p>
+            <p>
+                The instrument register is the master list of every item of
+                measuring equipment whose accuracy is controlled. Define at
+                least one calibration point before placing an instrument in
+                service.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_instrument_due" model="ir.actions.act_window">
+        <field name="name">Calibration Status</field>
+        <field name="res_model">ls.calibration.instrument</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_instrument_search"/>
+        <field name="domain">[('state', 'in', ('in_service', 'quarantined'))]</field>
+        <field name="context">{'search_default_filter_overdue': 1, 'search_default_filter_due_soon': 1, 'search_default_group_status': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No calibration is due</p>
+            <p>Instruments that are overdue or approaching their due date appear here.</p>
+        </field>
+    </record>
+
+</odoo>

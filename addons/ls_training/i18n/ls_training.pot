@@ -1,0 +1,1328 @@
+# Translation template for the ls_training Odoo module.
+# Copyright 2026 Life Sciences Suite Architecture Team
+# This file is distributed under the AGPL-3.0 licence.
+#
+# IMPORTANT: this template was produced by a helper extraction
+# script, NOT by Odoo's --i18n-export. It has not been verified
+# against a running Odoo 19 instance. Regenerate it with:
+#   odoo-bin --i18n-export=ls_training.pot \
+#            --modules=ls_training -d <database>
+# before starting translation work.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#: models/hr_employee.py:13
+#: views/ls_training_certification_views.xml:14
+#: views/ls_training_certification_views.xml:118
+msgid "Training Certifications"
+msgstr ""
+
+#: models/hr_employee.py:18
+#: models/ls_training_course.py:156
+#: models/ls_training_session.py:117
+msgid "Certification Count"
+msgstr ""
+
+#: models/hr_employee.py:22
+#: views/ls_training_attendance_views.xml:12
+#: views/ls_training_attendance_views.xml:31
+#: views/ls_training_attendance_views.xml:64
+#: views/ls_training_attendance_views.xml:92
+msgid "Training Attendance"
+msgstr ""
+
+#: models/hr_employee.py:27
+#: views/hr_employee_views.xml:53
+#: views/ls_training_competency_assessment_views.xml:13
+#: views/ls_training_competency_assessment_views.xml:82
+#: views/ls_training_competency_assessment_views.xml:115
+#: views/ls_training_menus.xml:49
+msgid "Competency Assessments"
+msgstr ""
+
+#: models/hr_employee.py:32
+msgid "Mandatory Courses"
+msgstr ""
+
+#: models/hr_employee.py:36
+msgid "Compliant Courses"
+msgstr ""
+
+#: models/hr_employee.py:40
+msgid "Training Compliance (%)"
+msgstr ""
+
+#: models/hr_employee.py:40
+msgid "Share of mandatory courses for which the employee holds a valid, non-expired certification."
+msgstr ""
+
+#: models/hr_employee.py:115
+msgid "Applicable Training Requirements"
+msgstr ""
+
+#: models/ls_training_attendance.py:22
+#: wizards/ls_training_session_register_wizard.py:20
+msgid "Session"
+msgstr ""
+
+#: models/ls_training_attendance.py:29
+#: models/ls_training_certification.py:36
+#: models/ls_training_competency_assessment.py:32
+#: wizards/ls_training_matrix_wizard.py:31
+#: views/ls_training_attendance_views.xml:79
+#: views/ls_training_certification_views.xml:142
+msgid "Employee"
+msgstr ""
+
+#: models/ls_training_attendance.py:36
+#: models/ls_training_certification.py:44
+#: models/ls_training_session.py:30
+#: wizards/ls_training_matrix_wizard.py:50
+#: views/ls_training_attendance_views.xml:81
+#: views/ls_training_certification_views.xml:144
+msgid "Course"
+msgstr ""
+
+#: models/ls_training_attendance.py:43
+#: models/ls_training_certification.py:60
+#: models/ls_training_competency.py:40
+#: models/ls_training_competency_assessment.py:55
+#: models/ls_training_course.py:49
+#: models/ls_training_requirement.py:29
+msgid "Company"
+msgstr ""
+
+#: models/ls_training_attendance.py:50
+msgid "Session Status"
+msgstr ""
+
+#: models/ls_training_attendance.py:55
+msgid "Session Start"
+msgstr ""
+
+#: models/ls_training_attendance.py:60
+msgid "Attended"
+msgstr ""
+
+#: models/ls_training_attendance.py:60
+msgid "Tick once the employee's presence has been verified."
+msgstr ""
+
+#: models/ls_training_attendance.py:65
+#: models/ls_training_certification.py:91
+msgid "Assessment Score (%)"
+msgstr ""
+
+#: models/ls_training_attendance.py:69
+msgid "Assessment Required"
+msgstr ""
+
+#: models/ls_training_attendance.py:73
+#: models/ls_training_course.py:130
+msgid "Pass Score (%)"
+msgstr ""
+
+#: models/ls_training_attendance.py:77
+#: views/ls_training_attendance_views.xml:73
+msgid "Pending"
+msgstr ""
+
+#: models/ls_training_attendance.py:77
+#: models/ls_training_session.py:102
+#: views/ls_training_attendance_views.xml:69
+msgid "Passed"
+msgstr ""
+
+#: models/ls_training_attendance.py:77
+#: models/ls_training_session.py:107
+#: views/ls_training_attendance_views.xml:71
+msgid "Failed"
+msgstr ""
+
+#: models/ls_training_attendance.py:77
+#: views/ls_training_attendance_views.xml:83
+msgid "Result"
+msgstr ""
+
+#: models/ls_training_attendance.py:88
+#: views/ls_training_attendance_views.xml:52
+msgid "Trainer Comment"
+msgstr ""
+
+#: models/ls_training_attendance.py:138
+msgid "The score of attendance '%s' must be between 0 and 100."
+msgstr ""
+
+#: models/ls_training_attendance.py:150
+msgid "Employee '%s' belongs to company '%s' and cannot attend a session of company '%s'."
+msgstr ""
+
+#: models/ls_training_attendance.py:166
+#: wizards/ls_training_session_register_wizard.py:121
+msgid "Session '%s' is %s; no attendee can be added."
+msgstr ""
+
+#: models/ls_training_attendance.py:191
+msgid "Attendance '%s' belongs to a closed session and cannot be deleted."
+msgstr ""
+
+#: models/ls_training_attendance.py:180
+msgid "Session '%s' is closed. Attendance evidence can no longer be modified."
+msgstr ""
+
+#: models/ls_training_certification.py:28
+#: models/ls_training_session.py:22
+msgid "Reference"
+msgstr ""
+
+#: models/ls_training_certification.py:52
+msgid "Source Session"
+msgstr ""
+
+#: models/ls_training_certification.py:52
+msgid "Session that issued this certification. Empty when the certification records externally delivered training."
+msgstr ""
+
+#: models/ls_training_certification.py:67
+msgid "Course Version"
+msgstr ""
+
+#: models/ls_training_certification.py:67
+msgid "Version of the course material at the time of certification. Frozen on creation so that later course revisions do not alter historical evidence."
+msgstr ""
+
+#: models/ls_training_certification.py:74
+#: wizards/ls_training_matrix_wizard.py:70
+msgid "Granted On"
+msgstr ""
+
+#: models/ls_training_certification.py:81
+#: wizards/ls_training_matrix_wizard.py:73
+msgid "Expires On"
+msgstr ""
+
+#: models/ls_training_certification.py:81
+msgid "Computed from the course validity period. It can be overridden for externally issued certifications."
+msgstr ""
+
+#: models/ls_training_certification.py:95
+#: models/ls_training_certification.py:105
+#: wizards/ls_training_matrix_wizard.py:76
+#: views/ls_training_certification_views.xml:49
+#: views/ls_training_certification_views.xml:130
+msgid "Revoked"
+msgstr ""
+
+#: models/ls_training_certification.py:101
+msgid "Revocation Reason"
+msgstr ""
+
+#: models/ls_training_certification.py:105
+#: wizards/ls_training_matrix_wizard.py:76
+#: views/ls_training_certification_views.xml:124
+#: wizards/ls_training_matrix_wizard_views.xml:90
+msgid "Valid"
+msgstr ""
+
+#: models/ls_training_certification.py:105
+#: wizards/ls_training_matrix_wizard.py:76
+#: views/ls_training_certification_views.xml:126
+#: wizards/ls_training_matrix_wizard_views.xml:88
+msgid "Expiring Soon"
+msgstr ""
+
+#: models/ls_training_certification.py:105
+#: wizards/ls_training_matrix_wizard.py:76
+#: views/ls_training_certification_views.xml:128
+msgid "Expired"
+msgstr ""
+
+#: models/ls_training_certification.py:105
+#: models/ls_training_competency_assessment.py:95
+#: models/ls_training_course.py:56
+#: models/ls_training_session.py:46
+#: wizards/ls_training_matrix_wizard.py:76
+#: views/ls_training_certification_views.xml:146
+msgid "Status"
+msgstr ""
+
+#: models/ls_training_certification.py:118
+msgid "Days To Expiry"
+msgstr ""
+
+#: models/ls_training_certification.py:122
+msgid "Competencies Granted"
+msgstr ""
+
+#: models/ls_training_certification.py:292
+msgid "Training certifications are retained as quality evidence and cannot be deleted. Revoke the certification instead."
+msgstr ""
+
+#: models/ls_training_certification.py:306
+#: views/ls_training_certification_views.xml:96
+msgid "Revoke Certification"
+msgstr ""
+
+#: models/ls_training_certification.py:33
+#: models/ls_training_certification.py:274
+#: models/ls_training_certification.py:280
+#: models/ls_training_course.py:33
+#: models/ls_training_course.py:267
+#: models/ls_training_course.py:273
+msgid "New"
+msgstr ""
+
+#: models/ls_training_certification.py:301
+msgid "Certification '%s' is already revoked."
+msgstr ""
+
+#: models/ls_training_certification.py:222
+msgid "Certification '%s' expires before it was granted."
+msgstr ""
+
+#: models/ls_training_certification.py:232
+msgid "The score of certification '%s' must be between 0 and 100."
+msgstr ""
+
+#: models/ls_training_certification.py:243
+msgid "Certification '%s' cannot be revoked without a documented reason."
+msgstr ""
+
+#: models/ls_training_certification.py:327
+msgid "Enter the reason before revoking certification '%s'."
+msgstr ""
+
+#: models/ls_training_competency.py:21
+#: models/ls_training_competency_assessment.py:40
+#: views/ls_training_competency_assessment_views.xml:105
+#: views/ls_training_competency_views.xml:26
+#: views/ls_training_competency_views.xml:39
+#: views/ls_training_competency_views.xml:80
+msgid "Competency"
+msgstr ""
+
+#: models/ls_training_competency.py:27
+msgid "Code"
+msgstr ""
+
+#: models/ls_training_competency.py:27
+msgid "Short unique identifier used in the training matrix and in printed training records."
+msgstr ""
+
+#: models/ls_training_competency.py:34
+#: models/ls_training_course.py:45
+#: models/ls_training_requirement.py:36
+msgid "Active"
+msgstr ""
+
+#: models/ls_training_competency.py:34
+msgid "Archived competencies remain linked to historical assessments but can no longer be selected on new records."
+msgstr ""
+
+#: models/ls_training_competency.py:47
+#: views/ls_training_competency_views.xml:54
+msgid "Description"
+msgstr ""
+
+#: models/ls_training_competency.py:51
+#: models/ls_training_competency_assessment.py:76
+msgid "Developing"
+msgstr ""
+
+#: models/ls_training_competency.py:51
+#: models/ls_training_competency_assessment.py:76
+msgid "Proficient"
+msgstr ""
+
+#: models/ls_training_competency.py:51
+#: models/ls_training_competency_assessment.py:76
+msgid "Expert"
+msgstr ""
+
+#: models/ls_training_competency.py:51
+msgid "Minimum Acceptable Level"
+msgstr ""
+
+#: models/ls_training_competency.py:51
+msgid "Assessment level at or above which the employee is considered to hold this competency."
+msgstr ""
+
+#: models/ls_training_competency.py:63
+msgid "Reassessment Interval (Months)"
+msgstr ""
+
+#: models/ls_training_competency.py:63
+msgid "Number of months after which the competency must be reassessed. Zero means no periodic reassessment."
+msgstr ""
+
+#: models/ls_training_competency.py:69
+#: views/ls_training_competency_views.xml:58
+msgid "Granting Courses"
+msgstr ""
+
+#: models/ls_training_competency.py:76
+#: views/ls_training_competency_views.xml:32
+msgid "Assessments"
+msgstr ""
+
+#: models/ls_training_competency.py:81
+msgid "Assessment Count"
+msgstr ""
+
+#: models/ls_training_competency.py:114
+msgid "The reassessment interval of competency '%s' cannot be negative."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:48
+msgid "Assessor"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:62
+msgid "Assessment Date"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:69
+msgid "Next Assessment"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:76
+msgid "Not Demonstrated"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:76
+msgid "Demonstrated Level"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:88
+msgid "Competency Acquired"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:88
+msgid "True when the demonstrated level reaches the minimum acceptable level defined on the competency."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:95
+#: models/ls_training_course.py:56
+#: models/ls_training_session.py:46
+#: views/ls_training_competency_assessment_views.xml:92
+#: views/ls_training_course_views.xml:146
+msgid "Draft"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:95
+#: models/ls_training_session.py:46
+#: views/ls_training_competency_assessment_views.xml:94
+msgid "Confirmed"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:107
+#: views/ls_training_competency_assessment_views.xml:66
+msgid "Assessment Evidence"
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:107
+msgid "Description of what was observed or reviewed to support the level awarded."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:159
+msgid "Employee '%s' cannot assess their own competency."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:171
+msgid "The next assessment date of '%s' precedes the assessment date."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:201
+msgid "Assessment '%s' is confirmed and cannot be deleted."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:211
+msgid "Assessment '%s' is already confirmed."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:216
+msgid "Assessment '%s' cannot be confirmed without recorded evidence."
+msgstr ""
+
+#: models/ls_training_competency_assessment.py:190
+msgid "Assessment '%s' is confirmed and can no longer be modified."
+msgstr ""
+
+#: models/ls_training_course.py:22
+msgid "Course Title"
+msgstr ""
+
+#: models/ls_training_course.py:29
+msgid "Course Code"
+msgstr ""
+
+#: models/ls_training_course.py:29
+msgid "Unique course identifier. Generated from the sequence 'ls.training.course' when left to its default value."
+msgstr ""
+
+#: models/ls_training_course.py:38
+msgid "Version"
+msgstr ""
+
+#: models/ls_training_course.py:38
+msgid "Version of the training material this course record describes."
+msgstr ""
+
+#: models/ls_training_course.py:56
+#: views/ls_training_course_views.xml:148
+msgid "Under Review"
+msgstr ""
+
+#: models/ls_training_course.py:56
+#: views/ls_training_course_views.xml:144
+msgid "Approved"
+msgstr ""
+
+#: models/ls_training_course.py:56
+#: views/ls_training_course_views.xml:72
+msgid "Obsolete"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Induction"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "GMP / GxP"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Procedure / SOP"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Technical"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Health and Safety"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Quality System"
+msgstr ""
+
+#: models/ls_training_course.py:70
+msgid "Regulatory"
+msgstr ""
+
+#: models/ls_training_course.py:70
+#: views/ls_training_course_views.xml:160
+msgid "Course Type"
+msgstr ""
+
+#: models/ls_training_course.py:85
+msgid "Classroom"
+msgstr ""
+
+#: models/ls_training_course.py:85
+msgid "On-the-Job"
+msgstr ""
+
+#: models/ls_training_course.py:85
+msgid "Self-Study"
+msgstr ""
+
+#: models/ls_training_course.py:85
+msgid "External e-Learning"
+msgstr ""
+
+#: models/ls_training_course.py:85
+#: views/ls_training_course_views.xml:162
+msgid "Delivery Mode"
+msgstr ""
+
+#: models/ls_training_course.py:97
+msgid "e-Learning URL"
+msgstr ""
+
+#: models/ls_training_course.py:97
+msgid "Address of the external e-Learning course. Only used when the delivery mode is 'External e-Learning'."
+msgstr ""
+
+#: models/ls_training_course.py:102
+msgid "Course Content"
+msgstr ""
+
+#: models/ls_training_course.py:106
+msgid "Learning Objectives"
+msgstr ""
+
+#: models/ls_training_course.py:110
+msgid "Duration (Hours)"
+msgstr ""
+
+#: models/ls_training_course.py:116
+msgid "Certification Validity (Months)"
+msgstr ""
+
+#: models/ls_training_course.py:116
+msgid "Number of months a certification issued by this course stays valid. Zero means the certification does not expire."
+msgstr ""
+
+#: models/ls_training_course.py:123
+msgid "Requires Assessment"
+msgstr ""
+
+#: models/ls_training_course.py:123
+msgid "When enabled, an attendee must reach the pass score to obtain a certification."
+msgstr ""
+
+#: models/ls_training_course.py:135
+msgid "Granted Competencies"
+msgstr ""
+
+#: models/ls_training_course.py:142
+#: views/ls_training_course_views.xml:60
+#: views/ls_training_menus.xml:25
+msgid "Sessions"
+msgstr ""
+
+#: models/ls_training_course.py:147
+msgid "Session Count"
+msgstr ""
+
+#: models/ls_training_course.py:151
+#: views/hr_employee_views.xml:17
+#: views/hr_employee_views.xml:42
+#: views/ls_training_certification_views.xml:156
+#: views/ls_training_course_views.xml:67
+#: views/ls_training_menus.xml:37
+msgid "Certifications"
+msgstr ""
+
+#: models/ls_training_course.py:160
+#: views/ls_training_course_views.xml:115
+#: views/ls_training_menus.xml:81
+#: views/ls_training_requirement_views.xml:10
+#: views/ls_training_requirement_views.xml:76
+#: views/ls_training_requirement_views.xml:103
+msgid "Training Requirements"
+msgstr ""
+
+#: models/ls_training_course.py:214
+msgid "The duration of course '%s' must be greater than zero."
+msgstr ""
+
+#: models/ls_training_course.py:225
+msgid "The pass score of course '%s' must be between 0 and 100."
+msgstr ""
+
+#: models/ls_training_course.py:236
+msgid "The certification validity of course '%s' cannot be negative."
+msgstr ""
+
+#: models/ls_training_course.py:249
+msgid "Course '%s' is delivered as external e-Learning and therefore requires an e-Learning URL."
+msgstr ""
+
+#: models/ls_training_course.py:282
+msgid "Only a draft course can be submitted for review. Course '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_course.py:293
+msgid "Only a course under review can be approved. Course '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_course.py:304
+msgid "Only an approved course can be made obsolete. Course '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_course.py:314
+msgid "Course '%s' still has %d open session(s). Close or cancel them before making the course obsolete."
+msgstr ""
+
+#: models/ls_training_course.py:325
+msgid "Course '%s' is already in draft."
+msgstr ""
+
+#: models/ls_training_requirement.py:22
+#: views/ls_training_requirement_views.xml:41
+msgid "Required Course"
+msgstr ""
+
+#: models/ls_training_requirement.py:40
+#: wizards/ls_training_matrix_wizard.py:44
+#: wizards/ls_training_session_register_wizard.py:53
+#: views/ls_training_requirement_views.xml:93
+#: wizards/ls_training_matrix_wizard_views.xml:99
+msgid "Job Position"
+msgstr ""
+
+#: models/ls_training_requirement.py:46
+#: wizards/ls_training_matrix_wizard.py:38
+#: wizards/ls_training_session_register_wizard.py:49
+#: views/ls_training_requirement_views.xml:95
+#: wizards/ls_training_matrix_wizard_views.xml:97
+msgid "Department"
+msgstr ""
+
+#: models/ls_training_requirement.py:52
+msgid "Specific Employee"
+msgstr ""
+
+#: models/ls_training_requirement.py:52
+msgid "Set to require the course from one named employee. Leave empty to target a job position and/or a department."
+msgstr ""
+
+#: models/ls_training_requirement.py:60
+#: wizards/ls_training_matrix_wizard.py:62
+#: views/ls_training_requirement_views.xml:82
+msgid "Mandatory"
+msgstr ""
+
+#: models/ls_training_requirement.py:60
+msgid "Mandatory requirements are counted in the compliance rate. Non-mandatory requirements are reported but excluded."
+msgstr ""
+
+#: models/ls_training_requirement.py:66
+msgid "Grace Period (Days)"
+msgstr ""
+
+#: models/ls_training_requirement.py:66
+msgid "Number of days a newly targeted employee has to complete the course before being reported as overdue."
+msgstr ""
+
+#: models/ls_training_requirement.py:72
+#: views/ls_training_requirement_views.xml:63
+msgid "Justification"
+msgstr ""
+
+#: models/ls_training_requirement.py:72
+msgid "Reason why this training is required for this population."
+msgstr ""
+
+#: models/ls_training_requirement.py:76
+#: models/ls_training_requirement.py:216
+msgid "Targeted Employees"
+msgstr ""
+
+#: models/ls_training_requirement.py:107
+msgid "Undefined"
+msgstr ""
+
+#: models/ls_training_requirement.py:121
+msgid "A training requirement must target a specific employee, a job position or a department."
+msgstr ""
+
+#: models/ls_training_requirement.py:148
+msgid "Requirement '%s' already exists."
+msgstr ""
+
+#: models/ls_training_requirement.py:159
+msgid "Employee '%s' does not belong to company '%s'."
+msgstr ""
+
+#: models/ls_training_session.py:46
+msgid "In Progress"
+msgstr ""
+
+#: models/ls_training_session.py:46
+#: views/ls_training_session_views.xml:169
+msgid "Closed"
+msgstr ""
+
+#: models/ls_training_session.py:46
+msgid "Cancelled"
+msgstr ""
+
+#: models/ls_training_session.py:61
+#: views/ls_training_session_views.xml:50
+msgid "Start"
+msgstr ""
+
+#: models/ls_training_session.py:67
+msgid "End"
+msgstr ""
+
+#: models/ls_training_session.py:72
+msgid "Internal Trainer"
+msgstr ""
+
+#: models/ls_training_session.py:78
+msgid "External Trainer"
+msgstr ""
+
+#: models/ls_training_session.py:78
+msgid "Name and organisation of the trainer when the training is delivered by an external provider."
+msgstr ""
+
+#: models/ls_training_session.py:84
+msgid "Location"
+msgstr ""
+
+#: models/ls_training_session.py:87
+msgid "Maximum Attendees"
+msgstr ""
+
+#: models/ls_training_session.py:87
+msgid "Maximum number of attendees. Zero means no limit."
+msgstr ""
+
+#: models/ls_training_session.py:92
+#: views/ls_training_session_views.xml:114
+msgid "Attendees"
+msgstr ""
+
+#: models/ls_training_session.py:97
+msgid "Registered"
+msgstr ""
+
+#: models/ls_training_session.py:112
+msgid "Issued Certifications"
+msgstr ""
+
+#: models/ls_training_session.py:121
+msgid "Session Notes"
+msgstr ""
+
+#: models/ls_training_session.py:181
+msgid "Session '%s' must end after it starts."
+msgstr ""
+
+#: models/ls_training_session.py:193
+msgid "Session '%s' accepts at most %d attendees; %d are registered."
+msgstr ""
+
+#: models/ls_training_session.py:208
+msgid "Session '%s' names both an internal and an external trainer. Record only one of them."
+msgstr ""
+
+#: models/ls_training_session.py:261
+msgid "Session '%s' is in state '%s' and cannot be deleted. Cancel it instead."
+msgstr ""
+
+#: models/ls_training_session.py:272
+msgid "Only a draft session can be confirmed. Session '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_session.py:278
+msgid "Session '%s' has no registered attendee."
+msgstr ""
+
+#: models/ls_training_session.py:288
+msgid "Only a confirmed session can be started. Session '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_session.py:304
+msgid "Only a session in progress can be closed. Session '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_session.py:313
+msgid "Session '%s' still has %d attendee(s) without a recorded outcome."
+msgstr ""
+
+#: models/ls_training_session.py:334
+msgid "Session '%s' is closed and can no longer be cancelled."
+msgstr ""
+
+#: models/ls_training_session.py:345
+msgid "Only a cancelled session can be reset to draft. Session '%s' is in state '%s'."
+msgstr ""
+
+#: models/ls_training_session.py:250
+msgid "Session '%s' is closed. Its course, dates and trainer can no longer be modified."
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:24
+msgid "Matrix"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:57
+msgid "Requirement"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:65
+msgid "Latest Certification"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:76
+msgid "Not Trained"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:110
+msgid "Departments"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:110
+msgid "Leave empty to cover every department of the company."
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:118
+msgid "Job Positions"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:118
+msgid "Leave empty to cover every job position of the company."
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:126
+msgid "Mandatory Requirements Only"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:130
+msgid "Matrix Lines"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:202
+msgid "No employee matches the selected scope."
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:207
+msgid "No training requirement applies to the selected scope."
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard.py:211
+msgid "The selected scope produces %d matrix lines, which exceeds the limit of %d. Narrow the scope by department or job position."
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:31
+msgid "Selected Employees"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:31
+msgid "All Employees of a Department"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:31
+msgid "All Employees of a Job Position"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:31
+msgid "All Employees Required to Take the Course"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:31
+msgid "Select By"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:42
+#: views/ls_training_requirement_views.xml:35
+msgid "Employees"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:57
+msgid "Skip Already Certified"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:57
+msgid "Exclude employees who already hold a valid certification for this course."
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:87
+msgid "Select a department."
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:96
+msgid "Select a job position."
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:137
+msgid "No employee remains to be registered on session '%s'."
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard.py:144
+msgid "Session '%s' has %d free seat(s) but %d employee(s) were selected."
+msgstr ""
+
+#: data/ir_cron_data.xml:9
+msgid "Training: Refresh Certification Status"
+msgstr ""
+
+#: data/ir_cron_data.xml:20
+msgid "Training: Send Expiry Reminders"
+msgstr ""
+
+#: data/mail_template_data.xml:9
+msgid "Training: Certification Expiry Reminder"
+msgstr ""
+
+#: data/mail_template_data.xml:12
+msgid "Training certification {{ object.course_id.name }} - action required"
+msgstr ""
+
+#: report/ls_training_report_actions.xml:8
+msgid "Training Certificate"
+msgstr ""
+
+#: report/ls_training_report_actions.xml:21
+msgid "Training Record"
+msgstr ""
+
+#: security/ls_training_groups.xml:8
+msgid "Life Sciences Training"
+msgstr ""
+
+#: security/ls_training_groups.xml:18
+msgid "Training Management"
+msgstr ""
+
+#: security/ls_training_groups.xml:24
+msgid "Learner"
+msgstr ""
+
+#: security/ls_training_groups.xml:33
+msgid "Viewer"
+msgstr ""
+
+#: security/ls_training_groups.xml:44
+#: views/ls_training_session_views.xml:100
+#: views/ls_training_session_views.xml:181
+msgid "Trainer"
+msgstr ""
+
+#: security/ls_training_groups.xml:55
+msgid "Manager"
+msgstr ""
+
+#: views/hr_employee_views.xml:22
+#: views/ls_training_menus.xml:13
+msgid "Training"
+msgstr ""
+
+#: views/hr_employee_views.xml:25
+msgid "Compliance"
+msgstr ""
+
+#: views/hr_employee_views.xml:31
+msgid "Reports"
+msgstr ""
+
+#: views/hr_employee_views.xml:35
+msgid "Print Training Record"
+msgstr ""
+
+#: views/hr_employee_views.xml:39
+msgid "Applicable Requirements"
+msgstr ""
+
+#: views/ls_training_attendance_views.xml:76
+msgid "My Attendance"
+msgstr ""
+
+#: views/ls_training_attendance_views.xml:77
+#: views/ls_training_certification_views.xml:140
+#: views/ls_training_competency_assessment_views.xml:101
+#: views/ls_training_competency_views.xml:86
+#: views/ls_training_course_views.xml:156
+#: views/ls_training_requirement_views.xml:89
+msgid "Group By"
+msgstr ""
+
+#: views/ls_training_attendance_views.xml:85
+msgid "Session Month"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:38
+msgid "Training Certification"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:43
+#: views/ls_training_certification_views.xml:106
+msgid "Revoke"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:54
+msgid "Subject"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:65
+msgid "Validity"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:74
+msgid "Revocation"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:79
+#: views/ls_training_competency_views.xml:10
+#: views/ls_training_competency_views.xml:77
+#: views/ls_training_competency_views.xml:95
+#: views/ls_training_course_views.xml:109
+#: views/ls_training_menus.xml:87
+msgid "Competencies"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:102
+msgid "Document why this certification is being revoked."
+msgstr ""
+
+#: views/ls_training_certification_views.xml:108
+#: views/ls_training_session_views.xml:60
+#: wizards/ls_training_matrix_wizard_views.xml:30
+#: wizards/ls_training_session_register_wizard_views.xml:34
+msgid "Cancel"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:134
+msgid "Action Required"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:136
+msgid "My Certifications"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:139
+msgid "Granted"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:148
+msgid "Expiry Month"
+msgstr ""
+
+#: views/ls_training_certification_views.xml:175
+#: views/ls_training_menus.xml:43
+msgid "Expiring and Expired"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:33
+msgid "Competency Assessment"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:38
+#: views/ls_training_session_views.xml:46
+msgid "Confirm"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:69
+msgid "Describe what was observed or reviewed."
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:87
+msgid "Acquired"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:89
+msgid "Not Acquired"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:98
+msgid "Reassessment Due"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:100
+msgid "My Assessments"
+msgstr ""
+
+#: views/ls_training_competency_assessment_views.xml:107
+msgid "Level"
+msgstr ""
+
+#: views/ls_training_competency_views.xml:36
+#: views/ls_training_competency_views.xml:85
+#: views/ls_training_course_views.xml:155
+#: views/ls_training_requirement_views.xml:39
+#: views/ls_training_requirement_views.xml:88
+msgid "Archived"
+msgstr ""
+
+#: views/ls_training_competency_views.xml:83
+msgid "Periodic Reassessment"
+msgstr ""
+
+#: views/ls_training_competency_views.xml:88
+msgid "Minimum Level"
+msgstr ""
+
+#: views/ls_training_course_views.xml:12
+#: views/ls_training_course_views.xml:137
+#: views/ls_training_course_views.xml:169
+msgid "Training Courses"
+msgstr ""
+
+#: views/ls_training_course_views.xml:18
+msgid "Total Hours"
+msgstr ""
+
+#: views/ls_training_course_views.xml:34
+msgid "Training Course"
+msgstr ""
+
+#: views/ls_training_course_views.xml:39
+msgid "Submit for Review"
+msgstr ""
+
+#: views/ls_training_course_views.xml:43
+msgid "Approve"
+msgstr ""
+
+#: views/ls_training_course_views.xml:47
+#: views/ls_training_session_views.xml:64
+msgid "Reset to Draft"
+msgstr ""
+
+#: views/ls_training_course_views.xml:51
+msgid "Make Obsolete"
+msgstr ""
+
+#: views/ls_training_course_views.xml:75
+msgid "Course title"
+msgstr ""
+
+#: views/ls_training_course_views.xml:78
+msgid "Identification"
+msgstr ""
+
+#: views/ls_training_course_views.xml:87
+msgid "Delivery"
+msgstr ""
+
+#: views/ls_training_course_views.xml:96
+msgid "Assessment"
+msgstr ""
+
+#: views/ls_training_course_views.xml:103
+msgid "Content"
+msgstr ""
+
+#: views/ls_training_course_views.xml:105
+msgid "Learning objectives"
+msgstr ""
+
+#: views/ls_training_course_views.xml:107
+msgid "Course content"
+msgstr ""
+
+#: views/ls_training_course_views.xml:152
+msgid "With Expiring Certification"
+msgstr ""
+
+#: views/ls_training_menus.xml:19
+msgid "Operations"
+msgstr ""
+
+#: views/ls_training_menus.xml:31
+msgid "Attendance"
+msgstr ""
+
+#: views/ls_training_menus.xml:56
+msgid "Reporting"
+msgstr ""
+
+#: views/ls_training_menus.xml:62
+#: wizards/ls_training_matrix_wizard_views.xml:10
+#: wizards/ls_training_matrix_wizard_views.xml:38
+#: wizards/ls_training_matrix_wizard_views.xml:51
+#: wizards/ls_training_matrix_wizard_views.xml:71
+#: wizards/ls_training_matrix_wizard_views.xml:82
+msgid "Training Matrix"
+msgstr ""
+
+#: views/ls_training_menus.xml:69
+msgid "Configuration"
+msgstr ""
+
+#: views/ls_training_menus.xml:75
+msgid "Courses"
+msgstr ""
+
+#: views/ls_training_requirement_views.xml:28
+msgid "Training Requirement"
+msgstr ""
+
+#: views/ls_training_requirement_views.xml:51
+msgid "Target Population"
+msgstr ""
+
+#: views/ls_training_requirement_views.xml:65
+msgid "Why is this training required for this population?"
+msgstr ""
+
+#: views/ls_training_requirement_views.xml:84
+msgid "Role Based"
+msgstr ""
+
+#: views/ls_training_requirement_views.xml:86
+msgid "Individual"
+msgstr ""
+
+#: views/ls_training_session_views.xml:13
+#: views/ls_training_session_views.xml:151
+#: views/ls_training_session_views.xml:162
+#: views/ls_training_session_views.xml:190
+msgid "Training Sessions"
+msgstr ""
+
+#: views/ls_training_session_views.xml:36
+msgid "Training Session"
+msgstr ""
+
+#: views/ls_training_session_views.xml:42
+#: wizards/ls_training_session_register_wizard_views.xml:11
+#: wizards/ls_training_session_register_wizard_views.xml:42
+msgid "Register Employees"
+msgstr ""
+
+#: views/ls_training_session_views.xml:56
+msgid "Close and Issue Certifications"
+msgstr ""
+
+#: views/ls_training_session_views.xml:56
+msgid "Closing the session issues certifications to every attendee who passed and freezes the attendance evidence. Continue?"
+msgstr ""
+
+#: views/ls_training_session_views.xml:92
+msgid "Schedule"
+msgstr ""
+
+#: views/ls_training_session_views.xml:107
+msgid "Results"
+msgstr ""
+
+#: views/ls_training_session_views.xml:135
+msgid "Notes"
+msgstr ""
+
+#: views/ls_training_session_views.xml:137
+msgid "Observations recorded during the session"
+msgstr ""
+
+#: views/ls_training_session_views.xml:167
+msgid "Open"
+msgstr ""
+
+#: views/ls_training_session_views.xml:172
+msgid "Upcoming"
+msgstr ""
+
+#: views/ls_training_session_views.xml:174
+msgid "This Month"
+msgstr ""
+
+#: views/ls_training_session_views.xml:183
+msgid "Start Month"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard_views.xml:12
+msgid "Scope"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard_views.xml:22
+msgid "Options"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard_views.xml:28
+msgid "Generate Matrix"
+msgstr ""
+
+#: wizards/ls_training_matrix_wizard_views.xml:86
+msgid "Gaps"
+msgstr ""
+
+#: wizards/ls_training_session_register_wizard_views.xml:32
+msgid "Register"
+msgstr ""

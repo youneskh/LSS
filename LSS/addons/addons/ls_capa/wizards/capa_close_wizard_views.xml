@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_capa_close_wizard_form" model="ir.ui.view">
+        <field name="name">ls.capa.close.wizard.form</field>
+        <field name="model">ls.capa.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close CAPA">
+                <group>
+                    <field name="issue_id" invisible="1"/>
+                    <field name="issue_reference"/>
+                    <field name="action_count"/>
+                    <field name="effectiveness_count"/>
+                </group>
+                <group string="Closure Summary">
+                    <field name="closure_summary" nolabel="1"
+                           placeholder="Confirm that the actions were implemented and verified as effective."/>
+                </group>
+                <footer>
+                    <button name="action_confirm_close" type="object"
+                            string="Close CAPA" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary"
+                            special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

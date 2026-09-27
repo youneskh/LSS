@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_audit_finding_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.finding.list</field>
+        <field name="model">ls.supplier.audit.finding</field>
+        <field name="arch" type="xml">
+            <list string="Audit Findings"
+                  decoration-danger="severity == 'critical' and state != 'closed'"
+                  decoration-warning="severity == 'major' and state != 'closed'"
+                  decoration-muted="state in ['closed', 'cancelled']">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="audit_id" optional="hide"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="severity" widget="badge"
+                       decoration-danger="severity == 'critical'"
+                       decoration-warning="severity == 'major'"
+                       decoration-info="severity == 'minor'"/>
+                <field name="description" optional="show"/>
+                <field name="requirement_reference" optional="hide"/>
+                <field name="action_due_date" optional="show"/>
+                <field name="closure_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_finding_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.finding.form</field>
+        <field name="model">ls.supplier.audit.finding</field>
+        <field name="arch" type="xml">
+            <form string="Audit Finding">
+                <header>
+                    <button name="action_register_response" type="object"
+                            string="Register Response" class="btn-primary"
+                            invisible="state != 'open'"/>
+                    <button name="action_agree_action" type="object"
+                            string="Agree Action" class="btn-primary"
+                            invisible="state != 'response_received'"/>
+                    <button name="action_mark_implemented" type="object"
+                            string="Mark Implemented" class="btn-primary"
+                            invisible="state != 'action_agreed'"/>
+                    <button name="action_verify" type="object" string="Verify"
+                            class="btn-primary" invisible="state != 'implemented'"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="btn-primary" invisible="state != 'verified'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ['closed', 'cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="open,response_received,action_agreed,implemented,verified,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="F-01"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="audit_id"/>
+                            <field name="partner_id"/>
+                            <field name="qualification_id"/>
+                            <field name="severity"/>
+                            <field name="requirement_reference"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Follow-Up">
+                            <field name="action_due_date"/>
+                            <field name="implementation_date"/>
+                            <field name="verified_by_id"/>
+                            <field name="closure_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Finding" name="finding">
+                            <field name="description" nolabel="1"
+                                   placeholder="Objective description of what was observed."/>
+                        </page>
+                        <page string="Supplier Response" name="response">
+                            <field name="supplier_response" nolabel="1"/>
+                        </page>
+                        <page string="Root Cause and Action" name="action">
+                            <group>
+                                <field name="root_cause"/>
+                                <field name="corrective_action"/>
+                            </group>
+                        </page>
+                        <page string="Verification and Closure" name="closure">
+                            <group>
+                                <field name="verification_method"/>
+                                <field name="closure_comment"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_finding_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.finding.search</field>
+        <field name="model">ls.supplier.audit.finding</field>
+        <field name="arch" type="xml">
+            <search string="Audit Findings">
+                <field name="name"/>
+                <field name="audit_id"/>
+                <field name="partner_id"/>
+                <filter name="filter_open" string="Not Closed"
+                        domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('severity', '=', 'critical')]"/>
+                <filter name="filter_major" string="Major"
+                        domain="[('severity', '=', 'major')]"/>
+                <separator/>
+                <filter name="filter_overdue" string="Overdue Action"
+                        domain="[('action_due_date', '&lt;', context_today().strftime('%Y-%m-%d')), ('state', 'not in', ['closed', 'cancelled'])]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_severity" string="Severity"
+                        context="{'group_by': 'severity'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_audit_finding" model="ir.actions.act_window">
+        <field name="name">Audit Findings</field>
+        <field name="res_model">ls.supplier.audit.finding</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No open finding</p>
+            <p>Findings are raised from within an audit report.</p>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.list</field>
+        <field name="model">ls.supplier.audit</field>
+        <field name="arch" type="xml">
+            <list string="Supplier Audits"
+                  decoration-danger="outcome == 'not_acceptable'"
+                  decoration-warning="critical_count &gt; 0"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="planned_date"/>
+                <field name="partner_id"/>
+                <field name="audit_type"/>
+                <field name="lead_auditor_id"/>
+                <field name="date_start" optional="hide"/>
+                <field name="date_stop" optional="hide"/>
+                <field name="critical_count" optional="show"/>
+                <field name="major_count" optional="show"/>
+                <field name="minor_count" optional="hide"/>
+                <field name="open_finding_count" optional="show"/>
+                <field name="outcome" widget="badge"
+                       decoration-success="outcome == 'acceptable'"
+                       decoration-warning="outcome == 'acceptable_with_actions'"
+                       decoration-danger="outcome == 'not_acceptable'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_view_calendar" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.calendar</field>
+        <field name="model">ls.supplier.audit</field>
+        <field name="arch" type="xml">
+            <calendar string="Audit Plan" date_start="planned_date"
+                      color="partner_id" mode="month">
+                <field name="partner_id"/>
+                <field name="audit_type"/>
+                <field name="lead_auditor_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.form</field>
+        <field name="model">ls.supplier.audit</field>
+        <field name="arch" type="xml">
+            <form string="Supplier Audit">
+                <header>
+                    <button name="action_plan" type="object" string="Plan"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'planned'"/>
+                    <button name="action_draft_report" type="object"
+                            string="Draft Report" class="btn-primary"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_issue_report" type="object"
+                            string="Issue Report" class="btn-primary"
+                            invisible="state != 'report_draft'"/>
+                    <button name="action_register_response" type="object"
+                            string="Register Response"
+                            invisible="state != 'report_issued'"/>
+                    <button name="action_close" type="object" string="Close Audit"
+                            class="btn-primary"
+                            invisible="state not in ['report_issued', 'response_received']"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ['closed', 'cancelled']"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,planned,in_progress,report_draft,report_issued,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_findings" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="finding_count" widget="statinfo"
+                                   string="Findings"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="qualification_id"
+                                   readonly="state not in ['draft']"/>
+                            <field name="partner_id"/>
+                            <field name="audit_type"
+                                   readonly="state not in ['draft', 'planned']"/>
+                            <field name="auditee_contact_id"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Planning and Team">
+                            <field name="planned_date"
+                                   readonly="state not in ['draft', 'planned']"/>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                            <field name="lead_auditor_id"/>
+                            <field name="auditor_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Reporting">
+                            <field name="report_date"/>
+                            <field name="response_due_date"/>
+                            <field name="response_received_date"/>
+                            <field name="outcome"
+                                   required="state in ['report_issued', 'response_received', 'closed']"/>
+                        </group>
+                        <group string="Finding Summary">
+                            <field name="critical_count"/>
+                            <field name="major_count"/>
+                            <field name="minor_count"/>
+                            <field name="observation_count"/>
+                            <field name="open_finding_count"/>
+                        </group>
+                    </group>
+                    <group string="Audit Basis">
+                        <field name="standard_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <page string="Scope" name="scope">
+                            <field name="audit_scope" nolabel="1"
+                                   placeholder="Processes, sites, products and periods covered."/>
+                        </page>
+                        <page string="Findings" name="findings">
+                            <field name="finding_ids"
+                                   context="{'default_audit_id': id}">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="severity"/>
+                                    <field name="description"/>
+                                    <field name="requirement_reference" optional="hide"/>
+                                    <field name="action_due_date"/>
+                                    <field name="state"/>
+                                    <field name="company_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <field name="conclusion" nolabel="1"
+                                   placeholder="Written conclusion of the lead auditor. Required before the report can be issued."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_audit_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.audit.search</field>
+        <field name="model">ls.supplier.audit</field>
+        <field name="arch" type="xml">
+            <search string="Supplier Audits">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="lead_auditor_id"/>
+                <field name="standard_ids"/>
+                <filter name="filter_mine" string="My Audits"
+                        domain="['|', ('lead_auditor_id', '=', uid), ('auditor_ids', 'in', [uid])]"/>
+                <separator/>
+                <filter name="filter_planned" string="Planned"
+                        domain="[('state', '=', 'planned')]"/>
+                <filter name="filter_open" string="Not Closed"
+                        domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                <filter name="filter_open_findings" string="With Open Findings"
+                        domain="[('open_finding_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_not_acceptable" string="Not Acceptable"
+                        domain="[('outcome', '=', 'not_acceptable')]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_type" string="Audit Type"
+                        context="{'group_by': 'audit_type'}"/>
+                    <filter name="group_outcome" string="Outcome"
+                        context="{'group_by': 'outcome'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_planned_date" string="Planned Date"
+                        context="{'group_by': 'planned_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_audit" model="ir.actions.act_window">
+        <field name="name">Supplier Audits</field>
+        <field name="res_model">ls.supplier.audit</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Plan a supplier audit</p>
+            <p>
+                Plan the audit, record the findings, issue the report, follow
+                up the corrective actions and close the audit once every
+                finding is closed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

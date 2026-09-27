@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="ls_lab_report_coa_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Certificate of Analysis</h2>
+                        <div class="text-center mb-4">
+                            <strong t-field="doc.name"/>
+                            <span> — version </span>
+                            <span t-field="doc.version"/>
+                        </div>
+
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td style="width:25%"><strong>Product</strong></td>
+                                <td style="width:25%"><span t-field="doc.product_id"/></td>
+                                <td style="width:25%"><strong>Lot / Serial</strong></td>
+                                <td style="width:25%">
+                                    <span t-if="doc.lot_id" t-field="doc.lot_id"/>
+                                    <span t-else="" t-field="doc.batch_reference"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sample</strong></td>
+                                <td><span t-field="doc.sample_id.name"/></td>
+                                <td><strong>Specification</strong></td>
+                                <td><span t-field="doc.specification_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Customer</strong></td>
+                                <td><span t-if="doc.customer_id" t-field="doc.customer_id"/></td>
+                                <td><strong>Receipt Date</strong></td>
+                                <td><span t-field="doc.sample_id.received_date"/></td>
+                            </tr>
+                        </table>
+
+                        <h4 class="mt-4">Results</h4>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Test</th>
+                                    <th>Acceptance Criterion</th>
+                                    <th class="text-end">Result</th>
+                                    <th class="text-center">Evaluation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.reportable_result_ids" t-as="line">
+                                    <td><span t-field="line.test_method_id.name"/></td>
+                                    <td><span t-field="line.criterion_display"/></td>
+                                    <td class="text-end"><span t-field="line.result_display"/></td>
+                                    <td class="text-center">
+                                        <span t-if="line.evaluation == 'conform'">Conforms</span>
+                                        <span t-elif="line.evaluation == 'non_conform'">Does not conform</span>
+                                        <span t-elif="line.evaluation == 'informative'">Informative</span>
+                                        <span t-else="">Pending</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4 class="mt-4">Conclusion</h4>
+                        <p>
+                            <span t-if="doc.conclusion == 'conforms'">
+                                The batch conforms to the referenced specification.
+                            </span>
+                            <span t-elif="doc.conclusion == 'does_not_conform'">
+                                The batch does NOT conform to the referenced specification.
+                            </span>
+                            <span t-else="">
+                                Testing is not complete; no conclusion can be stated.
+                            </span>
+                        </p>
+
+                        <div t-if="doc.remarks">
+                            <h4>Remarks</h4>
+                            <p><span t-field="doc.remarks"/></p>
+                        </div>
+
+                        <table class="table table-sm table-borderless mt-4">
+                            <tr>
+                                <td style="width:25%"><strong>Issued By</strong></td>
+                                <td style="width:25%"><span t-field="doc.issued_by_id"/></td>
+                                <td style="width:25%"><strong>Issue Date</strong></td>
+                                <td style="width:25%"><span t-field="doc.issue_date"/></td>
+                            </tr>
+                            <tr t-if="doc.signature_user_id">
+                                <td><strong>Signature Intent</strong></td>
+                                <td><span t-field="doc.signature_user_id"/></td>
+                                <td><strong>Meaning</strong></td>
+                                <td><span t-field="doc.signature_meaning"/></td>
+                            </tr>
+                        </table>
+
+                        <p class="mt-4" style="font-size:9px;">
+                            Signature intent recorded in this system captures the signing
+                            user identity, timestamp and declared meaning. It does not
+                            re-authenticate the user and is not an FDA 21 CFR Part 11
+                            electronic signature.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

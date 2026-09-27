@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_technical_file_section_template_list" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section_template.list</field>
+        <field name="model">ls.md.technical_file_section_template</field>
+        <field name="arch" type="xml">
+            <list string="Documentation Section Templates" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="annex_reference"/>
+                <field name="section_number"/>
+                <field name="name"/>
+                <field name="is_mandatory"/>
+                <field name="description" optional="hide"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_section_template_form" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section_template.form</field>
+        <field name="model">ls.md.technical_file_section_template</field>
+        <field name="arch" type="xml">
+            <form string="Documentation Section Template">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" string="Section Title"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="annex_reference"/>
+                            <field name="section_number"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="is_mandatory"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Expected Content">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_section_template_search" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section_template.search</field>
+        <field name="model">ls.md.technical_file_section_template</field>
+        <field name="arch" type="xml">
+            <search string="Documentation Section Templates">
+                <field name="name"/>
+                <field name="section_number"/>
+                <filter name="filter_mandatory" string="Mandatory" domain="[('is_mandatory', '=', True)]"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_annex" string="Annex" context="{'group_by': 'annex_reference'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_technical_file_section_template" model="ir.actions.act_window">
+        <field name="name">Documentation Section Templates</field>
+        <field name="res_model">ls.md.technical_file_section_template</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_technical_file_section_template_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Configure a documentation section template</p>
+            <p>
+                Section templates define the structure applied to a new technical documentation
+                record. They are configuration data and must be reviewed against the Official
+                Journal text of the applicable annex before use.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_section_list" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section.list</field>
+        <field name="model">ls.md.technical_file_section</field>
+        <field name="arch" type="xml">
+            <list string="Documentation Sections" decoration-danger="is_mandatory and not is_complete and not not_applicable" decoration-muted="not_applicable">
+                <field name="sequence" widget="handle"/>
+                <field name="section_number"/>
+                <field name="name"/>
+                <field name="technical_file_id" optional="hide"/>
+                <field name="device_id" optional="hide"/>
+                <field name="is_mandatory"/>
+                <field name="is_complete"/>
+                <field name="not_applicable"/>
+                <field name="evidence_reference" optional="show"/>
+                <field name="evidence_location" optional="hide"/>
+                <field name="responsible_id" optional="show"/>
+                <field name="review_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_section_form" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section.form</field>
+        <field name="model">ls.md.technical_file_section</field>
+        <field name="arch" type="xml">
+            <form string="Documentation Section">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Section Title"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="technical_file_id"/>
+                            <field name="device_id" readonly="1"/>
+                            <field name="section_number"/>
+                            <field name="sequence"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group string="Status">
+                            <field name="is_mandatory"/>
+                            <field name="is_complete"/>
+                            <field name="not_applicable"/>
+                            <field name="responsible_id"/>
+                            <field name="review_date"/>
+                        </group>
+                    </group>
+                    <group string="Expected Content">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <group string="Evidence">
+                        <field name="evidence_reference" placeholder="Reference of the document holding the content of this section"/>
+                        <field name="evidence_location" placeholder="Location where the evidence is stored"/>
+                    </group>
+                    <group string="Not Applicable Justification" invisible="not not_applicable">
+                        <field name="not_applicable_justification" nolabel="1" required="not_applicable" placeholder="Justification recorded where the section does not apply to the device"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_section_search" model="ir.ui.view">
+        <field name="name">ls.md.technical_file_section.search</field>
+        <field name="model">ls.md.technical_file_section</field>
+        <field name="arch" type="xml">
+            <search string="Documentation Sections">
+                <field name="name"/>
+                <field name="section_number"/>
+                <field name="technical_file_id"/>
+                <field name="device_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="filter_mandatory_missing" string="Mandatory and Incomplete" domain="[('is_mandatory', '=', True), ('is_complete', '=', False), ('not_applicable', '=', False)]"/>
+                <filter name="filter_complete" string="Complete" domain="[('is_complete', '=', True)]"/>
+                <filter name="filter_not_applicable" string="Not Applicable" domain="[('not_applicable', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_by_file" string="Technical Documentation" context="{'group_by': 'technical_file_id'}"/>
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_technical_file_section" model="ir.actions.act_window">
+        <field name="name">Documentation Sections</field>
+        <field name="res_model">ls.md.technical_file_section</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_technical_file_section_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No documentation section recorded yet</p>
+            <p>
+                Sections belong to a technical documentation record. This view lists them across
+                every record so that outstanding mandatory sections can be tracked centrally.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_list" model="ir.ui.view">
+        <field name="name">ls.md.technical_file.list</field>
+        <field name="model">ls.md.technical_file</field>
+        <field name="arch" type="xml">
+            <list string="Technical Documentation" decoration-danger="missing_mandatory_count &gt; 0" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="annex_reference"/>
+                <field name="version"/>
+                <field name="compilation_date" optional="show"/>
+                <field name="section_count" optional="hide"/>
+                <field name="complete_section_count" optional="hide"/>
+                <field name="missing_mandatory_count"/>
+                <field name="completeness_ratio" widget="percentage" optional="show"/>
+                <field name="retention_until" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_form" model="ir.ui.view">
+        <field name="name">ls.md.technical_file.form</field>
+        <field name="model">ls.md.technical_file</field>
+        <field name="arch" type="xml">
+            <form string="Technical Documentation">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <label for="title" string="Title"/>
+                        <h2><field name="title" placeholder="Technical documentation title"/></h2>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="missing_mandatory_count == 0">
+                        Mandatory sections of this compilation are still neither complete nor declared not applicable.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="annex_reference"/>
+                            <field name="version"/>
+                            <field name="compilation_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsibilities">
+                            <field name="responsible_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Completeness">
+                            <field name="section_count"/>
+                            <field name="complete_section_count"/>
+                            <field name="missing_mandatory_count"/>
+                            <field name="completeness_ratio" widget="percentage"/>
+                        </group>
+                        <group string="Retention">
+                            <field name="retention_until"/>
+                            <field name="storage_location" placeholder="Where the compilation is held"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sections" name="sections">
+                            <field name="section_ids" nolabel="1">
+                                <list editable="bottom" decoration-danger="is_mandatory and not is_complete and not not_applicable" decoration-muted="not_applicable">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="section_number"/>
+                                    <field name="name"/>
+                                    <field name="is_mandatory"/>
+                                    <field name="is_complete"/>
+                                    <field name="not_applicable"/>
+                                    <field name="not_applicable_justification" optional="hide"/>
+                                    <field name="evidence_reference"/>
+                                    <field name="evidence_location" optional="hide"/>
+                                    <field name="responsible_id" optional="show"/>
+                                    <field name="review_date" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_technical_file_search" model="ir.ui.view">
+        <field name="name">ls.md.technical_file.search</field>
+        <field name="model">ls.md.technical_file</field>
+        <field name="arch" type="xml">
+            <search string="Technical Documentation">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_incomplete" string="With Missing Mandatory Sections" domain="[('missing_mandatory_count', '&gt;', 0)]"/>
+                <filter name="filter_annex_ii" string="Annex II" domain="[('annex_reference', '=', 'annex_ii')]"/>
+                <filter name="filter_annex_iii" string="Annex III" domain="[('annex_reference', '=', 'annex_iii')]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_annex" string="Annex" context="{'group_by': 'annex_reference'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_technical_file" model="ir.actions.act_window">
+        <field name="name">Technical Documentation</field>
+        <field name="res_model">ls.md.technical_file</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_technical_file_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a technical documentation record</p>
+            <p>
+                A technical documentation record indexes the sections of a documentation set,
+                records where the underlying evidence is held and tracks whether each mandatory
+                section is complete or justified as not applicable.
+            </p>
+        </field>
+    </record>
+
+</odoo>

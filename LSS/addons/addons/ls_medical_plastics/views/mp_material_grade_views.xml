@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_material_grade_list" model="ir.ui.view">
+        <field name="name">ls.mp.material.grade.list</field>
+        <field name="model">ls.mp.material.grade</field>
+        <field name="arch" type="xml">
+            <list string="Material Grades">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="polymer_type"/>
+                <field name="manufacturer_id"/>
+                <field name="drug_contact"/>
+                <field name="qualification_state"/>
+                <field name="qualification_date"/>
+                <field name="requalification_date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_material_grade_form" model="ir.ui.view">
+        <field name="name">ls.mp.material.grade.form</field>
+        <field name="model">ls.mp.material.grade</field>
+        <field name="arch" type="xml">
+            <form string="Material Grade">
+                <header>
+                    <button name="action_set_under_evaluation" type="object"
+                            string="Start Evaluation" class="btn-primary"
+                            invisible="qualification_state not in ('draft', 'rejected')"/>
+                    <button name="action_qualify" type="object"
+                            string="Qualify" class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="qualification_state not in ('draft', 'under_evaluation', 'conditionally_qualified')"/>
+                    <button name="action_qualify_conditionally" type="object"
+                            string="Qualify Conditionally"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="qualification_state not in ('draft', 'under_evaluation')"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="qualification_state not in ('draft', 'under_evaluation')"/>
+                    <button name="action_set_obsolete" type="object" string="Set Obsolete"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="qualification_state not in ('qualified', 'conditionally_qualified', 'rejected')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="qualification_state not in ('rejected', 'obsolete')"/>
+                    <field name="qualification_state" widget="statusbar"
+                           statusbar_visible="draft,under_evaluation,qualified"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Grade name"/></h1>
+                        <label for="code"/>
+                        <h2><field name="code" placeholder="Internal code"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="polymer_type"/>
+                            <field name="manufacturer_id"/>
+                            <field name="product_id"/>
+                            <field name="default_quantity_uom"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Intended Use">
+                            <field name="drug_contact"/>
+                            <field name="food_contact"/>
+                            <field name="master_file_reference"/>
+                            <field name="change_notification_agreement"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Qualification" name="qualification">
+                            <group>
+                                <group>
+                                    <field name="qualification_date"/>
+                                    <field name="requalification_date"/>
+                                </group>
+                            </group>
+                            <separator string="Qualification Notes"/>
+                            <field name="qualification_note" placeholder="Basis of qualification and any conditions attached to it"/>
+                            <separator string="Regulatory and Compendial References"/>
+                            <field name="regulatory_reference"
+                                   placeholder="References relied upon by the organisation for this grade"/>
+                        </page>
+                        <page string="Technical Data" name="technical">
+                            <group>
+                                <group string="Melt Flow">
+                                    <field name="melt_flow_index"/>
+                                    <field name="melt_flow_index_uom"/>
+                                </group>
+                                <group string="Density">
+                                    <field name="density"/>
+                                    <field name="density_uom"/>
+                                </group>
+                                <group string="Composition">
+                                    <field name="recycled_content"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Supply" name="supply">
+                            <field name="supplier_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Components" name="components">
+                            <field name="component_ids" readonly="1">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_material_grade_search" model="ir.ui.view">
+        <field name="name">ls.mp.material.grade.search</field>
+        <field name="model">ls.mp.material.grade</field>
+        <field name="arch" type="xml">
+            <search string="Material Grades">
+                <field name="name" string="Grade"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="manufacturer_id"/>
+                <field name="polymer_type"/>
+                <filter name="filter_qualified" string="Qualified"
+                        domain="[('qualification_state', 'in', ('qualified', 'conditionally_qualified'))]"/>
+                <filter name="filter_drug_contact" string="Direct Drug Contact"
+                        domain="[('drug_contact', '=', True)]"/>
+                <filter name="filter_requalification_due" string="Requalification Due"
+                        domain="[('requalification_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_polymer" string="Polymer Type" context="{'group_by': 'polymer_type'}"/>
+                    <filter name="group_state" string="Qualification Status" context="{'group_by': 'qualification_state'}"/>
+                    <filter name="group_manufacturer" string="Manufacturer" context="{'group_by': 'manufacturer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mp_material_grade" model="ir.actions.act_window">
+        <field name="name">Material Grades</field>
+        <field name="res_model">ls.mp.material.grade</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_material_grade_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a polymer or masterbatch grade</p>
+            <p>Material grades are the qualified identity of the resins used to mould
+               components. Recording them enables traceability from a moulded part back
+               to the resin grade and lot it was made from.</p>
+        </field>
+    </record>
+
+</odoo>

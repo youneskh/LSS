@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_ls_signature_attempt_list" model="ir.ui.view">
+        <field name="name">ls.signature.attempt.list</field>
+        <field name="model">ls.signature.attempt</field>
+        <field name="arch" type="xml">
+            <list string="Signature Attempts" create="false" edit="false" delete="false"
+                  decoration-danger="result != 'success'">
+                <field name="attempted_at"/>
+                <field name="login_attempted"/>
+                <field name="user_id" optional="show"/>
+                <field name="result"/>
+                <field name="res_model" optional="hide"/>
+                <field name="res_id" optional="hide"/>
+                <field name="meaning_id" optional="hide"/>
+                <field name="ip_address" optional="show"/>
+                <field name="log_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_attempt_form" model="ir.ui.view">
+        <field name="name">ls.signature.attempt.form</field>
+        <field name="model">ls.signature.attempt</field>
+        <field name="arch" type="xml">
+            <form string="Signature Attempt" create="false" edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="attempted_at"/>
+                            <field name="login_attempted"/>
+                            <field name="user_id"/>
+                            <field name="result"/>
+                        </group>
+                        <group>
+                            <field name="res_model"/>
+                            <field name="res_id"/>
+                            <field name="meaning_id"/>
+                            <field name="log_id"/>
+                        </group>
+                    </group>
+                    <group string="Origin">
+                        <field name="ip_address"/>
+                        <field name="user_agent"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group string="Detail">
+                        <field name="detail" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_attempt_search" model="ir.ui.view">
+        <field name="name">ls.signature.attempt.search</field>
+        <field name="model">ls.signature.attempt</field>
+        <field name="arch" type="xml">
+            <search string="Signature Attempts">
+                <field name="login_attempted"/>
+                <field name="ip_address"/>
+                <field name="user_id"/>
+                <filter name="filter_failures" string="Failures Only"
+                        domain="[('result', '!=', 'success')]"/>
+                <filter name="filter_unauthorised" string="Possible Unauthorised Use"
+                        domain="[('result', 'in', ['invalid_password', 'identity_mismatch', 'not_authorised', 'locked_out'])]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('attempted_at', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                                    <filter name="group_result" string="Outcome"
+                        context="{'group_by': 'result'}"/>
+                    <filter name="group_login" string="Identification Code"
+                        context="{'group_by': 'login_attempted'}"/>
+                    <filter name="group_date" string="Date"
+                        context="{'group_by': 'attempted_at'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_attempt_graph" model="ir.ui.view">
+        <field name="name">ls.signature.attempt.graph</field>
+        <field name="model">ls.signature.attempt</field>
+        <field name="arch" type="xml">
+            <graph string="Signature Attempts" type="bar" sample="1">
+                <field name="attempted_at" interval="day"/>
+                <field name="result"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ls_signature_attempt" model="ir.actions.act_window">
+        <field name="name">Signature Attempts</field>
+        <field name="res_model">ls.signature.attempt</field>
+        <field name="view_mode">list,graph,form</field>
+        <field name="search_view_id" ref="view_ls_signature_attempt_search"/>
+        <field name="context">{'create': False, 'search_default_filter_failures': 1}</field>
+    </record>
+
+</odoo>

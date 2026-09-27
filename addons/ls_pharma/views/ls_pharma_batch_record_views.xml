@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Views of the batch production and control record and of its lines.
+     The tabs of the record form follow the order of the thirteen items
+     required by 21 CFR 211.188(b). -->
+<odoo>
+
+    <record id="view_ls_pharma_batch_record_discrepancy_form" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.discrepancy.form</field>
+        <field name="model">ls.pharma.batch_record.discrepancy</field>
+        <field name="arch" type="xml">
+            <form string="Discrepancy">
+                <header>
+                    <button name="action_start_investigation"
+                            string="Start Investigation"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'open'"/>
+                    <button name="action_close"
+                            string="Close"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'under_investigation'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_reopen"
+                            string="Reopen"
+                            type="object"
+                            invisible="state != 'closed'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Short title of the discrepancy"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Detection">
+                            <field name="classification"/>
+                            <field name="date_detected"/>
+                            <field name="detected_by_user_id"/>
+                            <field name="sequence" invisible="1"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Closure">
+                            <field name="investigated_by_user_id"/>
+                            <field name="date_closed"/>
+                            <field name="external_reference"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"
+                               placeholder="What was observed"/>
+                    </group>
+                    <group string="Investigation">
+                        <field name="investigation" nolabel="1"
+                               placeholder="Investigation performed"/>
+                    </group>
+                    <group string="Extension to Other Batches">
+                        <field name="extended_to_other_batches"/>
+                        <field name="extension_scope"
+                               invisible="not extended_to_other_batches"
+                               required="extended_to_other_batches"
+                               placeholder="Other batches and products covered by the investigation"/>
+                    </group>
+                    <group string="Written Conclusion">
+                        <field name="conclusion" nolabel="1"
+                               placeholder="Written conclusion of the investigation"/>
+                    </group>
+                    <group string="Follow-Up">
+                        <field name="follow_up" nolabel="1"
+                               placeholder="Follow-up actions"/>
+                    </group>
+                    <div class="text-muted">
+                        21 CFR 211.192 requires any unexplained discrepancy to
+                        be thoroughly investigated, requires the investigation
+                        to extend to other batches that may have been
+                        associated with the failure, and requires a written
+                        record of the investigation including its conclusions
+                        and follow-up.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_record_discrepancy_list" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.discrepancy.list</field>
+        <field name="model">ls.pharma.batch_record.discrepancy</field>
+        <field name="arch" type="xml">
+            <list string="Discrepancies" decoration-danger="state != 'closed'">
+                <field name="record_id"/>
+                <field name="name"/>
+                <field name="classification"/>
+                <field name="date_detected"/>
+                <field name="detected_by_user_id"/>
+                <field name="extended_to_other_batches" optional="show"/>
+                <field name="investigated_by_user_id" optional="hide"/>
+                <field name="date_closed" optional="hide"/>
+                <field name="external_reference" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_record_discrepancy_search" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.discrepancy.search</field>
+        <field name="model">ls.pharma.batch_record.discrepancy</field>
+        <field name="arch" type="xml">
+            <search string="Discrepancies">
+                <field name="name" string="Discrepancy"/>
+                <field name="record_id"/>
+                <field name="detected_by_user_id"/>
+                <field name="external_reference"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', '=', 'open')]"/>
+                <filter name="filter_under_investigation" string="Under Investigation"
+                        domain="[('state', '=', 'under_investigation')]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="filter_extended" string="Extended to Other Batches"
+                        domain="[('extended_to_other_batches', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_classification" string="Classification"
+                            context="{'group_by': 'classification'}"/>
+                    <filter name="group_record" string="Batch Record"
+                            context="{'group_by': 'record_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_record_list" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.list</field>
+        <field name="model">ls.pharma.batch_record</field>
+        <field name="arch" type="xml">
+            <list string="Batch Production and Control Records"
+                  decoration-danger="open_discrepancy_count &gt; 0 or state == 'rejected'"
+                  decoration-success="state == 'approved'"
+                  decoration-info="state == 'under_review'">
+                <field name="name"/>
+                <field name="batch_id"/>
+                <field name="product_id" optional="show"/>
+                <field name="record_type"/>
+                <field name="master_record_reference" optional="show"/>
+                <field name="master_record_version" optional="hide"/>
+                <field name="step_done_count" optional="hide"/>
+                <field name="step_count" optional="hide"/>
+                <field name="completion_percentage" optional="show"/>
+                <field name="open_discrepancy_count" optional="show"/>
+                <field name="nonconforming_control_count" optional="hide"/>
+                <field name="unreconciled_label_count" optional="hide"/>
+                <field name="executed_by_user_id" optional="hide"/>
+                <field name="reviewed_by_user_id" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_record_form" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.form</field>
+        <field name="model">ls.pharma.batch_record</field>
+        <field name="arch" type="xml">
+            <form string="Batch Production and Control Record">
+                <header>
+                    <button name="action_start_execution"
+                            string="Start Execution"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"
+                            groups="ls_pharma.group_ls_pharma_operator"/>
+                    <button name="action_complete_execution"
+                            string="Complete Execution"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'in_execution'"
+                            groups="ls_pharma.group_ls_pharma_operator"/>
+                    <button name="action_submit_review"
+                            string="Submit for Review"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'completed'"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_approve"
+                            string="Approve"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'under_review'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_reject"
+                            string="Reject"
+                            type="object"
+                            invisible="state != 'under_review'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_return_to_execution"
+                            string="Return for Completion"
+                            type="object"
+                            invisible="state not in ['completed', 'under_review']"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_execution,completed,under_review,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Batch">
+                            <field name="batch_id"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="record_type" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Master Production Record">
+                            <field name="master_record_reference"
+                                   readonly="state not in ['draft', 'in_execution']"/>
+                            <field name="master_record_version"
+                                   readonly="state not in ['draft', 'in_execution']"/>
+                            <field name="master_checked_by_user_id"
+                                   readonly="state not in ['draft', 'in_execution']"/>
+                            <field name="master_checked_date"
+                                   readonly="state not in ['draft', 'in_execution']"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Progress">
+                            <field name="step_done_count"/>
+                            <field name="step_count"/>
+                            <field name="completion_percentage"/>
+                        </group>
+                        <group string="Open Items">
+                            <field name="open_discrepancy_count"/>
+                            <field name="nonconforming_control_count"/>
+                            <field name="unreconciled_label_count"/>
+                            <field name="reserve_sample_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Processing Steps" name="steps">
+                            <field name="step_ids"
+                                   readonly="state in ['approved', 'rejected']">
+                                <list string="Processing Steps" editable="bottom"
+                                      decoration-success="state == 'done'"
+                                      decoration-muted="state == 'not_applicable'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="instruction" optional="hide"/>
+                                    <field name="is_significant"/>
+                                    <field name="is_automated" optional="hide"/>
+                                    <field name="recorded_value"/>
+                                    <field name="recorded_uom"/>
+                                    <field name="performed_by_user_id"/>
+                                    <field name="checked_by_user_id"/>
+                                    <field name="date_performed"/>
+                                    <field name="remark" optional="hide"/>
+                                    <field name="state" widget="badge"/>
+                                    <button name="action_done" type="object"
+                                            string="Done" icon="fa-check"
+                                            invisible="state == 'done'"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.188(b)(11) requires the identification
+                                of the persons performing and directly
+                                supervising or checking each significant step in
+                                the operation.
+                            </div>
+                        </page>
+                        <page string="In-Process and Laboratory Controls" name="controls">
+                            <field name="control_ids"
+                                   readonly="state in ['approved', 'rejected']">
+                                <list string="Controls" editable="bottom"
+                                      decoration-danger="not is_conform">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="control_type"/>
+                                    <field name="method_reference" optional="hide"/>
+                                    <field name="result_type"/>
+                                    <field name="specification_text" optional="show"/>
+                                    <field name="has_minimum" optional="hide"/>
+                                    <field name="specification_min" optional="show"/>
+                                    <field name="has_maximum" optional="hide"/>
+                                    <field name="specification_max" optional="show"/>
+                                    <field name="result_value"/>
+                                    <field name="result_text"/>
+                                    <field name="result_uom"/>
+                                    <field name="is_conform"/>
+                                    <field name="performed_by_user_id"/>
+                                    <field name="date_performed"/>
+                                    <field name="remark" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.188(b)(9) requires a record of the
+                                results of the examinations made in accordance
+                                with 21 CFR 211.110, and 21 CFR 211.188(b)(12)
+                                requires the results of the laboratory
+                                determinations.
+                            </div>
+                        </page>
+                        <page string="Line Clearance" name="clearance">
+                            <field name="clearance_ids"
+                                   readonly="state in ['approved', 'rejected']">
+                                <list string="Line Clearance" editable="bottom"
+                                      decoration-danger="result == 'fail'">
+                                    <field name="moment"/>
+                                    <field name="area"/>
+                                    <field name="previous_product"/>
+                                    <field name="date_performed"/>
+                                    <field name="performed_by_user_id"/>
+                                    <field name="verified_by_user_id"/>
+                                    <field name="result" widget="badge"/>
+                                    <field name="findings" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.188(b)(6) requires documentation of
+                                the inspection of the packaging and labelling
+                                area before and after use.
+                            </div>
+                        </page>
+                        <page string="Labelling Reconciliation" name="labeling">
+                            <field name="labeling_ids"
+                                   readonly="state in ['approved', 'rejected']">
+                                <list string="Labelling" editable="bottom"
+                                      decoration-danger="not is_reconciled">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="label_code" optional="show"/>
+                                    <field name="label_version" optional="show"/>
+                                    <field name="quantity_issued"/>
+                                    <field name="quantity_used"/>
+                                    <field name="quantity_returned"/>
+                                    <field name="quantity_destroyed"/>
+                                    <field name="quantity_difference"/>
+                                    <field name="tolerance" optional="hide"/>
+                                    <field name="is_reconciled"/>
+                                    <field name="checked_by_user_id"/>
+                                    <field name="date_checked" optional="hide"/>
+                                    <field name="remark" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.188(b)(8) requires a record of the
+                                labelling control operations of 21 CFR 211.125,
+                                which include reconciliation of the quantities
+                                of labelling issued, used and returned.
+                            </div>
+                        </page>
+                        <page string="Samples" name="samples">
+                            <field name="sample_ids"
+                                   readonly="state in ['approved', 'rejected']">
+                                <list string="Samples" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="sample_type"/>
+                                    <field name="purpose" optional="hide"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="sampling_point" optional="hide"/>
+                                    <field name="storage_location"/>
+                                    <field name="date_taken"/>
+                                    <field name="taken_by_user_id"/>
+                                    <field name="retention_until"/>
+                                    <field name="result_reference" optional="hide"/>
+                                    <field name="remark" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.170 requires reserve samples of
+                                active ingredients and of finished products to
+                                be retained.
+                            </div>
+                        </page>
+                        <page string="Discrepancies" name="discrepancies">
+                            <field name="discrepancy_ids"
+                                   readonly="state in ['approved', 'rejected']"
+                                   context="{'form_view_ref': 'ls_pharma.view_ls_pharma_batch_record_discrepancy_form'}">
+                                <list string="Discrepancies"
+                                      decoration-danger="state != 'closed'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="classification"/>
+                                    <field name="date_detected"/>
+                                    <field name="detected_by_user_id"/>
+                                    <field name="extended_to_other_batches"/>
+                                    <field name="investigated_by_user_id" optional="hide"/>
+                                    <field name="date_closed" optional="hide"/>
+                                    <field name="external_reference" optional="hide"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Containers and Closures" name="containers">
+                            <group>
+                                <field name="container_closure_description"
+                                       readonly="state in ['approved', 'rejected']"
+                                       placeholder="Description of the drug product containers and closures"/>
+                                <field name="examination_result"
+                                       readonly="state in ['approved', 'rejected']"
+                                       placeholder="Result of the examination of the containers and closures"/>
+                            </group>
+                            <div class="text-muted">
+                                21 CFR 211.188(b)(7) requires a description of
+                                the drug product containers and closures, and
+                                21 CFR 211.134 requires examination of the
+                                packaged and labelled products.
+                            </div>
+                        </page>
+                        <page string="Execution and Review" name="review">
+                            <group>
+                                <group string="Execution">
+                                    <field name="executed_by_user_id"/>
+                                    <field name="date_executed"/>
+                                </group>
+                                <group string="Quality Assurance Review">
+                                    <field name="reviewed_by_user_id"/>
+                                    <field name="date_reviewed"/>
+                                </group>
+                            </group>
+                            <group string="Review Conclusion">
+                                <field name="review_conclusion" nolabel="1"
+                                       readonly="state in ['approved', 'rejected']"
+                                       placeholder="Conclusion of the record review"/>
+                            </group>
+                            <div class="text-muted">
+                                21 CFR 211.192 requires all production and
+                                control records to be reviewed and approved by
+                                the quality control unit before a batch is
+                                released or distributed.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_record_search" model="ir.ui.view">
+        <field name="name">ls.pharma.batch_record.search</field>
+        <field name="model">ls.pharma.batch_record</field>
+        <field name="arch" type="xml">
+            <search string="Batch Production and Control Records">
+                <field name="name" string="Record"/>
+                <field name="batch_id"/>
+                <field name="product_id"/>
+                <field name="master_record_reference"/>
+                <field name="executed_by_user_id"/>
+                <field name="reviewed_by_user_id"/>
+                <filter name="filter_in_execution" string="In Execution"
+                        domain="[('state', '=', 'in_execution')]"/>
+                <filter name="filter_under_review" string="Under Review"
+                        domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_open_discrepancy"
+                        string="Open Discrepancies"
+                        domain="[('open_discrepancy_count', '&gt;', 0)]"/>
+                <filter name="filter_nonconforming"
+                        string="Non-Conforming Controls"
+                        domain="[('nonconforming_control_count', '&gt;', 0)]"/>
+                <filter name="filter_unreconciled"
+                        string="Unreconciled Labelling"
+                        domain="[('unreconciled_label_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_record_type" string="Record Type"
+                            context="{'group_by': 'record_type'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_batch" string="Batch"
+                            context="{'group_by': 'batch_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_batch_record" model="ir.actions.act_window">
+        <field name="name">Batch Records</field>
+        <field name="res_model">ls.pharma.batch_record</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_batch_record_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first batch production and control record
+            </p>
+            <p>
+                The record carries the processing steps, the in-process and
+                laboratory controls, the line clearances, the labelling
+                reconciliation, the samples and the discrepancies of one
+                batch.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_discrepancy" model="ir.actions.act_window">
+        <field name="name">Discrepancies</field>
+        <field name="res_model">ls.pharma.batch_record.discrepancy</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_batch_record_discrepancy_search"/>
+        <field name="domain">[('state', '!=', 'closed')]</field>
+    </record>
+
+</odoo>

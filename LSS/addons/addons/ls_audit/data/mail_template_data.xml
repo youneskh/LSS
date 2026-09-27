@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_finding_issued" model="mail.template">
+            <field name="name">Audit Finding: Issued to Auditee</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="subject">Audit finding {{ object.reference }} requires your response</field>
+            <field name="email_from">{{ (object.raised_by_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.auditee_id.email_formatted }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.auditee_id.name or ''">Auditee</t>,</p>
+                    <p>
+                        A finding has been raised against an area you are accountable for
+                        during audit <t t-out="object.audit_id.reference or ''">AUD/0000/0000</t>.
+                    </p>
+                    <table style="border-collapse:collapse;">
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Reference</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.reference or ''">FND/0000/0000</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Title</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.name or ''">Title</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Category</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.category_id.name or ''">Category</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Area</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.area_id.complete_name or ''">Area</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Response due</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.response_due_date or ''">Due date</t></td>
+                        </tr>
+                    </table>
+                    <p><strong>Statement of non-conformity</strong></p>
+                    <p style="white-space:pre-wrap;"><t t-out="object.description or ''">Description</t></p>
+                    <p>
+                        Please record the root cause, the immediate correction and the
+                        corrective action before the due date shown above.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.auditee_id.lang }}</field>
+        </record>
+
+        <record id="mail_template_finding_overdue" model="mail.template">
+            <field name="name">Audit Finding: Overdue Reminder</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="subject">Overdue audit finding {{ object.reference }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{ object.auditee_id.email_formatted }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.auditee_id.name or ''">Auditee</t>,</p>
+                    <p>
+                        Audit finding <t t-out="object.reference or ''">FND/0000/0000</t>
+                        (<t t-out="object.name or ''">Title</t>) is past its due date of
+                        <t t-out="object.response_due_date or ''">Due date</t> and is still
+                        in status <t t-out="object.state or ''">status</t>.
+                    </p>
+                    <p>
+                        Please provide or complete your response without further delay, or
+                        contact the lead auditor
+                        <t t-out="object.audit_id.lead_auditor_id.name or ''">Lead auditor</t>
+                        to agree a revised due date.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.auditee_id.lang }}</field>
+        </record>
+
+        <record id="mail_template_audit_report_issued" model="mail.template">
+            <field name="name">Audit Report: Issued</field>
+            <field name="model_id" ref="model_ls_audit_report"/>
+            <field name="subject">Audit report {{ object.reference }} has been issued</field>
+            <field name="email_from">{{ (object.approved_by_id.email_formatted or user.email_formatted) }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear colleague,</p>
+                    <p>
+                        The audit report <t t-out="object.reference or ''">ARP/0000/0000</t>
+                        for audit <t t-out="object.audit_id.reference or ''">AUD/0000/0000</t>
+                        has been approved and issued.
+                    </p>
+                    <table style="border-collapse:collapse;">
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Report date</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.report_date or ''">Date</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Findings raised</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.finding_count or 0">0</t></td>
+                        </tr>
+                        <tr>
+                            <td style="padding:4px 12px 4px 0;"><strong>Approved by</strong></td>
+                            <td style="padding:4px 0;"><t t-out="object.approved_by_id.name or ''">Approver</t></td>
+                        </tr>
+                    </table>
+                    <p><strong>Conclusion</strong></p>
+                    <p style="white-space:pre-wrap;"><t t-out="object.conclusion or ''">Conclusion</t></p>
+                </div>
+            </field>
+        </record>
+
+        <record id="mail_template_auditor_qualification_expiry" model="mail.template">
+            <field name="name">Auditor Qualification: Expiry Reminder</field>
+            <field name="model_id" ref="model_ls_audit_auditor"/>
+            <field name="subject">Auditor qualification of {{ object.user_id.name }} requires attention</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="email_to">{{ object.user_id.email_formatted }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.user_id.name or ''">Auditor</t>,</p>
+                    <p>
+                        Your auditor qualification expires on
+                        <t t-out="object.expiry_date or ''">Expiry date</t>
+                        (current status:
+                        <t t-out="object.qualification_state or ''">status</t>).
+                    </p>
+                    <p>
+                        An expired qualification prevents you from being assigned to new
+                        audits. Please contact the audit manager to arrange
+                        requalification.
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.user_id.lang }}</field>
+        </record>
+
+    </data>
+</odoo>

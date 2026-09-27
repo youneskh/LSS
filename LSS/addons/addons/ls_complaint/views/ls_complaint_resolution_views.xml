@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_complaint_resolution_view_list" model="ir.ui.view">
+        <field name="name">ls.complaint.resolution.list</field>
+        <field name="model">ls.complaint.resolution</field>
+        <field name="arch" type="xml">
+            <list string="Resolutions" editable="bottom">
+                <field name="complaint_id" optional="show"/>
+                <field name="resolution_type"/>
+                <field name="description"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="due_date"/>
+                <field name="completion_date"/>
+                <field name="completion_evidence" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state == 'cancelled'"
+                       decoration-info="state == 'in_progress'"/>
+                <button name="action_start" type="object" string="Start"
+                        icon="fa-play" invisible="state != 'draft'"/>
+                <button name="action_done" type="object" string="Done"
+                        icon="fa-check" invisible="state not in ['draft', 'in_progress']"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_complaint_resolution_view_form" model="ir.ui.view">
+        <field name="name">ls.complaint.resolution.form</field>
+        <field name="model">ls.complaint.resolution</field>
+        <field name="arch" type="xml">
+            <form string="Resolution">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Mark as Done"
+                            class="btn-primary"
+                            invisible="state not in ['draft', 'in_progress']"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            confirm="The resolution will be cancelled. The cancellation reason recorded below will be kept as justification."
+                            invisible="state not in ['draft', 'in_progress']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="complaint_id"/>
+                            <field name="resolution_type"/>
+                            <field name="owner_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="due_date"/>
+                            <field name="completion_date"/>
+                        </group>
+                    </group>
+                    <label for="description"/>
+                    <field name="description"/>
+                    <label for="completion_evidence"/>
+                    <field name="completion_evidence"/>
+                    <group string="Cancellation" invisible="state == 'done'">
+                        <field name="cancellation_reason" nolabel="1"
+                               placeholder="Mandatory justification before cancelling"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_complaint_resolution_view_search" model="ir.ui.view">
+        <field name="name">ls.complaint.resolution.search</field>
+        <field name="model">ls.complaint.resolution</field>
+        <field name="arch" type="xml">
+            <search string="Resolutions">
+                <field name="complaint_id"/>
+                <field name="owner_id"/>
+                <filter name="filter_my" string="My Resolutions"
+                        domain="[('owner_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ['draft', 'in_progress'])]"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('state', 'in', ['draft', 'in_progress']),
+                                 ('due_date', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_type" string="Resolution Type"
+                        context="{'group_by': 'resolution_type'}"/>
+                    <filter name="group_by_owner" string="Responsible"
+                        context="{'group_by': 'owner_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_complaint_resolution_action" model="ir.actions.act_window">
+        <field name="name">Resolutions</field>
+        <field name="res_model">ls.complaint.resolution</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_complaint_resolution_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No resolution recorded yet</p>
+            <p>Resolutions are created from the complaint they belong to.</p>
+        </field>
+    </record>
+
+</odoo>

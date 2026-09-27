@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Odoo 19 introduced res.groups.privilege. A group references a
+        privilege through privilege_id; the privilege in turn references an
+        ir.module.category. Verified against the official Odoo 19 tutorial
+        "Restrict access to data".
+    -->
+    <record id="module_category_ls_calibration" model="ir.module.category">
+        <field name="name">Calibration Management</field>
+        <field name="description">Calibration of measuring instruments for regulated environments.</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <record id="res_groups_privilege_ls_calibration" model="res.groups.privilege">
+        <field name="name">Calibration</field>
+        <field name="category_id" ref="module_category_ls_calibration"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Level 1: read-only access to the whole calibration data set. -->
+    <record id="group_ls_calibration_viewer" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_calibration"/>
+        <field name="comment">Read-only access to instruments, plans, calibration records, certificates and out-of-tolerance events.</field>
+    </record>
+
+    <!-- Level 2: performs calibrations and records measurement results. -->
+    <record id="group_ls_calibration_technician" model="res.groups">
+        <field name="name">Technician</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_calibration"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_calibration_viewer'))]"/>
+        <field name="comment">Creates and executes calibration records and enters as-found and as-left readings. Cannot review, approve or configure.</field>
+    </record>
+
+    <!--
+        Level 3: reviews and approves calibration records.
+
+        This group is a declared deviation from the suite specification, which
+        lists only Manager, Technician and Viewer. A distinct approver role is
+        required because the module enforces segregation of duties between the
+        user who performs a calibration and the user who approves it; without
+        a separate group the two roles could not be assigned to different
+        people without also granting full configuration rights.
+        See docs/DEVIATIONS.md.
+    -->
+    <record id="group_ls_calibration_approver" model="res.groups">
+        <field name="name">Approver</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_calibration"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_calibration_technician'))]"/>
+        <field name="comment">Reviews and approves calibration records and assesses out-of-tolerance events.</field>
+    </record>
+
+    <!-- Level 4: full access including master data and configuration. -->
+    <record id="group_ls_calibration_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_calibration"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_calibration_approver'))]"/>
+        <field name="comment">Full access, including instrument categories, reference standards, calibration plans and the deletion of draft data.</field>
+    </record>
+
+</odoo>

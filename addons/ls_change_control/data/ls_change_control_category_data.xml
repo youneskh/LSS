@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The categories below are proposed as a starting configuration. The
+     impact areas retained and the approval matrix of each category must be
+     reviewed and approved by the quality unit of the organisation before
+     use. They are loaded with noupdate="1" so that a module upgrade never
+     overwrites a local modification. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="category_facility" model="ls.change_control.category">
+            <field name="name">Facility Change</field>
+            <field name="code">FAC</field>
+            <field name="sequence">10</field>
+            <field name="description">Modification of a building, a room, a classified area or a flow of personnel or materials.</field>
+            <field name="implementation_delay">120</field>
+            <field name="verification_delay">60</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_facilities'),
+                ref('impact_area_utilities'),
+                ref('impact_area_cleaning'),
+                ref('impact_area_environmental_monitoring'),
+                ref('impact_area_documentation'),
+                ref('impact_area_personnel'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_facility_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_facility"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_facility_eng" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_facility"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">engineering</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_facility_prod" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_facility"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">production</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_equipment" model="ls.change_control.category">
+            <field name="name">Equipment Change</field>
+            <field name="code">EQP</field>
+            <field name="sequence">20</field>
+            <field name="description">Introduction, modification, relocation or decommissioning of production, packaging or laboratory equipment.</field>
+            <field name="implementation_delay">90</field>
+            <field name="verification_delay">30</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_equipment'),
+                ref('impact_area_process'),
+                ref('impact_area_cleaning'),
+                ref('impact_area_documentation'),
+                ref('impact_area_personnel'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_equipment_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_equipment"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_equipment_eng" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_equipment"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">engineering</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_equipment_val" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_equipment"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">validation</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_process" model="ls.change_control.category">
+            <field name="name">Manufacturing Process Change</field>
+            <field name="code">PRC</field>
+            <field name="sequence">30</field>
+            <field name="description">Modification of a process parameter, a process step, a batch size, a hold time or an in-process control.</field>
+            <field name="implementation_delay">120</field>
+            <field name="verification_delay">90</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_process'),
+                ref('impact_area_equipment'),
+                ref('impact_area_product'),
+                ref('impact_area_analytical'),
+                ref('impact_area_documentation'),
+                ref('impact_area_regulatory'),
+                ref('impact_area_personnel'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_process_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_process"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_process_prod" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_process"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">production</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_process_val" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_process"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">validation</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_process_ra" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_process"/>
+            <field name="sequence">40</field>
+            <field name="approval_role">regulatory_affairs</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_product" model="ls.change_control.category">
+            <field name="name">Product and Formulation Change</field>
+            <field name="code">PRD</field>
+            <field name="sequence">40</field>
+            <field name="description">Modification of the composition, the specification, the shelf life or the presentation of a finished product.</field>
+            <field name="implementation_delay">180</field>
+            <field name="verification_delay">90</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_product'),
+                ref('impact_area_process'),
+                ref('impact_area_material'),
+                ref('impact_area_analytical'),
+                ref('impact_area_packaging'),
+                ref('impact_area_documentation'),
+                ref('impact_area_regulatory'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_product_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_product"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_product_rd" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_product"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">research_development</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_product_ra" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_product"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">regulatory_affairs</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_product_qp" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_product"/>
+            <field name="sequence">40</field>
+            <field name="approval_role">qualified_person</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_analytical" model="ls.change_control.category">
+            <field name="name">Analytical Method Change</field>
+            <field name="code">ANA</field>
+            <field name="sequence">50</field>
+            <field name="description">Modification of a test method, a specification or a reference standard.</field>
+            <field name="implementation_delay">90</field>
+            <field name="verification_delay">60</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_analytical'),
+                ref('impact_area_product'),
+                ref('impact_area_documentation'),
+                ref('impact_area_regulatory'),
+                ref('impact_area_personnel'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_analytical_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_analytical"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_analytical_qc" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_analytical"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">quality_control</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_analytical_ra" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_analytical"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">regulatory_affairs</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_material" model="ls.change_control.category">
+            <field name="name">Material or Supplier Change</field>
+            <field name="code">MAT</field>
+            <field name="sequence">60</field>
+            <field name="description">Introduction or replacement of a material, or change of the supplier or of the manufacturing site of a material.</field>
+            <field name="implementation_delay">150</field>
+            <field name="verification_delay">90</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_material'),
+                ref('impact_area_product'),
+                ref('impact_area_process'),
+                ref('impact_area_analytical'),
+                ref('impact_area_regulatory'),
+                ref('impact_area_documentation'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_material_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_material"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_material_sc" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_material"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">supply_chain</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_material_ra" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_material"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">regulatory_affairs</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_packaging" model="ls.change_control.category">
+            <field name="name">Packaging and Labelling Change</field>
+            <field name="code">PKG</field>
+            <field name="sequence">70</field>
+            <field name="description">Modification of artwork, of a labelling text, of a leaflet, of coding or of serialisation.</field>
+            <field name="implementation_delay">120</field>
+            <field name="verification_delay">60</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_packaging'),
+                ref('impact_area_material'),
+                ref('impact_area_documentation'),
+                ref('impact_area_regulatory'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_packaging_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_packaging"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_packaging_ra" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_packaging"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">regulatory_affairs</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_packaging_prod" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_packaging"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">production</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_documentation" model="ls.change_control.category">
+            <field name="name">Documentation Change</field>
+            <field name="code">DOC</field>
+            <field name="sequence">80</field>
+            <field name="description">Creation, revision or withdrawal of a controlled document that is not covered by another category.</field>
+            <field name="implementation_delay">60</field>
+            <field name="verification_delay">30</field>
+            <field name="requires_verification" eval="False"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_documentation'),
+                ref('impact_area_personnel'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_documentation_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_documentation"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_computerised_system" model="ls.change_control.category">
+            <field name="name">Computerised System Change</field>
+            <field name="code">CSV</field>
+            <field name="sequence">90</field>
+            <field name="description">Modification of software, of a system configuration or of an interface of a computerised system used in a regulated activity.</field>
+            <field name="implementation_delay">90</field>
+            <field name="verification_delay">60</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_computerised_system'),
+                ref('impact_area_documentation'),
+                ref('impact_area_personnel'),
+                ref('impact_area_process'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_csv_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_computerised_system"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_csv_it" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_computerised_system"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">information_technology</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_csv_val" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_computerised_system"/>
+            <field name="sequence">30</field>
+            <field name="approval_role">validation</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+        <record id="category_organisational" model="ls.change_control.category">
+            <field name="name">Organisational Change</field>
+            <field name="code">ORG</field>
+            <field name="sequence">100</field>
+            <field name="description">Modification of roles, responsibilities or the organisation of a regulated activity.</field>
+            <field name="implementation_delay">60</field>
+            <field name="verification_delay">90</field>
+            <field name="requires_verification" eval="True"/>
+            <field name="impact_area_ids" eval="[(6, 0, [
+                ref('impact_area_personnel'),
+                ref('impact_area_documentation'),
+            ])]"/>
+        </record>
+
+        <record id="approval_template_org_qa" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_organisational"/>
+            <field name="sequence">10</field>
+            <field name="approval_role">quality_assurance</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+        <record id="approval_template_org_site" model="ls.change_control.approval_template">
+            <field name="category_id" ref="category_organisational"/>
+            <field name="sequence">20</field>
+            <field name="approval_role">site_management</field>
+            <field name="mandatory" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

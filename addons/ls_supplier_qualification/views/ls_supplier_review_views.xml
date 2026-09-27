@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_review_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.review.list</field>
+        <field name="model">ls.supplier.review</field>
+        <field name="arch" type="xml">
+            <list string="Periodic Reviews"
+                  decoration-danger="decision in ['suspend', 'disqualify']"
+                  decoration-warning="decision in ['requalify', 'maintain_conditional']"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="review_date"/>
+                <field name="partner_id"/>
+                <field name="review_type"/>
+                <field name="reviewer_id"/>
+                <field name="period_start" optional="hide"/>
+                <field name="period_end" optional="hide"/>
+                <field name="decision" widget="badge"
+                       decoration-success="decision == 'maintain'"
+                       decoration-warning="decision in ['maintain_conditional', 'requalify']"
+                       decoration-danger="decision in ['suspend', 'disqualify']"/>
+                <field name="new_expiry_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_review_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.review.form</field>
+        <field name="model">ls.supplier.review</field>
+        <field name="arch" type="xml">
+            <form string="Periodic Review">
+                <header>
+                    <button name="action_collect_evidence" type="object"
+                            string="Collect Evidence" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Complete Review"
+                            class="btn-primary" invisible="state != 'draft'"
+                            confirm="Completing the review applies its decision to the qualification dossier. Continue?"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="qualification_id" readonly="state != 'draft'"/>
+                            <field name="partner_id"/>
+                            <field name="review_type" readonly="state != 'draft'"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Review">
+                            <field name="review_date" readonly="state != 'draft'"/>
+                            <field name="reviewer_id" readonly="state != 'draft'"/>
+                            <field name="period_start" readonly="state != 'draft'"/>
+                            <field name="period_end" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Evidence Reviewed" name="evidence">
+                            <group>
+                                <field name="assessment_ids" widget="many2many_tags"
+                                       readonly="state != 'draft'"/>
+                                <field name="audit_ids" widget="many2many_tags"
+                                       readonly="state != 'draft'"/>
+                                <field name="performance_ids" widget="many2many_tags"
+                                       readonly="state != 'draft'"/>
+                            </group>
+                        </page>
+                        <page string="Summary" name="summary">
+                            <field name="summary" nolabel="1"
+                                   readonly="state != 'draft'"
+                                   placeholder="Consolidated summary of the period: assessments, audits, findings, performance, complaints and changes."/>
+                        </page>
+                        <page string="Decision" name="decision">
+                            <group>
+                                <group>
+                                    <field name="decision" readonly="state != 'draft'"/>
+                                    <field name="new_expiry_date"
+                                           readonly="state != 'draft'"
+                                           invisible="decision not in ['maintain', 'maintain_conditional']"/>
+                                </group>
+                            </group>
+                            <group string="Conditions"
+                                   invisible="decision != 'maintain_conditional'">
+                                <field name="new_conditions" nolabel="1"
+                                       readonly="state != 'draft'"
+                                       required="decision == 'maintain_conditional'"/>
+                            </group>
+                            <group string="Justification">
+                                <field name="decision_justification" nolabel="1"
+                                       readonly="state != 'draft'"
+                                       required="decision in ['requalify', 'suspend', 'disqualify']"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_review_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.review.search</field>
+        <field name="model">ls.supplier.review</field>
+        <field name="arch" type="xml">
+            <search string="Periodic Reviews">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="reviewer_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_done" string="Completed"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="filter_adverse" string="Adverse Decision"
+                        domain="[('decision', 'in', ['requalify', 'suspend', 'disqualify'])]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_decision" string="Decision"
+                        context="{'group_by': 'decision'}"/>
+                    <filter name="group_date" string="Review Date"
+                        context="{'group_by': 'review_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_review" model="ir.actions.act_window">
+        <field name="name">Periodic Reviews</field>
+        <field name="res_model">ls.supplier.review</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Perform a periodic review</p>
+            <p>
+                A review consolidates the evidence of a period and records a
+                decision. Completing it applies that decision to the dossier.
+            </p>
+        </field>
+    </record>
+
+</odoo>

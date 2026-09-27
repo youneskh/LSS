@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_signature_request" model="mail.template">
+            <field name="name">Electronic Signature: request</field>
+            <field name="model_id" ref="model_ls_signature_request"/>
+            <field name="subject">Signature requested: {{ object.res_name or object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="partner_to">{{ ','.join(str(pid) for pid in object.signer_ids.partner_id.ids) }}</field>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Hello,</p>
+                    <p>
+                        <t t-out="object.requested_by_id.name"/> has requested your electronic
+                        signature with the meaning <strong t-out="object.meaning_id.name"/> on
+                        the record <strong t-out="object.res_name or ''"/>.
+                    </p>
+                    <p t-if="object.deadline">
+                        Requested by: <t t-out="object.deadline"/>.
+                    </p>
+                    <p t-if="object.instructions">
+                        <t t-out="object.instructions"/>
+                    </p>
+                    <p>
+                        Reference: <t t-out="object.name"/>.
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_signature_alert" model="mail.template">
+            <field name="name">Electronic Signature: unauthorised attempt alert</field>
+            <field name="model_id" ref="model_ls_signature_attempt"/>
+            <field name="subject">URGENT: electronic signature attempt refused ({{ object.result }})</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="email_to">{{ ctx.get('security_recipients') or '' }}</field>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>
+                        An attempt to execute an electronic signature was refused. This
+                        notification is issued under 21 CFR 11.300(d).
+                    </p>
+                    <ul>
+                        <li>Identification code submitted: <t t-out="object.login_attempted"/></li>
+                        <li>Session user: <t t-out="object.user_id.name or 'n/a'"/></li>
+                        <li>Outcome: <t t-out="object.result"/></li>
+                        <li>Record: <t t-out="object.res_model or ''"/>, <t t-out="object.res_id or ''"/></li>
+                        <li>Time (UTC): <t t-out="object.attempted_at"/></li>
+                        <li>Source address: <t t-out="object.ip_address or 'unknown'"/></li>
+                    </ul>
+                    <p>Investigate and record the outcome in the quality management system.</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+        <record id="mail_template_integrity_failure" model="mail.template">
+            <field name="name">Electronic Signature: chain verification failure</field>
+            <field name="model_id" ref="model_ls_signature_integrity_check"/>
+            <field name="subject">URGENT: electronic signature chain verification failed</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="email_to">{{ ctx.get('security_recipients') or '' }}</field>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>
+                        Verification of the electronic signature hash chain failed for
+                        <strong t-out="object.company_id.name"/>.
+                    </p>
+                    <ul>
+                        <li>Checked at (UTC): <t t-out="object.checked_at"/></li>
+                        <li>Entries examined: <t t-out="object.entries_checked"/></li>
+                        <li>First divergence: <t t-out="object.first_divergence_log_id.name or 'n/a'"/></li>
+                    </ul>
+                    <pre t-out="object.details"/>
+                    <p>
+                        Treat this as a suspected data integrity event and open a deviation.
+                    </p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

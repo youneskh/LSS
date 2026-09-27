@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_assessment_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.assessment.list</field>
+        <field name="model">ls.supplier.assessment</field>
+        <field name="arch" type="xml">
+            <list string="Supplier Assessments"
+                  decoration-danger="result == 'fail'"
+                  decoration-warning="result == 'conditional'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="qualification_id" optional="hide"/>
+                <field name="assessment_type"/>
+                <field name="template_id" optional="hide"/>
+                <field name="assessor_id"/>
+                <field name="reviewer_id" optional="hide"/>
+                <field name="score_percent" widget="percentage" optional="show"/>
+                <field name="mandatory_failed_count" optional="hide"/>
+                <field name="result" widget="badge"
+                       decoration-success="result == 'pass'"
+                       decoration-warning="result == 'conditional'"
+                       decoration-danger="result == 'fail'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'reviewed'"
+                       decoration-info="state == 'done'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_assessment_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.assessment.form</field>
+        <field name="model">ls.supplier.assessment</field>
+        <field name="arch" type="xml">
+            <form string="Supplier Assessment">
+                <header>
+                    <button name="action_load_template" type="object"
+                            string="Load Criteria from Template"
+                            invisible="state != 'draft'"/>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_done" type="object" string="Complete"
+                            class="btn-primary" invisible="state != 'in_progress'"/>
+                    <button name="action_review" type="object" string="Review"
+                            class="btn-primary" invisible="state != 'done'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ['reviewed', 'cancelled']"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,done,reviewed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="qualification_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="partner_id"/>
+                            <field name="template_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="assessment_type"
+                                   readonly="state not in ['draft', 'in_progress']"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group string="Execution">
+                            <field name="date"
+                                   readonly="state not in ['draft', 'in_progress']"/>
+                            <field name="assessor_id"
+                                   readonly="state not in ['draft', 'in_progress']"/>
+                            <field name="reviewer_id"/>
+                            <field name="review_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Scoring Rules (frozen)">
+                            <field name="max_score_per_criterion"/>
+                            <field name="mandatory_min_score"/>
+                            <field name="pass_threshold"/>
+                            <field name="conditional_threshold"/>
+                        </group>
+                        <group string="Result">
+                            <field name="total_weighted_score"/>
+                            <field name="total_max_weighted_score"/>
+                            <field name="score_percent" widget="percentage"/>
+                            <field name="mandatory_failed_count"/>
+                            <field name="finding_count"/>
+                            <field name="result" widget="badge"
+                                   decoration-success="result == 'pass'"
+                                   decoration-warning="result == 'conditional'"
+                                   decoration-danger="result == 'fail'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Scored Criteria" name="lines">
+                            <field name="line_ids"
+                                   readonly="state not in ['draft', 'in_progress']">
+                                <list editable="bottom"
+                                      decoration-danger="is_mandatory and not is_conform"
+                                      decoration-warning="not is_conform">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="criterion_id"/>
+                                    <field name="criterion_domain" optional="show"/>
+                                    <field name="weight"/>
+                                    <field name="is_mandatory"/>
+                                    <field name="score"/>
+                                    <field name="max_score"/>
+                                    <field name="weighted_score" optional="hide"/>
+                                    <field name="evidence" optional="show"/>
+                                    <field name="comment" optional="show"/>
+                                    <field name="is_finding"/>
+                                    <field name="is_conform" column_invisible="1"/>
+                                    <field name="company_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <field name="conclusion" nolabel="1"
+                                   placeholder="Written conclusion of the assessor. Required before completion."
+                                   readonly="state not in ['draft', 'in_progress']"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_assessment_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.assessment.search</field>
+        <field name="model">ls.supplier.assessment</field>
+        <field name="arch" type="xml">
+            <search string="Supplier Assessments">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="assessor_id"/>
+                <field name="template_id"/>
+                <filter name="filter_my" string="My Assessments"
+                        domain="[('assessor_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_in_progress" string="In Progress"
+                        domain="[('state', '=', 'in_progress')]"/>
+                <filter name="filter_to_review" string="To Review"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="filter_fail" string="Failed"
+                        domain="[('result', '=', 'fail')]"/>
+                <separator/>
+                <filter name="filter_this_year" string="This Year"
+                        domain="[('date', '&gt;=', (context_today().replace(month=1, day=1)).strftime('%Y-%m-%d'))]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_type" string="Assessment Type"
+                        context="{'group_by': 'assessment_type'}"/>
+                    <filter name="group_result" string="Result"
+                        context="{'group_by': 'result'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_assessor" string="Assessor"
+                        context="{'group_by': 'assessor_id'}"/>
+                    <filter name="group_date" string="Date"
+                        context="{'group_by': 'date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_supplier_assessment_view_graph" model="ir.ui.view">
+        <field name="name">ls.supplier.assessment.graph</field>
+        <field name="model">ls.supplier.assessment</field>
+        <field name="arch" type="xml">
+            <graph string="Assessment Scores" type="bar" sample="1">
+                <field name="partner_id"/>
+                <field name="score_percent" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_supplier_assessment_view_pivot" model="ir.ui.view">
+        <field name="name">ls.supplier.assessment.pivot</field>
+        <field name="model">ls.supplier.assessment</field>
+        <field name="arch" type="xml">
+            <pivot string="Assessment Analysis" sample="1">
+                <field name="partner_id" type="row"/>
+                <field name="assessment_type" type="col"/>
+                <field name="score_percent" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_assessment" model="ir.actions.act_window">
+        <field name="name">Supplier Assessments</field>
+        <field name="res_model">ls.supplier.assessment</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a supplier assessment</p>
+            <p>
+                Select a template, load its criteria, score each of them with
+                the supporting evidence, and conclude.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_tool_list" model="ir.ui.view">
+        <field name="name">ls.mp.tool.list</field>
+        <field name="model">ls.mp.tool</field>
+        <field name="arch" type="xml">
+            <list string="Moulding Tools"
+                  decoration-danger="maintenance_status == 'overdue' or requalification_overdue"
+                  decoration-warning="maintenance_status == 'due_soon'"
+                  decoration-muted="state == 'decommissioned'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="tool_type"/>
+                <field name="cavity_count"/>
+                <field name="active_cavity_count"/>
+                <field name="blocked_cavity_count" optional="show"/>
+                <field name="workcenter_id" optional="show"/>
+                <field name="total_shot_count"/>
+                <field name="shots_since_maintenance" optional="show"/>
+                <field name="next_maintenance_date" optional="show"/>
+                <field name="maintenance_status"/>
+                <field name="requalification_overdue" optional="hide"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_tool_form" model="ir.ui.view">
+        <field name="name">ls.mp.tool.form</field>
+        <field name="model">ls.mp.tool</field>
+        <field name="arch" type="xml">
+            <form string="Moulding Tool">
+                <header>
+                    <button name="action_qualify" type="object" string="Qualify"
+                            class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state not in ('draft', 'quarantined')"/>
+                    <button name="action_place_in_service" type="object"
+                            string="Place In Service" class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_engineer"
+                            invisible="state != 'qualified'"/>
+                    <button name="action_send_to_maintenance" type="object"
+                            string="Send To Maintenance"
+                            groups="ls_medical_plastics.group_mp_technician"
+                            invisible="state not in ('in_service', 'qualified')"/>
+                    <button name="action_open_service_wizard" type="object"
+                            string="Return To Service" class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_technician"
+                            invisible="state not in ('maintenance', 'quarantined')"/>
+                    <button name="action_quarantine" type="object" string="Quarantine"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state in ('quarantined', 'decommissioned')"/>
+                    <button name="action_decommission" type="object" string="Decommission"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state == 'decommissioned'"
+                            confirm="Decommissioning permanently withdraws the tool from service. Continue?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,qualified,in_service"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_runs" type="object"
+                                class="oe_stat_button" icon="fa-industry">
+                            <field name="run_count" widget="statinfo" string="Runs"/>
+                        </button>
+                        <button name="action_view_maintenance" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="maintenance_count" widget="statinfo" string="Maintenance"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Decommissioned" bg_color="text-bg-danger"
+                            invisible="state != 'decommissioned'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Tool name"/></h1>
+                        <label for="code"/>
+                        <h2><field name="code" readonly="1"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="tool_type"/>
+                            <field name="manufacturer_id"/>
+                            <field name="serial_no"/>
+                            <field name="acquisition_date"/>
+                            <field name="steel_grade"/>
+                            <field name="storage_location"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Production">
+                            <field name="workcenter_id"/>
+                            <field name="cavity_count"/>
+                            <field name="active_cavity_count"/>
+                            <field name="blocked_cavity_count"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Shot Counting">
+                            <field name="opening_shot_count"
+                                   readonly="recorded_shot_count > 0"/>
+                            <field name="recorded_shot_count"/>
+                            <field name="total_shot_count"/>
+                        </group>
+                        <group string="Preventive Maintenance">
+                            <field name="maintenance_interval_shots"/>
+                            <field name="maintenance_interval_months"/>
+                            <field name="shot_count_at_last_maintenance"/>
+                            <field name="shots_since_maintenance"/>
+                            <field name="shots_to_next_maintenance"
+                                   invisible="maintenance_interval_shots == 0"/>
+                            <field name="last_maintenance_date"/>
+                            <field name="next_maintenance_date"/>
+                            <field name="maintenance_status"/>
+                        </group>
+                    </group>
+                    <group string="Qualification">
+                        <group>
+                            <field name="qualification_date"/>
+                            <field name="requalification_interval_months"/>
+                        </group>
+                        <group>
+                            <field name="requalification_due_date"/>
+                            <field name="requalification_overdue"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cavity Register" name="cavities">
+                            <field name="cavity_ids">
+                                <list editable="bottom"
+                                      decoration-danger="state == 'blocked'"
+                                      decoration-muted="state == 'removed'">
+                                    <field name="number" readonly="1"/>
+                                    <field name="label"/>
+                                    <field name="state"/>
+                                    <field name="blocked_reason"/>
+                                    <field name="blocked_date" readonly="1"/>
+                                    <field name="blocked_by_id" readonly="1"/>
+                                    <button name="action_block" type="object"
+                                            string="Block" icon="fa-ban"
+                                            invisible="state != 'active'"/>
+                                    <button name="action_unblock" type="object"
+                                            string="Unblock" icon="fa-check"
+                                            invisible="state != 'blocked'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Components Produced" name="components">
+                            <field name="component_ids">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="category"/>
+                                    <field name="criticality"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Maintenance History" name="maintenance">
+                            <field name="maintenance_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="maintenance_type"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_end"/>
+                                    <field name="shot_count_at_event"/>
+                                    <field name="performed_by_id"/>
+                                    <field name="requalification_required"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_tool_search" model="ir.ui.view">
+        <field name="name">ls.mp.tool.search</field>
+        <field name="model">ls.mp.tool</field>
+        <field name="arch" type="xml">
+            <search string="Moulding Tools">
+                <field name="name" string="Tool"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="workcenter_id"/>
+                <field name="manufacturer_id"/>
+                <field name="component_ids" string="Component"/>
+                <filter name="filter_in_service" string="In Service" domain="[('state', '=', 'in_service')]"/>
+                <filter name="filter_maintenance_overdue" string="Maintenance Overdue"
+                        domain="[('maintenance_status', '=', 'overdue')]"/>
+                <filter name="filter_maintenance_due_soon" string="Maintenance Due Soon"
+                        domain="[('maintenance_status', '=', 'due_soon')]"/>
+                <filter name="filter_requalification_overdue" string="Requalification Overdue"
+                        domain="[('requalification_overdue', '=', True)]"/>
+                <filter name="filter_blocked_cavities" string="Has Blocked Cavities"
+                        domain="[('blocked_cavity_count', '>', 0)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_type" string="Tool Type" context="{'group_by': 'tool_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_workcenter" string="Work Centre" context="{'group_by': 'workcenter_id'}"/>
+                    <filter name="group_maintenance_status" string="Maintenance Status"
+                            context="{'group_by': 'maintenance_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mp_tool" model="ir.actions.act_window">
+        <field name="name">Tool Register</field>
+        <field name="res_model">ls.mp.tool</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_tool_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a moulding tool</p>
+            <p>The tool register holds the lifecycle status, cavity register, cumulative
+               shot count and maintenance schedule of every mould and insert. Cavities are
+               created automatically from the declared cavity count.</p>
+        </field>
+    </record>
+
+    <record id="action_mp_tool_maintenance_due" model="ir.actions.act_window">
+        <field name="name">Tools Due For Maintenance</field>
+        <field name="res_model">ls.mp.tool</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_tool_search"/>
+        <field name="domain">['|', ('maintenance_status', 'in', ('due_soon', 'overdue')), ('requalification_overdue', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No tool currently requires attention</p>
+            <p>This view lists tools whose preventive maintenance or requalification is
+               due or overdue, based on the intervals configured on each tool.</p>
+        </field>
+    </record>
+
+</odoo>

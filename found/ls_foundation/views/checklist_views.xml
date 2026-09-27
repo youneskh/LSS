@@ -1,0 +1,9 @@
+<odoo>
+    <record id="view_lss_foundation_checklist_item_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.checklist.item.tree</field>
+        <field name="model">lss.foundation.checklist.item</field>
+        <field name="arch" type="xml">
+            <tree><field name="question"/><field name="answer" widget="selection"/><field name="required_for_next"/></tree>
+        </field>
+    </record>
+</odoo>

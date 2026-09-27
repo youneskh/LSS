@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ================= FORM ================= -->
+    <record id="view_ls_deviation_form" model="ir.ui.view">
+        <field name="name">ls.deviation.form</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <form string="Deviation">
+                <header>
+                    <button name="action_assess"
+                            string="Complete Assessment"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'reported'"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_start_investigation"
+                            string="Start Investigation"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'assessed'"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_disposition"
+                            string="Proceed to Disposition"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'investigation'"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_require_capa"
+                            string="Require CAPA"
+                            type="object"
+                            invisible="state != 'disposition'"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_open_close_wizard"
+                            string="Close Deviation"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state not in ['disposition', 'capa_required']"
+                            groups="ls_deviation.group_ls_deviation_manager"/>
+                    <button name="action_send_back"
+                            string="Send Back"
+                            type="object"
+                            invisible="state not in ['assessed', 'investigation', 'disposition', 'capa_required']"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_open_due_date_wizard"
+                            string="Extend Target Date"
+                            type="object"
+                            invisible="state in ['closed', 'cancelled']"
+                            groups="ls_deviation.group_ls_deviation_investigator"/>
+                    <button name="action_open_cancel_wizard"
+                            string="Cancel"
+                            type="object"
+                            invisible="state in ['closed', 'cancelled']"
+                            groups="ls_deviation.group_ls_deviation_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="reported,assessed,investigation,disposition,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Closed"
+                            invisible="state != 'closed'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" placeholder="Short description of the deviation"/></h2>
+                    </div>
+                    <group>
+                        <group string="Classification">
+                            <field name="deviation_type_id"/>
+                            <field name="category_id"/>
+                            <field name="severity"/>
+                            <field name="is_planned"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Chronology and Ownership">
+                            <field name="occurrence_date"/>
+                            <field name="detection_date"/>
+                            <field name="report_date"/>
+                            <field name="due_date" readonly="1"/>
+                            <field name="is_overdue" invisible="not is_overdue"/>
+                            <field name="days_open"/>
+                            <field name="reporter_id"/>
+                            <field name="owner_id"/>
+                            <field name="qa_reviewer_id"/>
+                            <field name="department_id"/>
+                        </group>
+                    </group>
+                    <group string="Subject of the Deviation">
+                        <group>
+                            <field name="product_id"/>
+                            <field name="quantity_affected"/>
+                            <field name="product_uom_id" invisible="not product_id"/>
+                            <field name="production_id"/>
+                        </group>
+                        <group>
+                            <field name="equipment_id"/>
+                            <field name="location_id"/>
+                            <field name="lot_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <group>
+                                <field name="description" nolabel="1"
+                                       placeholder="Factual account: what happened, where, when, and how it was detected."/>
+                            </group>
+                            <separator string="Justification (21 CFR 211.100(b))"/>
+                            <field name="justification" nolabel="1"
+                                   required="is_planned"
+                                   placeholder="Justification of the deviation. Mandatory for a planned deviation."/>
+                        </page>
+                        <page string="Impact Assessment" name="impact">
+                            <group>
+                                <group string="Impact Flags">
+                                    <field name="impact_patient_safety"/>
+                                    <field name="impact_product_quality"/>
+                                    <field name="impact_regulatory"/>
+                                    <field name="impact_validation"/>
+                                    <field name="impact_other_batches"/>
+                                    <field name="has_impact" readonly="1"/>
+                                </group>
+                                <group string="Assessment Record">
+                                    <field name="impact_assessed_by_id"/>
+                                    <field name="impact_assessment_date"/>
+                                </group>
+                            </group>
+                            <separator string="Assessment Rationale"/>
+                            <field name="impact_assessment" nolabel="1"
+                                   placeholder="Reasoned assessment supporting the impact flags above."/>
+                        </page>
+                        <page string="Immediate Actions" name="actions">
+                            <field name="immediate_action_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="action_type"/>
+                                    <field name="responsible_id"/>
+                                    <field name="deadline"/>
+                                    <field name="completion_evidence"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'done'"
+                                           decoration-warning="state == 'todo'"/>
+                                    <field name="date_done" column_invisible="True"/>
+                                    <button name="action_done" type="object"
+                                            string="Done" icon="fa-check"
+                                            invisible="state != 'todo'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Investigation" name="investigation">
+                            <field name="investigation_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="rca_method_id"/>
+                                    <field name="investigator_id"/>
+                                    <field name="date_started"/>
+                                    <field name="date_completed"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'completed'"/>
+                                </list>
+                            </field>
+                            <separator string="Extension to Other Batches (21 CFR 211.192)"/>
+                            <group>
+                                <field name="other_batches_lot_ids" widget="many2many_tags"
+                                       nolabel="1" colspan="2"/>
+                            </group>
+                            <field name="extension_rationale" nolabel="1"
+                                   placeholder="Rationale for the scope of the extension to other batches and products, including where no extension was considered necessary."/>
+                        </page>
+                        <page string="Disposition" name="disposition">
+                            <field name="disposition_ids">
+                                <list>
+                                    <field name="product_id"/>
+                                    <field name="lot_id"/>
+                                    <field name="quantity"/>
+                                    <field name="product_uom_id"/>
+                                    <field name="decision"/>
+                                    <field name="approved_by_id"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'approved'"
+                                           decoration-danger="state == 'rejected'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Closure" name="closure">
+                            <group>
+                                <group string="CAPA Decision">
+                                    <field name="capa_required"/>
+                                    <field name="capa_reference"/>
+                                </group>
+                                <group string="Closure Record">
+                                    <field name="closed_by_id"/>
+                                    <field name="closure_date"/>
+                                </group>
+                            </group>
+                            <separator string="CAPA Decision Rationale"/>
+                            <field name="capa_decision_rationale" nolabel="1"/>
+                            <separator string="Conclusions (21 CFR 211.192)"/>
+                            <field name="conclusion" nolabel="1"/>
+                            <separator string="Follow-up (21 CFR 211.192)"/>
+                            <field name="followup" nolabel="1"/>
+                            <separator string="Cancellation Reason" invisible="state != 'cancelled'"/>
+                            <field name="cancel_reason" nolabel="1" invisible="state != 'cancelled'"/>
+                        </page>
+                        <page string="Transition Log" name="stage_log">
+                            <field name="stage_log_ids" readonly="1">
+                                <list>
+                                    <field name="create_date" string="Timestamp"/>
+                                    <field name="user_id"/>
+                                    <field name="from_state"/>
+                                    <field name="to_state"/>
+                                    <field name="reason"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================= LIST ================= -->
+    <record id="view_ls_deviation_list" model="ir.ui.view">
+        <field name="name">ls.deviation.list</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <list string="Deviations"
+                  decoration-danger="is_overdue"
+                  decoration-muted="state in ['closed', 'cancelled']"
+                  decoration-bf="severity == 'critical'">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="deviation_type_id"/>
+                <field name="category_id"/>
+                <field name="severity" widget="badge"
+                       decoration-danger="severity == 'critical'"
+                       decoration-warning="severity == 'major'"/>
+                <field name="detection_date"/>
+                <field name="due_date"/>
+                <field name="days_open"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'investigation'"/>
+                <field name="is_overdue" column_invisible="True"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= KANBAN ================= -->
+    <record id="view_ls_deviation_kanban" model="ir.ui.view">
+        <field name="name">ls.deviation.kanban</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false">
+                <field name="is_overdue"/>
+                <field name="severity"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                            <field name="severity" widget="badge"
+                                   decoration-danger="severity == 'critical'"
+                                   decoration-warning="severity == 'major'"/>
+                        </div>
+                        <div class="mt-1"><field name="title"/></div>
+                        <div class="text-muted small mt-1">
+                            <field name="category_id"/>
+                        </div>
+                        <div class="mt-1">
+                            <span t-if="record.is_overdue.raw_value"
+                                  class="badge text-bg-danger">Overdue</span>
+                        </div>
+                        <footer>
+                            <field name="due_date" widget="date"/>
+                            <field name="owner_id" widget="many2one_avatar_user"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ================= SEARCH ================= -->
+    <record id="view_ls_deviation_search" model="ir.ui.view">
+        <field name="name">ls.deviation.search</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <search string="Deviations">
+                <field name="name" string="Reference"/>
+                <field name="title"/>
+                <field name="description"/>
+                <field name="product_id"/>
+                <field name="lot_ids"/>
+                <field name="production_id"/>
+                <field name="owner_id"/>
+                <field name="reporter_id"/>
+                <field name="deviation_type_id"/>
+                <field name="category_id"/>
+                <separator/>
+                <filter name="filter_my_deviations" string="My Deviations"
+                        domain="['|', ('owner_id', '=', uid), ('reporter_id', '=', uid)]"/>
+                <filter name="filter_to_review" string="Awaiting My QA Review"
+                        domain="[('qa_reviewer_id', '=', uid), ('state', 'in', ['disposition', 'capa_required'])]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <filter name="filter_overdue" string="Overdue"
+                        domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('severity', '=', 'critical')]"/>
+                <filter name="filter_major" string="Major"
+                        domain="[('severity', '=', 'major')]"/>
+                <filter name="filter_minor" string="Minor"
+                        domain="[('severity', '=', 'minor')]"/>
+                <separator/>
+                <filter name="filter_patient_safety" string="Patient Safety Impact"
+                        domain="[('impact_patient_safety', '=', True)]"/>
+                <filter name="filter_capa_required" string="CAPA Required"
+                        domain="[('capa_required', '=', True)]"/>
+                <separator/>
+                <filter name="filter_detected_this_month" string="Detected This Month"
+                        date="detection_date"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_severity" string="Severity" context="{'group_by': 'severity'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'deviation_type_id'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_owner" string="Investigator" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_detection_month" string="Detection Month"
+                            context="{'group_by': 'detection_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ================= GRAPH ================= -->
+    <record id="view_ls_deviation_graph" model="ir.ui.view">
+        <field name="name">ls.deviation.graph</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <graph string="Deviation Analysis" type="bar" sample="1">
+                <field name="category_id"/>
+                <field name="severity"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ================= PIVOT ================= -->
+    <record id="view_ls_deviation_pivot" model="ir.ui.view">
+        <field name="name">ls.deviation.pivot</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <pivot string="Deviation Analysis" sample="1">
+                <field name="category_id" type="row"/>
+                <field name="severity" type="col"/>
+                
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ================= CALENDAR ================= -->
+    <record id="view_ls_deviation_calendar" model="ir.ui.view">
+        <field name="name">ls.deviation.calendar</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <calendar string="Deviations" date_start="detection_date"
+                      color="severity" mode="month">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="severity"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ================= ACTIVITY ================= -->
+    <record id="view_ls_deviation_activity" model="ir.ui.view">
+        <field name="name">ls.deviation.activity</field>
+        <field name="model">ls.deviation</field>
+        <field name="arch" type="xml">
+            <activity string="Deviations">
+                <templates>
+                    <div t-name="activity-box">
+                        <field name="name" display="full"/>
+                        <field name="title" muted="1" display="full"/>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <!-- ================= ACTIONS ================= -->
+    <record id="action_ls_deviation" model="ir.actions.act_window">
+        <field name="name">Deviations</field>
+        <field name="res_model">ls.deviation</field>
+        <field name="view_mode">list,kanban,form,calendar,activity,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_deviation_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Record the first deviation
+            </p>
+            <p>
+                A deviation is a departure from an approved procedure,
+                specification or expected outcome. Record it, assess its
+                impact, investigate the root cause, disposition the affected
+                material and close it against documented conclusions.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_deviation_my" model="ir.actions.act_window">
+        <field name="name">My Deviations</field>
+        <field name="res_model">ls.deviation</field>
+        <field name="view_mode">list,kanban,form,activity</field>
+        <field name="search_view_id" ref="view_ls_deviation_search"/>
+        <field name="context">{'search_default_filter_my_deviations': 1, 'search_default_filter_open': 1}</field>
+    </record>
+
+    <record id="action_ls_deviation_analysis" model="ir.actions.act_window">
+        <field name="name">Deviation Analysis</field>
+        <field name="res_model">ls.deviation</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_ls_deviation_search"/>
+    </record>
+
+</odoo>

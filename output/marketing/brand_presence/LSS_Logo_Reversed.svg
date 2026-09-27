@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="460" viewBox="0 0 1600 460" role="img" aria-label="LSS Life Sciences Suite reverse logo">
+  <rect width="1600" height="460" fill="#102A43"/>
+  <g transform="translate(80 83)"><path d="M38 42V232H208" fill="none" stroke="#FFFFFF" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/><path d="M38 132H208" fill="none" stroke="#0E7C86" stroke-width="22" stroke-linecap="round"/><circle cx="38" cy="42" r="30" fill="#0E7C86"/><circle cx="38" cy="132" r="21" fill="#D98E04"/><circle cx="208" cy="132" r="21" fill="#0E7C86"/><circle cx="208" cy="232" r="30" fill="#FFFFFF"/></g>
+  <text x="390" y="220" font-family="Arial, Helvetica, sans-serif" font-size="142" font-weight="700" letter-spacing="-6" fill="#FFFFFF">LSS</text><text x="400" y="300" font-family="Arial, Helvetica, sans-serif" font-size="43" font-weight="700" letter-spacing="2" fill="#BEE3E8">LIFE SCIENCES SUITE</text><text x="400" y="365" font-family="Arial, Helvetica, sans-serif" font-size="32" fill="#D9E2EC">Connect Operations. Control Quality. Trace Everything.</text>
+</svg>

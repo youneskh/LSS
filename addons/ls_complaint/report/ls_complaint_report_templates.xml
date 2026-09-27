@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_complaint_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            Complaint <span t-field="doc.name"/>
+                        </h2>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Subject:</strong>
+                                <span t-field="doc.summary"/><br/>
+                                <strong>Status:</strong>
+                                <span t-field="doc.state"/><br/>
+                                <strong>Receipt Date:</strong>
+                                <span t-field="doc.receipt_date"/><br/>
+                                <strong>Reception Channel:</strong>
+                                <span t-field="doc.channel"/><br/>
+                                <strong>Received By:</strong>
+                                <span t-field="doc.received_by_id"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Category:</strong>
+                                <span t-field="doc.category_id"/><br/>
+                                <strong>Complaint Type:</strong>
+                                <span t-field="doc.complaint_type"/><br/>
+                                <strong>Severity:</strong>
+                                <span t-field="doc.severity"/><br/>
+                                <strong>Responsible:</strong>
+                                <span t-field="doc.owner_id"/><br/>
+                                <strong>Reviewer:</strong>
+                                <span t-field="doc.reviewer_id"/>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Complainant</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Partner:</strong>
+                                <span t-field="doc.partner_id"/><br/>
+                                <strong>Type:</strong>
+                                <span t-field="doc.complainant_type"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Contact:</strong>
+                                <span t-field="doc.contact_name"/><br/>
+                                <strong>Email:</strong>
+                                <span t-field="doc.contact_email"/><br/>
+                                <strong>Phone:</strong>
+                                <span t-field="doc.contact_phone"/>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Product</h4>
+                        <div class="row" t-if="doc.product_related">
+                            <div class="col-6">
+                                <strong>Product:</strong>
+                                <span t-field="doc.product_id"/><br/>
+                                <strong>Lot / Serial:</strong>
+                                <span t-field="doc.lot_id"/>
+                                <span t-field="doc.lot_name"/><br/>
+                                <strong>Quantity Concerned:</strong>
+                                <span t-field="doc.quantity_complained"/>
+                                <span t-field="doc.product_uom_id"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Manufacturing Date:</strong>
+                                <span t-field="doc.manufacturing_date"/><br/>
+                                <strong>Expiry Date:</strong>
+                                <span t-field="doc.expiry_date"/><br/>
+                                <strong>Market:</strong>
+                                <span t-field="doc.market_country_id"/>
+                            </div>
+                        </div>
+                        <p t-if="not doc.product_related">
+                            This complaint is not related to a manufactured product.
+                        </p>
+
+                        <h4 class="mt-4">Description</h4>
+                        <p t-field="doc.description"/>
+
+                        <h4 class="mt-4">Assessment</h4>
+                        <p t-field="doc.assessment_summary"/>
+                        <p>
+                            <strong>Potential Safety Impact:</strong>
+                            <span t-field="doc.potential_safety_impact"/> —
+                            <strong>Potential Regulatory Impact:</strong>
+                            <span t-field="doc.potential_regulatory_impact"/>
+                        </p>
+
+                        <h4 class="mt-4">Investigations</h4>
+                        <table class="table table-sm" t-if="doc.investigation_ids">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Investigator</th>
+                                    <th>Methodology</th>
+                                    <th>Root Cause</th>
+                                    <th>Conclusion</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.investigation_ids" t-as="investigation">
+                                    <td><span t-field="investigation.name"/></td>
+                                    <td><span t-field="investigation.investigator_id"/></td>
+                                    <td><span t-field="investigation.methodology"/></td>
+                                    <td><span t-field="investigation.root_cause_category"/></td>
+                                    <td><span t-field="investigation.conclusion"/></td>
+                                    <td><span t-field="investigation.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="not doc.investigation_ids">No investigation recorded.</p>
+                        <p t-if="doc.root_cause_summary">
+                            <strong>Root cause summary:</strong>
+                            <span t-field="doc.root_cause_summary"/>
+                        </p>
+
+                        <h4 class="mt-4">Adverse Events</h4>
+                        <table class="table table-sm" t-if="doc.adverse_event_ids">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Awareness Date</th>
+                                    <th>Seriousness</th>
+                                    <th>Outcome</th>
+                                    <th>Reportable</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.adverse_event_ids" t-as="event">
+                                    <td><span t-field="event.name"/></td>
+                                    <td><span t-field="event.awareness_date"/></td>
+                                    <td><span t-field="event.seriousness"/></td>
+                                    <td><span t-field="event.outcome"/></td>
+                                    <td><span t-field="event.reportable"/></td>
+                                    <td><span t-field="event.report_submitted_date"/></td>
+                                    <td><span t-field="event.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="not doc.adverse_event_ids">No adverse event recorded.</p>
+
+                        <h4 class="mt-4">Resolutions</h4>
+                        <table class="table table-sm" t-if="doc.resolution_ids">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Responsible</th>
+                                    <th>Completion Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.resolution_ids" t-as="resolution">
+                                    <td><span t-field="resolution.resolution_type"/></td>
+                                    <td><span t-field="resolution.description"/></td>
+                                    <td><span t-field="resolution.owner_id"/></td>
+                                    <td><span t-field="resolution.completion_date"/></td>
+                                    <td><span t-field="resolution.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="not doc.resolution_ids">No resolution recorded.</p>
+
+                        <h4 class="mt-4">CAPA</h4>
+                        <p>
+                            <strong>CAPA Required:</strong>
+                            <span t-field="doc.capa_required"/><br/>
+                            <strong>CAPA Reference:</strong>
+                            <span t-field="doc.capa_reference"/>
+                        </p>
+                        <p t-field="doc.capa_justification"/>
+
+                        <h4 class="mt-4">Closure</h4>
+                        <p>
+                            <strong>Closed On:</strong>
+                            <span t-field="doc.date_closed"/><br/>
+                            <strong>Closed By:</strong>
+                            <span t-field="doc.closed_by_id"/><br/>
+                            <strong>Complainant Informed:</strong>
+                            <span t-field="doc.customer_notified"/>
+                        </p>
+                        <p t-field="doc.closure_summary"/>
+                        <p t-if="doc.cancellation_reason">
+                            <strong>Cancellation Reason:</strong>
+                            <span t-field="doc.cancellation_reason"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

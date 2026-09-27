@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data>
+        <record id="view_ls_env_excursion_close_wizard_form" model="ir.ui.view">
+            <field name="name">ls.env.excursion.close.wizard.form</field>
+            <field name="model">ls.env.excursion.close.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Close Excursion">
+                    <group>
+                        <field name="excursion_id" readonly="1"/>
+                    </group>
+                    <group string="Closure Justification">
+                        <field name="justification" nolabel="1"
+                               placeholder="Basis on which this excursion is considered resolved."/>
+                    </group>
+                    <footer>
+                        <button name="action_close" type="object" string="Close Excursion" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_result_amend_wizard_form" model="ir.ui.view">
+            <field name="name">ls.env.result.amend.wizard.form</field>
+            <field name="model">ls.env.result.amend.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Amend Result">
+                    <group>
+                        <group string="Currently Reported">
+                            <field name="result_id" readonly="1"/>
+                            <field name="result_type" readonly="1"/>
+                            <field name="current_value_numeric" readonly="1"
+                                   invisible="result_type != 'quantitative'"/>
+                            <field name="current_value_qualitative" readonly="1"
+                                   invisible="result_type != 'qualitative'"/>
+                        </group>
+                        <group string="Correction">
+                            <field name="new_value_numeric" invisible="result_type != 'quantitative'"/>
+                            <field name="new_value_qualitative" invisible="result_type != 'qualitative'"/>
+                        </group>
+                    </group>
+                    <group string="Reason for Amendment">
+                        <field name="reason" nolabel="1"
+                               placeholder="Explanation of why the originally reported value is being corrected."/>
+                    </group>
+                    <p class="text-muted">
+                        The originally reported value is retained on the result and remains visible.
+                    </p>
+                    <footer>
+                        <button name="action_amend" type="object" string="Record Amendment" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_sample_cancel_wizard_form" model="ir.ui.view">
+            <field name="name">ls.env.sample.cancel.wizard.form</field>
+            <field name="model">ls.env.sample.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Sample">
+                    <group>
+                        <field name="sample_id" readonly="1"/>
+                    </group>
+                    <group string="Reason for Cancellation">
+                        <field name="reason" nolabel="1"
+                               placeholder="Why this scheduled sample was not taken or is being withdrawn."/>
+                    </group>
+                    <footer>
+                        <button name="action_cancel" type="object" string="Cancel Sample" class="btn-primary"/>
+                        <button string="Back" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

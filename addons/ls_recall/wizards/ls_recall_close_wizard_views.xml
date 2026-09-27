@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_close_wizard_form" model="ir.ui.view">
+        <field name="name">ls.recall.close.wizard.form</field>
+        <field name="model">ls.recall.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Recall">
+                <field name="execution_id" invisible="1"/>
+                <field name="mode" invisible="1"/>
+                <field name="gates_passed" invisible="1"/>
+                <div class="alert alert-info" role="alert"
+                     invisible="mode != 'close'">
+                    Closing states that the field action is complete. The
+                    checks below are evaluated against the recall as it
+                    stands now.
+                </div>
+                <div class="alert alert-warning" role="alert"
+                     invisible="mode != 'cancel'">
+                    Cancelling keeps the record and the reason on file.
+                    A cancelled recall can no longer be modified.
+                </div>
+                <group invisible="mode != 'close'">
+                    <field name="gate_report" nolabel="1" readonly="1"/>
+                </group>
+                <group invisible="mode != 'close' or gates_passed">
+                    <field name="override_gates"
+                           groups="ls_recall.group_ls_recall_manager"/>
+                </group>
+                <separator string="Justification"/>
+                <field name="justification" nolabel="1"
+                       placeholder="State the basis on which the action is closed or cancelled."/>
+                <group invisible="mode != 'close'">
+                    <field name="attestation"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Confirm" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

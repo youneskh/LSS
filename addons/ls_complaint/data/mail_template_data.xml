@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="mail_template_complaint_acknowledgement" model="mail.template">
+            <field name="name">Complaint: Acknowledgement of Receipt</field>
+            <field name="model_id" ref="model_ls_complaint"/>
+            <field name="subject">Acknowledgement of complaint {{ object.name }}</field>
+            <field name="email_to">{{ object.contact_email or '' }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.contact_name or 'Sir or Madam'"/>,</p>
+                    <p>
+                        We acknowledge receipt of your complaint registered under the
+                        reference <t t-out="object.name"/> on
+                        <t t-out="object.receipt_date or ''"/>.
+                    </p>
+                    <p>Subject: <t t-out="object.summary or ''"/></p>
+                    <p>
+                        Your complaint has been entered into our quality system and
+                        will be handled according to our documented procedure. We will
+                        contact you once the handling is complete.
+                    </p>
+                    <p>Kind regards,</p>
+                    <p><t t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+        </record>
+
+        <record id="mail_template_complaint_closure" model="mail.template">
+            <field name="name">Complaint: Closure Notification</field>
+            <field name="model_id" ref="model_ls_complaint"/>
+            <field name="subject">Outcome of complaint {{ object.name }}</field>
+            <field name="email_to">{{ object.contact_email or '' }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Dear <t t-out="object.contact_name or 'Sir or Madam'"/>,</p>
+                    <p>
+                        The handling of your complaint <t t-out="object.name"/> is now
+                        complete.
+                    </p>
+                    <p>Outcome: <t t-out="object.closure_summary or ''"/></p>
+                    <p>
+                        Thank you for having brought this matter to our attention.
+                    </p>
+                    <p>Kind regards,</p>
+                    <p><t t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+        </record>
+
+    </data>
+</odoo>

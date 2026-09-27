@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        The module carries its own root menu because the Life Sciences
+        Core quality module it would otherwise sit under is not a
+        dependency. See doc/05_architecture_review.md, deviation D-01.
+    -->
+
+    <menuitem id="menu_ls_recall_root"
+              name="Recalls"
+              sequence="72"
+              groups="ls_recall.group_ls_recall_viewer"
+              web_icon="ls_recall,static/description/icon.png"/>
+
+    <menuitem id="menu_ls_recall_operations"
+              name="Field Actions"
+              parent="menu_ls_recall_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_recall_execution"
+              name="Recalls"
+              parent="menu_ls_recall_operations"
+              action="action_ls_recall_execution"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_recall_execution_all"
+              name="All Field Actions"
+              parent="menu_ls_recall_operations"
+              action="action_ls_recall_execution_all"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_recall_initiate"
+              name="Initiate Recall"
+              parent="menu_ls_recall_operations"
+              action="action_ls_recall_initiate_wizard"
+              groups="ls_recall.group_ls_recall_coordinator"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_recall_execution_detail"
+              name="Execution"
+              parent="menu_ls_recall_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_recall_line"
+              name="Consignees"
+              parent="menu_ls_recall_execution_detail"
+              action="action_ls_recall_line"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_recall_communication"
+              name="Communications"
+              parent="menu_ls_recall_execution_detail"
+              action="action_ls_recall_communication"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_recall_effectiveness"
+              name="Effectiveness Checks"
+              parent="menu_ls_recall_execution_detail"
+              action="action_ls_recall_effectiveness"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_recall_report"
+              name="Reports"
+              parent="menu_ls_recall_execution_detail"
+              action="action_ls_recall_report"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_recall_configuration"
+              name="Configuration"
+              parent="menu_ls_recall_root"
+              groups="ls_recall.group_ls_recall_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_ls_recall_plan"
+              name="Recall Plans"
+              parent="menu_ls_recall_configuration"
+              action="action_ls_recall_plan"
+              sequence="10"/>
+
+</odoo>

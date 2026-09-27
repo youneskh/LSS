@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <!--
+      Declared deviation from the functional specification, section 7.16.
+      The specification places these menus under an existing "Quality" root
+      menu. That root menu is provided by `ls_qms`, which is not a dependency
+      of this module (see the manifest). A dedicated root menu is created here
+      so that the module is usable standalone. A module that provides the
+      Quality root menu can re-parent `menu_ls_risk_root` by inheritance
+      without modifying this module.
+    -->
+    <menuitem id="menu_ls_risk_root"
+              name="Risk Management"
+              web_icon="ls_risk_management,static/description/icon.png"
+              sequence="55"
+              groups="group_risk_viewer"/>
+
+    <menuitem id="menu_ls_risk_operations"
+              name="Risk Management"
+              parent="menu_ls_risk_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_risk_register"
+              name="Risk Register"
+              parent="menu_ls_risk_operations"
+              action="action_ls_risk_register"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_risk_assessment"
+              name="Risk Assessments"
+              parent="menu_ls_risk_operations"
+              action="action_ls_risk_assessment"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_risk_mitigation"
+              name="Risk Control Measures"
+              parent="menu_ls_risk_operations"
+              action="action_ls_risk_mitigation"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_risk_fmea_parent"
+              name="FMEA"
+              parent="menu_ls_risk_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_risk_fmea"
+              name="FMEA Worksheets"
+              parent="menu_ls_risk_fmea_parent"
+              action="action_ls_risk_fmea"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_risk_fmea_line"
+              name="Failure Modes"
+              parent="menu_ls_risk_fmea_parent"
+              action="action_ls_risk_fmea_line"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_risk_reporting"
+              name="Reporting"
+              parent="menu_ls_risk_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_risk_review_due"
+              name="Reviews Due"
+              parent="menu_ls_risk_reporting"
+              action="action_ls_risk_register_review_due"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_risk_configuration"
+              name="Configuration"
+              parent="menu_ls_risk_root"
+              sequence="90"
+              groups="group_risk_manager"/>
+
+    <menuitem id="menu_ls_risk_matrix"
+              name="Risk Matrices"
+              parent="menu_ls_risk_configuration"
+              action="action_ls_risk_matrix"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_risk_category"
+              name="Risk Categories"
+              parent="menu_ls_risk_configuration"
+              action="action_ls_risk_category"
+              sequence="20"/>
+
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+      Role hierarchy. Each role implies the one below it, so a manager holds
+      every permission of an engineer, a technician, an operator and a viewer.
+
+      No group category is declared. Odoo 19 introduced a reworked grouping
+      mechanism for res.groups whose field name could not be verified from
+      official documentation, so the module avoids the dependency entirely.
+      The groups remain fully functional; they are simply not clustered under
+      a named application heading in the user form.
+    -->
+
+    <record id="group_mp_viewer" model="res.groups">
+        <field name="name">Medical Plastics / Viewer</field>
+        <field name="comment">Read-only access to moulding tools, components, specifications and runs.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_mp_operator" model="res.groups">
+        <field name="name">Medical Plastics / Operator</field>
+        <field name="comment">Records moulding runs, parameter readings, material consumption and scrap.</field>
+        <field name="implied_ids" eval="[(4, ref('group_mp_viewer'))]"/>
+    </record>
+
+    <record id="group_mp_technician" model="res.groups">
+        <field name="name">Medical Plastics / Tool Technician</field>
+        <field name="comment">Performs tool maintenance and manages the cavity register.</field>
+        <field name="implied_ids" eval="[(4, ref('group_mp_operator'))]"/>
+    </record>
+
+    <record id="group_mp_engineer" model="res.groups">
+        <field name="name">Medical Plastics / Process Engineer</field>
+        <field name="comment">Maintains components, material grades, tools and draft moulding parameter specifications.</field>
+        <field name="implied_ids" eval="[(4, ref('group_mp_technician'))]"/>
+    </record>
+
+    <record id="group_mp_manager" model="res.groups">
+        <field name="name">Medical Plastics / Manager</field>
+        <field name="comment">Approves specifications, reviews and closes moulding runs, and decommissions tools.</field>
+        <field name="implied_ids" eval="[(4, ref('group_mp_engineer'))]"/>
+    </record>
+
+</odoo>

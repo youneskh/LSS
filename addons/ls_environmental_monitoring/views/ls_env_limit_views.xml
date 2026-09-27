@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views2.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_limit_list" model="ir.ui.view">
+            <field name="name">ls.env.limit.list</field>
+            <field name="model">ls.env.limit</field>
+            <field name="arch" type="xml">
+                <list string="Limits" decoration-muted="state == 'superseded'"
+                      decoration-info="state == 'draft'">
+                    <field name="sampling_point_id"/>
+                    <field name="area_id" optional="show"/>
+                    <field name="parameter_id"/>
+                    <field name="occupancy_state"/>
+                    <field name="direction"/>
+                    <field name="alert_value"/>
+                    <field name="action_value"/>
+                    <field name="spec_value"/>
+                    <field name="escalate_alert" optional="hide"/>
+                    <field name="version"/>
+                    <field name="state" widget="badge"/>
+                    <field name="effective_date"/>
+                    <field name="approved_by_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_limit_form" model="ir.ui.view">
+            <field name="name">ls.env.limit.form</field>
+            <field name="model">ls.env.limit</field>
+            <field name="arch" type="xml">
+                <form string="Limit">
+                    <header>
+                        <button name="action_approve" type="object" string="Approve"
+                                class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_create_revision" type="object" string="Create Revision"
+                                invisible="state != 'approved'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,superseded"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <div class="alert alert-info" role="alert" invisible="state != 'draft'">
+                            Thresholds are the responsibility of your organisation. Record the
+                            basis for these values in the Justification field before approval.
+                        </div>
+                        <group>
+                            <group string="Scope">
+                                <field name="sampling_point_id" readonly="state != 'draft'"/>
+                                <field name="area_id" readonly="1"/>
+                                <field name="parameter_id" readonly="state != 'draft'"/>
+                                <field name="occupancy_state" readonly="state != 'draft'"/>
+                                <field name="direction" readonly="state != 'draft'"/>
+                            </group>
+                            <group string="Control">
+                                <field name="version" readonly="1"/>
+                                <field name="effective_date" readonly="1"/>
+                                <field name="superseded_date" readonly="1" invisible="state != 'superseded'"/>
+                                <field name="superseded_by_id" readonly="1" invisible="state != 'superseded'"/>
+                                <field name="approved_by_id" readonly="1"/>
+                                <field name="source_reference"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group string="Thresholds">
+                            <group>
+                                <label for="alert_value" string="Alert Limit"/>
+                                <div class="o_row">
+                                    <field name="alert_set" readonly="state != 'draft'"/>
+                                    <field name="alert_value" readonly="state != 'draft' or not alert_set"/>
+                                </div>
+                                <label for="action_value" string="Action Limit"/>
+                                <div class="o_row">
+                                    <field name="action_set" readonly="state != 'draft'"/>
+                                    <field name="action_value" readonly="state != 'draft' or not action_set"/>
+                                </div>
+                                <label for="spec_value" string="Specification Limit"/>
+                                <div class="o_row">
+                                    <field name="spec_set" readonly="state != 'draft'"/>
+                                    <field name="spec_value" readonly="state != 'draft' or not spec_set"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="escalate_alert" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <group string="Justification">
+                            <field name="justification" nolabel="1" readonly="state != 'draft'"
+                                   placeholder="Basis on which these thresholds were set, for example the outcome of a risk assessment or an analysis of historical data."/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_limit_search" model="ir.ui.view">
+            <field name="name">ls.env.limit.search</field>
+            <field name="model">ls.env.limit</field>
+            <field name="arch" type="xml">
+                <search string="Limits">
+                    <field name="sampling_point_id"/>
+                    <field name="parameter_id"/>
+                    <field name="area_id"/>
+                    <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                    <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                    <filter name="filter_superseded" string="Superseded" domain="[('state', '=', 'superseded')]"/>
+                                            <filter name="group_point" string="Sampling Point" context="{'group_by': 'sampling_point_id'}"/>
+                    <filter name="group_parameter" string="Parameter" context="{'group_by': 'parameter_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_limit" model="ir.actions.act_window">
+            <field name="name">Limits</field>
+            <field name="res_model">ls.env.limit</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_filter_approved': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Configure an acceptance criterion</p>
+                <p>This module ships no threshold values. Every limit is entered and approved by your organisation.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

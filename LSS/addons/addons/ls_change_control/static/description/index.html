@@ -1,0 +1,52 @@
+<section style="font-family: Arial, sans-serif; color: #23374d; padding: 24px;">
+    <h1 style="margin-bottom: 4px;">Life Sciences - Change Control</h1>
+    <h3 style="margin-top: 0; font-weight: normal; color: #5b6e82;">
+        Request, assess, approve, implement and verify changes in a regulated environment
+    </h3>
+
+    <h2>What the module does</h2>
+    <p>
+        The module manages the complete lifecycle of a change in a
+        pharmaceutical, medical device, medical plastics, cosmetics or
+        laboratory organisation: Draft, Under Review, Impact Assessment,
+        Approved, Implementation, Verified, Closed, with Rejected and
+        Cancelled as final outcomes.
+    </p>
+
+    <h2>Main features</h2>
+    <ul>
+        <li>Change categories driving the impact areas to assess, the approval matrix and the deadlines.</li>
+        <li>One impact assessment record per impact area, so that assessment coverage is deterministic.</li>
+        <li>Approval matrix generated from the category, with the identity, the date and time in UTC and the meaning of each decision recorded.</li>
+        <li>Implementation actions requiring an evidence reference before they can be closed.</li>
+        <li>Effectiveness verification with acceptance criteria defined before the verification is performed.</li>
+        <li>Change control record report, printable for an inspection.</li>
+        <li>Three scheduled reminders: pending approvals, late implementations, due verifications.</li>
+    </ul>
+
+    <h2>Data integrity</h2>
+    <ul>
+        <li>The description of the change is frozen as soon as the request is submitted.</li>
+        <li>Workflow fields are only written by the workflow methods.</li>
+        <li>Completed assessments, recorded decisions, closed actions and completed verifications are immutable.</li>
+        <li>A submitted change request is never deleted.</li>
+    </ul>
+
+    <h2>Important notice on regulatory compliance</h2>
+    <p style="background: #fdf3e2; border-left: 4px solid #e0a03c; padding: 12px;">
+        This module is designed to <strong>support</strong> the implementation
+        of change control processes. Software alone does not achieve
+        regulatory compliance. Compliance depends on the procedures of the
+        organisation, the validation of the system in its intended use, the
+        training of personnel and the quality management system. The module is
+        not certified against any regulatory framework.
+    </p>
+
+    <h2>Technical information</h2>
+    <ul>
+        <li>Odoo 19.0 Community Edition.</li>
+        <li>Depends on <code>base</code>, <code>mail</code> and <code>hr</code> only.</li>
+        <li>No Odoo Enterprise module, view type or source code is used.</li>
+        <li>License AGPL-3.0.</li>
+    </ul>
+</section>

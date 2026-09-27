@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_ls_deviation_close_wizard_form" model="ir.ui.view">
+        <field name="name">ls.deviation.close.wizard.form</field>
+        <field name="model">ls.deviation.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Deviation">
+                <field name="deviation_id" invisible="1"/>
+                <div class="alert alert-info" role="alert">
+                    Closing a deviation records the written conclusions and
+                    follow-up required by 21 CFR 211.192. Both are mandatory.
+                </div>
+                <group>
+                    <field name="qa_reviewer_id"/>
+                </group>
+                <separator string="Conclusions"/>
+                <field name="conclusion" nolabel="1"
+                       placeholder="Conclusions of the investigation."/>
+                <separator string="Follow-up"/>
+                <field name="followup" nolabel="1"
+                       placeholder="Follow-up recorded with the conclusions. Where none is required, record that determination and its rationale."/>
+                <separator string="CAPA Decision"/>
+                <group>
+                    <field name="capa_required"/>
+                    <field name="capa_reference" required="capa_required"
+                           invisible="not capa_required"/>
+                </group>
+                <field name="capa_decision_rationale" nolabel="1"
+                       placeholder="Rationale for requiring, or for not requiring, a CAPA."/>
+                <footer>
+                    <button name="action_confirm" string="Close Deviation"
+                            type="object" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_register_list" model="ir.ui.view">
+        <field name="name">ls.risk.register.list</field>
+        <field name="model">ls.risk.register</field>
+        <field name="arch" type="xml">
+            <list string="Risk Register"
+                  decoration-danger="current_acceptability == 'not_acceptable'"
+                  decoration-warning="review_overdue"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="risk_type"/>
+                <field name="category_id" optional="show"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="identified_date" optional="hide"/>
+                <field name="initial_risk_level" optional="hide"/>
+                <field name="current_risk_level"/>
+                <field name="current_acceptability"/>
+                <field name="mitigation_open_count" string="Open Controls" optional="show"/>
+                <field name="next_review_date" optional="show"/>
+                <field name="review_overdue" column_invisible="True"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'monitoring'"
+                       decoration-info="state == 'assessed'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_register_form" model="ir.ui.view">
+        <field name="name">ls.risk.register.form</field>
+        <field name="model">ls.risk.register</field>
+        <field name="arch" type="xml">
+            <form string="Risk">
+                <header>
+                    <button name="action_open_assess_wizard" type="object"
+                            string="Assess" class="oe_highlight"
+                            invisible="state in ('closed', 'cancelled')"/>
+                    <button name="action_start_assessment" type="object"
+                            string="Mark Assessed" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_start_risk_control" type="object"
+                            string="Start Risk Control"
+                            invisible="state != 'assessed'"/>
+                    <button name="action_confirm_control_completeness" type="object"
+                            string="Confirm Control Completeness"
+                            invisible="state != 'control' or control_completeness_confirmed"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_accept_residual_risk" type="object"
+                            string="Accept Residual Risk"
+                            invisible="state != 'control' or residual_risk_accepted"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_start_monitoring" type="object"
+                            string="Move to Monitoring" class="oe_highlight"
+                            invisible="state != 'control'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_open_close_wizard" type="object"
+                            string="Close"
+                            invisible="state not in ('assessed', 'control', 'monitoring')"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'cancelled'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,assessed,control,monitoring,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_assessments" type="object"
+                                class="oe_stat_button" icon="fa-list-ol">
+                            <field name="assessment_count" widget="statinfo"
+                                   string="Assessments"/>
+                        </button>
+                        <button name="action_view_mitigations" type="object"
+                                class="oe_stat_button" icon="fa-shield">
+                            <field name="mitigation_count" widget="statinfo"
+                                   string="Controls"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Closed" bg_color="text-bg-secondary"
+                            invisible="state != 'closed'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2>
+                            <field name="title" placeholder="Short statement of the risk"
+                                   readonly="state in ('closed', 'cancelled')"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="classification" string="Classification">
+                            <field name="risk_type" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="category_id" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="matrix_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'draft'"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group name="ownership" string="Ownership">
+                            <field name="owner_id" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="identified_by_id" readonly="state != 'draft'"/>
+                            <field name="identified_date" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <group name="evaluation" string="Current Evaluation">
+                        <group>
+                            <field name="initial_risk_level"/>
+                            <field name="current_risk_level"/>
+                        </group>
+                        <group>
+                            <field name="current_acceptability"/>
+                            <field name="current_assessment_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Risk Analysis" name="analysis">
+                            <group>
+                                <field name="description" placeholder="Description of the risk"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                            <group string="Analysis Inputs">
+                                <field name="intended_use" readonly="state in ('closed', 'cancelled')"/>
+                                <field name="safety_characteristics" readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                            <group string="Hazard, Hazardous Situation and Harm">
+                                <field name="hazard" readonly="state in ('closed', 'cancelled')"/>
+                                <field name="sequence_of_events" readonly="state in ('closed', 'cancelled')"/>
+                                <field name="hazardous_situation" readonly="state in ('closed', 'cancelled')"/>
+                                <field name="harm" readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                        </page>
+                        <page string="Assessments" name="assessments">
+                            <field name="assessment_ids" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="assessment_type"/>
+                                    <field name="assessment_date"/>
+                                    <field name="severity_level_id"/>
+                                    <field name="probability_level_id"/>
+                                    <field name="risk_level"/>
+                                    <field name="acceptability"/>
+                                    <field name="assessed_by_id"/>
+                                    <field name="approved_by_id"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Risk Control" name="control">
+                            <field name="mitigation_ids"
+                                   readonly="state in ('closed', 'cancelled')"
+                                   context="{'default_risk_id': id}">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="control_option"/>
+                                    <field name="responsible_id"/>
+                                    <field name="due_date"/>
+                                    <field name="introduces_new_risk"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                            <group string="Completeness of Risk Control">
+                                <field name="all_mitigations_verified"/>
+                                <field name="control_completeness_confirmed"/>
+                                <field name="control_completeness_by_id"
+                                       invisible="not control_completeness_confirmed"/>
+                                <field name="control_completeness_date"
+                                       invisible="not control_completeness_confirmed"/>
+                            </group>
+                        </page>
+                        <page string="Residual Risk" name="residual">
+                            <group string="Residual Risk Acceptance">
+                                <field name="residual_risk_accepted"/>
+                                <field name="residual_risk_accepted_by_id"
+                                       invisible="not residual_risk_accepted"/>
+                                <field name="residual_risk_acceptance_date"
+                                       invisible="not residual_risk_accepted"/>
+                                <field name="residual_risk_justification"
+                                       invisible="not residual_risk_accepted"/>
+                            </group>
+                            <group string="Benefit-Risk Analysis">
+                                <field name="benefit_risk_analysis" nolabel="1"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                            <group string="Overall Residual Risk">
+                                <field name="overall_residual_risk_assessment" nolabel="1"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                        </page>
+                        <page string="Monitoring" name="monitoring">
+                            <group>
+                                <group>
+                                    <field name="review_interval_months"
+                                           readonly="state in ('closed', 'cancelled')"/>
+                                    <field name="next_review_date"
+                                           readonly="state in ('closed', 'cancelled')"/>
+                                </group>
+                                <group>
+                                    <field name="last_review_date"/>
+                                    <field name="review_overdue"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Traceability" name="traceability">
+                            <group string="Originating FMEA">
+                                <field name="fmea_line_count"/>
+                                <field name="fmea_line_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="fmea_id"/>
+                                        <field name="item"/>
+                                        <field name="failure_mode"/>
+                                        <field name="rpn"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="Linked Record">
+                                <field name="linked_model_id"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                                <field name="linked_res_id"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                                <button name="action_open_linked_record" type="object"
+                                        string="Open Linked Record" class="btn-link"
+                                        invisible="not linked_model_id"/>
+                            </group>
+                        </page>
+                        <page string="Closure" name="closure"
+                              invisible="state not in ('closed', 'cancelled')">
+                            <group string="Closure" invisible="state != 'closed'">
+                                <field name="closed_by_id"/>
+                                <field name="closed_date"/>
+                                <field name="closure_reason"/>
+                            </group>
+                            <group string="Cancellation" invisible="state != 'cancelled'">
+                                <field name="cancel_reason"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_register_search" model="ir.ui.view">
+        <field name="name">ls.risk.register.search</field>
+        <field name="model">ls.risk.register</field>
+        <field name="arch" type="xml">
+            <search string="Search Risks">
+                <field name="name" string="Reference"/>
+                <field name="title"/>
+                <field name="description"/>
+                <field name="hazard"/>
+                <field name="harm"/>
+                <field name="owner_id"/>
+                <field name="category_id"/>
+                <separator/>
+                <filter name="filter_my_risks" string="My Risks"
+                        domain="[('owner_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('assessed', 'control', 'monitoring'))]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="filter_not_acceptable" string="Not Acceptable"
+                        domain="[('current_acceptability', '=', 'not_acceptable')]"/>
+                <filter name="filter_requires_control" string="Acceptable Only With Control"
+                        domain="[('current_acceptability', '=', 'acceptable_with_control')]"/>
+                <separator/>
+                <filter name="filter_review_overdue" string="Review Overdue"
+                        domain="[('next_review_date', '&lt;', context_today().strftime('%Y-%m-%d')),
+                                 ('state', 'in', ('assessed', 'control', 'monitoring'))]"/>
+                <filter name="filter_open_controls" string="Has Open Controls"
+                        domain="[('mitigation_open_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_risk_type" string="Risk Type"
+                        context="{'group_by': 'risk_type'}"/>
+                    <filter name="group_category" string="Category"
+                        context="{'group_by': 'category_id'}"/>
+                    <filter name="group_current_risk_level" string="Current Risk Level"
+                        context="{'group_by': 'current_risk_level'}"/>
+                    <filter name="group_acceptability" string="Acceptability"
+                        context="{'group_by': 'current_acceptability'}"/>
+                    <filter name="group_owner" string="Risk Owner"
+                        context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_identified_date" string="Identification Date"
+                        context="{'group_by': 'identified_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_register" model="ir.actions.act_window">
+        <field name="name">Risk Register</field>
+        <field name="res_model">ls.risk.register</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_register_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record the first risk</p>
+            <p>
+                A risk register entry holds one identified risk: its hazard, the
+                hazardous situation, the resulting harm, its assessments and the
+                risk control measures applied to it. A risk matrix must be
+                configured and approved before a risk can be assessed.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_register_review_due" model="ir.actions.act_window">
+        <field name="name">Reviews Due</field>
+        <field name="res_model">ls.risk.register</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_register_search"/>
+        <field name="context">{'search_default_filter_review_overdue': 1}</field>
+    </record>
+
+</odoo>

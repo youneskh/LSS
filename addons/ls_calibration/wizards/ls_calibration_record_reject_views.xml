@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_calibration_record_reject_view_form" model="ir.ui.view">
+        <field name="name">ls.calibration.record.reject.form</field>
+        <field name="model">ls.calibration.record.reject</field>
+        <field name="arch" type="xml">
+            <form string="Reject Calibration Record">
+                <group>
+                    <field name="record_id" readonly="1" />
+                    <field
+                        name="reason"
+                        placeholder="Justification of the rejection of the calibration results."
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_reject"
+                        string="Reject"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_reject_action" model="ir.actions.act_window">
+        <field name="name">Reject Calibration Record</field>
+        <field name="res_model">ls.calibration.record.reject</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

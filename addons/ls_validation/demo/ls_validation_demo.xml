@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="0">
+
+        <record id="demo_item_autoclave" model="ls.validation.item">
+            <field name="code">EQ-0001</field>
+            <field name="name">Steam Sterilizer 500 L</field>
+            <field name="item_type">equipment</field>
+            <field name="gxp_impact">direct</field>
+            <field name="criticality">high</field>
+            <field name="manufacturer">Demo Equipment Manufacturer</field>
+            <field name="model_reference">STE-500</field>
+            <field name="serial_number">SN-DEMO-0001</field>
+            <field name="location">Sterile Production - Room 12</field>
+            <field name="department">Production</field>
+            <field name="revalidation_interval_months">36</field>
+        </record>
+
+        <record id="demo_item_hplc" model="ls.validation.item">
+            <field name="code">EQ-0002</field>
+            <field name="name">HPLC System - QC Laboratory</field>
+            <field name="item_type">equipment</field>
+            <field name="gxp_impact">direct</field>
+            <field name="criticality">high</field>
+            <field name="manufacturer">Demo Instruments</field>
+            <field name="model_reference">HPLC-2000</field>
+            <field name="serial_number">SN-DEMO-0002</field>
+            <field name="location">QC Laboratory</field>
+            <field name="department">Quality Control</field>
+            <field name="revalidation_interval_months">24</field>
+        </record>
+
+        <record id="demo_item_cleaning" model="ls.validation.item">
+            <field name="code">CLN-0001</field>
+            <field name="name">Cleaning Procedure - Mixing Vessel Line A</field>
+            <field name="item_type">cleaning</field>
+            <field name="gxp_impact">direct</field>
+            <field name="criticality">high</field>
+            <field name="location">Production Line A</field>
+            <field name="department">Production</field>
+            <field name="revalidation_interval_months">12</field>
+        </record>
+
+        <record id="demo_master_plan" model="ls.validation.master.plan">
+            <field name="name">Site Validation Master Plan</field>
+            <field name="version">1</field>
+            <field name="scope">
+                &lt;p&gt;This demonstration plan covers the qualification of the
+                production and quality control equipment of the site, and the
+                validation of the cleaning procedures of production line
+                A.&lt;/p&gt;
+            </field>
+            <field name="strategy">
+                &lt;p&gt;A risk based approach is applied. Items with a direct GxP
+                impact are qualified through IQ, OQ and PQ. Cleaning
+                procedures are validated over three consecutive runs.&lt;/p&gt;
+            </field>
+            <field name="responsibilities">
+                &lt;p&gt;Validation engineering prepares and executes the protocols.
+                Quality assurance reviews and approves the documentation.&lt;/p&gt;
+            </field>
+            <field name="review_interval_months">24</field>
+            <field name="item_ids" eval="[(6, 0, [
+                ref('demo_item_autoclave'),
+                ref('demo_item_hplc'),
+                ref('demo_item_cleaning')])]"/>
+        </record>
+
+        <record id="demo_protocol_autoclave_oq" model="ls.validation.protocol">
+            <field name="name">Operational Qualification - Steam Sterilizer 500 L</field>
+            <field name="protocol_type">oq</field>
+            <field name="item_id" ref="demo_item_autoclave"/>
+            <field name="master_plan_id" ref="demo_master_plan"/>
+            <field name="objective">
+                &lt;p&gt;Demonstrate that the sterilizer operates within the
+                specified ranges over its whole operating envelope.&lt;/p&gt;
+            </field>
+            <field name="scope">
+                &lt;p&gt;Empty chamber cycles, control loop verification and alarm
+                testing.&lt;/p&gt;
+            </field>
+            <field name="prerequisites">
+                &lt;p&gt;Installation qualification approved. Measuring instruments
+                calibrated. Executors trained on the protocol.&lt;/p&gt;
+            </field>
+            <field name="reference_documents">SOP-PRD-014
+SOP-QAL-002
+Manufacturer operating manual STE-500</field>
+        </record>
+
+        <record id="demo_protocol_test_temperature"
+                model="ls.validation.protocol.test">
+            <field name="protocol_id" ref="demo_protocol_autoclave_oq"/>
+            <field name="sequence">10</field>
+            <field name="code">TC-001</field>
+            <field name="name">Chamber temperature control</field>
+            <field name="objective">Verify the temperature control loop.</field>
+            <field name="acceptance_criteria">The chamber temperature remains
+                within 121.0 degrees Celsius and 124.0 degrees Celsius during
+                the whole exposure phase.</field>
+            <field name="expected_evidence">Printout of the cycle record and
+                data logger export.</field>
+            <field name="is_critical" eval="True"/>
+        </record>
+
+        <record id="demo_protocol_test_pressure"
+                model="ls.validation.protocol.test">
+            <field name="protocol_id" ref="demo_protocol_autoclave_oq"/>
+            <field name="sequence">20</field>
+            <field name="code">TC-002</field>
+            <field name="name">Chamber pressure control</field>
+            <field name="objective">Verify the pressure control loop.</field>
+            <field name="acceptance_criteria">The chamber pressure remains
+                within the range declared in the operating manual during the
+                whole exposure phase.</field>
+            <field name="expected_evidence">Printout of the cycle record.</field>
+            <field name="is_critical" eval="True"/>
+        </record>
+
+        <record id="demo_protocol_test_alarm"
+                model="ls.validation.protocol.test">
+            <field name="protocol_id" ref="demo_protocol_autoclave_oq"/>
+            <field name="sequence">30</field>
+            <field name="code">TC-003</field>
+            <field name="name">Door interlock alarm</field>
+            <field name="objective">Verify that the door interlock alarm is
+                raised when the door is opened during a cycle.</field>
+            <field name="acceptance_criteria">The cycle is aborted and the alarm
+                is recorded in the equipment log.</field>
+            <field name="expected_evidence">Screenshot of the alarm log.</field>
+        </record>
+
+    </data>
+</odoo>

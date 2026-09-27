@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_ls_deviation_investigation_form" model="ir.ui.view">
+        <field name="name">ls.deviation.investigation.form</field>
+        <field name="model">ls.deviation.investigation</field>
+        <field name="arch" type="xml">
+            <form string="Investigation">
+                <header>
+                    <button name="action_start" string="Start" type="object"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_complete" string="Complete" type="object"
+                            class="btn-primary" invisible="state != 'in_progress'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Investigation subject"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="deviation_id"/>
+                            <field name="rca_method_id"/>
+                            <field name="investigator_id"/>
+                        </group>
+                        <group>
+                            <field name="date_started"/>
+                            <field name="date_completed"/>
+                            <field name="root_cause_determined"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Findings" name="findings">
+                            <field name="findings" nolabel="1"
+                                   placeholder="Facts established: data reviewed, personnel interviewed, observations made."/>
+                        </page>
+                        <page string="Contributing Factors" name="factors">
+                            <field name="contributing_factors" nolabel="1"/>
+                        </page>
+                        <page string="Root Cause" name="root_cause">
+                            <field name="root_cause" nolabel="1"
+                                   placeholder="Determined root cause. Where no definitive root cause could be established, record the most probable cause and the rationale."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_deviation_investigation_list" model="ir.ui.view">
+        <field name="name">ls.deviation.investigation.list</field>
+        <field name="model">ls.deviation.investigation</field>
+        <field name="arch" type="xml">
+            <list string="Investigations">
+                <field name="deviation_id"/>
+                <field name="name"/>
+                <field name="rca_method_id"/>
+                <field name="investigator_id" widget="many2one_avatar_user"/>
+                <field name="date_started"/>
+                <field name="date_completed"/>
+                <field name="state" widget="badge" decoration-success="state == 'completed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_ls_deviation_investigation" model="ir.actions.act_window">
+        <field name="name">Investigations</field>
+        <field name="res_model">ls.deviation.investigation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

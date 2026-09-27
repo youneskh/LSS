@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details.
+
+     The meanings below are the four examples named in 21 CFR 11.50(a)(3)
+     ("review, approval, responsibility, or authorship") together with three
+     further meanings that recur in GMP records. They are supplied for the main
+     company only; a multi-company deployment configures its own set for each
+     additional company. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="meaning_authored" model="ls.signature.meaning">
+            <field name="code">AUTHORED</field>
+            <field name="name">Authored by</field>
+            <field name="sequence">10</field>
+            <field name="description">The signer is the author of the content of this record.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_reviewed" model="ls.signature.meaning">
+            <field name="code">REVIEWED</field>
+            <field name="name">Reviewed by</field>
+            <field name="sequence">20</field>
+            <field name="description">The signer has reviewed the content of this record and found it complete and correct.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_approved" model="ls.signature.meaning">
+            <field name="code">APPROVED</field>
+            <field name="name">Approved by</field>
+            <field name="sequence">30</field>
+            <field name="description">The signer approves this record and accepts responsibility for the decision.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_responsible" model="ls.signature.meaning">
+            <field name="code">RESPONSIBLE</field>
+            <field name="name">Responsibility accepted by</field>
+            <field name="sequence">40</field>
+            <field name="description">The signer accepts responsibility for the activity documented by this record.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_performed" model="ls.signature.meaning">
+            <field name="code">PERFORMED</field>
+            <field name="name">Performed by</field>
+            <field name="sequence">50</field>
+            <field name="description">The signer performed the operation documented by this record.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_witnessed" model="ls.signature.meaning">
+            <field name="code">WITNESSED</field>
+            <field name="name">Witnessed by</field>
+            <field name="sequence">60</field>
+            <field name="description">The signer witnessed the operation documented by this record being performed by another person.</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="meaning_rejected" model="ls.signature.meaning">
+            <field name="code">REJECTED</field>
+            <field name="name">Rejected by</field>
+            <field name="sequence">70</field>
+            <field name="description">The signer rejects this record. A reason is mandatory.</field>
+            <field name="require_reason" eval="True"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</odoo>

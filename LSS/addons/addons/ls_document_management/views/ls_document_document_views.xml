@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Odoo 18 replaced the <list> element by <list> and the
+     <div class="oe_chatter"> block by the <chatter/> element. -->
+<odoo>
+
+    <record id="view_ls_document_document_list" model="ir.ui.view">
+        <field name="name">ls.document.document.list</field>
+        <field name="model">ls.document.document</field>
+        <field name="arch" type="xml">
+            <list string="Controlled Documents" decoration-muted="state == 'archived'" decoration-success="state == 'published'" decoration-info="state == 'under_review'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="folder_id"/>
+                <field name="owner_id" widget="many2one_avatar_user"/>
+                <field name="version_count" string="Versions"/>
+                <field name="effective_date"/>
+                <field name="retention_due_date" optional="show"/>
+                <field name="retention_state" optional="hide"/>
+                <field name="legal_hold" optional="hide"/>
+                <field name="tag_ids" widget="many2many_tags" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'published'" decoration-info="state == 'approved'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_document_document_form" model="ir.ui.view">
+        <field name="name">ls.document.document.form</field>
+        <field name="model">ls.document.document</field>
+        <field name="arch" type="xml">
+            <form string="Controlled Document">
+                <header>
+                    <button name="action_submit_review"
+                            string="Submit for Review"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"
+                            groups="ls_document_management.group_ls_document_editor"/>
+                    <button name="action_publish"
+                            string="Publish"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'approved'"
+                            groups="ls_document_management.group_ls_document_manager"/>
+                    <button name="action_reject"
+                            string="Reject"
+                            type="object"
+                            invisible="state != 'under_review'"
+                            groups="ls_document_management.group_ls_document_approver"/>
+                    <button name="action_reset_to_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'approved'"
+                            groups="ls_document_management.group_ls_document_manager"/>
+                    <button name="action_start_revision"
+                            string="Start Revision"
+                            type="object"
+                            invisible="state != 'published'"
+                            groups="ls_document_management.group_ls_document_editor"/>
+                    <button name="action_archive_document"
+                            string="Archive"
+                            type="object"
+                            invisible="state != 'published'"
+                            groups="ls_document_management.group_ls_document_manager"/>
+                    <button name="action_open_new_version_wizard"
+                            string="New Version"
+                            type="object"
+                            invisible="state != 'draft'"
+                            groups="ls_document_management.group_ls_document_editor"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved,published"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_versions"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-history">
+                            <field name="version_count" widget="statinfo" string="Versions"/>
+                        </button>
+                        <button name="action_open_links"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-link">
+                            <field name="link_count" widget="statinfo" string="Links"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="state != 'archived'"/>
+                    <div class="oe_title">
+                        <label for="reference" string="Document Number"/>
+                        <h1><field name="reference" readonly="1"/></h1>
+                        <label for="name" string="Title"/>
+                        <h2><field name="name" placeholder="Document title" readonly="state not in ('draft',)"/></h2>
+                    </div>
+                    <group>
+                        <group string="Classification">
+                            <field name="folder_id" readonly="state not in ('draft',)"/>
+                            <field name="owner_id" readonly="state not in ('draft',)"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Control">
+                            <field name="current_version_id"/>
+                            <field name="latest_version_id"/>
+                            <field name="effective_date"/>
+                            <field name="archive_date" invisible="state != 'archived'"/>
+                        </group>
+                        <group string="Retention">
+                            <field name="retention_policy_id"/>
+                            <field name="retention_due_date"/>
+                            <field name="retention_state"/>
+                            <field name="legal_hold"/>
+                        </group>
+                        <group string="Approval Routing">
+                            <field name="approver_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"
+                                   readonly="state not in ('draft',)"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" placeholder="Purpose and scope of the document"/>
+                        </page>
+                        <page string="Version History" name="versions">
+                            <field name="version_ids" readonly="1">
+                                <list string="Versions">
+                                    <field name="version_number"/>
+                                    <field name="filename"/>
+                                    <field name="file_size"/>
+                                    <field name="author_id"/>
+                                    <field name="create_date"/>
+                                    <field name="change_summary"/>
+                                    <field name="is_current"/>
+                                    <field name="is_superseded"/>
+                                    <field name="checksum_sha256" optional="hide"/>
+                                    <field name="content" widget="binary" filename="filename" string="Download"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Approvals" name="approvals">
+                            <field name="approval_ids" readonly="1">
+                                <list string="Approvals">
+                                    <field name="version_id"/>
+                                    <field name="approver_id"/>
+                                    <field name="state"/>
+                                    <field name="decision_date"/>
+                                    <field name="comment"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Linked Records" name="links">
+                            <field name="link_ids">
+                                <list string="Linked Records" editable="bottom">
+                                    <field name="res_model"/>
+                                    <field name="res_id"/>
+                                    <field name="res_name"/>
+                                    <field name="relation_type"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_document_document_kanban" model="ir.ui.view">
+        <field name="name">ls.document.document.kanban</field>
+        <field name="model">ls.document.document</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false">
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_details">
+                            <strong><field name="reference"/></strong>
+                            <div><field name="name"/></div>
+                            <div class="text-muted"><field name="folder_id"/></div>
+                            <div><field name="tag_ids" widget="many2many_tags"/></div>
+                            <div class="text-muted">
+                                <span>Effective: </span><field name="effective_date"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_ls_document_document_search" model="ir.ui.view">
+        <field name="name">ls.document.document.search</field>
+        <field name="model">ls.document.document</field>
+        <field name="arch" type="xml">
+            <search string="Controlled Documents">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="folder_id"/>
+                <field name="tag_ids"/>
+                <field name="owner_id"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_published" string="Published" domain="[('state', '=', 'published')]"/>
+                <filter name="filter_archived" string="Archived" domain="[('state', '=', 'archived')]"/>
+                <separator/>
+                <filter name="filter_my_documents" string="My Documents" domain="[('owner_id', '=', uid)]"/>
+                <filter name="filter_awaiting_my_approval" string="Awaiting My Approval"
+                        domain="[('approval_ids.approver_id', '=', uid), ('approval_ids.state', '=', 'pending')]"/>
+                <separator/>
+                <filter name="filter_retention_due_soon" string="Retention Due Soon" domain="[('retention_state', '=', 'due_soon')]"/>
+                <filter name="filter_retention_elapsed" string="Retention Elapsed" domain="[('retention_state', '=', 'elapsed')]"/>
+                <filter name="filter_legal_hold" string="Under Legal Hold" domain="[('legal_hold', '=', True)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_folder" string="Folder" context="{'group_by': 'folder_id'}"/>
+                    <filter name="group_by_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                    <filter name="group_by_retention_state" string="Retention Status" context="{'group_by': 'retention_state'}"/>
+                    <filter name="group_by_effective_date" string="Effective Date" context="{'group_by': 'effective_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_document_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">ls.document.document</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_ls_document_document_search"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first controlled document</p>
+            <p>Controlled documents follow the lifecycle Draft, Under Review, Approved, Published and Archived.</p>
+        </field>
+    </record>
+
+</odoo>

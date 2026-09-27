@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="action_report_ls_cosmetic_formulation" model="ir.actions.report">
+        <field name="name">Formulation Composition</field>
+        <field name="model">ls.cosmetic.formulation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_cosmetics.report_ls_cosmetic_formulation</field>
+        <field name="report_file">ls_cosmetics.report_ls_cosmetic_formulation</field>
+        <field name="binding_model_id" ref="model_ls_cosmetic_formulation"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Formulation - %s v%s' % (object.code, object.version)</field>
+    </record>
+
+    <record id="action_report_ls_cosmetic_safety_assessment" model="ir.actions.report">
+        <field name="name">Cosmetic Product Safety Report</field>
+        <field name="model">ls.cosmetic.safety_assessment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_cosmetics.report_ls_cosmetic_safety_assessment</field>
+        <field name="report_file">ls_cosmetics.report_ls_cosmetic_safety_assessment</field>
+        <field name="binding_model_id" ref="model_ls_cosmetic_safety_assessment"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'CPSR - %s v%s' % (object.code, object.version)</field>
+    </record>
+
+    <record id="action_report_ls_cosmetic_pif" model="ir.actions.report">
+        <field name="name">Product Information File Index</field>
+        <field name="model">ls.cosmetic.pif</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_cosmetics.report_ls_cosmetic_pif</field>
+        <field name="report_file">ls_cosmetics.report_ls_cosmetic_pif</field>
+        <field name="binding_model_id" ref="model_ls_cosmetic_pif"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'PIF Index - %s' % (object.code)</field>
+    </record>
+
+    <record id="action_report_ls_cosmetic_label" model="ir.actions.report">
+        <field name="name">Labelling Particulars</field>
+        <field name="model">ls.cosmetic.label</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_cosmetics.report_ls_cosmetic_label</field>
+        <field name="report_file">ls_cosmetics.report_ls_cosmetic_label</field>
+        <field name="binding_model_id" ref="model_ls_cosmetic_label"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Label - %s v%s' % (object.code, object.version)</field>
+    </record>
+
+</odoo>

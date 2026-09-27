@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!-- The QMS parameters are stored as system parameters. This action gives
+         a filtered entry point to them and is restricted to the settings
+         group, because ir.config_parameter is a technical model. -->
+    <record id="ls_qms_config_parameter_action" model="ir.actions.act_window">
+        <field name="name">QMS Parameters</field>
+        <field name="res_model">ir.config_parameter</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('key', 'like', 'ls_qms.')]</field>
+        <field name="help" type="html">
+            <p>These four parameters drive the behaviour of the quality management system.</p>
+            <p>
+                ls_qms.default_review_period_months, ls_qms.review_reminder_lead_days,
+                ls_qms.enforce_segregation_of_duties and ls_qms.default_retention_period_months.
+            </p>
+        </field>
+    </record>
+
+</odoo>

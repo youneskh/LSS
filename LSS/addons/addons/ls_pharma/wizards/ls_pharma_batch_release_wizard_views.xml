@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_batch_release_wizard_form" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.release.wizard.form</field>
+        <field name="model">ls.pharma.batch.release.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Batch Release Decision">
+                <group>
+                    <group string="Batch">
+                        <field name="batch_id" readonly="1"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="batch_state" readonly="1"/>
+                    </group>
+                    <group string="Yield">
+                        <field name="yield_percentage" readonly="1"/>
+                        <field name="yield_investigation_required" readonly="1"/>
+                    </group>
+                </group>
+                <group string="System Evaluation">
+                    <field name="system_evaluation" nolabel="1" readonly="1"/>
+                </group>
+                <div class="text-muted mb-3">
+                    The system evaluation is advisory. It reports what the
+                    recorded data show. It does not decide, and it does not
+                    tick any box below on the user's behalf. Each confirmation
+                    below is an assertion made by the person recording the
+                    decision.
+                </div>
+                <group string="Release Checklist">
+                    <field name="check_record_reviewed"/>
+                    <field name="check_discrepancies_closed"/>
+                    <field name="check_yield_within_limits"/>
+                    <field name="check_components_verified"/>
+                    <field name="check_qc_conform"/>
+                    <field name="check_labeling_reconciled"/>
+                    <field name="check_reserve_samples"/>
+                    <field name="check_stability_programme"/>
+                </group>
+                <group string="Decision">
+                    <field name="decision" widget="radio"/>
+                    <field name="statement"
+                           placeholder="Statement supporting the decision"/>
+                </group>
+                <div class="text-muted">
+                    The decision, its date, the deciding user and the eight
+                    answers above are stored in an append-only record that can
+                    never be modified or deleted, and are covered by a SHA-256
+                    integrity digest. That digest is not an electronic
+                    signature within the meaning of FDA 21 CFR Part 11.
+                </div>
+                <footer>
+                    <button name="action_confirm"
+                            string="Record Decision"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

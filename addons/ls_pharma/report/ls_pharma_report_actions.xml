@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="action_report_ls_pharma_batch_record" model="ir.actions.report">
+        <field name="name">Batch Production and Control Record</field>
+        <field name="model">ls.pharma.batch_record</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_pharma.report_batch_record</field>
+        <field name="report_file">ls_pharma.report_batch_record</field>
+        <field name="print_report_name">"BPCR - %s" % (object.name)</field>
+        <field name="binding_model_id" ref="model_ls_pharma_batch_record"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_ls_pharma_release_certificate" model="ir.actions.report">
+        <field name="name">Batch Release Certificate</field>
+        <field name="model">ls.pharma.batch.release</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_pharma.report_release_certificate</field>
+        <field name="report_file">ls_pharma.report_release_certificate</field>
+        <field name="print_report_name">"Release - %s" % (object.name)</field>
+        <field name="binding_model_id" ref="model_ls_pharma_batch_release"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

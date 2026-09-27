@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_test_result_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.test_result.list</field>
+        <field name="model">ls.lab.test_result</field>
+        <field name="arch" type="xml">
+            <list default_order="sample_id desc, sequence, id"
+                  decoration-danger="evaluation == 'non_conform'"
+                  decoration-success="evaluation == 'conform'"
+                  decoration-warning="is_oot">
+                <field name="sample_id"/>
+                <field name="sequence" optional="hide"/>
+                <field name="product_id" optional="show"/>
+                <field name="test_method_id"/>
+                <field name="criterion_display"/>
+                <field name="result_display"/>
+                <field name="uom_id" optional="hide"/>
+                <field name="evaluation" widget="badge"
+                       decoration-success="evaluation == 'conform'"
+                       decoration-danger="evaluation == 'non_conform'"/>
+                <field name="is_oot" optional="show"/>
+                <field name="analyst_id"/>
+                <field name="test_date" optional="show"/>
+                <field name="reviewed_by_id" optional="hide"/>
+                <field name="oos_id" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_result_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.test_result.form</field>
+        <field name="model">ls.lab.test_result</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_enter" type="object" string="Record Result"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_analyst"/>
+                    <button name="action_review" type="object" string="Review"
+                            class="oe_highlight" invisible="state != 'entered'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Reset to Draft" invisible="state != 'entered'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,entered,reviewed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="test_method_id" readonly="1"
+                                   options="{'no_open': True}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Context">
+                            <field name="sample_id" readonly="1"/>
+                            <field name="product_id"/>
+                            <field name="specification_line_id" readonly="1"/>
+                            <field name="criterion_display"/>
+                            <field name="is_mandatory"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Result">
+                            <field name="result_type" invisible="1"/>
+                            <field name="criterion_type" invisible="1"/>
+                            <field name="result_numeric"
+                                   invisible="result_type != 'numeric'"
+                                   readonly="state == 'reviewed'"/>
+                            <field name="result_text"
+                                   invisible="result_type != 'text'"
+                                   readonly="state == 'reviewed'"/>
+                            <field name="result_boolean"
+                                   invisible="result_type != 'boolean'"
+                                   readonly="state == 'reviewed'"/>
+                            <field name="uom_id" readonly="state == 'reviewed'"/>
+                            <field name="evaluation" widget="badge"/>
+                            <field name="result_display" invisible="state == 'draft'"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Execution">
+                            <field name="analyst_id"/>
+                            <field name="test_date" readonly="state == 'reviewed'"/>
+                            <field name="instrument_reference"
+                                   readonly="state == 'reviewed'"/>
+                        </group>
+                        <group string="Review">
+                            <field name="reviewed_by_id"/>
+                            <field name="review_date"/>
+                            <field name="oos_id" readonly="1"
+                                   invisible="not oos_id"/>
+                            <field name="is_retest" invisible="not is_retest"/>
+                            <field name="retest_of_id" invisible="not retest_of_id"/>
+                        </group>
+                    </group>
+                    <group string="Out Of Trend">
+                        <field name="is_oot"/>
+                        <field name="oot_justification" invisible="not is_oot"
+                               placeholder="Basis of the out-of-trend determination"/>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The evaluation is derived from the approved specification and
+                        cannot be set by a user. This module performs no statistical
+                        trend analysis; an out-of-trend determination is made outside
+                        the system and recorded here with its justification.
+                    </div>
+                    <group string="Remarks">
+                        <field name="remarks" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_result_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.test_result.search</field>
+        <field name="model">ls.lab.test_result</field>
+        <field name="arch" type="xml">
+            <search string="Test Results">
+                <field name="sample_id"/>
+                <field name="product_id"/>
+                <field name="test_method_id"/>
+                <field name="analyst_id"/>
+                <field name="instrument_reference"/>
+                <filter name="filter_pending" string="Pending"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_entered" string="Entered"
+                        domain="[('state', '=', 'entered')]"/>
+                <filter name="filter_reviewed" string="Reviewed"
+                        domain="[('state', '=', 'reviewed')]"/>
+                <separator/>
+                <filter name="filter_non_conform" string="Out Of Specification"
+                        domain="[('evaluation', '=', 'non_conform')]"/>
+                <filter name="filter_conform" string="Conforms"
+                        domain="[('evaluation', '=', 'conform')]"/>
+                <filter name="filter_oot" string="Out Of Trend"
+                        domain="[('is_oot', '=', True)]"/>
+                <separator/>
+                <filter name="filter_retest" string="Retests"
+                        domain="[('is_retest', '=', True)]"/>
+                <filter name="filter_test_date" string="Test Date" date="test_date"/>
+                <group>
+                    <filter name="group_by_evaluation" string="Evaluation"
+                            domain="[]" context="{'group_by': 'evaluation'}"/>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_test_method" string="Test Method"
+                            domain="[]" context="{'group_by': 'test_method_id'}"/>
+                    <filter name="group_by_analyst" string="Analyst"
+                            domain="[]" context="{'group_by': 'analyst_id'}"/>
+                    <filter name="group_by_test_date" string="Test Date"
+                            domain="[]" context="{'group_by': 'test_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_result_view_pivot" model="ir.ui.view">
+        <field name="name">ls.lab.test_result.pivot</field>
+        <field name="model">ls.lab.test_result</field>
+        <field name="arch" type="xml">
+            <pivot string="Test Result Analysis">
+                <field name="product_id" type="row"/>
+                <field name="evaluation" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_lab_test_result_view_graph" model="ir.ui.view">
+        <field name="name">ls.lab.test_result.graph</field>
+        <field name="model">ls.lab.test_result</field>
+        <field name="arch" type="xml">
+            <graph string="Test Result Analysis" type="bar">
+                <field name="test_method_id"/>
+                <field name="evaluation"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_test_result" model="ir.actions.act_window">
+        <field name="name">Test Results</field>
+        <field name="res_model">ls.lab.test_result</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="ls_lab_test_result_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No test result yet</p>
+            <p>
+                Result lines are generated automatically when a sample is registered
+                against an approved specification.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_test_result_analysis" model="ir.actions.act_window">
+        <field name="name">Test Result Analysis</field>
+        <field name="res_model">ls.lab.test_result</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="search_view_id" ref="ls_lab_test_result_view_search"/>
+        <field name="context">{'search_default_group_by_evaluation': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No data to analyse yet</p>
+            <p>Result conformity can be analysed here by product, method and analyst.</p>
+        </field>
+    </record>
+
+</odoo>

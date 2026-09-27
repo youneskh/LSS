@@ -1,0 +1,1819 @@
+# Translation template for the ls_lab module.
+# This file is distributed under the same license as the ls_lab package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-07 02:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "-at_install"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Accelerated"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Acceptance Criteria"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Acceptance Criterion"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Active"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Actual Pull Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Additional Testing"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Ambient Light"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Analyst"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Analyst Interviewed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approval"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approval Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approve"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approve Protocol"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approved"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Approved By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Archived"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Assessments"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Assessments (continued)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Assignable Laboratory Cause"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Assignable Laboratory Cause Identified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Assignable Manufacturing Cause"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Authorise Resample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Authorise Retest"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Authorised"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Awaiting Approval"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Awaiting Review"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Batch"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Batch Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Batch Size"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Batch Size Unit"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Between Min and Max"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Biochemical"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "CAPA Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Calculation Verified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancel"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancel Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancellation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancellation Reason"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancelled"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cancelled By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Certificate Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Certificates"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Certificates of Analysis"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Chromatographic"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Classification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Cleaning Verification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Close"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Closed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Closure"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Closure Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Code"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Company"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Complete"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Complete Phase I"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Complete Phase II"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Completed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Completed Time Points"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Completion"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conclude"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Concluded"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conclusion"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conclusion And Disposition"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conditions"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Confirm"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Confirm Results Recorded"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Confirm Signature Intent"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conforms"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Conforms To Specification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Container Closure System"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Context"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Control"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Controlled Light Exposure"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Create Pull Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Create Revision"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Create Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Create Stability Pull Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Criteria Count"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Criterion Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Current Status"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Customer"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Decimal Places"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Default Unit of Measure"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Description"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Discard"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Disposition Justification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Does Not Conform"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Does Not Conform To Specification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Draft"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Due Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Effective Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Entered"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Evaluation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Execution"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Expected Text"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Fail"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Final Conclusion"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Findings"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Finished Product"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Further Investigation Required"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Gravimetric"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Humidity Tolerance (+/- %)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "I confirm this action"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Identification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "In Process"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "In Progress"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "In Use"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Informative"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Informative Only"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Instrument Category"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Instrument Performance Verified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Instrument Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Instrument Required"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Intermediate"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Interval (months)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Investigation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Investigation Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Investigations"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Investigator"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Is Retest"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Issue"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Issue Certificate"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Issue Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Issued"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Issued By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Light Condition"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Limitation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Long Term"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Lot / Serial Number"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Mandatory"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Manufacturing Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Manufacturing Review"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Mark Missed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Mark Reported"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Mark Tested"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Material"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Maximum"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Meaning Of Signature"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Method Adherence Verified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Method Code"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Method Name"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Method Validation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Method Validation Status"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Microbiological"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Minimum"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Missed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Name"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "No Assignable Cause Identified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "No Assignable Laboratory Cause"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Normal"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Not Less Than"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Not More Than"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Not Required"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Not Specified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Notes"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Numeric"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Numeric Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "OOS / OOT Investigations"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Obsolescence"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Obsolescence Reason"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Obsolete"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Ongoing"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Ongoing / Annual"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Open"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Open Investigations"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Open OOS"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Opened On"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Origin"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Originating Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Other"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Out Of Specification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Out Of Trend"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Out Of Trend Justification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Overall Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Overdue"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Packaging Material"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pass"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pass / Fail"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pass / Fail Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pending"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pending Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I - Laboratory"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I - Laboratory Investigation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I Complete"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I Completed By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I Completion Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I Conclusion"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase I Findings"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase II - Full Investigation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase II Completed By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase II Completion Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Phase II Findings"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Photostability"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Physical"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Planned"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Planned End Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Priority"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Procedure"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Procedure Summary"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Product"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Product Disposition"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Protected From Light"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Protocol Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Pull Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Quality Approver"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Quantity"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Raw Material"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Receipt Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Received"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Received By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Record"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Record Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Record Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Recorded Value"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reference Document"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reject"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Related Result Count"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Related Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Relative Humidity (%)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Release"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Remain In Quarantine"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Remarks"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Report"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Report Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reported"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reported By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reported Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reporting"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Resample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Resample Authorisation Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Resample Authorised"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Resample Authorised By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Resample Justification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Result Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Result Under Investigation"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Results Recorded"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retain"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest Authorisation Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest Authorised"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest Authorised By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest Justification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retest Of"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Retests"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Revalidation Due"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Review"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Review Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Review and Approval"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reviewed"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Reviewed By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Revision Reason"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Root Cause"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sample"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sample Integrity Verified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sample Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sample Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sampled"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sampled By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Samples"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sampling Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sampling Point"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sampling and Receipt"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Schedule"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Scope"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Sequence"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Set Obsolete"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Show On CoA"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Signature Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Signature Intent"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Signature Meaning"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Signed By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification Code"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification Line"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification Name"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specification Usage"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Specifications"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Spectroscopic"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Stability"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Stability Studies"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Stability Study"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Stability Time Point"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Standards And Reagents Verified"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start Phase I"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start Phase II"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start Study"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Start Testing"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Status"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Storage Condition"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Storage Conditions"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Study Design"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Study Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Study Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Submit for Review"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Superseded"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Superseded By"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Supersedes"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Target"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Target Model"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Target Record"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Technique"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Temperature (deg C)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Temperature Tolerance (+/- deg C)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Terminate"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Terminated"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Termination"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Termination Reason"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test Method"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test Methods"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test Result Analysis"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Test Results"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Tested"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Testing"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Testing Due Date"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Text"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Text Match"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Text Result"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Time Point"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Time Points"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Titrimetric"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Type"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Under Review"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Unit of Measure"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Urgent"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Used In Specifications"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Validated"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Validated Methods"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Validation Reference"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Validation Status"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Version"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Versioning"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Water"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "Window (days)"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "criterion_display"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "informative"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "investigator_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "line_ids"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "name"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "non_conform"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "obsolete"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "ongoing"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "oot_justification"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "product_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "reported"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "res_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "result_ids"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "reviewed_by_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "sample_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "superseded"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "test_method_id"
+msgstr ""
+
+#. module: ls_lab
+#: model:ir.model.fields,field_description:ls_lab
+msgid "testing"
+msgstr ""

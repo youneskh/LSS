@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_ls_qms_policy_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center"><span t-field="doc.name"/></h2>
+                        <t t-call="ls_qms.report_ls_qms_document_control_block"/>
+                        <div t-if="doc.scope">
+                            <h4>1. Scope</h4>
+                            <p><span t-field="doc.scope"/></p>
+                        </div>
+                        <div t-if="doc.policy_statement">
+                            <h4>2. Policy Statement</h4>
+                            <div t-field="doc.policy_statement"/>
+                        </div>
+                        <div t-if="doc.commitment">
+                            <h4>3. Commitments</h4>
+                            <div t-field="doc.commitment"/>
+                        </div>
+                        <div t-if="doc.communication_method">
+                            <h4>4. Communication</h4>
+                            <p><span t-field="doc.communication_method"/></p>
+                        </div>
+                        <div t-if="doc.objective_ids">
+                            <h4>5. Related Quality Objectives</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Objective</th>
+                                        <th>Target Date</th>
+                                        <th class="text-end">Target</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.objective_ids" t-as="objective">
+                                        <td><span t-field="objective.reference"/></td>
+                                        <td><span t-field="objective.name"/></td>
+                                        <td><span t-field="objective.date_target"/></td>
+                                        <td class="text-end"><span t-field="objective.target_value"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div t-if="doc.reason_for_change">
+                            <h4>6. Reason for Change</h4>
+                            <p><span t-field="doc.reason_for_change"/></p>
+                        </div>
+                        <t t-call="ls_qms.report_ls_qms_uncontrolled_copy_notice"/>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        The three reports below render records that already exist in the
+        database. They do not compute regulatory conclusions and they do not
+        assert conformity: every value printed is a value a user entered and
+        approved through the workflow of the corresponding model.
+    -->
+
+    <record id="action_report_ls_md_device_regulatory_summary" model="ir.actions.report">
+        <field name="name">Device Regulatory Summary</field>
+        <field name="model">ls.md.device</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_medical_device.report_device_regulatory_summary</field>
+        <field name="report_file">ls_medical_device.report_device_regulatory_summary</field>
+        <field name="binding_model_id" ref="model_ls_md_device"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Regulatory Summary - %s' % (object.reference or '')</field>
+    </record>
+
+    <record id="action_report_ls_md_risk_management" model="ir.actions.report">
+        <field name="name">Risk Management File</field>
+        <field name="model">ls.md.risk_assessment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_medical_device.report_risk_management</field>
+        <field name="report_file">ls_medical_device.report_risk_management</field>
+        <field name="binding_model_id" ref="model_ls_md_risk_assessment"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Risk Management File - %s' % (object.name or '')</field>
+    </record>
+
+    <record id="action_report_ls_md_pms_periodic" model="ir.actions.report">
+        <field name="name">Periodic Post-Market Report</field>
+        <field name="model">ls.md.pms_report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_medical_device.report_pms_periodic</field>
+        <field name="report_file">ls_medical_device.report_pms_periodic</field>
+        <field name="binding_model_id" ref="model_ls_md_pms_report"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Periodic Report - %s' % (object.name or '')</field>
+    </record>
+
+</odoo>

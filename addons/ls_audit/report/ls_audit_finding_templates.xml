@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_audit_finding_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            Audit Finding
+                            <span t-field="doc.reference"/>
+                        </h2>
+                        <h4 t-field="doc.name"/>
+
+                        <table class="table table-sm">
+                            <tr>
+                                <td style="width:30%"><strong>Audit</strong></td>
+                                <td><span t-field="doc.audit_id.reference"/> - <span t-field="doc.audit_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Area</strong></td>
+                                <td><span t-field="doc.area_id.complete_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Category</strong></td>
+                                <td>
+                                    <span t-field="doc.category_id.name"/>
+                                    (<span t-field="doc.severity"/>)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Requirement reference</strong></td>
+                                <td><span t-field="doc.reference_clause"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Raised by / on</strong></td>
+                                <td>
+                                    <span t-field="doc.raised_by_id.name"/> /
+                                    <span t-field="doc.raised_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Responsible auditee</strong></td>
+                                <td><span t-field="doc.auditee_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Issued on / response due</strong></td>
+                                <td>
+                                    <span t-field="doc.issue_date"/> /
+                                    <span t-field="doc.response_due_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><span t-field="doc.state"/></td>
+                            </tr>
+                        </table>
+
+                        <h5>Statement of Non-conformity</h5>
+                        <p style="white-space:pre-wrap;" t-field="doc.description"/>
+
+                        <h5>Objective Evidence</h5>
+                        <p style="white-space:pre-wrap;" t-field="doc.evidence"/>
+
+                        <div t-if="doc.root_cause">
+                            <h5>Root Cause</h5>
+                            <p style="white-space:pre-wrap;" t-field="doc.root_cause"/>
+                        </div>
+                        <div t-if="doc.correction">
+                            <h5>Immediate Correction</h5>
+                            <p style="white-space:pre-wrap;" t-field="doc.correction"/>
+                        </div>
+                        <div t-if="doc.corrective_action">
+                            <h5>Corrective Action</h5>
+                            <p style="white-space:pre-wrap;" t-field="doc.corrective_action"/>
+                            <p t-if="doc.capa_reference">
+                                <strong>CAPA reference: </strong><span t-field="doc.capa_reference"/>
+                            </p>
+                        </div>
+                        <div t-if="doc.verification_method">
+                            <h5>Effectiveness Verification</h5>
+                            <p style="white-space:pre-wrap;" t-field="doc.verification_method"/>
+                            <p style="white-space:pre-wrap;" t-field="doc.verification_result"/>
+                            <p>
+                                <strong>Verified by: </strong><span t-field="doc.verified_by_id.name"/>
+                                <strong> on </strong><span t-field="doc.verification_date"/>
+                            </p>
+                        </div>
+                        <div t-if="doc.state == 'cancelled'">
+                            <h5>Cancellation Reason</h5>
+                            <p style="white-space:pre-wrap;" t-field="doc.cancellation_reason"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

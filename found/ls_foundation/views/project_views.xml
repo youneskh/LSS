@@ -1,0 +1,91 @@
+<odoo>
+    <record id="view_lss_foundation_project_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.project.tree</field>
+        <field name="model">lss.foundation.project</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='completed'" decoration-warning="state=='in_progress'" decoration-danger="state=='cancelled'">
+                <field name="name"/>
+                <field name="company_name"/>
+                <field name="sector"/>
+                <field name="activity_type"/>
+                <field name="state" widget="badge"/>
+                <field name="start_date"/>
+                <field name="target_completion_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_lss_foundation_project_form" model="ir.ui.view">
+        <field name="name">lss.foundation.project.form</field>
+        <field name="model">lss.foundation.project</field>
+        <field name="arch" type="xml">
+            <form string="Business Establishment Project">
+                <header>
+                    <button name="action_generate_roadmap" string="Generate Roadmap"
+                            type="object" class="btn-primary" states="qualification"/>
+                    <button name="action_start_project" string="Start Project"
+                            type="object" class="btn-success" states="roadmap_generation"/>
+                    <button name="action_complete" string="Complete Project"
+                            type="object" class="btn-success" states="in_progress"/>
+                    <button name="action_suspend" string="Suspend"
+                            type="object" class="btn-warning" states="in_progress"/>
+                    <button name="action_resume" string="Resume"
+                            type="object" class="btn-primary" states="suspended"/>
+                    <button name="action_cancel" string="Cancel"
+                            type="object" class="btn-danger" states="qualification,roadmap_generation,in_progress"/>
+                    <field name="state" widget="statusbar" statusbar_visible="qualification,roadmap_generation,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="company_name"/>
+                            <field name="company_type"/>
+                            <field name="sector" widget="selection"/>
+                            <field name="activity_type" widget="selection"/>
+                            <field name="products"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="target_completion_date"/>
+                            <field name="actual_completion_date"/>
+                            <field name="applicable_authorities" widget="many2many_tags"/>
+                            <field name="required_licenses" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Roadmap">
+                            <field name="step_ids">
+                                <tree decoration-success="state=='approved'" decoration-warning="state in ['preparing','submitted','under_review']" decoration-danger="state in ['rejected','renewal']">
+                                    <field name="sequence"/>
+                                    <field name="name"/>
+                                    <field name="authority_id"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="start_date"/>
+                                    <field name="submission_date"/>
+                                    <field name="approval_date"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Licenses">
+                            <field name="license_ids"/>
+                        </page>
+                        <page string="Documents">
+                            <field name="document_ids" context="{'default_project_id': id}"/>
+                        </page>
+                        <page string="Investments">
+                            <field name="investment_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_lss_foundation_project" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">lss.foundation.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html"><p>Manage business establishment projects with full regulatory guidance.</p></field>
+    </record>
+</odoo>

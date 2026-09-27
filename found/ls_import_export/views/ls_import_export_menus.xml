@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Menu structure follows the suite convention: own root menu, viewer
+     group on root, Configuration restricted to manager. Section
+     placeholders for later phases are included so the menu shape is
+     stable as phases land. Only the Registry section and Configuration
+     are populated in Phase 1.
+
+     Deviation D-02 (own root menu, no shared parent): no shared
+     "Life Sciences" or "Regulatory Affairs" parent menu exists in the
+     suite. Each ls_* module defines its own root (see ls_recall
+     deviation D-01).
+-->
+<odoo>
+
+    <!-- ===== Root menu ================================================= -->
+
+    <menuitem id="menu_ls_import_export_root"
+              name="Import &amp; Export Compliance"
+              web_icon="ls_import_export,static/description/icon.png"
+              sequence="80"
+              groups="ls_import_export.group_ls_import_export_viewer"/>
+
+    <!-- ===== Registry (Phase 1 — populated) =========================== -->
+
+    <menuitem id="menu_ls_import_export_registry"
+              name="Registry"
+              parent="menu_ls_import_export_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_import_export_provision"
+              name="Provisions"
+              parent="menu_ls_import_export_registry"
+              action="action_ls_import_export_provision"
+              sequence="10"
+              groups="ls_import_export.group_ls_import_export_viewer"/>
+
+    <menuitem id="menu_ls_import_export_requirement"
+              name="Compliance Requirements"
+              parent="menu_ls_import_export_registry"
+              action="action_ls_import_export_requirement"
+              sequence="20"
+              groups="ls_import_export.group_ls_import_export_viewer"/>
+
+    <menuitem id="menu_ls_import_export_regulatory_question"
+              name="Regulatory Questions"
+              parent="menu_ls_import_export_registry"
+              action="action_ls_import_export_regulatory_question"
+              sequence="30"
+              groups="ls_import_export.group_ls_import_export_viewer"/>
+
+    <!-- ===== Operations (Phase 4 — placeholder) ======================== -->
+
+    <menuitem id="menu_ls_import_export_operations"
+              name="Operations"
+              parent="menu_ls_import_export_root"
+              sequence="20"
+              groups="ls_import_export.group_ls_import_export_user"/>
+
+    <!-- ===== Compliance (Phase 3 — placeholder) ========================= -->
+
+    <menuitem id="menu_ls_import_export_compliance"
+              name="Compliance"
+              parent="menu_ls_import_export_root"
+              sequence="30"
+              groups="ls_import_export.group_ls_import_export_officer"/>
+
+    <!-- ===== Intelligence (Phase 5 — placeholder) ====================== -->
+
+    <menuitem id="menu_ls_import_export_intelligence"
+              name="Intelligence"
+              parent="menu_ls_import_export_root"
+              sequence="40"
+              groups="ls_import_export.group_ls_import_export_user"/>
+
+    <!-- ===== Configuration (Phase 1 — populated) ======================== -->
+
+    <menuitem id="menu_ls_import_export_config"
+              name="Configuration"
+              parent="menu_ls_import_export_root"
+              sequence="90"
+              groups="ls_import_export.group_ls_import_export_manager"/>
+
+</odoo>

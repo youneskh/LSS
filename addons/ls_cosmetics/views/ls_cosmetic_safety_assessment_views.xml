@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_safety_assessment_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.safety_assessment.list</field>
+        <field name="model">ls.cosmetic.safety_assessment</field>
+        <field name="arch" type="xml">
+            <list string="Safety Reports"
+                  decoration-muted="state in ('superseded', 'cancelled')"
+                  decoration-danger="conclusion == 'not_safe'"
+                  decoration-warning="review_overdue">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="formulation_id"/>
+                <field name="product_tmpl_id" optional="show"/>
+                <field name="conclusion" optional="show"/>
+                <field name="assessor_partner_id" optional="show"/>
+                <field name="approval_date" optional="show"/>
+                <field name="review_date" optional="show"/>
+                <field name="review_overdue" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state in ('part_a', 'part_b')"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_safety_assessment_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.safety_assessment.form</field>
+        <field name="model">ls.cosmetic.safety_assessment</field>
+        <field name="arch" type="xml">
+            <form string="Cosmetic Product Safety Report">
+                <header>
+                    <button name="action_start_part_a" type="object"
+                            string="Start Part A" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_start_part_b" type="object"
+                            string="Start Part B" class="btn-primary"
+                            invisible="state != 'part_a'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve as Safety Assessor" class="btn-primary"
+                            invisible="state != 'part_b'"
+                            groups="ls_cosmetics.group_ls_cosmetics_safety_assessor"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state not in ('part_a', 'part_b')"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,part_a,part_b,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Not Safe" bg_color="text-bg-danger"
+                            invisible="conclusion != 'not_safe'"/>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-secondary"
+                            invisible="state != 'superseded'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1>
+                            <field name="code" readonly="1"/>
+                            <span> v</span><field name="version" readonly="1" class="oe_inline"/>
+                        </h1>
+                        <label for="name" class="oe_edit_only"/>
+                        <h2><field name="name" placeholder="Report title"/></h2>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="formulation_id"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="predecessor_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Review">
+                            <field name="review_date"/>
+                            <field name="review_overdue"/>
+                            <field name="approval_date"/>
+                            <field name="approved_by_id"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state != 'part_a'">
+                        Every Part A section must be documented before Part B can
+                        start: Annex I Part B section 3 requires the reasoning to be
+                        based on the descriptions set out under Part A.
+                    </div>
+                    <notebook>
+                        <page string="Part A - Safety Information" name="part_a">
+                            <separator string="A1. Quantitative and Qualitative Composition"/>
+                            <field name="part_a_1_composition"/>
+                            <separator string="A2. Physical/Chemical Characteristics and Stability"/>
+                            <field name="part_a_2_physchem"/>
+                            <separator string="A3. Microbiological Quality"/>
+                            <field name="part_a_3_microbiology"/>
+                            <separator string="A4. Impurities, Traces, Packaging Material"/>
+                            <field name="part_a_4_impurities"/>
+                            <separator string="A5. Normal and Reasonably Foreseeable Use"/>
+                            <field name="part_a_5_use"/>
+                            <separator string="A6. Exposure to the Cosmetic Product"/>
+                            <field name="part_a_6_product_exposure"/>
+                            <separator string="A7. Exposure to the Substances"/>
+                            <field name="part_a_7_substance_exposure"/>
+                            <separator string="A8. Toxicological Profile of the Substances"/>
+                            <field name="part_a_8_toxicological"/>
+                            <group>
+                                <field name="margin_of_safety"/>
+                                <field name="margin_of_safety_basis"/>
+                            </group>
+                            <separator string="A9. Undesirable and Serious Undesirable Effects"/>
+                            <field name="part_a_9_undesirable_effects"/>
+                            <separator string="A10. Other Information on the Cosmetic Product"/>
+                            <field name="part_a_10_other_information"/>
+                            <separator string="Non-Clinical Studies"/>
+                            <field name="non_clinical_glp_statement"/>
+                        </page>
+                        <page string="Part B - Safety Assessment" name="part_b">
+                            <separator string="B1. Assessment Conclusion"/>
+                            <group>
+                                <field name="conclusion"/>
+                            </group>
+                            <field name="conclusion_statement"
+                                   placeholder="Statement on the safety of the cosmetic product in relation to Article 3"/>
+                            <separator string="B2. Labelled Warnings and Instructions of Use"/>
+                            <field name="labelled_warnings"
+                                   placeholder="Statement on the need to label particular warnings and instructions of use - Article 19(1)(d)"/>
+                            <separator string="B3. Reasoning"/>
+                            <field name="reasoning"/>
+                            <separator string="B3. Interactions Between Substances"/>
+                            <field name="reasoning_interactions"/>
+                            <separator string="B3. Impact of Stability on Safety"/>
+                            <field name="reasoning_stability_impact"/>
+                            <separator string="B3. Justification of Toxicological Profiles Considered"/>
+                            <field name="reasoning_toxicological_scope"/>
+                            <separator string="B3. Specific Assessment - Children Under Three"/>
+                            <field name="reasoning_children"/>
+                            <separator string="B3. Specific Assessment - External Intimate Hygiene"/>
+                            <field name="reasoning_intimate_hygiene"/>
+                        </page>
+                        <page string="B4. Assessor" name="assessor">
+                            <group>
+                                <group string="Identity">
+                                    <field name="assessor_partner_id"/>
+                                    <field name="assessor_address"/>
+                                    <field name="assessor_user_id"/>
+                                </group>
+                                <group string="Qualification">
+                                    <field name="assessor_qualification"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Article 10(2) requires the Part B assessment to be
+                                carried out by a person holding a diploma or other
+                                evidence of formal qualifications from a university
+                                course in pharmacy, toxicology, medicine or a similar
+                                discipline, or a course recognised as equivalent. This
+                                module records the evidence; it does not verify it.
+                            </div>
+                            <field name="assessor_qualification_attachment_ids"
+                                   widget="many2many_binary"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_safety_assessment_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.safety_assessment.search</field>
+        <field name="model">ls.cosmetic.safety_assessment</field>
+        <field name="arch" type="xml">
+            <search string="Safety Reports">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="formulation_id"/>
+                <field name="assessor_partner_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_in_progress" string="In Preparation"
+                        domain="[('state', 'in', ('part_a', 'part_b'))]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_not_safe" string="Concluded Not Safe"
+                        domain="[('conclusion', '=', 'not_safe')]"/>
+                <filter name="filter_review_overdue" string="Review Overdue"
+                        domain="[('review_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_conclusion" string="Conclusion"
+                            context="{'group_by': 'conclusion'}"/>
+                    <filter name="group_assessor" string="Assessor"
+                            context="{'group_by': 'assessor_partner_id'}"/>
+                    <filter name="group_review" string="Review Date"
+                            context="{'group_by': 'review_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_safety_assessment" model="ir.actions.act_window">
+        <field name="name">Safety Assessments</field>
+        <field name="res_model">ls.cosmetic.safety_assessment</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_safety_assessment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Set up your first safety report</p>
+            <p>
+                Article 10(1) requires a cosmetic product safety report drawn up in
+                accordance with Annex I before the product is placed on the market.
+                The form reproduces Part A sections 1 to 10 and Part B sections 1 to 4.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_assessment_review_due" model="ir.actions.act_window">
+        <field name="name">Safety Reports Due for Review</field>
+        <field name="res_model">ls.cosmetic.safety_assessment</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('review_overdue', '=', True)]</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_safety_assessment_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is overdue</p>
+            <p>
+                Article 10(1)(c) requires the safety report to be kept up to date in
+                view of additional relevant information generated after the product
+                is placed on the market. Reports whose review date has passed appear
+                here.
+            </p>
+        </field>
+    </record>
+
+</odoo>

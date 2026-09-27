@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <record id="ls_calibration_cron_notify_due" model="ir.cron">
+        <field name="name">Calibration: notify due and overdue instruments</field>
+        <field name="model_id" ref="model_ls_calibration_instrument" />
+        <field name="state">code</field>
+        <field name="code">model._cron_notify_due_calibrations()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="user_id" ref="base.user_root" />
+        <field
+            name="nextcall"
+            eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 01:00:00')"
+        />
+        <field name="active" eval="True" />
+    </record>
+
+    <record id="ls_calibration_cron_generate_records" model="ir.cron">
+        <field name="name">Calibration: generate due calibration records</field>
+        <field name="model_id" ref="model_ls_calibration_plan" />
+        <field name="state">code</field>
+        <field name="code">model._cron_generate_calibration_records()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="user_id" ref="base.user_root" />
+        <field
+            name="nextcall"
+            eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')"
+        />
+        <field name="active" eval="True" />
+    </record>
+
+</odoo>

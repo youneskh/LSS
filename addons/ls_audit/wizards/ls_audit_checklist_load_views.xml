@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_checklist_load_form" model="ir.ui.view">
+        <field name="name">ls.audit.checklist.load.form</field>
+        <field name="model">ls.audit.checklist.load</field>
+        <field name="arch" type="xml">
+            <form string="Load Checklist">
+                <group>
+                    <field name="audit_id" readonly="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <field name="existing_count"/>
+                    <field name="checklist_id"/>
+                    <field name="replace_existing" invisible="existing_count == 0"/>
+                </group>
+                <div class="alert alert-warning" role="alert" invisible="existing_count == 0">
+                    This audit already contains questions. Loading a different checklist
+                    will delete the existing questions and any assessment already recorded
+                    on them.
+                </div>
+                <div class="alert alert-info" role="alert">
+                    Only approved checklists can be loaded. The question text is copied into
+                    the audit, so later changes to the checklist template will not alter
+                    this audit.
+                </div>
+                <footer>
+                    <button name="action_load" type="object" string="Load" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="action_report_signature_certificate" model="ir.actions.report">
+        <field name="name">Signature Certificate</field>
+        <field name="model">ls.signature.log</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_electronic_signature.report_signature_certificate</field>
+        <field name="report_file">ls_electronic_signature.report_signature_certificate</field>
+        <field name="binding_model_id" ref="model_ls_signature_log"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Signature Certificate - %s' % (object.name)</field>
+    </record>
+
+</odoo>

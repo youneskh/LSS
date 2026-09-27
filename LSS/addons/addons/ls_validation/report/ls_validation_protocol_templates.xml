@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_protocol_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    <span t-field="doc.reference"/>
+                    <span> v</span>
+                    <span t-field="doc.version"/>
+                </h2>
+                <h3 t-field="doc.name"/>
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Protocol Type</strong></td>
+                        <td><span t-field="doc.protocol_type"/></td>
+                        <td><strong>Status</strong></td>
+                        <td><span t-field="doc.state"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Validation Item</strong></td>
+                        <td><span t-field="doc.item_id"/></td>
+                        <td><strong>Master Plan</strong></td>
+                        <td><span t-field="doc.master_plan_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Author</strong></td>
+                        <td><span t-field="doc.author_id"/></td>
+                        <td><strong>Reviewer</strong></td>
+                        <td><span t-field="doc.reviewer_id"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approved by</strong></td>
+                        <td><span t-field="doc.approver_id"/></td>
+                        <td><strong>Approval Date</strong></td>
+                        <td><span t-field="doc.approval_date"/></td>
+                    </tr>
+                </table>
+
+                <h4>1. Objective</h4>
+                <div t-field="doc.objective"/>
+
+                <h4>2. Scope</h4>
+                <div t-field="doc.scope"/>
+
+                <h4>3. Prerequisites</h4>
+                <div t-field="doc.prerequisites"/>
+
+                <h4>4. Reference Documents</h4>
+                <div t-field="doc.reference_documents"/>
+
+                <h4>5. Test Cases</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Test Case</th>
+                            <th>Title</th>
+                            <th>Acceptance Criteria</th>
+                            <th>Critical</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.test_ids" t-as="test">
+                            <td t-out="test.code"/>
+                            <td t-out="test.name"/>
+                            <td t-out="test.acceptance_criteria"/>
+                            <td>
+                                <span t-if="test.is_critical">Yes</span>
+                                <span t-if="not test.is_critical">No</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>6. Electronic Signatures</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signatory</th>
+                            <th>Meaning</th>
+                            <th>Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.signature_ids" t-as="signature">
+                            <td t-out="signature.signed_on"/>
+                            <td t-out="signature.user_id.name"/>
+                            <td t-out="signature.meaning"/>
+                            <td t-out="signature.signature_hash"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.signature_ids">
+                    This protocol carries no electronic signature yet.
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_protocol">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_validation.report_protocol_document"/>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_execution_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2 t-field="doc.reference"/>
+                <h3 t-field="doc.protocol_id"/>
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Validation Item</strong></td>
+                        <td><span t-field="doc.item_id"/></td>
+                        <td><strong>Execution Round</strong></td>
+                        <td><span t-field="doc.execution_round"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Executed by</strong></td>
+                        <td><span t-field="doc.executed_by_id"/></td>
+                        <td><strong>Start</strong></td>
+                        <td><span t-field="doc.date_start"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reviewed by</strong></td>
+                        <td><span t-field="doc.reviewed_by_id"/></td>
+                        <td><strong>End</strong></td>
+                        <td><span t-field="doc.date_end"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approved by</strong></td>
+                        <td><span t-field="doc.approved_by_id"/></td>
+                        <td><strong>Overall Result</strong></td>
+                        <td><span t-field="doc.overall_result"/></td>
+                    </tr>
+                </table>
+
+                <h4>1. Results</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Test Case</th>
+                            <th>Acceptance Criteria</th>
+                            <th>Observed Result</th>
+                            <th>Verdict</th>
+                            <th>Performed by</th>
+                            <th>Performed on</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.result_ids" t-as="line">
+                            <td t-out="line.code"/>
+                            <td t-out="line.acceptance_criteria"/>
+                            <td t-out="line.actual_result"/>
+                            <td t-out="line.verdict"/>
+                            <td t-out="line.performed_by_id.name"/>
+                            <td t-out="line.performed_on"/>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>2. Discrepancies</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Title</th>
+                            <th>Classification</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.discrepancy_ids" t-as="discrepancy">
+                            <td t-out="discrepancy.reference"/>
+                            <td t-out="discrepancy.name"/>
+                            <td t-out="discrepancy.classification"/>
+                            <td t-out="discrepancy.state"/>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.discrepancy_ids">
+                    No discrepancy was raised during this execution.
+                </p>
+
+                <h4>3. Remarks</h4>
+                <div t-field="doc.remarks"/>
+
+                <h4>4. Electronic Signatures</h4>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Signatory</th>
+                            <th>Meaning</th>
+                            <th>Hash</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.signature_ids" t-as="signature">
+                            <td t-out="signature.signed_on"/>
+                            <td t-out="signature.user_id.name"/>
+                            <td t-out="signature.meaning"/>
+                            <td t-out="signature.signature_hash"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_execution">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_validation.report_execution_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

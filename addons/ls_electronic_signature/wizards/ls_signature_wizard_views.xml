@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_ls_signature_wizard_form" model="ir.ui.view">
+        <field name="name">ls.signature.wizard.form</field>
+        <field name="model">ls.signature.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Execute Electronic Signature">
+                <field name="res_model" invisible="1"/>
+                <field name="res_id" invisible="1"/>
+                <field name="available_meaning_ids" invisible="1"/>
+                <field name="require_password" invisible="1"/>
+                <field name="reason_required" invisible="1"/>
+                <group>
+                    <field name="res_name" readonly="1"/>
+                    <field name="policy_id" readonly="1" invisible="not policy_id"/>
+                    <field name="request_id" readonly="1" invisible="not request_id"/>
+                </group>
+                <group>
+                    <field name="meaning_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="meaning_description" readonly="1" nolabel="1" colspan="2"
+                           invisible="not meaning_description"/>
+                </group>
+                <group>
+                    <field name="reason" required="reason_required"
+                           placeholder="Recorded with the signature and retained with it."/>
+                </group>
+                <div class="alert alert-info" role="status">
+                    <field name="binding_statement" readonly="1" nolabel="1"/>
+                </div>
+                <group string="Signature Components">
+                    <field name="login" autocomplete="username"/>
+                    <field name="password" password="True"
+                           autocomplete="current-password"
+                           invisible="not require_password"
+                           required="require_password"/>
+                    <div colspan="2" class="text-muted" invisible="require_password">
+                        A signature was already executed with all components during this
+                        continuous period of controlled system access, so only the
+                        identification code is required.
+                    </div>
+                </group>
+                <group>
+                    <field name="consent"/>
+                </group>
+                <footer>
+                    <button name="action_sign" type="object" string="Sign"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_decline_wizard_form" model="ir.ui.view">
+        <field name="name">ls.signature.decline.wizard.form</field>
+        <field name="model">ls.signature.decline.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Decline Signature Request">
+                <field name="request_id" invisible="1"/>
+                <group>
+                    <field name="reason" nolabel="1"
+                           placeholder="State why the signature is refused. Retained with the request."/>
+                </group>
+                <footer>
+                    <button name="action_decline" type="object" string="Decline"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

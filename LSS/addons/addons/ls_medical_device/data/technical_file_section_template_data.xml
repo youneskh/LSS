@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Verification note on the section titles below.
+
+     The titles of Annex II sections 1 to 5 were confirmed against published
+     renderings of Regulation (EU) 2017/745 during preparation of this module.
+     The title of Annex II section 6 and the titles of its sub-sections could
+     not be re-verified from official documentation at that time and are
+     recorded here as commonly rendered. The implementing organisation must
+     confirm every title below against the Official Journal text of the
+     Regulation before relying on this template.
+
+     Annex III section titles follow Annex III points 1.1 and 1.2 as described
+     in the Regulation. Annex XIII coverage is limited to the documentation
+     referred to in Section 2 of that annex for custom-made devices.
+
+     The template is editable data. Adding, renaming or removing a section
+     changes only the outline proposed for new documentation sets; existing
+     sets keep the sections they were created with.
+-->
+<odoo>
+    <data noupdate="1">
+
+        <!-- Annex II - Technical documentation -->
+        <record id="tf_section_annex_ii_1" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">1</field>
+            <field name="name">Device description and specification, including variants and accessories</field>
+            <field name="sequence">10</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Description of the device, its intended purpose, its operating principle, its classification and the rationale for it, the variants and accessories covered, and the Basic UDI-DI.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_1_1" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">1.1</field>
+            <field name="name">Device description and specification</field>
+            <field name="sequence">20</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Detailed description including the Basic UDI-DI assigned by the manufacturer as soon as identification of the device becomes based on a UDI system.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_1_2" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">1.2</field>
+            <field name="name">Reference to previous and similar generations of the device</field>
+            <field name="sequence">30</field>
+            <field name="is_mandatory" eval="False"/>
+            <field name="description">Overview of previous generations produced by the manufacturer and of similar devices available on the market, where such devices exist.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_2" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">2</field>
+            <field name="name">Information to be supplied by the manufacturer</field>
+            <field name="sequence">40</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Complete set of labels, packaging information and instructions for use, in the languages accepted in the Member States where the device is envisaged to be sold.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_3" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">3</field>
+            <field name="name">Design and manufacturing information</field>
+            <field name="sequence">50</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Information allowing the design stages and the manufacturing processes to be understood, together with the identification of all sites, suppliers and subcontractors involved.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_4" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">4</field>
+            <field name="name">General safety and performance requirements</field>
+            <field name="sequence">60</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Demonstration of conformity with the applicable general safety and performance requirements set out in Annex I, with an explanation for each requirement considered not to apply, and reference to the harmonised standards or common specifications applied.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_5" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">5</field>
+            <field name="name">Benefit-risk analysis and risk management</field>
+            <field name="sequence">70</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Benefit-risk analysis and the solutions adopted for risk management, drawn from the risk management file of the device.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_6" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">6</field>
+            <field name="name">Product verification and validation</field>
+            <field name="sequence">80</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Results and analyses of the tests, verification and validation activities carried out to demonstrate conformity. Confirm the section title against the Official Journal text of the Regulation.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_6_1" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">6.1</field>
+            <field name="name">Pre-clinical and clinical data</field>
+            <field name="sequence">90</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Pre-clinical testing results and the clinical evaluation report together with the post-market clinical follow-up plan and its evaluation report. Confirm the section title against the Official Journal text of the Regulation.</field>
+        </record>
+
+        <record id="tf_section_annex_ii_6_2" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_ii</field>
+            <field name="section_number">6.2</field>
+            <field name="name">Additional information required in specific cases</field>
+            <field name="sequence">100</field>
+            <field name="is_mandatory" eval="False"/>
+            <field name="description">Additional information required where the device incorporates a medicinal substance, materials of human or animal origin, substances absorbed by the human body, or where other specific cases apply. Confirm the section title against the Official Journal text of the Regulation.</field>
+        </record>
+
+        <!-- Annex III - Technical documentation on post-market surveillance -->
+        <record id="tf_section_annex_iii_1_1" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_iii</field>
+            <field name="section_number">1.1</field>
+            <field name="name">Post-market surveillance plan</field>
+            <field name="sequence">10</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Post-market surveillance plan drawn up in accordance with Article 84, proving that the manufacturer complies with the obligation referred to in Article 83.</field>
+        </record>
+
+        <record id="tf_section_annex_iii_1_2" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_iii</field>
+            <field name="section_number">1.2</field>
+            <field name="name">Periodic safety update report and post-market surveillance report</field>
+            <field name="sequence">20</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">The periodic safety update report referred to in Article 86 and the post-market surveillance report referred to in Article 85, as applicable to the risk class of the device.</field>
+        </record>
+
+        <!-- Annex XIII - Custom-made devices -->
+        <record id="tf_section_annex_xiii_2" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_xiii</field>
+            <field name="section_number">2</field>
+            <field name="name">Documentation on design, manufacture and performance</field>
+            <field name="sequence">10</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Documentation indicating the manufacturing sites and allowing the design, manufacture and performance of the device to be assessed, including the expected performance, so that conformity with the requirements of the Regulation can be assessed.</field>
+        </record>
+
+        <record id="tf_section_annex_xiii_2_statement" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_xiii</field>
+            <field name="section_number">2.1</field>
+            <field name="name">Statement for the custom-made device</field>
+            <field name="sequence">20</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Statement identifying the device, the prescribing professional and the patient or user for whose exclusive use the device is intended, together with the declaration of conformity with the general safety and performance requirements.</field>
+        </record>
+
+        <record id="tf_section_annex_xiii_2_pms" model="ls.md.technical_file_section_template">
+            <field name="annex_reference">annex_xiii</field>
+            <field name="section_number">2.2</field>
+            <field name="name">Post-production experience review</field>
+            <field name="sequence">30</field>
+            <field name="is_mandatory" eval="True"/>
+            <field name="description">Review of the experience gained in the post-production phase, including post-market clinical follow-up, and the means of applying any necessary corrective action.</field>
+        </record>
+
+    </data>
+</odoo>

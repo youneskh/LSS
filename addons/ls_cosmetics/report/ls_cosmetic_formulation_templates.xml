@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_ls_cosmetic_formulation_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    Formulation
+                    <span t-field="doc.code"/> v<span t-field="doc.version"/>
+                </h2>
+                <h4 t-field="doc.name"/>
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Product:</strong>
+                        <span t-field="doc.product_tmpl_id"/>
+                        <br/>
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/>
+                        <br/>
+                        <strong>Company:</strong>
+                        <span t-field="doc.company_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Approved by:</strong>
+                        <span t-field="doc.approved_by_id"/>
+                        <br/>
+                        <strong>Approved on:</strong>
+                        <span t-field="doc.approved_date"/>
+                        <br/>
+                        <strong>Total:</strong>
+                        <span t-field="doc.total_percentage"/> % w/w
+                    </div>
+                </div>
+                <p class="text-muted">
+                    Quantitative and qualitative composition, as required by Annex I
+                    Part A section 1 of Regulation (EC) No 1223/2009.
+                </p>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>INCI Name</th>
+                            <th>CAS</th>
+                            <th>EC</th>
+                            <th>Function</th>
+                            <th class="text-end">% w/w</th>
+                            <th>Nano</th>
+                            <th>Annex Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.line_ids" t-as="line">
+                            <td><span t-field="line.ingredient_id.inci_name"/></td>
+                            <td><span t-field="line.ingredient_id.cas_number"/></td>
+                            <td><span t-field="line.ingredient_id.ec_number"/></td>
+                            <td><span t-field="line.function_in_product"/></td>
+                            <td class="text-end"><span t-field="line.concentration"/></td>
+                            <td>
+                                <span t-if="line.is_nanomaterial">nano</span>
+                            </td>
+                            <td><span t-field="line.restriction_status"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div t-if="doc.unevaluated_line_count" class="alert alert-warning mt16">
+                    <strong>Not evaluated:</strong>
+                    <span t-field="doc.unevaluated_line_count"/>
+                    ingredient(s) have no annex entry linked. Compliance with
+                    Annexes II to VI has not been evaluated for those lines.
+                </div>
+                <h4 class="mt32">Normal and Reasonably Foreseeable Use</h4>
+                <p t-field="doc.intended_use"/>
+                <h4>Targeted Population</h4>
+                <p t-field="doc.target_population"/>
+                <p>
+                    <strong>Intended for children under three:</strong>
+                    <span t-field="doc.for_children_under_three"/>
+                    <br/>
+                    <strong>Exclusively for external intimate hygiene:</strong>
+                    <span t-field="doc.for_intimate_hygiene"/>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_cosmetic_formulation">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_cosmetics.report_ls_cosmetic_formulation_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

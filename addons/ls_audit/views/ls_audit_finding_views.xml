@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_finding_list" model="ir.ui.view">
+        <field name="name">ls.audit.finding.list</field>
+        <field name="model">ls.audit.finding</field>
+        <field name="arch" type="xml">
+            <list string="Findings"
+                  decoration-danger="is_overdue"
+                  decoration-bf="severity == 'critical'"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="reference"/>
+                <field name="audit_id" optional="show"/>
+                <field name="name"/>
+                <field name="area_id" optional="show"/>
+                <field name="category_id"/>
+                <field name="severity" optional="hide"/>
+                <field name="auditee_id"/>
+                <field name="response_due_date"/>
+                <field name="is_overdue" optional="hide"/>
+                <field name="capa_reference" optional="hide"/>
+                <field name="days_open" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'verification'"
+                       decoration-warning="state in ('open', 'responded')"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_finding_form" model="ir.ui.view">
+        <field name="name">ls.audit.finding.form</field>
+        <field name="model">ls.audit.finding</field>
+        <field name="arch" type="xml">
+            <form string="Finding">
+                <header>
+                    <button name="action_issue" type="object" string="Issue to Auditee"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_audit.group_ls_audit_auditor"/>
+                    <button name="action_submit_response" type="object" string="Submit Response"
+                            class="btn-primary" invisible="state != 'open'"/>
+                    <button name="action_accept_response" type="object" string="Accept Response"
+                            class="btn-primary" invisible="state != 'responded'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_reject_response" type="object" string="Reject Response"
+                            invisible="state != 'responded'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_request_verification" type="object" string="Action Completed"
+                            class="btn-primary" invisible="state != 'in_progress'"/>
+                    <button name="action_verify_and_close" type="object" string="Verify and Close"
+                            class="btn-primary" invisible="state != 'verification'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,open,responded,in_progress,verification,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <widget name="web_ribbon" title="Overdue" bg_color="text-bg-warning"
+                            invisible="not is_overdue"/>
+                    <div class="oe_title">
+                        <h2><field name="reference" readonly="1"/></h2>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Short statement of the finding"/></h1>
+                    </div>
+                    <group>
+                        <group string="Classification">
+                            <field name="audit_id" readonly="state != 'draft'"/>
+                            <field name="area_id" readonly="state != 'draft'"/>
+                            <field name="category_id" readonly="state != 'draft'"/>
+                            <field name="severity"/>
+                            <field name="reference_clause"/>
+                            <field name="response_id" readonly="1" invisible="not response_id"/>
+                            <field name="requires_capa" invisible="1"/>
+                            <field name="requires_root_cause" invisible="1"/>
+                            <field name="is_overdue" invisible="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsibility and Dates">
+                            <field name="raised_by_id"/>
+                            <field name="raised_date"/>
+                            <field name="auditee_id" readonly="state not in ('draft', 'open')"/>
+                            <field name="issue_date"/>
+                            <field name="response_due_date"/>
+                            <field name="days_open"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Finding" name="finding">
+                            <group string="Statement of Non-conformity">
+                                <field name="description" nolabel="1" readonly="state != 'draft'"
+                                       placeholder="State the requirement that was not met."/>
+                            </group>
+                            <group string="Objective Evidence">
+                                <field name="evidence" nolabel="1" readonly="state != 'draft'"
+                                       placeholder="Verifiable records or statements of fact supporting the finding."/>
+                            </group>
+                        </page>
+                        <page string="Auditee Response" name="response">
+                            <group>
+                                <group>
+                                    <field name="responded_by_id"/>
+                                    <field name="response_date"/>
+                                </group>
+                                <group>
+                                    <field name="capa_reference"
+                                           required="requires_capa and state not in ('draft', 'open')"/>
+                                    <field name="action_due_date"/>
+                                </group>
+                            </group>
+                            <group string="Root Cause">
+                                <field name="root_cause" nolabel="1"/>
+                            </group>
+                            <group string="Immediate Correction">
+                                <field name="correction" nolabel="1"/>
+                            </group>
+                            <group string="Corrective Action">
+                                <field name="corrective_action" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Effectiveness Verification" name="verification">
+                            <group>
+                                <group>
+                                    <field name="verified_by_id"/>
+                                    <field name="verification_date"/>
+                                </group>
+                                <group>
+                                    <field name="closure_date"/>
+                                </group>
+                            </group>
+                            <group string="Verification Method">
+                                <field name="verification_method" nolabel="1"
+                                       placeholder="How was the effectiveness of the action checked?"/>
+                            </group>
+                            <group string="Verification Result">
+                                <field name="verification_result" nolabel="1"
+                                       placeholder="What evidence demonstrates that the action was effective?"/>
+                            </group>
+                        </page>
+                        <page string="Cancellation" name="cancellation" invisible="state != 'cancelled'">
+                            <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_finding_search" model="ir.ui.view">
+        <field name="name">ls.audit.finding.search</field>
+        <field name="model">ls.audit.finding</field>
+        <field name="arch" type="xml">
+            <search string="Findings">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="audit_id"/>
+                <field name="area_id"/>
+                <field name="auditee_id"/>
+                <field name="capa_reference"/>
+                <filter name="filter_my_findings" string="My Findings"
+                        domain="[('auditee_id', '=', uid)]"/>
+                <filter name="filter_raised_by_me" string="Raised by Me"
+                        domain="[('raised_by_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'not in', ('closed', 'cancelled'))]"/>
+                <filter name="filter_overdue" string="Overdue" domain="[('is_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="filter_critical" string="Critical" domain="[('severity', '=', 'critical')]"/>
+                <filter name="filter_major" string="Major" domain="[('severity', '=', 'major')]"/>
+                <filter name="filter_requires_capa" string="Requires CAPA"
+                        domain="[('category_id.requires_capa', '=', True)]"/>
+                <separator/>
+                <filter name="filter_due_this_month" string="Due This Month"
+                        date="response_due_date"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_severity" string="Severity" context="{'group_by': 'severity'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="group_audit" string="Audit" context="{'group_by': 'audit_id'}"/>
+                    <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                    <filter name="group_auditee" string="Auditee" context="{'group_by': 'auditee_id'}"/>
+                    <filter name="group_due" string="Response Due" context="{'group_by': 'response_due_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_finding_graph" model="ir.ui.view">
+        <field name="name">ls.audit.finding.graph</field>
+        <field name="model">ls.audit.finding</field>
+        <field name="arch" type="xml">
+            <graph string="Findings Analysis" type="bar" sample="1">
+                <field name="area_id" type="row"/>
+                <field name="severity" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_finding_pivot" model="ir.ui.view">
+        <field name="name">ls.audit.finding.pivot</field>
+        <field name="model">ls.audit.finding</field>
+        <field name="arch" type="xml">
+            <pivot string="Findings Analysis" sample="1">
+                <field name="area_id" type="row"/>
+                <field name="severity" type="col"/>
+                
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_finding" model="ir.actions.act_window">
+        <field name="name">Findings</field>
+        <field name="res_model">ls.audit.finding</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_audit_finding_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No finding raised yet</p>
+            <p>Findings are raised during an audit and follow a response, action and effectiveness verification cycle before they can be closed.</p>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_finding_my" model="ir.actions.act_window">
+        <field name="name">My Findings</field>
+        <field name="res_model">ls.audit.finding</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_finding_search"/>
+        <field name="domain">[('auditee_id', '=', uid)]</field>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No finding assigned to you</p>
+            <p>Findings raised against the areas you are accountable for appear here.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <!--
+        Demonstration configuration only. It audits three fields of res.partner
+        so that a fresh demonstration database produces audit entries as soon as
+        a contact is edited. Odoo 19 no longer loads demonstration data by
+        default, so this file has no effect on a production installation.
+    -->
+    <record id="demo_rule_res_partner" model="ls.audit_trail.rule">
+        <field name="name">Demonstration: contact master data</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="log_create" eval="True"/>
+        <field name="log_write" eval="True"/>
+        <field name="log_unlink" eval="True"/>
+        <field name="field_ids" eval="[(6, 0, [
+            ref('base.field_res_partner__name'),
+            ref('base.field_res_partner__vat'),
+            ref('base.field_res_partner__email'),
+        ])]"/>
+        <field name="note">Demonstration rule illustrating a narrow, justified audit scope: only the three identifying attributes of a contact are captured.</field>
+    </record>
+
+</odoo>

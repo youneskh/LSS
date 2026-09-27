@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ===== Regulatory Question: tree ================================= -->
+
+    <record id="view_ls_import_export_regulatory_question_list"
+            model="ir.ui.view">
+        <field name="name">ls.import_export.regulatory.question.list</field>
+        <field name="model">ls.import_export.regulatory.question</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="status == 'open'"
+                  decoration-success="status == 'answered'"
+                  decoration-muted="status == 'wont_answer'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="question_type"/>
+                <field name="status" widget="badge"
+                       decoration-warning="status == 'open'"
+                       decoration-success="status == 'answered'"
+                       decoration-muted="status == 'wont_answer'"/>
+                <field name="answer_provision_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===== Regulatory Question: form ================================= -->
+
+    <record id="view_ls_import_export_regulatory_question_form"
+            model="ir.ui.view">
+        <field name="name">ls.import_export.regulatory.question.form</field>
+        <field name="model">ls.import_export.regulatory.question</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Open"
+                            bg_color="text-bg-warning"
+                            invisible="status != 'open'"/>
+                    <widget name="web_ribbon" title="Answered"
+                            bg_color="text-bg-success"
+                            invisible="status != 'answered'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                        <h3><field name="code" readonly="1" class="oe_inline"/></h3>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group string="Question">
+                            <field name="question_type"/>
+                            <field name="expected_provision_ref"/>
+                            <field name="status"/>
+                        </group>
+                        <group string="Answer">
+                            <field name="answer_provision_id"
+                                   domain="[('status', '=', 'in_force')]"
+                                   invisible="status != 'answered'"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Context">
+                        <field name="context" nolabel="1"
+                               colspan="4"
+                               placeholder="Why this question is open and what depends on the answer."/>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===== Regulatory Question: search ================================ -->
+
+    <record id="view_ls_import_export_regulatory_question_search"
+            model="ir.ui.view">
+        <field name="name">ls.import_export.regulatory.question.search</field>
+        <field name="model">ls.import_export.regulatory.question</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="question_type"/>
+                <field name="status"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('status', '=', 'open')]"/>
+                <filter name="filter_answered" string="Answered"
+                        domain="[('status', '=', 'answered')]"/>
+                <group name="group_by">
+                    <filter name="group_type" string="Question Type"
+                            context="{'group_by': 'question_type'}"/>
+                    <filter name="group_status" string="Status"
+                            context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ===== Regulatory Question: action ================================ -->
+
+    <record id="action_ls_import_export_regulatory_question"
+            model="ir.actions.act_window">
+        <field name="name">Regulatory Questions</field>
+        <field name="res_model">ls.import_export.regulatory.question</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="view_ls_import_export_regulatory_question_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No regulatory question recorded.
+            </p>
+            <p>
+                Twenty-five questions are seeded on first install, mirroring
+                the open questions listed in doc/02_regulatory_analysis.md
+                section 3. Close a question by linking it to the cited
+                provision that answers it.
+            </p>
+        </field>
+    </record>
+
+</odoo>

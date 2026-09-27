@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_pms_periodic_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Periodic Post-Market Report</h2>
+                <h3><span t-field="doc.name"/></h3>
+
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Device</strong>
+                        <p t-field="doc.device_id"/>
+                        <strong>Report Type</strong>
+                        <p t-field="doc.report_type"/>
+                        <strong>Surveillance Plan</strong>
+                        <p t-field="doc.pms_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Period Start</strong>
+                        <p t-field="doc.period_start"/>
+                        <strong>Period End</strong>
+                        <p t-field="doc.period_end"/>
+                        <strong>Status</strong>
+                        <p t-field="doc.state"/>
+                    </div>
+                </div>
+
+                <h4>Signals Recorded During the Period</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Complaints Received</td>
+                            <td><span t-field="doc.complaint_count"/></td>
+                            <td>Serious Incidents Reported</td>
+                            <td><span t-field="doc.serious_incident_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Non-Serious Incidents</td>
+                            <td><span t-field="doc.non_serious_incident_count"/></td>
+                            <td>Field Safety Corrective Actions</td>
+                            <td><span t-field="doc.fsca_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Sales Volume</td>
+                            <td><span t-field="doc.sales_volume"/></td>
+                            <td>Trend Signal Identified</td>
+                            <td><span t-field="doc.trend_signal_identified"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div t-if="doc.trend_signal_identified">
+                    <h4>Trend Signal</h4>
+                    <p t-field="doc.trend_signal_description"/>
+                </div>
+
+                <h4>Results and Conclusions of the Data Analysis</h4>
+                <p t-field="doc.data_analysis_summary"/>
+
+                <h4>User Population and Usage</h4>
+                <p t-field="doc.population_estimate"/>
+
+                <h4>Main Findings of the Post-Market Clinical Follow-up</h4>
+                <p t-field="doc.pmcf_main_findings"/>
+
+                <h4>Preventive and Corrective Actions</h4>
+                <p t-field="doc.capa_summary"/>
+
+                <h4>Benefit-Risk Determination</h4>
+                <p>
+                    <strong>Recorded conclusion: </strong>
+                    <span t-field="doc.conclusion"/>
+                </p>
+                <p t-field="doc.benefit_risk_conclusion"/>
+
+                <h4>Resulting Updates</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Risk Management File Update Required</td>
+                            <td><span t-field="doc.risk_file_update_required"/></td>
+                        </tr>
+                        <tr>
+                            <td>Clinical Evaluation Update Required</td>
+                            <td><span t-field="doc.clinical_evaluation_update_required"/></td>
+                        </tr>
+                        <tr>
+                            <td>Labelling Update Required</td>
+                            <td><span t-field="doc.labelling_update_required"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Submission</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Notified Body Submission Required</td>
+                            <td><span t-field="doc.notified_body_submission_required"/></td>
+                        </tr>
+                        <tr>
+                            <td>Submission Date</td>
+                            <td><span t-field="doc.notified_body_submission_date"/></td>
+                        </tr>
+                        <tr>
+                            <td>Submission Reference</td>
+                            <td><span t-field="doc.notified_body_reference"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row mt32">
+                    <div class="col-6">
+                        <strong>Prepared By</strong>
+                        <p t-field="doc.author_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Approved By</strong>
+                        <p t-field="doc.approver_id"/>
+                        <strong>Approval Date</strong>
+                        <p t-field="doc.approval_date"/>
+                    </div>
+                </div>
+
+                <div class="mt32">
+                    <p class="text-muted">
+                        This document reproduces data recorded in the periodic post-market report.
+                        It is not a submission form and does not certify compliance with any
+                        regulatory framework.
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_pms_periodic">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_medical_device.report_pms_periodic_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

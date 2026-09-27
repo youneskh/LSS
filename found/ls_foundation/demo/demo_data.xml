@@ -1,0 +1,9 @@
+<odoo>
+    <record id="demo_project_pharma" model="lss.foundation.project">
+        <field name="name">Demo Pharma SARL</field>
+        <field name="company_name">Demo Pharma SARL</field>
+        <field name="sector">pharma</field>
+        <field name="activity_type">manufacturing</field>
+        <field name="products">Comprimés, gélules</field>
+    </record>
+</odoo>

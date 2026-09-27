@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_formulation_revise_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.formulation.revise.form</field>
+        <field name="model">ls.cosmetic.formulation.revise</field>
+        <field name="arch" type="xml">
+            <form string="Revise Formulation">
+                <div class="alert alert-info" role="alert">
+                    An approved formulation is frozen so that the product information
+                    file remains reconstructable for the ten year retention period of
+                    Article 11(1). A change is made by issuing a new version; the
+                    current version is marked as superseded once the new one is
+                    approved.
+                </div>
+                <group>
+                    <group>
+                        <field name="formulation_id" readonly="1"/>
+                        <field name="current_version"/>
+                        <field name="new_version"/>
+                    </group>
+                    <group>
+                        <field name="copy_lines"/>
+                    </group>
+                </group>
+                <separator string="Reason for the Change"/>
+                <field name="change_reason"
+                       placeholder="Recorded on both versions"/>
+                <footer>
+                    <button name="action_revise" type="object"
+                            string="Create New Version" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

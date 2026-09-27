@@ -1,0 +1,1318 @@
+# Translation template for the ls_deviation Odoo module.
+# Copyright 2026 Life Sciences Suite
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#: ls_deviation/models/ls_deviation.py:81
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Reference"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:87
+msgid "Sequence-generated unique reference of the deviation record."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:94
+msgid "Company owning this deviation record."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:97
+#: ls_deviation/models/ls_deviation_tag.py:16
+msgid "Colour Index"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:102
+msgid "Short unambiguous description of what departed from the approved procedure, specification or expected outcome."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:108
+msgid "Factual account of the event: what happened, where, when and how it was detected. Conclusions belong in the investigation."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:113
+msgid "Justification of the deviation as required by 21 CFR 211.100(b), which states that any deviation from written production and process control procedures shall be recorded and justified."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:123
+#: ls_deviation/views/ls_deviation_type_views.xml
+msgid "Deviation Type"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:131
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Category"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:139
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Tags"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:144
+msgid "Critical: deviation that has or may have an impact on patient safety, product efficacy or regulatory commitments. Major: deviation affecting product quality without direct patient safety impact. Minor: deviation with no impact on product quality."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:151
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Planned Deviation"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:153
+msgid "A planned deviation is authorised before the event occurs. It must be justified and approved prior to execution."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:163
+msgid "Date and time at which the deviating event actually occurred."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:169
+msgid "Date and time at which the deviation was detected."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:175
+msgid "Date and time at which the deviation was recorded in the system."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:178
+msgid "Target Closure Date"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:181
+msgid "Date by which the deviation is expected to be closed. Computed from the severity when the severity is first set, and thereafter changeable only through the due date extension wizard."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:189
+msgid "Whole days between detection and closure, or between detection and today for a record that is still open."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:195
+msgid "Set when an open deviation has passed its target closure date."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:203
+msgid "Reported By"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:211
+msgid "Assigned Investigator"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:214
+msgid "User accountable for progressing the investigation."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:218
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:37
+msgid "QA Reviewer"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:221
+msgid "Quality Assurance representative accountable for the closure decision."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:226
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Department"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:230
+msgid "Department in which the deviation occurred."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:238
+#: ls_deviation/models/ls_deviation_disposition.py:47
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Product"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:248
+msgid "Affected Lots/Serials"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:250
+msgid "Lots or serial numbers directly affected by the deviation."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:257
+msgid "Other Batches Evaluated"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:259
+msgid "Other batches evaluated for association with this deviation. 21 CFR 211.192 requires the investigation to extend to other batches of the same drug product and to other drug products that may have been associated with the specific failure or discrepancy."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:265
+msgid "Extension Rationale"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:266
+msgid "Documented rationale for the scope of the extension to other batches and products, including the rationale where no extension was considered necessary (21 CFR 211.192)."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:272
+msgid "Manufacturing Order"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:279
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Equipment"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:286
+msgid "Location"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:293
+msgid "Quantity of product affected, expressed in the unit of measure of the product."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:298
+#: ls_deviation/models/ls_deviation_disposition.py:64
+msgid "Unit of Measure"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:313
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Reasoned assessment supporting the impact flags above."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:317
+msgid "Impact Assessed By"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:326
+msgid "Set when at least one impact flag is set. Drives the requirement for a product disposition."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:336
+#: ls_deviation/views/ls_deviation_action_views.xml
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Immediate Actions"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:341
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Investigations"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:346
+msgid "Dispositions"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:351
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_stage_log_views.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Transition Log"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:362
+#: ls_deviation/models/ls_deviation.py:34
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:32
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "CAPA Required"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:364
+msgid "Set when the investigation concludes that corrective and/or preventive action beyond the immediate actions is necessary."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:368
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Rationale for requiring, or for not requiring, a CAPA."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:371
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:33
+msgid "CAPA Reference"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:373
+msgid "External reference of the CAPA record. This module does not depend on a CAPA module; see docs/04_technical_specification.md for the documented integration hook."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:382
+msgid "Conclusions of the investigation. 21 CFR 211.192 requires a written record of the investigation including the conclusions and follow-up."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:387
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:27
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Follow-up"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:388
+msgid "Follow-up recorded with the conclusions (21 CFR 211.192)."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:392
+msgid "Closed By"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:691
+msgid "Impact assessment completed"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:704
+msgid "Investigation started"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:742
+msgid "Disposition stage entered"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:756
+msgid "CAPA required"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:763
+#: ls_deviation/wizards/ls_deviation_cancel_wizard.py:31
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Send Back"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:778
+#: ls_deviation/views/ls_deviation_views.xml
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Close Deviation"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:790
+msgid "Cancel Deviation"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:805
+#: ls_deviation/wizards/ls_deviation_due_date_wizard_views.xml
+msgid "Extend Target Closure Date"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:86
+#: ls_deviation/models/ls_deviation.py:555
+#: ls_deviation/models/ls_deviation.py:611
+#: ls_deviation/models/ls_deviation.py:562
+msgid "New"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:473
+msgid "The Overdue filter only supports the = and != operators."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:565
+msgid "Deviation recorded"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:636
+msgid "Deviation %(ref)s cannot move from %(source)s to %(target)s."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:507
+msgid "Deviation %(ref)s: the occurrence date cannot be later than the detection date."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:515
+msgid "Deviation %(ref)s: the detection date cannot be later than the date the deviation was recorded."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:528
+msgid "Deviation %(ref)s is flagged as planned and therefore requires a justification recorded before execution."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:541
+msgid "Deviation %(ref)s: an affected quantity requires a product to be selected."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:577
+msgid "Deviation %(ref)s is %(state)s and can no longer be modified."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:597
+msgid "Deviation %(ref)s cannot be deleted because it has progressed beyond the Reported state. Cancel it instead so that the record remains traceable."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:663
+msgid "Deviation %(ref)s requires a severity before it can be assessed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:671
+msgid "Deviation %(ref)s requires a documented impact assessment before it can be assessed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:679
+msgid "Deviation %(ref)s requires an assigned investigator before it can be assessed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:698
+msgid "Deviation %(ref)s requires at least one investigation record before the investigation can start."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:719
+msgid "Deviation %(ref)s has an investigation that is not completed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:727
+msgid "Deviation %(ref)s requires a documented rationale for the extension of the investigation to other batches and products."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:736
+msgid "Deviation %(ref)s was assessed as having an impact and therefore requires at least one product disposition."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:749
+msgid "Deviation %(ref)s requires a rationale for the CAPA decision."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+msgid "Reported"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+msgid "Assessed"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Investigation"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Disposition"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Closed"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:34
+#: ls_deviation/models/ls_deviation_action.py:14
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Cancelled"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:58
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Minor"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:58
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Major"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation.py:58
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Critical"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:43
+msgid "Action"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:52
+msgid "Responsible"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:59
+msgid "Objective evidence that the action was performed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:75
+msgid "Action '%(action)s' cannot be marked done without completion evidence."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:8
+#: ls_deviation/views/ls_deviation_action_views.xml
+msgid "Immediate Action"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:8
+msgid "Containment Action"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:8
+msgid "Correction"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:14
+msgid "To Do"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_action.py:14
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Done"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_category.py:18
+#: ls_deviation/models/ls_deviation_type.py:18
+msgid "Short code used in reports and exports."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_category.py:25
+msgid "Leave empty to share this category across all companies."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:54
+msgid "Lot/Serial"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:77
+msgid "Scientific and quality rationale supporting the decision. A Use As Is decision requires a rationale demonstrating that product quality, safety and efficacy are not adversely affected."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:83
+msgid "Approved By"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:128
+msgid "Only a Deviation Manager may approve a product disposition."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:147
+msgid "Only a Deviation Manager may reject a product disposition."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:113
+msgid "Lot %(lot)s does not belong to product %(product)s."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:133
+msgid "Only a draft disposition can be approved."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Use As Is"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Rework"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Reprocess"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Quarantine"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+msgid "Reject"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Destroy"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:8
+msgid "Return to Supplier"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:18
+#: ls_deviation/models/ls_deviation_investigation.py:8
+msgid "Draft"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:18
+msgid "Approved"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_disposition.py:18
+msgid "Rejected"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:35
+msgid "Subject"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:37
+msgid "Short subject of this investigation."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:41
+msgid "RCA Method"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:48
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Investigator"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:57
+msgid "Facts established during the investigation, including the data reviewed and the personnel interviewed."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:63
+msgid "The determined root cause. Where a root cause cannot be established, record the most probable cause together with the rationale for that conclusion."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:69
+msgid "Clear when no definitive root cause could be established, in which case the most probable cause and its rationale are recorded."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:85
+msgid "Investigation '%(subject)s': the completion date cannot precede the start date."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:101
+msgid "Investigation '%(subject)s' cannot be completed without a recorded root cause."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:109
+msgid "Investigation '%(subject)s' cannot be completed without recorded findings."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:8
+msgid "In Progress"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_investigation.py:8
+msgid "Completed"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_stage_log.py:44
+#: ls_deviation/views/ls_deviation_stage_log_views.xml
+msgid "Performed By"
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_stage_log.py:54
+msgid "The deviation transition log is append-only and cannot be edited."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_stage_log.py:61
+msgid "The deviation transition log is append-only and cannot be deleted."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_type.py:25
+msgid "Leave empty to share this type across all companies."
+msgstr ""
+
+#: ls_deviation/models/ls_deviation_type.py:28
+msgid "Set when a deviation of this type always requires a documented product disposition, irrespective of the impact assessment."
+msgstr ""
+
+#: ls_deviation/models/res_company.py:17
+msgid "Minor Deviation Closure Target (days)"
+msgstr ""
+
+#: ls_deviation/models/res_company.py:21
+msgid "Major Deviation Closure Target (days)"
+msgstr ""
+
+#: ls_deviation/models/res_company.py:25
+msgid "Critical Deviation Closure Target (days)"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard.py:31
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Cancel"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard.py:50
+msgid "Deviation %(ref)s is %(state)s and cannot be sent back."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:29
+msgid "Follow-up recorded with the conclusions. Where no follow-up is required, record that determination and its rationale."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:110
+msgid "Deviation closed by QA"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:69
+msgid "A CAPA reference is required because the closure records that a CAPA is required."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:79
+msgid "Deviation %(ref)s still has %(count)s open immediate action(s) and cannot be closed."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard.py:91
+msgid "Deviation %(ref)s still has %(count)s unapproved product disposition(s) and cannot be closed."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard.py:27
+msgid "Current Target Closure Date"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard.py:51
+msgid "The target closure date of a closed or cancelled deviation cannot be changed."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard.py:58
+msgid "The new target closure date must be later than the current one (%(current)s)."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard.py:67
+msgid "Target closure date extended from %(previous)s to %(new)s. Justification: %(justification)s"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard.py:70
+msgid "not set"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_action_views.xml
+#: ls_deviation/views/ls_deviation_category_views.xml
+#: ls_deviation/views/ls_deviation_type_views.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Description"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_action_views.xml
+msgid "Completion Evidence"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_category_views.xml
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Deviation Categories"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_category_views.xml
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Deviations"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_category_views.xml
+msgid "Deviation Category"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_category_views.xml
+msgid "Category name"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+msgid "Product Disposition"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+msgid "Approve"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+#: ls_deviation/wizards/ls_deviation_due_date_wizard_views.xml
+msgid "Justification"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+msgid "Scientific and quality rationale supporting the decision."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_disposition_views.xml
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Product Dispositions"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Start"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Complete"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Investigation subject"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Findings"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Facts established: data reviewed, personnel interviewed, observations made."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Contributing Factors"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Root Cause"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_investigation_views.xml
+msgid "Determined root cause. Where no definitive root cause could be established, record the most probable cause and the rationale."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Quality Management"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "All Deviations"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "My Deviations"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Reporting"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Deviation Analysis"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+msgid "Configuration"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_type_views.xml
+msgid "Deviation Types"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_menus.xml
+#: ls_deviation/views/ls_deviation_rca_method_views.xml
+msgid "Root Cause Analysis Methods"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_stage_log_views.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Timestamp"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_stage_log_views.xml
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Deviation"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_stage_log_views.xml
+msgid "Target State"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_tag_views.xml
+msgid "Deviation Tags"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_type_views.xml
+msgid "Type name"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Complete Assessment"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Start Investigation"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Proceed to Disposition"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Require CAPA"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Extend Target Date"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Short description of the deviation"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Classification"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Chronology and Ownership"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Subject of the Deviation"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Factual account: what happened, where, when, and how it was detected."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Justification (21 CFR 211.100(b))"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Justification of the deviation. Mandatory for a planned deviation."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Impact Assessment"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Impact Flags"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Assessment Record"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Assessment Rationale"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Extension to Other Batches (21 CFR 211.192)"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Rationale for the scope of the extension to other batches and products, including where no extension was considered necessary."
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Closure"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "CAPA Decision"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Closure Record"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "CAPA Decision Rationale"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Conclusions (21 CFR 211.192)"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Follow-up (21 CFR 211.192)"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Cancellation Reason"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Awaiting My QA Review"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Open"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Overdue"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Patient Safety Impact"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Detected This Month"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Status"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Severity"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Type"
+msgstr ""
+
+#: ls_deviation/views/ls_deviation_views.xml
+msgid "Detection Month"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Management"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Number of days after detection by which a deviation is expected to be closed. Used to propose the target closure date and to drive the overdue notification."
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Closure Targets"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Minor Deviation"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Target closure interval for a minor deviation, in days."
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Major Deviation"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Target closure interval for a major deviation, in days."
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Critical Deviation"
+msgstr ""
+
+#: ls_deviation/views/res_config_settings_views.xml
+msgid "Target closure interval for a critical deviation, in days."
+msgstr ""
+
+#: ls_deviation/report/ls_deviation_report.xml
+msgid "Deviation Report"
+msgstr ""
+
+#: ls_deviation/data/ir_cron_data.xml
+msgid "Deviation: notify overdue records"
+msgstr ""
+
+#: ls_deviation/data/ir_sequence_data.xml
+msgid "GxP Deviation"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Production"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations arising during manufacturing operations."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Packaging and Labelling"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations arising during primary or secondary packaging and labelling."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "QC Laboratory"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations arising during quality control testing."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Warehouse and Storage"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations arising during receipt, storage or distribution."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Utilities"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations affecting water systems, HVAC, compressed gases or steam."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations arising from equipment malfunction or misuse."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Documentation"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations relating to the completion or control of GxP records."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Personnel"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_category_data.xml
+msgid "Deviations relating to training, hygiene or gowning."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "5 Whys"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Iterative interrogative technique that repeatedly asks why in order to move from symptom to cause."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Ishikawa (Cause and Effect)"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Cause and effect diagram grouping candidate causes into categories such as man, machine, method, material, measurement and environment."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Fault Tree Analysis"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Deductive top-down analysis decomposing an undesired event into contributing failure combinations."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Failure Mode and Effects Analysis"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Systematic evaluation of potential failure modes and their effects. Named as a risk management tool in ICH Q9."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Is / Is Not Analysis"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_rca_method_data.xml
+msgid "Comparative technique bounding a problem by what is and is not affected in order to isolate distinguishing factors."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Procedural Deviation"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "A departure from an approved written procedure. 21 CFR 211.100(b) requires any deviation from written production and process control procedures to be recorded and justified."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Process Parameter Excursion"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "A process parameter outside its validated or registered range."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Yield Discrepancy"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "A percentage of theoretical yield outside the limits established in the master production and control records, expressly named in 21 CFR 211.192."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Equipment Failure"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Malfunction or unavailability of equipment during a GxP operation."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Environmental Excursion"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "An environmental monitoring result exceeding an alert or action limit."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Material Discrepancy"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "A discrepancy in the identity, quantity or condition of a material."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "Documentation Error"
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "An error or omission in the completion of a GxP record."
+msgstr ""
+
+#: ls_deviation/data/ls_deviation_type_data.xml
+msgid "A pre-approved and justified departure authorised before execution."
+msgstr ""
+
+#: ls_deviation/data/mail_message_subtype_data.xml
+msgid "Deviation Closed"
+msgstr ""
+
+#: ls_deviation/data/mail_message_subtype_data.xml
+msgid "A deviation has been closed."
+msgstr ""
+
+#: ls_deviation/data/mail_message_subtype_data.xml
+msgid "Deviation Cancelled"
+msgstr ""
+
+#: ls_deviation/data/mail_message_subtype_data.xml
+msgid "A deviation has been cancelled."
+msgstr ""
+
+#: ls_deviation/data/mail_template_data.xml
+msgid "Deviation: Overdue Notification"
+msgstr ""
+
+#: ls_deviation/demo/ls_deviation_demo.xml
+msgid "The compression stage of the batch produced a yield of 92.4 percent against a lower limit of 95.0 percent established in the master production and control record. The discrepancy was identified by the line supervisor during reconciliation at the end of the stage."
+msgstr ""
+
+#: ls_deviation/demo/ls_deviation_demo.xml
+msgid "The continuous monitoring system recorded an excursion above the upper limit for a period of three hours and ten minutes following a chiller compressor fault. The alarm was acknowledged by the warehouse operator on the same shift."
+msgstr ""
+
+#: ls_deviation/demo/ls_deviation_demo.xml
+msgid "The dispensing record for a weighing operation was completed without the required second-person verification signature. The omission was identified during the review of the record by the quality control unit."
+msgstr ""
+
+#: ls_deviation/demo/ls_deviation_demo.xml
+msgid "Quarantine all pallets held in the affected area"
+msgstr ""
+
+#: ls_deviation/demo/ls_deviation_demo.xml
+msgid "Raise a maintenance request for the chiller compressor"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Life Sciences quality management applications."
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Viewer"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Read-only access to deviation records."
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Reporter"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "May report deviations and maintain their own records while still in the Reported state."
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Investigator"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "May investigate any open deviation and record dispositions for approval."
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Manager"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Quality Assurance role. Approves dispositions, closes and cancels deviations."
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Action: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Investigation: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Disposition: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Transition Log: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Category: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation Type: multi-company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation: read all within company"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation: reporter maintains own reported records"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation: investigator maintains open records"
+msgstr ""
+
+#: ls_deviation/security/ls_deviation_security.xml
+msgid "Deviation: manager unrestricted"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard_views.xml
+msgid "Cancel or Send Back Deviation"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard_views.xml
+msgid "Reason"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard_views.xml
+msgid "Mandatory reason. This is written to the append-only transition log."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard_views.xml
+msgid "Confirm"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_cancel_wizard_views.xml
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+#: ls_deviation/wizards/ls_deviation_due_date_wizard_views.xml
+msgid "Discard"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Conclusions"
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Conclusions of the investigation."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_close_wizard_views.xml
+msgid "Follow-up recorded with the conclusions. Where none is required, record that determination and its rationale."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard_views.xml
+msgid "Mandatory justification for the extension. This is posted to the deviation chatter."
+msgstr ""
+
+#: ls_deviation/wizards/ls_deviation_due_date_wizard_views.xml
+msgid "Apply Extension"
+msgstr ""

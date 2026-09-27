@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Menus declare group_ids, which is the Odoo 19 field name on ir.ui.menu
+        (verified: odoo/addons/base/models/ir_ui_menu.py declares
+        group_ids = fields.Many2many('res.groups', 'ir_ui_menu_group_rel', ...)).
+    -->
+    <menuitem id="ls_lab_menu_root"
+              name="Laboratory"
+              web_icon="ls_lab,static/description/icon.png"
+              sequence="72"
+              groups="ls_lab.ls_lab_group_viewer"/>
+
+    <!-- Samples -->
+    <menuitem id="ls_lab_menu_samples"
+              name="Samples"
+              parent="ls_lab_menu_root"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_sample_register"
+              name="Sample Register"
+              parent="ls_lab_menu_samples"
+              action="ls_lab_action_sample"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_sample_receipt"
+              name="Sample Receipt"
+              parent="ls_lab_menu_samples"
+              action="ls_lab_action_sample_receipt"
+              sequence="20"/>
+
+    <!-- Tests -->
+    <menuitem id="ls_lab_menu_tests"
+              name="Tests"
+              parent="ls_lab_menu_root"
+              sequence="20"/>
+
+    <menuitem id="ls_lab_menu_test_method"
+              name="Test Methods"
+              parent="ls_lab_menu_tests"
+              action="ls_lab_action_test_method"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_test_result"
+              name="Test Results"
+              parent="ls_lab_menu_tests"
+              action="ls_lab_action_test_result"
+              sequence="20"/>
+
+    <!-- Specifications -->
+    <menuitem id="ls_lab_menu_specifications"
+              name="Specifications"
+              parent="ls_lab_menu_root"
+              sequence="30"/>
+
+    <menuitem id="ls_lab_menu_specification"
+              name="Product Specifications"
+              parent="ls_lab_menu_specifications"
+              action="ls_lab_action_specification"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_oos"
+              name="OOS / OOT"
+              parent="ls_lab_menu_specifications"
+              action="ls_lab_action_oos"
+              sequence="20"/>
+
+    <!-- Stability -->
+    <menuitem id="ls_lab_menu_stability"
+              name="Stability"
+              parent="ls_lab_menu_root"
+              sequence="40"/>
+
+    <menuitem id="ls_lab_menu_stability_study"
+              name="Stability Studies"
+              parent="ls_lab_menu_stability"
+              action="ls_lab_action_stability_study"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_stability_timepoint"
+              name="Time Points"
+              parent="ls_lab_menu_stability"
+              action="ls_lab_action_stability_timepoint"
+              sequence="20"/>
+
+    <menuitem id="ls_lab_menu_stability_sample"
+              name="Stability Samples"
+              parent="ls_lab_menu_stability"
+              action="ls_lab_action_stability_sample"
+              sequence="30"/>
+
+    <!-- Reports -->
+    <menuitem id="ls_lab_menu_reports"
+              name="Reports"
+              parent="ls_lab_menu_root"
+              sequence="50"/>
+
+    <menuitem id="ls_lab_menu_coa"
+              name="Certificates of Analysis"
+              parent="ls_lab_menu_reports"
+              action="ls_lab_action_coa"
+              sequence="10"/>
+
+    <menuitem id="ls_lab_menu_test_result_analysis"
+              name="Test Result Analysis"
+              parent="ls_lab_menu_reports"
+              action="ls_lab_action_test_result_analysis"
+              sequence="20"/>
+
+    <!-- Configuration -->
+    <menuitem id="ls_lab_menu_configuration"
+              name="Configuration"
+              parent="ls_lab_menu_root"
+              sequence="90"
+              groups="ls_lab.ls_lab_group_manager"/>
+
+    <menuitem id="ls_lab_menu_storage_condition"
+              name="Storage Conditions"
+              parent="ls_lab_menu_configuration"
+              action="ls_lab_action_storage_condition"
+              sequence="10"/>
+
+</odoo>

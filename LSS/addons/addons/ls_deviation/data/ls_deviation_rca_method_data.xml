@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+        <record id="rca_five_whys" model="ls.deviation.rca.method">
+            <field name="name">5 Whys</field>
+            <field name="code">5WHY</field>
+            <field name="sequence">10</field>
+            <field name="description">Iterative interrogative technique that repeatedly asks why in order to move from symptom to cause.</field>
+        </record>
+        <record id="rca_ishikawa" model="ls.deviation.rca.method">
+            <field name="name">Ishikawa (Cause and Effect)</field>
+            <field name="code">ISHIKAWA</field>
+            <field name="sequence">20</field>
+            <field name="description">Cause and effect diagram grouping candidate causes into categories such as man, machine, method, material, measurement and environment.</field>
+        </record>
+        <record id="rca_fault_tree" model="ls.deviation.rca.method">
+            <field name="name">Fault Tree Analysis</field>
+            <field name="code">FTA</field>
+            <field name="sequence">30</field>
+            <field name="description">Deductive top-down analysis decomposing an undesired event into contributing failure combinations.</field>
+        </record>
+        <record id="rca_fmea" model="ls.deviation.rca.method">
+            <field name="name">Failure Mode and Effects Analysis</field>
+            <field name="code">FMEA</field>
+            <field name="sequence">40</field>
+            <field name="description">Systematic evaluation of potential failure modes and their effects. Named as a risk management tool in ICH Q9.</field>
+        </record>
+        <record id="rca_is_is_not" model="ls.deviation.rca.method">
+            <field name="name">Is / Is Not Analysis</field>
+            <field name="code">ISISNOT</field>
+            <field name="sequence">50</field>
+            <field name="description">Comparative technique bounding a problem by what is and is not affected in order to isolate distinguishing factors.</field>
+        </record>
+    </data>
+</odoo>

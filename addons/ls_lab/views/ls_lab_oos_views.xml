@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_oos_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.oos.list</field>
+        <field name="model">ls.lab.oos</field>
+        <field name="arch" type="xml">
+            <list decoration-danger="state in ('open', 'phase1', 'phase2')"
+                  decoration-success="state == 'closed'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="oos_type"/>
+                <field name="product_id"/>
+                <field name="sample_id"/>
+                <field name="test_method_id"/>
+                <field name="recorded_value" optional="show"/>
+                <field name="acceptance_criterion" optional="show"/>
+                <field name="investigator_id"/>
+                <field name="opened_date"/>
+                <field name="final_conclusion" optional="show"/>
+                <field name="product_disposition" optional="show"/>
+                <field name="qa_approver_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-danger="state in ('open', 'phase1', 'phase2')"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_oos_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.oos.form</field>
+        <field name="model">ls.lab.oos</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start_phase1" type="object"
+                            string="Start Phase I" class="oe_highlight"
+                            invisible="state != 'open'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_complete_phase1" type="object"
+                            string="Complete Phase I" class="oe_highlight"
+                            invisible="state != 'phase1'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_start_phase2" type="object"
+                            string="Start Phase II" class="oe_highlight"
+                            invisible="state != 'phase1_done' or phase1_conclusion != 'no_lab_error'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_conclude" type="object"
+                            string="Conclude" class="oe_highlight"
+                            invisible="state != 'phase1_done' or phase1_conclusion != 'lab_error_confirmed'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_complete_phase2" type="object"
+                            string="Complete Phase II" class="oe_highlight"
+                            invisible="state != 'phase2'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_authorise_retest" type="object"
+                            string="Authorise Retest"
+                            invisible="state not in ('phase1', 'phase1_done', 'phase2') or retest_authorised"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_authorise_resample" type="object"
+                            string="Authorise Resample"
+                            invisible="state not in ('phase1', 'phase1_done', 'phase2') or resample_authorised"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="oe_highlight" invisible="state != 'concluded'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="open,phase1,phase1_done,phase2,concluded,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_results" type="object"
+                                class="oe_stat_button" icon="fa-flask">
+                            <field name="retest_result_count" widget="statinfo"
+                                   string="Results"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Origin">
+                            <field name="oos_type"/>
+                            <field name="test_result_id" readonly="1"/>
+                            <field name="sample_id"/>
+                            <field name="product_id"/>
+                            <field name="test_method_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Result Under Investigation">
+                            <field name="recorded_value"/>
+                            <field name="acceptance_criterion"/>
+                            <field name="investigator_id"/>
+                            <field name="opened_date"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Phase I - Laboratory Investigation" name="phase1">
+                            <div class="alert alert-info" role="alert">
+                                The laboratory phase establishes whether an assignable
+                                laboratory cause explains the result. Complete each
+                                assessment and record the findings before concluding.
+                            </div>
+                            <group>
+                                <group string="Assessments">
+                                    <field name="chk_analyst_interview"/>
+                                    <field name="chk_calculation_verified"/>
+                                    <field name="chk_instrument_verified"/>
+                                </group>
+                                <group string="Assessments (continued)">
+                                    <field name="chk_standard_verified"/>
+                                    <field name="chk_sample_integrity"/>
+                                    <field name="chk_method_followed"/>
+                                </group>
+                            </group>
+                            <group string="Findings">
+                                <field name="phase1_findings" nolabel="1"
+                                       placeholder="Findings of the laboratory investigation"/>
+                            </group>
+                            <group>
+                                <group string="Conclusion">
+                                    <field name="phase1_conclusion"/>
+                                    <field name="phase1_completed_by_id"/>
+                                    <field name="phase1_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Phase II - Full Investigation" name="phase2"
+                              invisible="state in ('open', 'phase1')">
+                            <div class="alert alert-info" role="alert">
+                                Phase II applies when no assignable laboratory cause was
+                                identified and the investigation extends beyond the
+                                laboratory.
+                            </div>
+                            <group string="Findings">
+                                <field name="phase2_findings" nolabel="1"/>
+                            </group>
+                            <group string="Manufacturing Review">
+                                <field name="manufacturing_review" nolabel="1"/>
+                            </group>
+                            <group string="Root Cause">
+                                <field name="root_cause" nolabel="1"/>
+                            </group>
+                            <group>
+                                <group string="Completion">
+                                    <field name="phase2_completed_by_id"/>
+                                    <field name="phase2_date"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Additional Testing" name="additional_testing">
+                            <div class="alert alert-warning" role="alert">
+                                A retest result cannot be recorded until a retest has
+                                been authorised here with a written scientific
+                                justification.
+                            </div>
+                            <group>
+                                <group string="Retest">
+                                    <field name="retest_authorised"/>
+                                    <field name="retest_authorised_by_id"/>
+                                    <field name="retest_authorisation_date"/>
+                                </group>
+                                <group string="Resample">
+                                    <field name="resample_authorised"/>
+                                    <field name="resample_authorised_by_id"/>
+                                    <field name="resample_authorisation_date"/>
+                                </group>
+                            </group>
+                            <group string="Retest Justification">
+                                <field name="retest_justification" nolabel="1"/>
+                            </group>
+                            <group string="Resample Justification">
+                                <field name="resample_justification" nolabel="1"/>
+                            </group>
+                            <field name="retest_result_ids" readonly="1">
+                                <list>
+                                    <field name="sample_id"/>
+                                    <field name="test_method_id"/>
+                                    <field name="result_display"/>
+                                    <field name="evaluation" widget="badge"/>
+                                    <field name="is_retest"/>
+                                    <field name="analyst_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conclusion And Disposition" name="conclusion">
+                            <group>
+                                <group string="Conclusion">
+                                    <field name="final_conclusion"/>
+                                    <field name="capa_reference"
+                                           placeholder="Reference held in the CAPA module"/>
+                                </group>
+                                <group string="Closure">
+                                    <field name="qa_approver_id"/>
+                                    <field name="closure_date"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Product Disposition">
+                                    <field name="product_disposition"/>
+                                </group>
+                            </group>
+                            <group string="Disposition Justification">
+                                <field name="disposition_justification" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Cancellation" name="cancellation"
+                              invisible="state != 'cancelled'">
+                            <group>
+                                <field name="cancel_reason" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_oos_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.oos.search</field>
+        <field name="model">ls.lab.oos</field>
+        <field name="arch" type="xml">
+            <search string="Investigations">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="sample_id"/>
+                <field name="test_method_id"/>
+                <field name="investigator_id"/>
+                <field name="capa_reference"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('open', 'phase1', 'phase1_done', 'phase2', 'concluded'))]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter name="filter_oos" string="Out Of Specification"
+                        domain="[('oos_type', '=', 'oos')]"/>
+                <filter name="filter_oot" string="Out Of Trend"
+                        domain="[('oos_type', '=', 'oot')]"/>
+                <separator/>
+                <filter name="filter_retest_authorised" string="Retest Authorised"
+                        domain="[('retest_authorised', '=', True)]"/>
+                <filter name="filter_opened_date" string="Opened On" date="opened_date"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_oos_type" string="Type"
+                            domain="[]" context="{'group_by': 'oos_type'}"/>
+                    <filter name="group_by_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_final_conclusion" string="Final Conclusion"
+                            domain="[]" context="{'group_by': 'final_conclusion'}"/>
+                    <filter name="group_by_disposition" string="Product Disposition"
+                            domain="[]" context="{'group_by': 'product_disposition'}"/>
+                    <filter name="group_by_investigator" string="Investigator"
+                            domain="[]" context="{'group_by': 'investigator_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_oos_view_graph" model="ir.ui.view">
+        <field name="name">ls.lab.oos.graph</field>
+        <field name="model">ls.lab.oos</field>
+        <field name="arch" type="xml">
+            <graph string="Investigations" type="bar">
+                <field name="product_id"/>
+                <field name="final_conclusion"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_oos" model="ir.actions.act_window">
+        <field name="name">OOS / OOT Investigations</field>
+        <field name="res_model">ls.lab.oos</field>
+        <field name="view_mode">list,form,graph</field>
+        <field name="search_view_id" ref="ls_lab_oos_view_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No investigation open</p>
+            <p>
+                An investigation is raised automatically when a result falls outside
+                its acceptance criterion, or when a result is flagged out of trend.
+            </p>
+        </field>
+    </record>
+
+</odoo>

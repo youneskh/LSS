@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+        <record id="mt_deviation_closed" model="mail.message.subtype">
+            <field name="name">Deviation Closed</field>
+            <field name="res_model">ls.deviation</field>
+            <field name="default" eval="True"/>
+            <field name="description">A deviation has been closed.</field>
+        </record>
+        <record id="mt_deviation_cancelled" model="mail.message.subtype">
+            <field name="name">Deviation Cancelled</field>
+            <field name="res_model">ls.deviation</field>
+            <field name="default" eval="True"/>
+            <field name="description">A deviation has been cancelled.</field>
+        </record>
+    </data>
+</odoo>

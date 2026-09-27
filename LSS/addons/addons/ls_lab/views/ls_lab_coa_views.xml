@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_coa_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.coa.list</field>
+        <field name="model">ls.lab.coa</field>
+        <field name="arch" type="xml">
+            <list decoration-success="state == 'issued'"
+                  decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="version"/>
+                <field name="product_id"/>
+                <field name="lot_id" optional="show"/>
+                <field name="sample_id"/>
+                <field name="customer_id" optional="hide"/>
+                <field name="conclusion" widget="badge"
+                       decoration-success="conclusion == 'conforms'"
+                       decoration-danger="conclusion == 'does_not_conform'"/>
+                <field name="issued_by_id" optional="show"/>
+                <field name="issue_date" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_coa_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.coa.form</field>
+        <field name="model">ls.lab.coa</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_issue_signature" type="object"
+                            string="Issue Certificate" class="oe_highlight"
+                            invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state != 'issued'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,issued"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-warning"
+                            invisible="state != 'superseded'"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                        <h3>
+                            <span>Version </span>
+                            <field name="version" class="oe_inline" readonly="1"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Material">
+                            <field name="sample_id" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                            <field name="batch_reference"/>
+                            <field name="specification_id"/>
+                        </group>
+                        <group string="Issue">
+                            <field name="customer_id" readonly="state != 'draft'"/>
+                            <field name="overall_result"/>
+                            <field name="conclusion" widget="badge"/>
+                            <field name="issued_by_id"/>
+                            <field name="issue_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reported Results" name="results">
+                            <field name="reportable_result_ids" readonly="1">
+                                <list>
+                                    <field name="test_method_id"/>
+                                    <field name="criterion_display"/>
+                                    <field name="result_display"/>
+                                    <field name="evaluation" widget="badge"
+                                           decoration-success="evaluation == 'conform'"
+                                           decoration-danger="evaluation == 'non_conform'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Remarks" name="remarks">
+                            <field name="remarks" readonly="state != 'draft'"/>
+                        </page>
+                        <page string="Versioning" name="versioning">
+                            <group>
+                                <field name="predecessor_id"/>
+                                <field name="successor_id"/>
+                            </group>
+                            <group string="Revision Reason">
+                                <field name="revision_reason" nolabel="1"
+                                       placeholder="Required before superseding an issued certificate"/>
+                            </group>
+                        </page>
+                        <page string="Cancellation" name="cancellation"
+                              invisible="state != 'cancelled'">
+                            <field name="cancel_reason" nolabel="1"/>
+                        </page>
+                        <page string="Signature Intent" name="signature"
+                              invisible="not signature_user_id">
+                            <group>
+                                <field name="signature_user_id"/>
+                                <field name="signature_date"/>
+                                <field name="signature_meaning"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_coa_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.coa.search</field>
+        <field name="model">ls.lab.coa</field>
+        <field name="arch" type="xml">
+            <search string="Certificates of Analysis">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="sample_id"/>
+                <field name="customer_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_issued" string="Issued"
+                        domain="[('state', '=', 'issued')]"/>
+                <separator/>
+                <filter name="filter_conforms" string="Conforms"
+                        domain="[('conclusion', '=', 'conforms')]"/>
+                <filter name="filter_does_not_conform" string="Does Not Conform"
+                        domain="[('conclusion', '=', 'does_not_conform')]"/>
+                <filter name="filter_issue_date" string="Issue Date" date="issue_date"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_customer" string="Customer"
+                            domain="[]" context="{'group_by': 'customer_id'}"/>
+                    <filter name="group_by_conclusion" string="Conclusion"
+                            domain="[]" context="{'group_by': 'conclusion'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_coa" model="ir.actions.act_window">
+        <field name="name">Certificates of Analysis</field>
+        <field name="res_model">ls.lab.coa</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_lab_coa_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No certificate yet</p>
+            <p>
+                A certificate can only be issued from an approved sample. Once issued
+                it is frozen and is corrected by issuing a new version.
+            </p>
+        </field>
+    </record>
+
+</odoo>

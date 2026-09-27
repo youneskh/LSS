@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <menuitem
+        id="menu_ls_calibration_root"
+        name="Calibration"
+        sequence="95"
+        web_icon="ls_calibration,static/description/icon.png"
+        groups="ls_calibration.group_ls_calibration_viewer"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_instrument"
+        name="Instruments"
+        parent="menu_ls_calibration_root"
+        action="ls_calibration_instrument_action"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_plan"
+        name="Calibration Plans"
+        parent="menu_ls_calibration_root"
+        action="ls_calibration_plan_action"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_record"
+        name="Calibration Records"
+        parent="menu_ls_calibration_root"
+        action="ls_calibration_record_action"
+        sequence="30"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_certificate"
+        name="Certificates"
+        parent="menu_ls_calibration_root"
+        action="ls_calibration_certificate_action"
+        sequence="40"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_status_root"
+        name="Calibration Status"
+        parent="menu_ls_calibration_root"
+        sequence="50"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_status"
+        name="Due and Overdue"
+        parent="menu_ls_calibration_status_root"
+        action="ls_calibration_status_action"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_record_generate"
+        name="Generate Calibration Records"
+        parent="menu_ls_calibration_status_root"
+        action="ls_calibration_record_generate_action"
+        sequence="20"
+        groups="ls_calibration.group_ls_calibration_technician"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_reporting_root"
+        name="Reporting"
+        parent="menu_ls_calibration_root"
+        sequence="60"
+    />
+
+    <menuitem
+        id="menu_ls_calibration_record_analysis"
+        name="Calibration Analysis"
+        parent="menu_ls_calibration_reporting_root"
+        action="ls_calibration_record_analysis_action"
+        sequence="10"
+    />
+
+</odoo>

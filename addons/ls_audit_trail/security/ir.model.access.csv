@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_log_viewer,ls.audit_trail.log viewer,model_ls_audit_trail_log,group_ls_audit_trail_viewer,1,0,0,0
+access_log_line_viewer,ls.audit_trail.log.line viewer,model_ls_audit_trail_log_line,group_ls_audit_trail_viewer,1,0,0,0
+access_verification_viewer,ls.audit_trail.verification viewer,model_ls_audit_trail_verification,group_ls_audit_trail_viewer,1,0,0,0
+access_evidence_pack_viewer,ls.audit_trail.evidence_pack viewer,model_ls_audit_trail_evidence_pack,group_ls_audit_trail_viewer,1,0,0,0
+access_rule_viewer,ls.audit_trail.rule viewer,model_ls_audit_trail_rule,group_ls_audit_trail_viewer,1,0,0,0
+access_evidence_pack_auditor,ls.audit_trail.evidence_pack auditor,model_ls_audit_trail_evidence_pack,group_ls_audit_trail_auditor,1,1,1,0
+access_verify_wizard_auditor,ls.audit_trail.verify.wizard auditor,model_ls_audit_trail_verify_wizard,group_ls_audit_trail_auditor,1,1,1,1
+access_rule_admin,ls.audit_trail.rule administrator,model_ls_audit_trail_rule,group_ls_audit_trail_admin,1,1,1,1
+access_purge_wizard_admin,ls.audit_trail.purge.wizard administrator,model_ls_audit_trail_purge_wizard,group_ls_audit_trail_admin,1,1,1,1

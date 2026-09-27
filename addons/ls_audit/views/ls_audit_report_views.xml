@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_report_list" model="ir.ui.view">
+        <field name="name">ls.audit.report.list</field>
+        <field name="model">ls.audit.report</field>
+        <field name="arch" type="xml">
+            <list string="Audit Reports" decoration-muted="state == 'cancelled'" decoration-success="state == 'issued'">
+                <field name="reference"/>
+                <field name="audit_id"/>
+                <field name="name"/>
+                <field name="report_date"/>
+                <field name="prepared_by_id" optional="show"/>
+                <field name="reviewed_by_id" optional="hide"/>
+                <field name="approved_by_id" optional="show"/>
+                <field name="finding_count" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'issued'" decoration-muted="state == 'cancelled'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_report_form" model="ir.ui.view">
+        <field name="name">ls.audit.report.form</field>
+        <field name="model">ls.audit.report</field>
+        <field name="arch" type="xml">
+            <form string="Audit Report">
+                <header>
+                    <button name="action_submit_review" type="object" string="Submit for Review"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_review" type="object" string="Record Review"
+                            class="btn-primary" invisible="state != 'under_review' or reviewed_by_id"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'under_review' or not reviewed_by_id"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_issue" type="object" string="Issue"
+                            class="btn-primary" invisible="state != 'approved'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'under_review'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('issued', 'cancelled')"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,under_review,approved,issued"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <h2><field name="reference" readonly="1"/></h2>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Internal Audit Report - Sterile Filling"/></h1>
+                    </div>
+                    <group>
+                        <group string="Audit">
+                            <field name="audit_id"/>
+                            <field name="report_date"/>
+                            <field name="finding_count"/>
+                            <field name="conformity_rate" widget="percentage"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Control Signatures">
+                            <field name="prepared_by_id"/>
+                            <field name="reviewed_by_id"/>
+                            <field name="review_date"/>
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                            <field name="issue_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Executive Summary" name="summary">
+                            <field name="executive_summary" nolabel="1"
+                                   placeholder="How the audit was conducted and what was covered."/>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <field name="conclusion" nolabel="1"
+                                   placeholder="Overall conclusion against the audit criteria."/>
+                        </page>
+                        <page string="Positive Observations" name="positive">
+                            <field name="positive_observations" nolabel="1"
+                                   placeholder="Strengths and good practices observed."/>
+                        </page>
+                        <page string="Distribution" name="distribution">
+                            <p class="text-muted">Audit results must be reported to the management responsible for the audited areas.</p>
+                            <field name="distribution_ids" nolabel="1" widget="many2many_tags"/>
+                        </page>
+                        <page string="Cancellation" name="cancellation" invisible="state != 'cancelled'">
+                            <field name="cancellation_reason" nolabel="1" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_report_search" model="ir.ui.view">
+        <field name="name">ls.audit.report.search</field>
+        <field name="model">ls.audit.report</field>
+        <field name="arch" type="xml">
+            <search string="Audit Reports">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="audit_id"/>
+                <field name="prepared_by_id"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_issued" string="Issued" domain="[('state', '=', 'issued')]"/>
+                <separator/>
+                <filter name="filter_report_date" string="Report Date" date="report_date"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_audit" string="Audit" context="{'group_by': 'audit_id'}"/>
+                    <filter name="group_prepared" string="Prepared By" context="{'group_by': 'prepared_by_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_report" model="ir.actions.act_window">
+        <field name="name">Audit Reports</field>
+        <field name="res_model">ls.audit.report</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No audit report yet</p>
+            <p>An audit report is prepared, independently reviewed, approved and then issued to its distribution list. The preparer cannot review or approve their own report.</p>
+        </field>
+    </record>
+
+</odoo>

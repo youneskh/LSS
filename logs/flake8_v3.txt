@@ -1,0 +1,3 @@
+addons/ls_environmental_monitoring\models\ls_env_area.py:152:1: W293 blank line contains whitespace
+addons/ls_validation\models\ls_validation_execution.py:270:1: W293 blank line contains whitespace
+addons/ls_validation\models\ls_validation_execution.py:284:1: W293 blank line contains whitespace

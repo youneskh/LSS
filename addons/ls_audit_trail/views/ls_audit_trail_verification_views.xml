@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_audit_trail_verification_list" model="ir.ui.view">
+        <field name="name">ls.audit_trail.verification.list</field>
+        <field name="model">ls.audit_trail.verification</field>
+        <field name="arch" type="xml">
+            <list string="Integrity Verifications" create="false" edit="false" delete="false"
+                  decoration-danger="result == 'failed'"
+                  decoration-success="result == 'passed'">
+                <field name="name"/>
+                <field name="executed_on"/>
+                <field name="executed_by"/>
+                <field name="source"/>
+                <field name="date_from" optional="show"/>
+                <field name="date_to" optional="show"/>
+                <field name="entries_checked"/>
+                <field name="result"/>
+                <field name="first_failure_sequence" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_verification_form" model="ir.ui.view">
+        <field name="name">ls.audit_trail.verification.form</field>
+        <field name="model">ls.audit_trail.verification</field>
+        <field name="arch" type="xml">
+            <form string="Integrity Verification" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-success" role="alert" invisible="result != 'passed'">
+                        Every verified entry matches its recorded digests.
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="result != 'failed'">
+                        The recomputed digests diverge from the recorded digests.
+                        This finding must be investigated as a data integrity
+                        deviation.
+                    </div>
+                    <group>
+                        <group string="Execution" name="execution">
+                            <field name="executed_on" readonly="1"/>
+                            <field name="executed_by" readonly="1"/>
+                            <field name="source" readonly="1"/>
+                            <field name="company_id" readonly="1"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Outcome" name="outcome">
+                            <field name="result" readonly="1"/>
+                            <field name="entries_checked" readonly="1"/>
+                            <field name="first_failure_sequence" readonly="1"
+                                   invisible="result != 'failed'"/>
+                            <field name="first_failure_log_id" readonly="1"
+                                   invisible="result != 'failed'"/>
+                        </group>
+                        <group string="Verified Range" name="range">
+                            <field name="date_from" readonly="1"/>
+                            <field name="date_to" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Findings">
+                        <field name="details" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_verification_search" model="ir.ui.view">
+        <field name="name">ls.audit_trail.verification.search</field>
+        <field name="model">ls.audit_trail.verification</field>
+        <field name="arch" type="xml">
+            <search string="Integrity Verifications">
+                <field name="name"/>
+                <field name="executed_by"/>
+                <filter name="filter_failed" string="Failed"
+                        domain="[('result', '=', 'failed')]"/>
+                <filter name="filter_passed" string="Passed"
+                        domain="[('result', '=', 'passed')]"/>
+                <separator/>
+                <filter name="filter_scheduled" string="Scheduled"
+                        domain="[('source', '=', 'cron')]"/>
+                <filter name="filter_manual" string="Manual"
+                        domain="[('source', '=', 'manual')]"/>
+                                    <filter name="group_ver_result" string="Result"
+                        context="{'group_by': 'result'}"/>
+                    <filter name="group_ver_source" string="Source"
+                        context="{'group_by': 'source'}"/>
+                    <filter name="group_ver_day" string="Execution Day"
+                        context="{'group_by': 'executed_on:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_verification" model="ir.actions.act_window">
+        <field name="name">Integrity Verifications</field>
+        <field name="res_model">ls.audit_trail.verification</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_trail_verification_search"/>
+    </record>
+
+</odoo>

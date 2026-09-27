@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_batch_list" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.list</field>
+        <field name="model">ls.pharma.batch</field>
+        <field name="arch" type="xml">
+            <list string="Manufacturing Batches"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-danger="state == 'rejected' or yield_investigation_required"
+                  decoration-success="state == 'released'"
+                  decoration-info="state == 'under_review'">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="batch_type"/>
+                <field name="lot_id" optional="show"/>
+                <field name="planned_qty" optional="hide"/>
+                <field name="theoretical_yield_qty" optional="hide"/>
+                <field name="actual_yield_qty" optional="show"/>
+                <field name="uom_id" optional="show"/>
+                <field name="yield_percentage" optional="show"/>
+                <field name="yield_investigation_required" optional="hide"/>
+                <field name="date_manufacture" optional="show"/>
+                <field name="date_expiry" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_form" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.form</field>
+        <field name="model">ls.pharma.batch</field>
+        <field name="arch" type="xml">
+            <form string="Manufacturing Batch">
+                <header>
+                    <button name="action_start"
+                            string="Start Production"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_complete"
+                            string="Complete Manufacturing"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'in_process'"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_quarantine"
+                            string="Place in Quarantine"
+                            type="object"
+                            invisible="state != 'manufactured'"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_submit_review"
+                            string="Submit for QA Review"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'quarantine'"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_open_release_wizard"
+                            string="Record Release Decision"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state != 'under_review'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            invisible="state not in ['draft', 'in_process']"
+                            groups="ls_pharma.group_ls_pharma_production_manager"/>
+                    <button name="action_set_draft"
+                            string="Reset to Planned"
+                            type="object"
+                            invisible="state != 'cancelled'"
+                            groups="ls_pharma.group_ls_pharma_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_process,manufactured,quarantine,under_review,released"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-secondary"
+                            invisible="active"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_batch_records"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="batch_record_count" widget="statinfo"
+                                   string="Batch Records"/>
+                        </button>
+                        <button name="action_view_stability_studies"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-flask">
+                            <field name="stability_study_count" widget="statinfo"
+                                   string="Stability"/>
+                        </button>
+                        <button name="action_view_serialization"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-barcode">
+                            <field name="serialization_count" widget="statinfo"
+                                   string="Serial Numbers"/>
+                        </button>
+                        <button name="action_view_child_batches"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-sitemap"
+                                invisible="child_batch_count == 0">
+                            <field name="child_batch_count" widget="statinfo"
+                                   string="Child Batches"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Product">
+                            <field name="product_id"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="batch_type" readonly="state != 'draft'"/>
+                            <field name="lot_id"
+                                   options="{'no_create': True}"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="parent_batch_id"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Manufacturing Order">
+                            <field name="production_id"
+                                   options="{'no_create': True}"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="bom_id"
+                                   options="{'no_create': True}"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="warehouse_id"
+                                   options="{'no_create': True}"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Quantities and Yield">
+                            <field name="uom_id"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="planned_qty" readonly="state != 'draft'"/>
+                            <field name="theoretical_yield_qty"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="actual_yield_qty"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="yield_percentage"/>
+                            <label for="yield_min_percentage" string="Yield Limits (%)"/>
+                            <div class="o_row">
+                                <field name="yield_min_percentage"
+                                       readonly="state in ['released', 'rejected', 'cancelled']"/>
+                                <span class="oe_inline"> to </span>
+                                <field name="yield_max_percentage"
+                                       readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            </div>
+                            <field name="yield_investigation_required"/>
+                            <field name="yield_investigation_reference"
+                                   invisible="not yield_investigation_required"
+                                   required="yield_investigation_required"/>
+                        </group>
+                        <group string="Dates">
+                            <field name="date_start"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="date_end"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="date_manufacture"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="shelf_life_months"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                            <field name="date_expiry"/>
+                            <field name="date_retest"
+                                   readonly="state in ['released', 'rejected', 'cancelled']"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Components" name="components">
+                            <field name="component_ids"
+                                   readonly="state in ['released', 'rejected', 'cancelled']">
+                                <list string="Components" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="is_active_ingredient"/>
+                                    <field name="api_id"
+                                           options="{'no_create': True}"
+                                           optional="show"/>
+                                    <field name="excipient_id"
+                                           options="{'no_create': True}"
+                                           optional="show"/>
+                                    <field name="component_lot_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="component_lot_reference"
+                                           optional="hide"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="assay_percentage" optional="show"/>
+                                    <field name="compensated_quantity" optional="show"/>
+                                    <field name="is_automated_charge" optional="hide"/>
+                                    <field name="charged_by_user_id"/>
+                                    <field name="verified_by_user_id"/>
+                                    <field name="date_charged" optional="hide"/>
+                                    <field name="note" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.101(c) requires the weight or measure
+                                of each component to be verified by a second
+                                person unless the charge-in is performed by an
+                                automated system under 21 CFR 211.101(d).
+                            </div>
+                        </page>
+                        <page string="Equipment" name="equipment">
+                            <field name="equipment_ids"
+                                   readonly="state in ['released', 'rejected', 'cancelled']">
+                                <list string="Equipment Used" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="equipment_identifier"/>
+                                    <field name="operation"/>
+                                    <field name="cleaning_record_reference"/>
+                                    <field name="cleaning_verified_by_user_id"/>
+                                    <field name="date_used_start"/>
+                                    <field name="date_used_end"/>
+                                    <field name="note" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <div class="text-muted mt-2">
+                                21 CFR 211.188(b)(4) requires identification of
+                                the major equipment used, and 21 CFR 211.182
+                                requires an equipment cleaning and use log.
+                            </div>
+                        </page>
+                        <page string="Co-Products" name="coproducts">
+                            <field name="coproduct_ids"
+                                   readonly="state in ['released', 'rejected', 'cancelled']">
+                                <list string="Co-Products" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="lot_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="quantity"/>
+                                    <field name="uom_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="note" optional="hide"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Responsibility" name="responsibility">
+                            <group>
+                                <group string="Production">
+                                    <field name="user_manufactured_id"/>
+                                </group>
+                                <group string="Quality Assurance">
+                                    <field name="user_reviewed_id"/>
+                                    <field name="release_id" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_search" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.search</field>
+        <field name="model">ls.pharma.batch</field>
+        <field name="arch" type="xml">
+            <search string="Manufacturing Batches">
+                <field name="name" string="Batch"/>
+                <field name="product_id"/>
+                <field name="lot_id"/>
+                <field name="production_id"/>
+                <field name="user_manufactured_id"/>
+                <filter name="filter_in_process" string="In Production"
+                        domain="[('state', '=', 'in_process')]"/>
+                <filter name="filter_quarantine" string="Quarantine"
+                        domain="[('state', '=', 'quarantine')]"/>
+                <filter name="filter_under_review" string="Awaiting QA Review"
+                        domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_released" string="Released"
+                        domain="[('state', '=', 'released')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_yield_investigation"
+                        string="Yield Investigation Required"
+                        domain="[('yield_investigation_required', '=', True)]"/>
+                <separator/>
+                <filter name="filter_expired" string="Expired"
+                        domain="[('date_expiry', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="filter_manufacture_date" string="Manufacturing Date"
+                        date="date_manufacture"/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_batch_type" string="Batch Type"
+                            context="{'group_by': 'batch_type'}"/>
+                    <filter name="group_manufacture_month" string="Manufacturing Month"
+                            context="{'group_by': 'date_manufacture:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_graph" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.graph</field>
+        <field name="model">ls.pharma.batch</field>
+        <field name="arch" type="xml">
+            <graph string="Batch Yield" type="bar" sample="1">
+                <field name="product_id"/>
+                <field name="yield_percentage" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_pivot" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.pivot</field>
+        <field name="model">ls.pharma.batch</field>
+        <field name="arch" type="xml">
+            <pivot string="Batch Analysis" sample="1">
+                <field name="product_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="actual_yield_qty" type="measure"/>
+                <field name="yield_percentage" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_batch" model="ir.actions.act_window">
+        <field name="name">Manufacturing Batches</field>
+        <field name="res_model">ls.pharma.batch</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_pharma_batch_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create the first manufacturing batch
+            </p>
+            <p>
+                A batch carries its components, the major equipment used, its
+                yield, its batch production and control records and its
+                release decision.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_batch_yield_analysis" model="ir.actions.act_window">
+        <field name="name">Batch Yield Analysis</field>
+        <field name="res_model">ls.pharma.batch</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_ls_pharma_batch_search"/>
+        <field name="domain">[('state', 'not in', ['draft', 'cancelled'])]</field>
+    </record>
+
+</odoo>

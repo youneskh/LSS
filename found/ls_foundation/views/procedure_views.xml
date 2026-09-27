@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_lss_foundation_procedure_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.procedure.tree</field>
+        <field name="model">lss.foundation.procedure</field>
+        <field name="arch" type="xml">
+            <tree><field name="name"/><field name="code"/><field name="authority_id"/><field name="procedure_type"/><field name="sector"/></tree>
+        </field>
+    </record>
+    <record id="action_lss_foundation_procedure" model="ir.actions.act_window">
+        <field name="name">Procedures</field>
+        <field name="res_model">lss.foundation.procedure</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

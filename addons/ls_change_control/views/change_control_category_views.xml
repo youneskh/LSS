@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_category_list" model="ir.ui.view">
+        <field name="name">ls.change_control.category.list</field>
+        <field name="model">ls.change_control.category</field>
+        <field name="arch" type="xml">
+            <list string="Change Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="implementation_delay"/>
+                <field name="verification_delay"/>
+                <field name="requires_verification"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_category_form" model="ir.ui.view">
+        <field name="name">ls.change_control.category.form</field>
+        <field name="model">ls.change_control.category</field>
+        <field name="arch" type="xml">
+            <form string="Change Category">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Equipment Change"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Deadlines">
+                            <field name="implementation_delay"/>
+                            <field name="requires_verification"/>
+                            <field name="verification_delay"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Impact Areas" name="impact_areas">
+                            <field name="impact_area_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                        </page>
+                        <page string="Approval Template" name="approval_template">
+                            <field name="approval_template_ids">
+                                <list string="Approval Template" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="approval_role"/>
+                                    <field name="user_id"/>
+                                    <field name="mandatory"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                The approvals listed above are generated on a
+                                change request of this category when the
+                                change control manager starts the impact
+                                assessment. Approvals with no default
+                                approver must be assigned manually before the
+                                assessment starts.
+                            </p>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_category_search" model="ir.ui.view">
+        <field name="name">ls.change_control.category.search</field>
+        <field name="model">ls.change_control.category</field>
+        <field name="arch" type="xml">
+            <search string="Change Categories">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="impact_area_ids"/>
+                <filter name="filter_requires_verification" string="Verification Required"
+                        domain="[('requires_verification', '=', True)]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_category" model="ir.actions.act_window">
+        <field name="name">Change Categories</field>
+        <field name="res_model">ls.change_control.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_category_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define the categories of change
+            </p>
+            <p>
+                A category determines the impact areas to assess, the
+                approval matrix and the deadlines that apply to a change
+                request.
+            </p>
+        </field>
+    </record>
+
+</odoo>

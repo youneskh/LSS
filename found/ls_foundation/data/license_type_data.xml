@@ -1,0 +1,29 @@
+<odoo>
+    <record id="license_type_anpp_marketing" model="lss.foundation.license.type">
+        <field name="name">Autorisation de Mise sur le Marché (AMM)</field>
+        <field name="code">AMM</field>
+        <field name="sector">pharma</field>
+        <field name="activity_type">manufacturing</field>
+        <field name="authority_id" ref="authority_anpp"/>
+        <field name="validity_period">60</field>
+        <field name="renewal_lead_time">90</field>
+    </record>
+    <record id="license_type_import_pharma" model="lss.foundation.license.type">
+        <field name="name">Licence d'Importation de Produits Pharmaceutiques</field>
+        <field name="code">LIP</field>
+        <field name="sector">pharma</field>
+        <field name="activity_type">import</field>
+        <field name="authority_id" ref="authority_mip"/>
+        <field name="validity_period">12</field>
+        <field name="renewal_lead_time">30</field>
+    </record>
+    <record id="license_type_export_pharma" model="lss.foundation.license.type">
+        <field name="name">Licence d'Exportation de Produits Pharmaceutiques</field>
+        <field name="code">LEP</field>
+        <field name="sector">pharma</field>
+        <field name="activity_type">export</field>
+        <field name="authority_id" ref="authority_mip"/>
+        <field name="validity_period">12</field>
+        <field name="renewal_lead_time">30</field>
+    </record>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_label_generate_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.label.generate.form</field>
+        <field name="model">ls.cosmetic.label.generate</field>
+        <field name="arch" type="xml">
+            <form string="Generate Ingredient List">
+                <group>
+                    <group>
+                        <field name="label_id" readonly="1"/>
+                        <field name="formulation_id"/>
+                    </group>
+                    <group>
+                        <field name="colorants_last"/>
+                        <field name="may_contain" invisible="not colorants_last"/>
+                    </group>
+                </group>
+                <separator string="Preview"/>
+                <field name="preview" readonly="1"/>
+                <separator string="Excluded from the List"/>
+                <div class="text-muted">
+                    Impurities in raw materials and subsidiary technical materials are
+                    not regarded as ingredients for labelling purposes -
+                    Article 19(1)(g)(i) and (ii).
+                </div>
+                <field name="excluded_summary" readonly="1"/>
+                <footer>
+                    <button name="action_apply" type="object"
+                            string="Apply to Label" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

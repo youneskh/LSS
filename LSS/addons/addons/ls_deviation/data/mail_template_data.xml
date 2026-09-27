@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_deviation_overdue" model="mail.template">
+            <field name="name">Deviation: Overdue Notification</field>
+            <field name="model_id" ref="ls_deviation.model_ls_deviation"/>
+            <field name="subject">Overdue deviation {{ object.name }}</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="partner_to">{{ ','.join(str(pid) for pid in (object.owner_id.partner_id | object.qa_reviewer_id.partner_id).ids) }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin:0px;padding:0px;font-size:13px;">
+                    <p>Deviation <strong t-out="object.name">DEV/2026/00001</strong> has passed its target closure date.</p>
+                    <ul>
+                        <li>Title: <t t-out="object.title">Title</t></li>
+                        <li>Severity: <t t-out="dict(object._fields['severity'].selection).get(object.severity, '')">Major</t></li>
+                        <li>Current state: <t t-out="dict(object._fields['state'].selection).get(object.state, '')">Investigation</t></li>
+                        <li>Target closure date: <t t-out="object.due_date">2026-01-01</t></li>
+                        <li>Days open: <t t-out="object.days_open">10</t></li>
+                    </ul>
+                    <p>Either progress the deviation to closure or record a justified extension of the target closure date.</p>
+                </div>
+            </field>
+            <field name="lang">{{ object.owner_id.lang or user.lang }}</field>
+        </record>
+    </data>
+</odoo>

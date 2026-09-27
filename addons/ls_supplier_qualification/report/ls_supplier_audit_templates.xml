@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_supplier_audit_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.company_id.partner_id.lang)"/>
+            <div class="page">
+                <h2>Supplier Audit Report</h2>
+                <h3 t-field="doc.name"/>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Audited Supplier</strong>
+                        <div t-field="doc.partner_id"
+                             t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}"/>
+                        <div t-if="doc.auditee_contact_id">
+                            Contact: <span t-field="doc.auditee_contact_id"/>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Dossier</strong></td>
+                                <td><span t-field="doc.qualification_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit type</strong></td>
+                                <td><span t-field="doc.audit_type"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit dates</strong></td>
+                                <td>
+                                    <span t-field="doc.date_start"/> -
+                                    <span t-field="doc.date_stop"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lead auditor</strong></td>
+                                <td><span t-field="doc.lead_auditor_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Report date</strong></td>
+                                <td><span t-field="doc.report_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Response due</strong></td>
+                                <td><span t-field="doc.response_due_date"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Audit Team</h4>
+                <p>
+                    <span t-field="doc.lead_auditor_id"/>
+                    <t t-foreach="doc.auditor_ids" t-as="auditor">
+                        , <span t-out="auditor.display_name"/>
+                    </t>
+                </p>
+
+                <h4 class="mt-4">Audit Basis</h4>
+                <p>
+                    <t t-if="doc.standard_ids">
+                        <t t-foreach="doc.standard_ids" t-as="standard">
+                            <span t-field="standard.name"/>
+                            <t t-if="not standard_last">; </t>
+                        </t>
+                    </t>
+                    <t t-else="">Not specified.</t>
+                </p>
+
+                <h4 class="mt-4">Scope</h4>
+                <p t-field="doc.audit_scope"/>
+
+                <h4 class="mt-4">Findings</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Ref.</th>
+                            <th>Severity</th>
+                            <th>Description</th>
+                            <th>Requirement</th>
+                            <th>Corrective action</th>
+                            <th>Due</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.finding_ids" t-as="finding">
+                            <td><span t-field="finding.name"/></td>
+                            <td><span t-field="finding.severity"/></td>
+                            <td><span t-field="finding.description"/></td>
+                            <td><span t-field="finding.requirement_reference"/></td>
+                            <td><span t-field="finding.corrective_action"/></td>
+                            <td><span t-field="finding.action_due_date"/></td>
+                            <td><span t-field="finding.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Summary</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td style="width:45%"><strong>Critical findings</strong></td>
+                        <td><span t-field="doc.critical_count"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Major findings</strong></td>
+                        <td><span t-field="doc.major_count"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Minor findings</strong></td>
+                        <td><span t-field="doc.minor_count"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Observations</strong></td>
+                        <td><span t-field="doc.observation_count"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Outcome</strong></td>
+                        <td><span t-field="doc.outcome"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Conclusion</h4>
+                <p t-field="doc.conclusion"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_supplier_audit">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_supplier_qualification.report_ls_supplier_audit_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

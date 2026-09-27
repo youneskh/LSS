@@ -1,0 +1,25 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ls_recall_plan_viewer,ls.recall.plan viewer,model_ls_recall_plan,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_plan_coordinator,ls.recall.plan coordinator,model_ls_recall_plan,group_ls_recall_coordinator,1,0,0,0
+access_ls_recall_plan_manager,ls.recall.plan manager,model_ls_recall_plan,group_ls_recall_manager,1,1,1,1
+access_ls_recall_execution_viewer,ls.recall.execution viewer,model_ls_recall_execution,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_execution_coordinator,ls.recall.execution coordinator,model_ls_recall_execution,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_execution_manager,ls.recall.execution manager,model_ls_recall_execution,group_ls_recall_manager,1,1,1,1
+access_ls_recall_line_viewer,ls.recall.line viewer,model_ls_recall_line,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_line_coordinator,ls.recall.line coordinator,model_ls_recall_line,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_line_manager,ls.recall.line manager,model_ls_recall_line,group_ls_recall_manager,1,1,1,1
+access_ls_recall_communication_viewer,ls.recall.communication viewer,model_ls_recall_communication,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_communication_coordinator,ls.recall.communication coordinator,model_ls_recall_communication,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_communication_manager,ls.recall.communication manager,model_ls_recall_communication,group_ls_recall_manager,1,1,1,1
+access_ls_recall_effectiveness_viewer,ls.recall.effectiveness viewer,model_ls_recall_effectiveness,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_effectiveness_coordinator,ls.recall.effectiveness coordinator,model_ls_recall_effectiveness,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_effectiveness_manager,ls.recall.effectiveness manager,model_ls_recall_effectiveness,group_ls_recall_manager,1,1,1,1
+access_ls_recall_report_viewer,ls.recall.report viewer,model_ls_recall_report,group_ls_recall_viewer,1,0,0,0
+access_ls_recall_report_coordinator,ls.recall.report coordinator,model_ls_recall_report,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_report_manager,ls.recall.report manager,model_ls_recall_report,group_ls_recall_manager,1,1,1,1
+access_ls_recall_initiate_wizard_coordinator,ls.recall.initiate.wizard coordinator,model_ls_recall_initiate_wizard,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_initiate_wizard_manager,ls.recall.initiate.wizard manager,model_ls_recall_initiate_wizard,group_ls_recall_manager,1,1,1,1
+access_ls_recall_close_wizard_coordinator,ls.recall.close.wizard coordinator,model_ls_recall_close_wizard,group_ls_recall_coordinator,1,1,1,0
+access_ls_recall_close_wizard_manager,ls.recall.close.wizard manager,model_ls_recall_close_wizard,group_ls_recall_manager,1,1,1,1
+access_stock_lot_ls_recall_viewer,stock.lot recall viewer (read),stock.model_stock_lot,group_ls_recall_viewer,1,0,0,0
+access_stock_picking_ls_recall_viewer,stock.picking recall viewer (read),stock.model_stock_picking,group_ls_recall_viewer,1,0,0,0

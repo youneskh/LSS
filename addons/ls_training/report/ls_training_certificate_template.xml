@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="ls_training_certificate_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">Training Certificate</h2>
+                        <p class="text-center">
+                            <span t-field="doc.name"/>
+                        </p>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Employee</strong><br/>
+                                <span t-field="doc.employee_id.name"/><br/>
+                                <span t-field="doc.employee_id.job_title"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Company</strong><br/>
+                                <span t-field="doc.company_id.name"/>
+                            </div>
+                        </div>
+                        <table class="table table-sm mt-4">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Course</strong></td>
+                                    <td><span t-field="doc.course_id.name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Course code</strong></td>
+                                    <td><span t-field="doc.course_id.code"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Course version</strong></td>
+                                    <td><span t-field="doc.course_version"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Duration</strong></td>
+                                    <td>
+                                        <span t-field="doc.course_id.duration_hours"/>
+                                        hour(s)
+                                    </td>
+                                </tr>
+                                <tr t-if="doc.session_id">
+                                    <td><strong>Session</strong></td>
+                                    <td><span t-field="doc.session_id.name"/></td>
+                                </tr>
+                                <tr t-if="doc.session_id.trainer_employee_id">
+                                    <td><strong>Trainer</strong></td>
+                                    <td>
+                                        <span t-field="doc.session_id.trainer_employee_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="doc.session_id.trainer_external">
+                                    <td><strong>External trainer</strong></td>
+                                    <td>
+                                        <span t-field="doc.session_id.trainer_external"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Granted on</strong></td>
+                                    <td><span t-field="doc.date_granted"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Valid until</strong></td>
+                                    <td>
+                                        <span t-if="doc.date_expiry"
+                                              t-field="doc.date_expiry"/>
+                                        <span t-if="not doc.date_expiry">
+                                            No expiry
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr t-if="doc.course_id.requires_assessment">
+                                    <td><strong>Assessment score</strong></td>
+                                    <td>
+                                        <span t-field="doc.score"/> %
+                                        (pass mark
+                                        <span t-field="doc.course_id.pass_score"/> %)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Status</strong></td>
+                                    <td><span t-field="doc.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div t-if="doc.competency_ids" class="mt-3">
+                            <strong>Competencies granted</strong>
+                            <ul>
+                                <li t-foreach="doc.competency_ids"
+                                    t-as="competency">
+                                    <span t-field="competency.code"/> -
+                                    <span t-field="competency.name"/>
+                                </li>
+                            </ul>
+                        </div>
+                        <div t-if="doc.revoked"
+                             class="alert alert-danger mt-3">
+                            <strong>This certification has been revoked.</strong>
+                            <p t-field="doc.revocation_reason"/>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-6">
+                                <p>Training coordinator</p>
+                                <p>_____________________________</p>
+                            </div>
+                            <div class="col-6">
+                                <p>Quality assurance</p>
+                                <p>_____________________________</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

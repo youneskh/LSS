@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_capa_issue_01" model="ls.capa.issue">
+            <field name="title">Out-of-specification assay result on Batch B-2451</field>
+            <field name="description">During routine release testing of Batch B-2451, the assay result was recorded at 94.1 percent against a specification of 95.0 to 105.0 percent. The result was confirmed on retest of the retained sample.</field>
+            <field name="source">nonconformity</field>
+            <field name="source_reference">OOS-2026-018</field>
+            <field name="capa_type">both</field>
+            <field name="severity">major</field>
+            <field name="priority">2</field>
+            <field name="category_id" ref="capa_category_laboratory"/>
+            <field name="date_identified" eval="(DateTime.today() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="quality_impact" eval="True"/>
+            <field name="regulatory_impact" eval="False"/>
+            <field name="impact_assessment">Batch B-2451 is quarantined and was not released. No other batch used the same excipient lot. No regulatory notification is required.</field>
+            <field name="immediate_action">Batch B-2451 placed on quarantine hold. Excipient lot segregated pending investigation.</field>
+        </record>
+
+        <record id="demo_capa_root_cause_01" model="ls.capa.root_cause">
+            <field name="issue_id" ref="demo_capa_issue_01"/>
+            <field name="method">five_whys</field>
+            <field name="description">The dispensing balance used for the active ingredient had drifted outside tolerance because its calibration interval was not enforced by the planning system.</field>
+            <field name="is_primary" eval="True"/>
+            <field name="why_1">The assay result was low.</field>
+            <field name="why_2">Less active ingredient was dispensed than the batch record specified.</field>
+            <field name="why_3">The dispensing balance under-read.</field>
+            <field name="why_4">The balance had drifted outside its tolerance.</field>
+            <field name="why_5">Its calibration was overdue and no system control blocked its use.</field>
+        </record>
+
+        <record id="demo_capa_action_01" model="ls.capa.action">
+            <field name="issue_id" ref="demo_capa_issue_01"/>
+            <field name="root_cause_id" ref="demo_capa_root_cause_01"/>
+            <field name="action_type">corrective</field>
+            <field name="description">Recalibrate dispensing balance BAL-014 and verify performance against certified reference weights before returning it to service.</field>
+            <field name="date_planned" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_capa_action_02" model="ls.capa.action">
+            <field name="issue_id" ref="demo_capa_issue_01"/>
+            <field name="root_cause_id" ref="demo_capa_root_cause_01"/>
+            <field name="action_type">preventive</field>
+            <field name="description">Configure the calibration schedule so that instruments past their due date are blocked from dispensing operations, and extend the control to all weighing equipment.</field>
+            <field name="date_planned" eval="(DateTime.today() + relativedelta(days=25)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_capa_effectiveness_01" model="ls.capa.effectiveness">
+            <field name="issue_id" ref="demo_capa_issue_01"/>
+            <field name="method">data_review</field>
+            <field name="criteria">No out-of-specification assay result attributable to dispensing accuracy across the next twenty manufactured batches, and zero use of an overdue instrument recorded in the calibration log.</field>
+            <field name="date_planned" eval="(DateTime.today() + relativedelta(days=90)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_capa_issue_02" model="ls.capa.issue">
+            <field name="title">Gowning procedure not followed in Grade C corridor</field>
+            <field name="description">An internal audit observed two operators entering the Grade C corridor without the second pair of gloves required by SOP-CR-004.</field>
+            <field name="source">internal_audit</field>
+            <field name="source_reference">IA-2026-004</field>
+            <field name="capa_type">corrective</field>
+            <field name="severity">minor</field>
+            <field name="priority">1</field>
+            <field name="category_id" ref="capa_category_production"/>
+            <field name="date_identified" eval="(DateTime.today() - relativedelta(days=6)).strftime('%Y-%m-%d')"/>
+        </record>
+
+    </data>
+</odoo>

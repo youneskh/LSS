@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_parameter_list" model="ir.ui.view">
+            <field name="name">ls.env.parameter.list</field>
+            <field name="model">ls.env.parameter</field>
+            <field name="arch" type="xml">
+                <list string="Parameters">
+                    <field name="sequence" widget="handle"/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="parameter_type"/>
+                    <field name="result_type"/>
+                    <field name="uom_label"/>
+                    <field name="incubation_required"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_parameter_form" model="ir.ui.view">
+            <field name="name">ls.env.parameter.form</field>
+            <field name="model">ls.env.parameter</field>
+            <field name="arch" type="xml">
+                <form string="Parameter">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="Measured characteristic"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="parameter_type"/>
+                                <field name="result_type"/>
+                                <field name="incubation_required"/>
+                            </group>
+                            <group>
+                                <field name="uom_label"/>
+                                <field name="decimal_precision"/>
+                                <field name="sequence"/>
+                                <field name="active" widget="boolean_toggle"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group string="Description">
+                            <field name="description" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_parameter_search" model="ir.ui.view">
+            <field name="name">ls.env.parameter.search</field>
+            <field name="model">ls.env.parameter</field>
+            <field name="arch" type="xml">
+                <search string="Parameters">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <filter name="filter_viable" string="Viable"
+                            domain="[('parameter_type', 'in', ['viable_air_active', 'viable_air_passive', 'viable_surface', 'viable_personnel'])]"/>
+                    <filter name="filter_nonviable" string="Non-Viable"
+                            domain="[('parameter_type', '=', 'nonviable_particle')]"/>
+                                            <filter name="group_type" string="Parameter Type" context="{'group_by': 'parameter_type'}"/>
+                    <filter name="group_result_type" string="Result Type" context="{'group_by': 'result_type'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_parameter" model="ir.actions.act_window">
+            <field name="name">Parameters</field>
+            <field name="res_model">ls.env.parameter</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Define a monitored parameter</p>
+                <p>Parameters describe what is measured. Thresholds are configured separately, per sampling point.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

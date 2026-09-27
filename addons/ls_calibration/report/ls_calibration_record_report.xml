@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="action_report_ls_calibration_record" model="ir.actions.report">
+        <field name="name">Calibration Record</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_calibration.report_ls_calibration_record</field>
+        <field name="report_file">ls_calibration.report_ls_calibration_record</field>
+        <field name="binding_model_id" ref="model_ls_calibration_record" />
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Calibration Record - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_ls_calibration_record_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    Calibration Record
+                    <span t-field="doc.name" />
+                </h2>
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Instrument:</strong>
+                        <span t-field="doc.instrument_id.display_name" />
+                        <br />
+                        <strong>Serial number:</strong>
+                        <span t-field="doc.instrument_id.serial_number" />
+                        <br />
+                        <strong>Location:</strong>
+                        <span t-field="doc.instrument_id.location" />
+                        <br />
+                        <strong>Calibration plan:</strong>
+                        <span t-field="doc.plan_id.name" />
+                        <br />
+                        <strong>Procedure:</strong>
+                        <span t-field="doc.plan_id.procedure_reference" />
+                    </div>
+                    <div class="col-6">
+                        <strong>Calibration type:</strong>
+                        <span t-field="doc.calibration_type" />
+                        <br />
+                        <strong>Calibration date:</strong>
+                        <span t-field="doc.calibration_date" />
+                        <br />
+                        <strong>Performed by:</strong>
+                        <span t-field="doc.performed_by_id.name" />
+                        <br />
+                        <strong>Ambient temperature:</strong>
+                        <span t-field="doc.ambient_temperature" />
+                        <br />
+                        <strong>Relative humidity:</strong>
+                        <span t-field="doc.ambient_humidity" />
+                    </div>
+                </div>
+
+                <h4>Reference standards</h4>
+                <p>
+                    <t t-foreach="doc.standard_ids" t-as="standard">
+                        <span t-field="standard.display_name" />
+                        <span t-if="not standard_last">, </span>
+                    </t>
+                    <t t-if="doc.external_standard_reference">
+                        <span t-if="doc.standard_ids">, </span>
+                        <span t-field="doc.external_standard_reference" />
+                    </t>
+                    <t t-if="not doc.standard_ids and not doc.external_standard_reference">
+                        <span>Not documented</span>
+                    </t>
+                </p>
+
+                <h4>Test points</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Point</th>
+                            <th class="text-end">Nominal</th>
+                            <th>Unit</th>
+                            <th class="text-end">Lower limit</th>
+                            <th class="text-end">Upper limit</th>
+                            <th class="text-end">As found</th>
+                            <th class="text-center">Verdict</th>
+                            <th class="text-end">As left</th>
+                            <th class="text-center">Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.line_ids" t-as="line">
+                            <td><span t-field="line.name" /></td>
+                            <td class="text-end"><span t-field="line.nominal_value" /></td>
+                            <td><span t-field="line.unit" /></td>
+                            <td class="text-end"><span t-field="line.limit_min" /></td>
+                            <td class="text-end"><span t-field="line.limit_max" /></td>
+                            <td class="text-end"><span t-field="line.as_found_value" /></td>
+                            <td class="text-center">
+                                <span t-if="line.as_found_in_tolerance">Pass</span>
+                                <span t-else="">Fail</span>
+                            </td>
+                            <td class="text-end"><span t-field="line.as_left_value" /></td>
+                            <td class="text-center">
+                                <span t-if="line.as_left_in_tolerance">Pass</span>
+                                <span t-else="">Fail</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row mt32">
+                    <div class="col-6">
+                        <strong>As found status:</strong>
+                        <span t-field="doc.as_found_status" />
+                        <br />
+                        <strong>As left status:</strong>
+                        <span t-field="doc.as_left_status" />
+                        <br />
+                        <strong>Adjustment performed:</strong>
+                        <span t-field="doc.adjustment_performed" />
+                    </div>
+                    <div class="col-6">
+                        <strong>Result:</strong>
+                        <span t-field="doc.result" />
+                        <br />
+                        <strong>Next due date:</strong>
+                        <span t-field="doc.next_due_date" />
+                    </div>
+                </div>
+
+                <div t-if="doc.as_found_status == 'out_of_tolerance'" class="mt16">
+                    <h4>Out-of-tolerance handling</h4>
+                    <p>
+                        <strong>Impact assessment:</strong>
+                        <span t-field="doc.oot_impact_assessment" />
+                    </p>
+                    <p>
+                        <strong>Action reference:</strong>
+                        <span t-field="doc.oot_action_reference" />
+                    </p>
+                </div>
+
+                <div t-if="doc.conclusion" class="mt16">
+                    <h4>Conclusion</h4>
+                    <p><span t-field="doc.conclusion" /></p>
+                </div>
+
+                <div class="row mt32">
+                    <div class="col-6">
+                        <strong>Submitted by:</strong>
+                        <span t-field="doc.submitted_by_id.name" />
+                        <br />
+                        <strong>Submission date:</strong>
+                        <span t-field="doc.submission_date" />
+                    </div>
+                    <div class="col-6">
+                        <strong>Approved by:</strong>
+                        <span t-field="doc.approved_by_id.name" />
+                        <br />
+                        <strong>Approval date:</strong>
+                        <span t-field="doc.approval_date" />
+                    </div>
+                </div>
+                <p class="mt16">
+                    <small>
+                        This document is an extract of the electronic calibration
+                        record. The electronic record and its audit trail remain the
+                        original evidence.
+                    </small>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_calibration_record">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="ls_calibration.report_ls_calibration_record_document"
+                    t-lang="doc.company_id.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+
+</odoo>

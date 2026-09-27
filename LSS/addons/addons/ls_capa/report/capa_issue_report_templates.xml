@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <template id="report_capa_issue_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.owner_id.lang)"/>
+            <div class="page">
+                <h2>
+                    CAPA Record
+                    <span t-field="doc.name"/>
+                </h2>
+                <h4 t-field="doc.title"/>
+
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Source:</strong>
+                        <span t-field="doc.source"/><br/>
+                        <strong>Source Reference:</strong>
+                        <span t-field="doc.source_reference"/><br/>
+                        <strong>CAPA Type:</strong>
+                        <span t-field="doc.capa_type"/><br/>
+                        <strong>Severity:</strong>
+                        <span t-field="doc.severity"/><br/>
+                        <strong>Category:</strong>
+                        <span t-field="doc.category_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/><br/>
+                        <strong>Owner:</strong>
+                        <span t-field="doc.owner_id"/><br/>
+                        <strong>Identified On:</strong>
+                        <span t-field="doc.date_identified"/><br/>
+                        <strong>Due Date:</strong>
+                        <span t-field="doc.date_due"/><br/>
+                        <strong>Closed On:</strong>
+                        <span t-field="doc.date_closed"/>
+                    </div>
+                </div>
+
+                <h4>Issue Description</h4>
+                <p t-field="doc.description"/>
+
+                <t t-if="doc.immediate_action">
+                    <h4>Immediate Action / Correction</h4>
+                    <p t-field="doc.immediate_action"/>
+                </t>
+
+                <h4>Impact Assessment</h4>
+                <p>
+                    <strong>Product Quality Impact:</strong>
+                    <span t-field="doc.quality_impact"/> |
+                    <strong>Regulatory Impact:</strong>
+                    <span t-field="doc.regulatory_impact"/> |
+                    <strong>Safety Impact:</strong>
+                    <span t-field="doc.safety_impact"/>
+                </p>
+                <p t-field="doc.impact_assessment"/>
+
+                <h4>Root Cause Analysis</h4>
+                <table class="table table-sm o_main_table" t-if="doc.root_cause_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Method</th>
+                            <th>Root Cause</th>
+                            <th>Primary</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.root_cause_ids" t-as="rc">
+                            <td><span t-field="rc.name"/></td>
+                            <td><span t-field="rc.method"/></td>
+                            <td><span t-field="rc.description"/></td>
+                            <td><span t-field="rc.is_primary"/></td>
+                            <td><span t-field="rc.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.root_cause_ids">No root cause analysis recorded.</p>
+
+                <h4>Actions</h4>
+                <table class="table table-sm o_main_table" t-if="doc.action_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Responsible</th>
+                            <th>Planned</th>
+                            <th>Completed</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.action_ids" t-as="act">
+                            <td><span t-field="act.name"/></td>
+                            <td><span t-field="act.action_type"/></td>
+                            <td><span t-field="act.description"/></td>
+                            <td><span t-field="act.responsible_id"/></td>
+                            <td><span t-field="act.date_planned"/></td>
+                            <td><span t-field="act.date_done"/></td>
+                            <td><span t-field="act.state"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.action_ids">No action recorded.</p>
+
+                <h4>Effectiveness Verification</h4>
+                <table class="table table-sm o_main_table" t-if="doc.effectiveness_ids">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Method</th>
+                            <th>Acceptance Criteria</th>
+                            <th>Verifier</th>
+                            <th>Verified On</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.effectiveness_ids" t-as="eff">
+                            <td><span t-field="eff.name"/></td>
+                            <td><span t-field="eff.method"/></td>
+                            <td><span t-field="eff.criteria"/></td>
+                            <td><span t-field="eff.verifier_id"/></td>
+                            <td><span t-field="eff.date_check"/></td>
+                            <td><span t-field="eff.result"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.effectiveness_ids">No effectiveness check recorded.</p>
+
+                <t t-if="doc.closure_summary">
+                    <h4>Closure Summary</h4>
+                    <p t-field="doc.closure_summary"/>
+                    <p>
+                        <strong>Closed By:</strong>
+                        <span t-field="doc.closed_by_id"/>
+                    </p>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_capa_issue">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_capa.report_capa_issue_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,50 @@
+addons/account_asset_management\models\account_asset.py:1315:18: W292 no newline at end of file
+addons/account_asset_management\models\account_asset_profile.py:239:19: W292 no newline at end of file
+addons/account_global_discount\models\account_move.py:311:20: W292 no newline at end of file
+addons/account_move_name_sequence\models\ir_sequence.py:57:30: W292 no newline at end of file
+addons/base_delivery_patch\__init__.py:23:9: W292 no newline at end of file
+addons/base_technical_user\models\models.py:37:27: W292 no newline at end of file
+addons/base_time_window\models\time_window_mixin.py:134:56: W292 no newline at end of file
+addons/kpi\models\kpi_threshold.py:111:21: W292 no newline at end of file
+addons/ls_lab\tools\verify_constraints.py:232:9: F841 local variable '_shown' is assigned to but never used
+addons/ls_lab\tools\verify_constraints.py:233:16: F821 undefined name 'shown'
+addons/ls_lab\tools\verify_constraints.py:234:21: F821 undefined name 'shown'
+addons/ls_lab\tools\verify_constraints.py:250:21: W292 no newline at end of file
+addons/ls_recall\models\ls_recall_report.py:326:30: W292 no newline at end of file
+addons/mis_builder\models\aep.py:677:65: W292 no newline at end of file
+addons/mis_builder\models\kpimatrix.py:595:56: W292 no newline at end of file
+addons/mis_builder\models\mis_report.py:1002:27: W292 no newline at end of file
+addons/mis_builder\models\mis_report_instance.py:1032:10: W292 no newline at end of file
+addons/mis_builder\report\mis_report_instance_xlsx.py:196:63: W292 no newline at end of file
+addons/mis_builder\tests\test_aep.py:556:57: W292 no newline at end of file
+addons/mis_builder_demo\models\mis_committed_purchase.py:33:42: W292 no newline at end of file
+addons/mrp_multi_level\models\mrp_inventory.py:165:22: W292 no newline at end of file
+addons/mrp_multi_level\models\mrp_move.py:89:40: W292 no newline at end of file
+addons/mrp_multi_level\models\product_mrp_area.py:310:47: W292 no newline at end of file
+addons/mrp_multi_level\wizards\mrp_multi_level.py:957:22: W292 no newline at end of file
+addons/pdf_xml_attachment\tests\test_helper.py:57:61: W292 no newline at end of file
+addons/procurement_purchase_no_grouping\tests\test_procurement_purchase_no_grouping.py:193:41: W292 no newline at end of file
+addons/purchase_request\models\purchase_request_line.py:378:10: W292 no newline at end of file
+addons/purchase_request\wizard\purchase_request_line_make_purchase_order.py:360:33: W292 no newline at end of file
+addons/queue_job\jobrunner\runner.py:531:32: W292 no newline at end of file
+addons/queue_job\models\queue_job.py:483:67: W292 no newline at end of file
+addons/queue_job_cron_jobrunner\models\queue_job.py:156:19: W292 no newline at end of file
+addons/report_py3o\tests\test_report_py3o.py:304:56: W292 no newline at end of file
+addons/report_py3o\wizard\py3o_report.py:425:29: W292 no newline at end of file
+addons/report_qweb_parameter\models\ir_qweb.py:76:74: W292 no newline at end of file
+addons/report_xlsx\controllers\main.py:108:14: W292 no newline at end of file
+addons/report_xlsx_helper\controllers\main.py:50:76: W292 no newline at end of file
+addons/report_xlsx_helper\report\test_partner_report_xlsx.py:76:14: W292 no newline at end of file
+addons/sale_global_discount\models\sale_order.py:253:28: W292 no newline at end of file
+addons/sale_order_split_strategy\models\sale_order.py:175:26: W292 no newline at end of file
+addons/sentry\logutils.py:117:38: W292 no newline at end of file
+addons/stock_account_product_run_fifo_hook\hooks.py:60:45: W292 no newline at end of file
+addons/stock_picking_auto_create_lot\tests\common.py:64:10: W292 no newline at end of file
+addons/stock_picking_invoicing\models\stock_move.py:137:22: W292 no newline at end of file
+addons/test_queue_job\tests\test_json_field.py:48:74: W292 no newline at end of file
+addons/tracking_manager_domain\models\models.py:98:43: W292 no newline at end of file
+addons/upgrade_analysis\models\upgrade_record.py:186:21: W292 no newline at end of file
+addons/verify_constraints.py:232:9: F841 local variable '_shown' is assigned to but never used
+addons/verify_constraints.py:233:16: F821 undefined name 'shown'
+addons/verify_constraints.py:234:21: F821 undefined name 'shown'
+addons/verify_constraints.py:250:21: W292 no newline at end of file

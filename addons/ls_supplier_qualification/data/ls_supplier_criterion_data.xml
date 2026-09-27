@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Starter criteria library.
+
+     The wording below is ORIGINAL to this module. It does not quote,
+     paraphrase or summarise the text of any standard or regulation. The
+     `standard_ids` links express the association the organisation chooses to
+     make between one of its own questions and a framework it applies; they
+     are a traceability aid, not a statement about the content of that
+     framework. Weights and mandatory flags are proposals to be reviewed and
+     approved by the quality department.
+-->
+<odoo noupdate="1">
+
+    <record id="criterion_qms_certified" model="ls.supplier.criterion">
+        <field name="name">Certified quality management system in force</field>
+        <field name="code">QMS-01</field>
+        <field name="domain">qms</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="description">Ask for the certificate, check its validity dates, its scope and the accreditation of the certification body.</field>
+        <field name="standard_ids" eval="[(6, 0, [ref('standard_iso_9001'), ref('standard_iso_13485')])]"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="criterion_qms_manual" model="ls.supplier.criterion">
+        <field name="name">Documented quality manual and procedures available</field>
+        <field name="code">QMS-02</field>
+        <field name="domain">qms</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="criterion_qms_management_review" model="ls.supplier.criterion">
+        <field name="name">Management review performed at a defined frequency</field>
+        <field name="code">QMS-03</field>
+        <field name="domain">qms</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="criterion_qms_internal_audit" model="ls.supplier.criterion">
+        <field name="name">Internal audit programme executed and followed up</field>
+        <field name="code">QMS-04</field>
+        <field name="domain">qms</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="criterion_qms_capa" model="ls.supplier.criterion">
+        <field name="name">Corrective and preventive action process in place</field>
+        <field name="code">QMS-05</field>
+        <field name="domain">qms</field>
+        <field name="default_weight">2.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="criterion_reg_authorisation" model="ls.supplier.criterion">
+        <field name="name">Manufacturing or distribution authorisation held and valid</field>
+        <field name="code">REG-01</field>
+        <field name="domain">regulatory</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="description">Record the authority, the authorisation number and the expiry date. Attach a copy to the assessment.</field>
+        <field name="standard_ids" eval="[(6, 0, [ref('standard_anpp'), ref('standard_who_gmp')])]"/>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="criterion_reg_inspection_history" model="ls.supplier.criterion">
+        <field name="name">Inspection history disclosed by the supplier</field>
+        <field name="code">REG-02</field>
+        <field name="domain">regulatory</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="criterion_reg_notification" model="ls.supplier.criterion">
+        <field name="name">Commitment to notify regulatory status changes</field>
+        <field name="code">REG-03</field>
+        <field name="domain">regulatory</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">80</field>
+    </record>
+
+    <record id="criterion_doc_control" model="ls.supplier.criterion">
+        <field name="name">Document and record control with versioning</field>
+        <field name="code">DOC-01</field>
+        <field name="domain">documentation</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record id="criterion_doc_retention" model="ls.supplier.criterion">
+        <field name="name">Defined record retention periods respected</field>
+        <field name="code">DOC-02</field>
+        <field name="domain">documentation</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">100</field>
+    </record>
+
+    <record id="criterion_doc_coa" model="ls.supplier.criterion">
+        <field name="name">Certificate of analysis issued for each delivered batch</field>
+        <field name="code">DOC-03</field>
+        <field name="domain">documentation</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="sequence">110</field>
+    </record>
+
+    <record id="criterion_mfg_process_control" model="ls.supplier.criterion">
+        <field name="name">Manufacturing process defined and under control</field>
+        <field name="code">MFG-01</field>
+        <field name="domain">manufacturing</field>
+        <field name="default_weight">3.0</field>
+        <field name="sequence">120</field>
+    </record>
+
+    <record id="criterion_mfg_validation" model="ls.supplier.criterion">
+        <field name="name">Process and cleaning validation evidence available</field>
+        <field name="code">MFG-02</field>
+        <field name="domain">manufacturing</field>
+        <field name="default_weight">3.0</field>
+        <field name="sequence">130</field>
+    </record>
+
+    <record id="criterion_mfg_premises" model="ls.supplier.criterion">
+        <field name="name">Premises and utilities suitable for the product</field>
+        <field name="code">MFG-03</field>
+        <field name="domain">manufacturing</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">140</field>
+    </record>
+
+    <record id="criterion_mfg_contamination" model="ls.supplier.criterion">
+        <field name="name">Cross-contamination controls implemented</field>
+        <field name="code">MFG-04</field>
+        <field name="domain">manufacturing</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="sequence">150</field>
+    </record>
+
+    <record id="criterion_lab_methods" model="ls.supplier.criterion">
+        <field name="name">Test methods documented and validated</field>
+        <field name="code">LAB-01</field>
+        <field name="domain">laboratory</field>
+        <field name="default_weight">3.0</field>
+        <field name="sequence">160</field>
+    </record>
+
+    <record id="criterion_lab_calibration" model="ls.supplier.criterion">
+        <field name="name">Measuring equipment calibrated and traceable</field>
+        <field name="code">LAB-02</field>
+        <field name="domain">laboratory</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">170</field>
+    </record>
+
+    <record id="criterion_lab_oos" model="ls.supplier.criterion">
+        <field name="name">Out-of-specification results investigated</field>
+        <field name="code">LAB-03</field>
+        <field name="domain">laboratory</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">180</field>
+    </record>
+
+    <record id="criterion_mat_traceability" model="ls.supplier.criterion">
+        <field name="name">Full traceability of incoming materials</field>
+        <field name="code">MAT-01</field>
+        <field name="domain">materials</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="sequence">190</field>
+    </record>
+
+    <record id="criterion_mat_subsupplier" model="ls.supplier.criterion">
+        <field name="name">Sub-supplier qualification programme in place</field>
+        <field name="code">MAT-02</field>
+        <field name="domain">materials</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">200</field>
+    </record>
+
+    <record id="criterion_log_storage" model="ls.supplier.criterion">
+        <field name="name">Storage conditions defined and monitored</field>
+        <field name="code">LOG-01</field>
+        <field name="domain">logistics</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">210</field>
+    </record>
+
+    <record id="criterion_log_transport" model="ls.supplier.criterion">
+        <field name="name">Transport conditions controlled up to delivery</field>
+        <field name="code">LOG-02</field>
+        <field name="domain">logistics</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">220</field>
+    </record>
+
+    <record id="criterion_chg_notification" model="ls.supplier.criterion">
+        <field name="name">Written commitment to notify changes before implementation</field>
+        <field name="code">CHG-01</field>
+        <field name="domain">change_control</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="description">A change notification agreement, or an equivalent clause in the quality agreement, must be signed by both parties.</field>
+        <field name="sequence">230</field>
+    </record>
+
+    <record id="criterion_chg_deviation" model="ls.supplier.criterion">
+        <field name="name">Deviations affecting delivered batches communicated</field>
+        <field name="code">CHG-02</field>
+        <field name="domain">change_control</field>
+        <field name="default_weight">3.0</field>
+        <field name="is_mandatory" eval="True"/>
+        <field name="sequence">240</field>
+    </record>
+
+    <record id="criterion_di_access_control" model="ls.supplier.criterion">
+        <field name="name">Access to computerised systems is individual and controlled</field>
+        <field name="code">DI-01</field>
+        <field name="domain">data_integrity</field>
+        <field name="default_weight">2.0</field>
+        <field name="standard_ids" eval="[(6, 0, [ref('standard_cfr_11')])]"/>
+        <field name="sequence">250</field>
+    </record>
+
+    <record id="criterion_di_audit_trail" model="ls.supplier.criterion">
+        <field name="name">Audit trails enabled and periodically reviewed</field>
+        <field name="code">DI-02</field>
+        <field name="domain">data_integrity</field>
+        <field name="default_weight">2.0</field>
+        <field name="standard_ids" eval="[(6, 0, [ref('standard_cfr_11')])]"/>
+        <field name="sequence">260</field>
+    </record>
+
+    <record id="criterion_di_backup" model="ls.supplier.criterion">
+        <field name="name">Backup and restoration of records demonstrated</field>
+        <field name="code">DI-03</field>
+        <field name="domain">data_integrity</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">270</field>
+    </record>
+
+    <record id="criterion_per_training" model="ls.supplier.criterion">
+        <field name="name">Personnel trained for their assigned tasks</field>
+        <field name="code">PER-01</field>
+        <field name="domain">personnel</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">280</field>
+    </record>
+
+    <record id="criterion_per_responsibilities" model="ls.supplier.criterion">
+        <field name="name">Quality responsibilities defined and independent</field>
+        <field name="code">PER-02</field>
+        <field name="domain">personnel</field>
+        <field name="default_weight">2.0</field>
+        <field name="sequence">290</field>
+    </record>
+
+    <record id="criterion_hse_compliance" model="ls.supplier.criterion">
+        <field name="name">Health, safety and environmental obligations met</field>
+        <field name="code">HSE-01</field>
+        <field name="domain">hse</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">300</field>
+    </record>
+
+    <record id="criterion_com_continuity" model="ls.supplier.criterion">
+        <field name="name">Business continuity and supply capacity demonstrated</field>
+        <field name="code">COM-01</field>
+        <field name="domain">commercial</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">310</field>
+    </record>
+
+    <record id="criterion_com_financial" model="ls.supplier.criterion">
+        <field name="name">Financial stability assessed</field>
+        <field name="code">COM-02</field>
+        <field name="domain">commercial</field>
+        <field name="default_weight">1.0</field>
+        <field name="sequence">320</field>
+    </record>
+
+</odoo>

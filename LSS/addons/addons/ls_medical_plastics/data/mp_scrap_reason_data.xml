@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+          Default scrap reason catalogue.
+
+          The reason names are standard injection moulding defect terminology.
+          They are a configurable starting point, not a regulatory or
+          normative classification, and each site is expected to adapt the
+          catalogue to its own defect taxonomy.
+
+          Reasons are created without a company so that they are shared across
+          all companies until a site chooses to restrict them.
+        -->
+
+        <record id="mp_scrap_reason_startup_purge" model="ls.mp.scrap.reason">
+            <field name="name">Start-up purge</field>
+            <field name="code">SU-PURGE</field>
+            <field name="category">setup</field>
+            <field name="sequence">10</field>
+            <field name="is_startup" eval="True"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="description">Material purged from the barrel before stable production is reached.</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_startup_stabilisation" model="ls.mp.scrap.reason">
+            <field name="name">Start-up stabilisation parts</field>
+            <field name="code">SU-STAB</field>
+            <field name="category">setup</field>
+            <field name="sequence">20</field>
+            <field name="is_startup" eval="True"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="description">Parts produced while the process is being brought to a stable condition.</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_tool_change" model="ls.mp.scrap.reason">
+            <field name="name">Tool change parts</field>
+            <field name="code">SU-TOOL</field>
+            <field name="category">setup</field>
+            <field name="sequence">30</field>
+            <field name="is_startup" eval="True"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="description">Parts produced immediately after a tool change, before release of the run.</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_short_shot" model="ls.mp.scrap.reason">
+            <field name="name">Short shot</field>
+            <field name="code">DEF-SHORT</field>
+            <field name="category">process</field>
+            <field name="sequence">40</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_flash" model="ls.mp.scrap.reason">
+            <field name="name">Flash</field>
+            <field name="code">DEF-FLASH</field>
+            <field name="category">process</field>
+            <field name="sequence">50</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_sink_mark" model="ls.mp.scrap.reason">
+            <field name="name">Sink mark</field>
+            <field name="code">DEF-SINK</field>
+            <field name="category">cosmetic</field>
+            <field name="sequence">60</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_weld_line" model="ls.mp.scrap.reason">
+            <field name="name">Weld line</field>
+            <field name="code">DEF-WELD</field>
+            <field name="category">cosmetic</field>
+            <field name="sequence">70</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_burn_mark" model="ls.mp.scrap.reason">
+            <field name="name">Burn mark</field>
+            <field name="code">DEF-BURN</field>
+            <field name="category">process</field>
+            <field name="sequence">80</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_warpage" model="ls.mp.scrap.reason">
+            <field name="name">Warpage</field>
+            <field name="code">DEF-WARP</field>
+            <field name="category">dimensional</field>
+            <field name="sequence">90</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_dimension_out" model="ls.mp.scrap.reason">
+            <field name="name">Dimension out of specification</field>
+            <field name="code">DEF-DIM</field>
+            <field name="category">dimensional</field>
+            <field name="sequence">100</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_weight_out" model="ls.mp.scrap.reason">
+            <field name="name">Part weight out of specification</field>
+            <field name="code">DEF-WGT</field>
+            <field name="category">dimensional</field>
+            <field name="sequence">110</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_black_specks" model="ls.mp.scrap.reason">
+            <field name="name">Black specks</field>
+            <field name="code">DEF-SPECK</field>
+            <field name="category">contamination</field>
+            <field name="sequence">120</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_foreign_matter" model="ls.mp.scrap.reason">
+            <field name="name">Foreign matter</field>
+            <field name="code">DEF-FM</field>
+            <field name="category">contamination</field>
+            <field name="sequence">130</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_oil_grease" model="ls.mp.scrap.reason">
+            <field name="name">Oil or grease contamination</field>
+            <field name="code">DEF-OIL</field>
+            <field name="category">contamination</field>
+            <field name="sequence">140</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_colour_deviation" model="ls.mp.scrap.reason">
+            <field name="name">Colour deviation</field>
+            <field name="code">DEF-COL</field>
+            <field name="category">cosmetic</field>
+            <field name="sequence">150</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_surface_scratch" model="ls.mp.scrap.reason">
+            <field name="name">Surface scratch</field>
+            <field name="code">DEF-SCR</field>
+            <field name="category">cosmetic</field>
+            <field name="sequence">160</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_material_defect" model="ls.mp.scrap.reason">
+            <field name="name">Material defect</field>
+            <field name="code">DEF-MAT</field>
+            <field name="category">material</field>
+            <field name="sequence">170</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_moisture_streak" model="ls.mp.scrap.reason">
+            <field name="name">Moisture streaking</field>
+            <field name="code">DEF-MOIST</field>
+            <field name="category">material</field>
+            <field name="sequence">180</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_handling_damage" model="ls.mp.scrap.reason">
+            <field name="name">Handling damage</field>
+            <field name="code">DEF-HAND</field>
+            <field name="category">handling</field>
+            <field name="sequence">190</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_sampling" model="ls.mp.scrap.reason">
+            <field name="name">Removed for sampling or testing</field>
+            <field name="code">OTH-SAMP</field>
+            <field name="category">other</field>
+            <field name="sequence">200</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="False"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="mp_scrap_reason_other" model="ls.mp.scrap.reason">
+            <field name="name">Other reason</field>
+            <field name="code">OTH-OTHER</field>
+            <field name="category">other</field>
+            <field name="sequence">210</field>
+            <field name="is_startup" eval="False"/>
+            <field name="requires_investigation" eval="True"/>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+#
+# LSS Foundation & Licensing - French translation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: LSS Foundation 19.0\n"
+"Language: fr\n"
+
+msgid "Business Establishment Project"
+msgstr "Projet d'Établissement d'Entreprise"
+
+msgid "Regulatory Authority"
+msgstr "Autorité Réglementaire"
+
+msgid "Regulatory Procedure"
+msgstr "Procédure Réglementaire"
+
+msgid "Regulatory Step"
+msgstr "Étape Réglementaire"
+
+msgid "License"
+msgstr "Licence"
+
+msgid "Regulatory Text"
+msgstr "Texte Réglementaire"
+
+msgid "Checklist Item"
+msgstr "Élément de Checklist"
+
+msgid "Foundation Document"
+msgstr "Document Fondation"
+
+msgid "Investment Item"
+msgstr "Élément d'Investissement"
+
+msgid "Pharmaceutical"
+msgstr "Pharmaceutique"
+
+msgid "Medical Devices"
+msgstr "Dispositifs Médicaux"
+
+msgid "Cosmetics"
+msgstr "Cosmétiques"
+
+msgid "Manufacturing"
+msgstr "Fabrication"
+
+msgid "Import"
+msgstr "Importation"
+
+msgid "Export"
+msgstr "Exportation"
+
+msgid "Generate Roadmap"
+msgstr "Générer la Feuille de Route"
+
+msgid "Start Project"
+msgstr "Démarrer le Projet"

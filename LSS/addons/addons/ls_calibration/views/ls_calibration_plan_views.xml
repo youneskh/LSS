@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_calibration_plan_view_list" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.list</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <list string="Calibration Plans">
+                <field name="name" />
+                <field name="instrument_id" />
+                <field name="description" optional="show" />
+                <field name="procedure_reference" optional="hide" />
+                <field name="interval_number" />
+                <field name="interval_uom" />
+                <field name="responsible_user_id" optional="show" widget="many2one_avatar_user" />
+                <field name="performed_externally" optional="hide" />
+                <field name="last_calibration_date" optional="show" />
+                <field name="next_due_date" />
+                <field name="state" widget="badge" />
+                <field name="company_id" groups="base.group_multi_company" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_calibration_plan_view_form" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.form</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <form string="Calibration Plan">
+                <header>
+                    <button
+                        name="action_activate"
+                        string="Activate"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state not in ('draft', 'suspended')"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_create_calibration_record"
+                        string="Create Calibration Record"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'active'"
+                    />
+                    <button
+                        name="action_suspend"
+                        string="Suspend"
+                        type="object"
+                        invisible="state != 'active'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_set_obsolete"
+                        string="Set Obsolete"
+                        type="object"
+                        invisible="state == 'obsolete'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        invisible="state not in ('suspended', 'obsolete')"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,active,obsolete"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_records"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-check-square-o"
+                        >
+                            <field
+                                name="record_count"
+                                widget="statinfo"
+                                string="Records"
+                            />
+                        </button>
+                    </div>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" readonly="state != 'draft'" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="scope" string="Scope">
+                            <field
+                                name="instrument_id"
+                                readonly="state != 'draft'"
+                            />
+                            <field name="description" />
+                            <field name="procedure_reference" />
+                            <field name="responsible_user_id" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group name="schedule" string="Schedule">
+                            <label for="interval_number" string="Interval" />
+                            <div class="o_row">
+                                <field name="interval_number" />
+                                <field name="interval_uom" />
+                            </div>
+                            <field name="start_date" />
+                            <field name="last_calibration_date" />
+                            <field name="next_due_date" />
+                            <field name="performed_externally" />
+                            <field
+                                name="provider_id"
+                                invisible="not performed_externally"
+                                required="performed_externally"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="points" string="Test Points">
+                            <field name="point_ids" readonly="state == 'obsolete'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" />
+                                    <field name="nominal_value" />
+                                    <field name="unit" />
+                                    <field name="tolerance_type" />
+                                    <field name="tolerance_value" />
+                                    <field name="limit_min" readonly="1" />
+                                    <field name="limit_max" readonly="1" />
+                                    <field name="company_id" column_invisible="1" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="method" string="Method">
+                            <field
+                                name="method_description"
+                                placeholder="Summary of the calibration method applied by this plan."
+                            />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_calibration_plan_view_search" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.search</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <search string="Calibration Plans">
+                <field name="name" />
+                <field name="instrument_id" />
+                <field name="procedure_reference" />
+                <field name="responsible_user_id" />
+                <filter
+                    name="filter_active"
+                    string="Active Plans"
+                    domain="[('state', '=', 'active')]"
+                />
+                <filter
+                    name="filter_due"
+                    string="Due"
+                    domain="[('next_due_date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"
+                />
+                <filter
+                    name="filter_external"
+                    string="Externally Calibrated"
+                    domain="[('performed_externally', '=', True)]"
+                />
+                <separator />
+                <filter
+                    name="filter_my_plans"
+                    string="My Plans"
+                    domain="[('responsible_user_id', '=', uid)]"
+                />
+                <filter
+                    name="filter_archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                                    <filter
+                    name="group_by_instrument"
+                    string="Instrument"
+                    context="{'group_by': 'instrument_id'}"
+                    />
+                    <filter
+                    name="group_by_state"
+                    string="State"
+                    context="{'group_by': 'state'}"
+                    />
+                    <filter
+                    name="group_by_responsible"
+                    string="Responsible"
+                    context="{'group_by': 'responsible_user_id'}"
+                    />
+                    <filter
+                    name="group_by_next_due_date"
+                    string="Next Due Date"
+                    context="{'group_by': 'next_due_date'}"
+                    />
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_calibration_plan_action" model="ir.actions.act_window">
+        <field name="name">Calibration Plans</field>
+        <field name="res_model">ls.calibration.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_calibration_plan_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a calibration plan</p>
+            <p>
+                A calibration plan defines the interval, the test points and the
+                acceptance criteria applied to one instrument.
+            </p>
+        </field>
+    </record>
+
+</odoo>

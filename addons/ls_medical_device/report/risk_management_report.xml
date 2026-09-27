@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_risk_management_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>Risk Management File</h2>
+                <h3>
+                    <span t-field="doc.name"/>
+                    <span> - </span>
+                    <span t-field="doc.title"/>
+                </h3>
+
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Device</strong>
+                        <p t-field="doc.device_id"/>
+                        <strong>Version</strong>
+                        <p t-field="doc.version"/>
+                        <strong>Assessment Date</strong>
+                        <p t-field="doc.assessment_date"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Standard Reference</strong>
+                        <p t-field="doc.standard_reference"/>
+                        <strong>Responsible</strong>
+                        <p t-field="doc.responsible_id"/>
+                        <strong>Status</strong>
+                        <p t-field="doc.state"/>
+                    </div>
+                </div>
+
+                <h4>Scope</h4>
+                <p t-field="doc.scope"/>
+
+                <h4>Risk Acceptability Policy</h4>
+                <p t-field="doc.risk_policy"/>
+
+                <h4>Risk Summary</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Recorded Risks</td>
+                            <td><span t-field="doc.risk_item_count"/></td>
+                            <td>Unacceptable Residual Risks</td>
+                            <td><span t-field="doc.unacceptable_risk_count"/></td>
+                        </tr>
+                        <tr>
+                            <td>Risks With Unverified Controls</td>
+                            <td><span t-field="doc.uncontrolled_risk_count"/></td>
+                            <td>Highest Residual Risk Index</td>
+                            <td><span t-field="doc.max_residual_index"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Risk Table</h4>
+                <table class="table table-sm" t-if="doc.risk_item_ids">
+                    <thead>
+                        <tr>
+                            <th>Ref.</th>
+                            <th>Hazard</th>
+                            <th>Hazardous Situation</th>
+                            <th>Harm</th>
+                            <th>Init. S</th>
+                            <th>Init. P</th>
+                            <th>Init. Index</th>
+                            <th>Control Measure</th>
+                            <th>Res. S</th>
+                            <th>Res. P</th>
+                            <th>Res. Index</th>
+                            <th>Acceptability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.risk_item_ids" t-as="risk">
+                            <td><span t-field="risk.reference"/></td>
+                            <td><span t-field="risk.hazard"/></td>
+                            <td><span t-field="risk.hazardous_situation"/></td>
+                            <td><span t-field="risk.harm"/></td>
+                            <td><span t-field="risk.initial_severity"/></td>
+                            <td><span t-field="risk.initial_probability"/></td>
+                            <td><span t-field="risk.initial_index"/></td>
+                            <td><span t-field="risk.control_measure"/></td>
+                            <td><span t-field="risk.residual_severity"/></td>
+                            <td><span t-field="risk.residual_probability"/></td>
+                            <td><span t-field="risk.residual_index"/></td>
+                            <td><span t-field="risk.residual_acceptability"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p t-if="not doc.risk_item_ids">No risk is recorded in this file.</p>
+
+                <h4>Overall Benefit-Risk Conclusion</h4>
+                <p t-field="doc.overall_benefit_risk_conclusion"/>
+                <p>
+                    <strong>Overall residual risk judged acceptable: </strong>
+                    <span t-field="doc.overall_risk_acceptable"/>
+                </p>
+
+                <h4>Production and Post-Production Information</h4>
+                <p t-field="doc.production_information_summary"/>
+
+                <div class="row mt32">
+                    <div class="col-6">
+                        <strong>Approved By</strong>
+                        <p t-field="doc.approver_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Approval Date</strong>
+                        <p t-field="doc.approval_date"/>
+                    </div>
+                </div>
+
+                <div class="mt32">
+                    <p class="text-muted">
+                        This document reproduces data recorded in the risk management file. It does
+                        not certify compliance with ISO 14971:2019 or with any regulatory
+                        framework.
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_risk_management">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_medical_device.report_risk_management_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

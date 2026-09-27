@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo noupdate="1">
+
+    <!--
+      Every rule below is deliberately GLOBAL: no group is specified.
+
+      Rationale. The exact name of the groups field on `ir.rule` in Odoo 19
+      could not be verified from official documentation: the Odoo 19 security
+      reference page describes the field only as "the res.groups to which
+      access is granted (or not)" without naming it, and a secondary source
+      reports that `groups_id` was renamed to `group_ids` in this version.
+      Rather than guess an identifier that would raise a ParseError at
+      installation, this module restricts record rules to the multi-company
+      dimension, which needs no group, and enforces role separation entirely
+      through:
+
+        * access rights in security/ir.model.access.csv, whose `group_id`
+          field IS confirmed by the official Odoo 19 security reference, and
+        * ORM-level checks inside the workflow methods, which cannot be
+          bypassed by the user interface.
+
+      The official Odoo 19 security reference confirms that a rule with no
+      group specified is global, and that global rules are combined with a
+      logical AND. `ir.rule.global` is a computed field and is never written
+      here.
+    -->
+
+    <record id="rule_ls_risk_register_company" model="ir.rule">
+        <field name="name">Risk register: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_register"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_assessment_company" model="ir.rule">
+        <field name="name">Risk assessment: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_assessment"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_mitigation_company" model="ir.rule">
+        <field name="name">Risk control measure: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_mitigation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_fmea_company" model="ir.rule">
+        <field name="name">FMEA worksheet: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_fmea"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_fmea_line_company" model="ir.rule">
+        <field name="name">FMEA failure mode: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_fmea_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_category_company" model="ir.rule">
+        <field name="name">Risk category: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_category"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_matrix_company" model="ir.rule">
+        <field name="name">Risk matrix: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_matrix"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_matrix_level_company" model="ir.rule">
+        <field name="name">Risk matrix level: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_matrix_level"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_risk_matrix_cell_company" model="ir.rule">
+        <field name="name">Risk matrix cell: multi-company</field>
+        <field name="model_id" ref="model_ls_risk_matrix_cell"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

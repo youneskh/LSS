@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Only the fields whose presence on ir.cron is stable across recent
+            Odoo versions are set here. Fields such as numbercall and doall,
+            whose availability in Odoo 19 could not be verified from official
+            documentation, are deliberately not written.
+        -->
+
+        <record id="cron_ls_env_generate_samples" model="ir.cron">
+            <field name="name">Environmental Monitoring: Generate Scheduled Samples</field>
+            <field name="model_id" ref="model_ls_env_schedule_wizard"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_generate_scheduled_samples()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_env_notify_overdue" model="ir.cron">
+            <field name="name">Environmental Monitoring: Notify Overdue Samples</field>
+            <field name="model_id" ref="model_ls_env_sample"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_notify_overdue_samples()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

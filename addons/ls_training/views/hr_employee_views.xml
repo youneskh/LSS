@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="hr_employee_view_form_ls_training" model="ir.ui.view">
+        <field name="name">hr.employee.form.ls.training</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_ls_training_certifications"
+                        type="object" class="oe_stat_button"
+                        icon="fa-certificate"
+                        groups="ls_training.group_ls_training_learner">
+                    <field name="ls_training_certification_count"
+                           widget="statinfo" string="Certifications"/>
+                </button>
+            </div>
+            <notebook position="inside">
+                <page name="ls_training" string="Training"
+                      groups="ls_training.group_ls_training_learner">
+                    <group>
+                        <group name="ls_training_compliance"
+                               string="Compliance">
+                            <field name="ls_training_required_count"/>
+                            <field name="ls_training_compliant_count"/>
+                            <field name="ls_training_compliance_rate"
+                                   widget="percentage"/>
+                        </group>
+                        <group name="ls_training_actions" string="Reports">
+                            <button name="action_print_ls_training_record"
+                                    type="object" class="btn-link"
+                                    icon="fa-print"
+                                    string="Print Training Record"/>
+                            <button name="action_view_ls_training_requirements"
+                                    type="object" class="btn-link"
+                                    icon="fa-list"
+                                    string="Applicable Requirements"/>
+                        </group>
+                    </group>
+                    <separator string="Certifications"/>
+                    <field name="ls_training_certification_ids" readonly="1">
+                        <list decoration-danger="state == 'expired'"
+                              decoration-warning="state == 'expiring'">
+                            <field name="name"/>
+                            <field name="course_id"/>
+                            <field name="date_granted"/>
+                            <field name="date_expiry"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                    <separator string="Competency Assessments"/>
+                    <field name="ls_training_assessment_ids" readonly="1">
+                        <list>
+                            <field name="competency_id"/>
+                            <field name="date_assessment"/>
+                            <field name="level"/>
+                            <field name="is_acquired"/>
+                            <field name="state"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

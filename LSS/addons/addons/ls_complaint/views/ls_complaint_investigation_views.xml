@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_complaint_investigation_view_list" model="ir.ui.view">
+        <field name="name">ls.complaint.investigation.list</field>
+        <field name="model">ls.complaint.investigation</field>
+        <field name="arch" type="xml">
+            <list string="Investigations">
+                <field name="name"/>
+                <field name="complaint_id"/>
+                <field name="investigator_id" widget="many2one_avatar_user"/>
+                <field name="methodology"/>
+                <field name="root_cause_category"/>
+                <field name="conclusion"/>
+                <field name="date_started"/>
+                <field name="date_completed"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'"
+                       decoration-info="state == 'in_progress'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_complaint_investigation_view_form" model="ir.ui.view">
+        <field name="name">ls.complaint.investigation.form</field>
+        <field name="model">ls.complaint.investigation</field>
+        <field name="arch" type="xml">
+            <form string="Investigation">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            class="btn-primary" invisible="state != 'in_progress'"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'completed'"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'completed'"
+                            confirm="The investigation will be rejected. The rejection reason recorded on the Rejection tab will be kept as justification."
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,completed,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="context" string="Context">
+                            <field name="complaint_id" readonly="state != 'draft'"/>
+                            <field name="investigator_id" readonly="state != 'draft'"/>
+                            <field name="sequence"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group name="timing" string="Timing">
+                            <field name="date_started"/>
+                            <field name="date_completed"/>
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="analysis" string="Analysis">
+                            <group>
+                                <field name="methodology"/>
+                                <field name="methodology_other_description"
+                                       invisible="methodology != 'other'"
+                                       required="methodology == 'other'"/>
+                                <field name="root_cause_category"/>
+                                <field name="conclusion"/>
+                            </group>
+                            <label for="investigation_plan"/>
+                            <field name="investigation_plan"/>
+                            <label for="investigation_summary"/>
+                            <field name="investigation_summary"/>
+                            <label for="root_cause_description"/>
+                            <field name="root_cause_description"/>
+                        </page>
+                        <page name="impact" string="Batch Impact">
+                            <group>
+                                <field name="other_batches_impacted"/>
+                            </group>
+                            <label for="batch_impact_assessment"/>
+                            <field name="batch_impact_assessment"/>
+                        </page>
+                        <page name="rejection" string="Rejection"
+                              invisible="state not in ['completed', 'rejected']">
+                            <field name="rejection_reason"
+                                   placeholder="Mandatory justification before rejecting"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_complaint_investigation_view_search" model="ir.ui.view">
+        <field name="name">ls.complaint.investigation.search</field>
+        <field name="model">ls.complaint.investigation</field>
+        <field name="arch" type="xml">
+            <search string="Investigations">
+                <field name="name"/>
+                <field name="complaint_id"/>
+                <field name="investigator_id"/>
+                <field name="root_cause_description"/>
+                <filter name="filter_my" string="My Investigations"
+                        domain="[('investigator_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ['draft', 'in_progress', 'completed'])]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_root_cause" string="Root Cause Category"
+                        context="{'group_by': 'root_cause_category'}"/>
+                    <filter name="group_by_conclusion" string="Conclusion"
+                        context="{'group_by': 'conclusion'}"/>
+                    <filter name="group_by_investigator" string="Investigator"
+                        context="{'group_by': 'investigator_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_complaint_investigation_view_pivot" model="ir.ui.view">
+        <field name="name">ls.complaint.investigation.pivot</field>
+        <field name="model">ls.complaint.investigation</field>
+        <field name="arch" type="xml">
+            <pivot string="Investigation Analysis">
+                <field name="root_cause_category" type="row"/>
+                <field name="conclusion" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_complaint_investigation_action" model="ir.actions.act_window">
+        <field name="name">Investigations</field>
+        <field name="res_model">ls.complaint.investigation</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="ls_complaint_investigation_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No investigation recorded yet</p>
+            <p>Investigations are created from the complaint they belong to.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+# Python and Odoo runtime artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+
+# Local databases and tooling caches
+*.db
+*.sqlite3
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment and editor files
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

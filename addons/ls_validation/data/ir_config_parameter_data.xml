@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Password re-entry on electronic signature. Keep the value at 1 in
+            any GxP environment; the parameter exists so that automated test
+            environments can run workflow scenarios without credentials.
+        -->
+        <record id="param_ls_validation_signature_password_required"
+                model="ir.config_parameter">
+            <field name="key">ls_validation.signature_password_required</field>
+            <field name="value">1</field>
+        </record>
+
+        <!-- Number of days before expiry raising the "Expiring Soon" status. -->
+        <record id="param_ls_validation_expiry_notice_days"
+                model="ir.config_parameter">
+            <field name="key">ls_validation.expiry_notice_days</field>
+            <field name="value">60</field>
+        </record>
+
+    </data>
+</odoo>

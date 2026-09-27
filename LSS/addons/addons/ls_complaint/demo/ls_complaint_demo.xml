@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<!-- The values below are illustrative examples only. They are not derived from
+     any regulation and must not be used as configuration guidance. -->
+<odoo>
+
+    <record id="demo_category_product_defect" model="ls.complaint.category">
+        <field name="name">Product Quality Defect</field>
+        <field name="code">PQD</field>
+        <field name="default_severity">major</field>
+        <field name="requires_investigation" eval="True"/>
+        <field name="acknowledgement_target_days">2</field>
+        <field name="investigation_target_days">20</field>
+        <field name="closure_target_days">30</field>
+        <field name="ae_reporting_deadline_days">0</field>
+        <field name="description">Example category. Targets are illustrative and must be replaced by the values defined in the organisation's own procedure.</field>
+    </record>
+
+    <record id="demo_category_packaging" model="ls.complaint.category">
+        <field name="name">Packaging Defect</field>
+        <field name="code">PKG</field>
+        <field name="default_severity">minor</field>
+        <field name="requires_investigation" eval="False"/>
+        <field name="acknowledgement_target_days">2</field>
+        <field name="investigation_target_days">0</field>
+        <field name="closure_target_days">30</field>
+        <field name="ae_reporting_deadline_days">0</field>
+        <field name="description">Example category. Targets are illustrative and must be replaced by the values defined in the organisation's own procedure.</field>
+    </record>
+
+    <record id="demo_partner_pharmacy" model="res.partner">
+        <field name="name">Demo Pharmacy Central</field>
+        <field name="email">demo.pharmacy@example.com</field>
+        <field name="phone">+000000000</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="demo_product_tablet" model="product.product">
+        <field name="name">Demo Film-Coated Tablet 10 mg</field>
+        <field name="default_code">DEMO-TAB-10</field>
+    </record>
+
+    <record id="demo_complaint_received" model="ls.complaint">
+        <field name="summary">Chipped tablets found in blister</field>
+        <field name="description">The pharmacist reports that several tablets in one blister strip are chipped on the edge.</field>
+        <field name="channel">phone</field>
+        <field name="complainant_type">pharmacy</field>
+        <field name="partner_id" ref="demo_partner_pharmacy"/>
+        <field name="contact_name">Demo Pharmacy Central</field>
+        <field name="contact_email">demo.pharmacy@example.com</field>
+        <field name="category_id" ref="demo_category_product_defect"/>
+        <field name="product_related" eval="True"/>
+        <field name="product_id" ref="demo_product_tablet"/>
+        <field name="lot_name">DEMO-LOT-2026-001</field>
+        <field name="quantity_complained">4</field>
+        <field name="severity">major</field>
+        <field name="complaint_type">quality_defect</field>
+        <field name="sample_available" eval="True"/>
+        <field name="sample_reference">SMP-DEMO-001</field>
+    </record>
+
+    <record id="demo_complaint_packaging" model="ls.complaint">
+        <field name="summary">Leaflet missing from carton</field>
+        <field name="description">A wholesaler reports one carton delivered without a patient information leaflet.</field>
+        <field name="channel">email</field>
+        <field name="complainant_type">distributor</field>
+        <field name="partner_id" ref="demo_partner_pharmacy"/>
+        <field name="category_id" ref="demo_category_packaging"/>
+        <field name="product_related" eval="True"/>
+        <field name="product_id" ref="demo_product_tablet"/>
+        <field name="lot_name">DEMO-LOT-2026-002</field>
+        <field name="quantity_complained">1</field>
+        <field name="severity">minor</field>
+        <field name="complaint_type">packaging</field>
+    </record>
+
+    <record id="demo_complaint_safety" model="ls.complaint">
+        <field name="summary">Skin reaction reported after administration</field>
+        <field name="description">A healthcare professional reports a localised skin reaction observed after administration.</field>
+        <field name="channel">email</field>
+        <field name="complainant_type">healthcare_professional</field>
+        <field name="category_id" ref="demo_category_product_defect"/>
+        <field name="product_related" eval="True"/>
+        <field name="product_id" ref="demo_product_tablet"/>
+        <field name="lot_name">DEMO-LOT-2026-003</field>
+        <field name="severity">critical</field>
+        <field name="complaint_type">safety</field>
+        <field name="potential_safety_impact" eval="True"/>
+    </record>
+
+    <record id="demo_adverse_event" model="ls.complaint.adverse_event">
+        <field name="complaint_id" ref="demo_complaint_safety"/>
+        <field name="event_description">Localised erythema observed a few hours after administration.</field>
+        <field name="seriousness">non_serious</field>
+        <field name="outcome">recovering</field>
+        <field name="patient_reference">SUBJ-DEMO-001</field>
+        <field name="patient_age_range">adult</field>
+        <field name="patient_sex">not_disclosed</field>
+    </record>
+
+</odoo>

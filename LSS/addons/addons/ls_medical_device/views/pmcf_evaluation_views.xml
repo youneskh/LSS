@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_pmcf_evaluation_list" model="ir.ui.view">
+        <field name="name">ls.md.pmcf_evaluation.list</field>
+        <field name="model">ls.md.pmcf_evaluation</field>
+        <field name="arch" type="xml">
+            <list string="PMCF Evaluation Reports" decoration-danger="not benefit_risk_remains_acceptable and state == 'approved'" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="clinical_evaluation_id" optional="hide"/>
+                <field name="period_start"/>
+                <field name="period_end"/>
+                <field name="new_risks_identified" optional="show"/>
+                <field name="benefit_risk_remains_acceptable" optional="show"/>
+                <field name="annual_update_required" optional="hide"/>
+                <field name="next_update_due" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pmcf_evaluation_form" model="ir.ui.view">
+        <field name="name">ls.md.pmcf_evaluation.form</field>
+        <field name="model">ls.md.pmcf_evaluation</field>
+        <field name="arch" type="xml">
+            <form string="PMCF Evaluation Report">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="annual_update_required == False">
+                        This device requires the PMCF evaluation report to be updated at least annually.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="clinical_evaluation_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Reporting Period">
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="annual_update_required" readonly="1"/>
+                            <field name="next_update_due" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Responsibilities">
+                            <field name="author_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Activities and Data" name="activities">
+                            <group string="Activities Performed">
+                                <field name="activities_performed" nolabel="1" placeholder="Post-market clinical follow-up activities carried out during the period"/>
+                            </group>
+                            <group string="Data Collected">
+                                <field name="data_collected" nolabel="1" placeholder="Clinical data collected during the period"/>
+                            </group>
+                            <group string="Findings">
+                                <field name="findings" nolabel="1" placeholder="Findings of the post-market clinical follow-up"/>
+                            </group>
+                        </page>
+                        <page string="Risks and Use" name="risks">
+                            <group string="New Risks">
+                                <field name="new_risks_identified"/>
+                                <field name="new_risks_description" invisible="not new_risks_identified" required="new_risks_identified" placeholder="Description of the risks identified during the period"/>
+                            </group>
+                            <group string="Off-Label Use">
+                                <field name="off_label_use_observed"/>
+                                <field name="off_label_use_description" invisible="not off_label_use_observed" placeholder="Description of the observed use outside the intended purpose"/>
+                            </group>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <group>
+                                <field name="benefit_risk_remains_acceptable"/>
+                            </group>
+                            <group string="Benefit-Risk Conclusion">
+                                <field name="benefit_risk_conclusion" nolabel="1" placeholder="Conclusion on the benefit-risk determination for the period"/>
+                            </group>
+                            <group string="Actions">
+                                <field name="actions_required"/>
+                                <field name="actions_description" invisible="not actions_required" required="actions_required" placeholder="Actions decided as a result of the conclusions"/>
+                            </group>
+                            <group string="Downstream Updates">
+                                <field name="clinical_evaluation_update_required"/>
+                                <field name="risk_file_update_required"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pmcf_evaluation_search" model="ir.ui.view">
+        <field name="name">ls.md.pmcf_evaluation.search</field>
+        <field name="model">ls.md.pmcf_evaluation</field>
+        <field name="arch" type="xml">
+            <search string="PMCF Evaluation Reports">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="clinical_evaluation_id"/>
+                <field name="author_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_new_risks" string="New Risks Identified" domain="[('new_risks_identified', '=', True)]"/>
+                <filter name="filter_off_label" string="Off-Label Use Observed" domain="[('off_label_use_observed', '=', True)]"/>
+                <filter name="filter_not_acceptable" string="Benefit-Risk Not Acceptable" domain="[('benefit_risk_remains_acceptable', '=', False)]"/>
+                <filter name="filter_annual" string="Annual Update Required" domain="[('annual_update_required', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_period" string="Period End" context="{'group_by': 'period_end:year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_pmcf_evaluation" model="ir.actions.act_window">
+        <field name="name">PMCF Evaluation Reports</field>
+        <field name="res_model">ls.md.pmcf_evaluation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_pmcf_evaluation_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a PMCF evaluation report</p>
+            <p>
+                A post-market clinical follow-up evaluation report records the activities
+                performed, the clinical data collected and the resulting benefit-risk
+                conclusion for a reporting period.
+            </p>
+        </field>
+    </record>
+
+</odoo>

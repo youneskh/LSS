@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_device_list" model="ir.ui.view">
+        <field name="name">ls.md.device.list</field>
+        <field name="model">ls.md.device</field>
+        <field name="arch" type="xml">
+            <list string="Medical Devices" decoration-danger="periodic_report_overdue" decoration-muted="state == 'withdrawn'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="device_class_id"/>
+                <field name="basic_udi_di" optional="show"/>
+                <field name="manufacturer_id" optional="hide"/>
+                <field name="is_implantable" optional="hide"/>
+                <field name="market_placement_date" optional="show"/>
+                <field name="next_periodic_report_due" optional="show"/>
+                <field name="periodic_report_overdue" column_invisible="True"/>
+                <field name="ce_certificate_expiry_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'on_market'" decoration-warning="state == 'suspended'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_device_form" model="ir.ui.view">
+        <field name="name">ls.md.device.form</field>
+        <field name="model">ls.md.device</field>
+        <field name="arch" type="xml">
+            <form string="Medical Device">
+                <header>
+                    <button name="action_start_development" type="object" string="Start Development" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_start_conformity_assessment" type="object" string="Start Conformity Assessment" class="oe_highlight" invisible="state != 'development'"/>
+                    <button name="action_place_on_market" type="object" string="Place on the Market" class="oe_highlight" invisible="state != 'conformity_assessment'"/>
+                    <button name="action_suspend" type="object" string="Suspend" invisible="state != 'on_market'"/>
+                    <button name="action_resume" type="object" string="Resume" invisible="state != 'suspended'"/>
+                    <button name="action_withdraw" type="object" string="Withdraw" invisible="state not in ('on_market', 'suspended')"/>
+                    <button name="action_open_state_wizard" type="object" string="Change Status with Justification" invisible="state == 'withdrawn'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,development,conformity_assessment,on_market"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_udi" type="object" class="oe_stat_button" icon="fa-barcode">
+                            <field name="udi_count" widget="statinfo" string="UDI"/>
+                        </button>
+                        <button name="action_view_risk_assessments" type="object" class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="risk_assessment_count" widget="statinfo" string="Risk Files"/>
+                        </button>
+                        <button name="action_view_clinical_evaluations" type="object" class="oe_stat_button" icon="fa-stethoscope">
+                            <field name="clinical_evaluation_count" widget="statinfo" string="Clinical"/>
+                        </button>
+                        <button name="action_view_technical_files" type="object" class="oe_stat_button" icon="fa-folder-open">
+                            <field name="technical_file_count" widget="statinfo" string="Tech. Doc."/>
+                        </button>
+                        <button name="action_view_ce_markings" type="object" class="oe_stat_button" icon="fa-certificate">
+                            <field name="ce_marking_count" widget="statinfo" string="Certificates"/>
+                        </button>
+                        <button name="action_view_pms_reports" type="object" class="oe_stat_button" icon="fa-line-chart">
+                            <field name="pms_report_count" widget="statinfo" string="PMS Reports"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="reference" string="Reference"/>
+                        <h1><field name="reference" readonly="1"/></h1>
+                        <label for="name" string="Device Name"/>
+                        <h2><field name="name" placeholder="Trade name of the device"/></h2>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not periodic_report_overdue">
+                        The periodic post-market report of this device is past its due date.
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="model_reference"/>
+                            <field name="basic_udi_di"/>
+                            <field name="gmdn_code"/>
+                            <field name="product_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Economic Operators">
+                            <field name="manufacturer_id"/>
+                            <field name="authorised_representative_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Classification">
+                            <field name="device_class_id"/>
+                            <field name="classification_rule" placeholder="e.g. Annex VIII, Rule 8"/>
+                            <field name="notified_body_required" readonly="1"/>
+                        </group>
+                        <group string="Characteristics">
+                            <field name="is_implantable"/>
+                            <field name="is_sterile"/>
+                            <field name="is_measuring"/>
+                            <field name="is_reusable_surgical"/>
+                            <field name="is_software"/>
+                            <field name="is_custom_made"/>
+                            <field name="requires_direct_marking"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Intended Purpose" name="intended_purpose">
+                            <group>
+                                <field name="intended_purpose" nolabel="1" placeholder="Intended purpose as stated in the labelling and instructions for use"/>
+                            </group>
+                            <group string="Classification Rationale">
+                                <field name="classification_rationale" nolabel="1" placeholder="Justification of the classification decision"/>
+                            </group>
+                        </page>
+                        <page string="Market Status" name="market_status">
+                            <group>
+                                <group string="Market Dates">
+                                    <field name="market_placement_date"/>
+                                    <field name="market_withdrawal_date"/>
+                                </group>
+                                <group string="Documentation Retention">
+                                    <field name="documentation_retention_years"/>
+                                    <field name="documentation_retention_until"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Post-Market Reporting">
+                                    <field name="periodic_report_type"/>
+                                    <field name="periodic_report_interval_months"/>
+                                    <field name="last_periodic_report_date"/>
+                                    <field name="next_periodic_report_due"/>
+                                    <field name="periodic_report_overdue"/>
+                                    <field name="annual_pmcf_update_required"/>
+                                </group>
+                                <group string="Certification">
+                                    <field name="active_ce_marking_id"/>
+                                    <field name="ce_certificate_expiry_date"/>
+                                </group>
+                            </group>
+                            <group string="Last Status Change Reason">
+                                <field name="state_change_reason" nolabel="1" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="UDI Assignments" name="udi">
+                            <field name="udi_ids" context="{'default_device_id': id}">
+                                <list editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="udi_kind"/>
+                                    <field name="udi_di"/>
+                                    <field name="issuing_entity"/>
+                                    <field name="packaging_level"/>
+                                    <field name="quantity_per_package"/>
+                                    <field name="carrier_type"/>
+                                    <field name="assignment_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Regulatory Records" name="regulatory">
+                            <group string="Risk Management">
+                                <field name="risk_assessment_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="version"/>
+                                        <field name="risk_item_count"/>
+                                        <field name="max_residual_index"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="Clinical Evaluation">
+                                <field name="clinical_evaluation_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="version"/>
+                                        <field name="pmcf_applicable"/>
+                                        <field name="next_review_date"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="Technical Documentation">
+                                <field name="technical_file_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="annex_reference"/>
+                                        <field name="version"/>
+                                        <field name="missing_mandatory_count"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="Post-Market Surveillance Plans">
+                                <field name="pms_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="title"/>
+                                        <field name="version"/>
+                                        <field name="effective_date"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_device_search" model="ir.ui.view">
+        <field name="name">ls.md.device.search</field>
+        <field name="model">ls.md.device</field>
+        <field name="arch" type="xml">
+            <search string="Medical Devices">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="basic_udi_di"/>
+                <field name="device_class_id"/>
+                <field name="manufacturer_id"/>
+                <field name="product_id"/>
+                <separator/>
+                <filter name="filter_on_market" string="On the Market" domain="[('state', '=', 'on_market')]"/>
+                <filter name="filter_suspended" string="Suspended" domain="[('state', '=', 'suspended')]"/>
+                <filter name="filter_withdrawn" string="Withdrawn" domain="[('state', '=', 'withdrawn')]"/>
+                <separator/>
+                <filter name="filter_implantable" string="Implantable" domain="[('is_implantable', '=', True)]"/>
+                <filter name="filter_custom_made" string="Custom-Made" domain="[('is_custom_made', '=', True)]"/>
+                <filter name="filter_software" string="Software" domain="[('is_software', '=', True)]"/>
+                <separator/>
+                <filter name="filter_report_overdue" string="Periodic Report Overdue" domain="[('periodic_report_overdue', '=', True)]"/>
+                <filter name="filter_no_basic_udi" string="Without Basic UDI-DI" domain="[('basic_udi_di', '=', False)]"/>
+                <filter name="filter_annual_pmcf" string="Annual PMCF Update Required" domain="[('annual_pmcf_update_required', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_class" string="Risk Class" context="{'group_by': 'device_class_id'}"/>
+                    <filter name="group_by_manufacturer" string="Manufacturer" context="{'group_by': 'manufacturer_id'}"/>
+                    <filter name="group_by_report_type" string="Periodic Report Type" context="{'group_by': 'periodic_report_type'}"/>
+                    <filter name="group_by_placement" string="Placed on the Market" context="{'group_by': 'market_placement_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_device" model="ir.actions.act_window">
+        <field name="name">Device Register</field>
+        <field name="res_model">ls.md.device</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_device_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a medical device</p>
+            <p>
+                The device register is the anchor of every regulatory record managed by this
+                application: UDI assignments, risk management files, clinical evaluations,
+                technical documentation, certificates and post-market surveillance.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_md_device_overdue" model="ir.actions.act_window">
+        <field name="name">Overdue Post-Market Reports</field>
+        <field name="res_model">ls.md.device</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('periodic_report_overdue', '=', True)]</field>
+        <field name="search_view_id" ref="view_ls_md_device_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No periodic post-market report is overdue</p>
+            <p>Devices appear here once their next periodic report passes its due date.</p>
+        </field>
+    </record>
+
+</odoo>

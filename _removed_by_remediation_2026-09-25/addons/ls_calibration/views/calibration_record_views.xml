@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_record_list" model="ir.ui.view">
+        <field name="name">ls.calibration.record.list</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <list string="Calibration Records"
+                  decoration-danger="overall_result == 'fail'"
+                  decoration-warning="overall_result == 'pass_after_adjustment'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="instrument_code"/>
+                <field name="instrument_id"/>
+                <field name="category_id" optional="hide"/>
+                <field name="criticality" optional="hide"/>
+                <field name="scheduled_date"/>
+                <field name="performed_date"/>
+                <field name="next_due_date" optional="show"/>
+                <field name="provider_type" optional="hide"/>
+                <field name="performed_by_user_id" optional="show"/>
+                <field name="as_found_result" widget="badge"
+                       decoration-danger="as_found_result == 'fail'"
+                       decoration-success="as_found_result == 'pass'"/>
+                <field name="as_left_result" widget="badge" optional="show"
+                       decoration-danger="as_left_result == 'fail'"
+                       decoration-success="as_left_result == 'pass'"/>
+                <field name="overall_result" widget="badge"
+                       decoration-danger="overall_result == 'fail'"
+                       decoration-warning="overall_result == 'pass_after_adjustment'"
+                       decoration-success="overall_result == 'pass'"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_record_form" model="ir.ui.view">
+        <field name="name">ls.calibration.record.form</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <form string="Calibration Record">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="ls_calibration.group_ls_calibration_technician"/>
+                    <button name="action_mark_performed" type="object" string="Mark Performed"
+                            class="oe_highlight" invisible="state != 'in_progress'"
+                            groups="ls_calibration.group_ls_calibration_technician"/>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review"
+                            class="oe_highlight" invisible="state != 'performed'"
+                            groups="ls_calibration.group_ls_calibration_technician"/>
+                    <button name="action_review" type="object" string="Record Review"
+                            invisible="state != 'under_review' or reviewed_by_user_id != False"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'under_review'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_open_reject_wizard" type="object" string="Reject"
+                            invisible="state != 'under_review'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('approved', 'cancelled')"
+                            groups="ls_calibration.group_ls_calibration_approver"
+                            confirm="Cancelling a calibration record is permanent. A cancellation reason is required. Continue?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,performed,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_certificates" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="certificate_count" widget="statinfo" string="Certificates"/>
+                        </button>
+                        <button name="action_open_oot" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="oot_count" widget="statinfo" string="OOT Events"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Approved" bg_color="text-bg-success"
+                            invisible="state != 'approved'"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="as_found_result != 'fail'">
+                        The as-found series failed on <field name="failed_point_count" readonly="1" class="oe_inline"/>
+                        point(s). Approving this record raises an out-of-tolerance event
+                        when the instrument is configured to require one.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="state != 'rejected'">
+                        This record was rejected and returned for correction.
+                    </div>
+                    <group>
+                        <group string="Instrument">
+                            <field name="instrument_id" readonly="state != 'draft'"/>
+                            <field name="instrument_code" readonly="1"/>
+                            <field name="category_id" readonly="1"/>
+                            <field name="criticality" readonly="1"/>
+                            <field name="plan_id" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Schedule">
+                            <field name="scheduled_date" readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="performed_date" readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="next_due_date" readonly="state not in ('in_progress', 'performed')"/>
+                            <field name="procedure_reference" readonly="state not in ('draft', 'in_progress')"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Performed By">
+                            <field name="provider_type" readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="performed_by_user_id"
+                                   invisible="provider_type != 'internal'"
+                                   readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="service_provider_id"
+                                   invisible="provider_type != 'external'"
+                                   required="provider_type == 'external'"
+                                   readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="performed_by_name"
+                                   invisible="provider_type != 'external'"
+                                   readonly="state not in ('draft', 'in_progress')"/>
+                        </group>
+                        <group string="Review and Approval">
+                            <field name="reviewed_by_user_id" readonly="1"/>
+                            <field name="reviewed_date" readonly="1"/>
+                            <field name="approved_by_user_id" readonly="1"/>
+                            <field name="approved_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Readings" name="readings">
+                            <field name="reading_ids"
+                                   readonly="state not in ('draft', 'in_progress')">
+                                <list editable="bottom" create="0" delete="0"
+                                      decoration-danger="as_found_recorded and not as_found_in_tolerance"
+                                      decoration-warning="as_left_recorded and not as_left_in_tolerance">
+                                    <field name="sequence" column_invisible="1"/>
+                                    <field name="point_id" readonly="1"/>
+                                    <field name="nominal_value" readonly="1"/>
+                                    <field name="unit_label" readonly="1"/>
+                                    <field name="lower_limit" readonly="1"/>
+                                    <field name="upper_limit" readonly="1"/>
+                                    <field name="as_found_value"/>
+                                    <field name="as_found_recorded" string="Found?"/>
+                                    <field name="as_found_deviation" readonly="1"/>
+                                    <field name="as_found_in_tolerance" readonly="1" widget="boolean_toggle"/>
+                                    <field name="as_left_value"/>
+                                    <field name="as_left_recorded" string="Left?"/>
+                                    <field name="as_left_deviation" readonly="1"/>
+                                    <field name="as_left_in_tolerance" readonly="1" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                            <group>
+                                <group string="Result">
+                                    <field name="reading_count" readonly="1"/>
+                                    <field name="failed_point_count" readonly="1"/>
+                                    <field name="as_found_result" readonly="1" widget="badge"/>
+                                    <field name="as_left_result" readonly="1" widget="badge"/>
+                                    <field name="overall_result" readonly="1" widget="badge"/>
+                                </group>
+                                <group string="Adjustment">
+                                    <field name="adjustment_performed"
+                                           readonly="state not in ('draft', 'in_progress')"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Reference Standards" name="standards">
+                            <field name="standard_ids" widget="many2many"
+                                   readonly="state not in ('draft', 'in_progress')">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="traceability_reference"/>
+                                    <field name="issuing_body"/>
+                                    <field name="valid_until"/>
+                                    <field name="is_valid" widget="boolean_toggle" readonly="1"/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                At least one reference standard is required before the record
+                                can be marked as performed.
+                            </p>
+                        </page>
+                        <page string="Conditions" name="conditions">
+                            <group>
+                                <group string="Environmental Conditions">
+                                    <field name="ambient_temperature"
+                                           readonly="state not in ('draft', 'in_progress')"/>
+                                    <field name="ambient_temperature_unit"
+                                           readonly="state not in ('draft', 'in_progress')"/>
+                                    <field name="ambient_humidity"
+                                           readonly="state not in ('draft', 'in_progress')"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Remarks" name="remarks">
+                            <field name="remarks" nolabel="1"
+                                   readonly="state not in ('draft', 'in_progress')"
+                                   placeholder="Observations made during the calibration."/>
+                        </page>
+                        <page string="Rejection" name="rejection" invisible="state != 'rejected'">
+                            <field name="rejection_reason" nolabel="1" readonly="1"/>
+                        </page>
+                        <page string="Cancellation" name="cancellation"
+                              invisible="state == 'approved'">
+                            <field name="cancellation_reason" nolabel="1"
+                                   readonly="state == 'cancelled'"
+                                   placeholder="Reason the calibration record is cancelled. Required before cancellation."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_record_search" model="ir.ui.view">
+        <field name="name">ls.calibration.record.search</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <search string="Calibration Records">
+                <field name="name" string="Record"
+                       filter_domain="['|', ('name', 'ilike', self), ('instrument_code', 'ilike', self)]"/>
+                <field name="instrument_id"/>
+                <field name="plan_id"/>
+                <field name="category_id"/>
+                <field name="performed_by_user_id"/>
+                <field name="approved_by_user_id"/>
+                <field name="standard_ids"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('draft', 'in_progress', 'performed', 'under_review'))]"/>
+                <filter name="filter_under_review" string="Awaiting Approval"
+                        domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_failed" string="Failed"
+                        domain="[('overall_result', '=', 'fail')]"/>
+                <filter name="filter_oot" string="As-Found Out of Tolerance"
+                        domain="[('as_found_result', '=', 'fail')]"/>
+                <separator/>
+                <filter name="filter_mine" string="Performed by Me"
+                        domain="[('performed_by_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_scheduled_this_month" string="Scheduled This Month"
+                        domain="[('scheduled_date', '&gt;=', (context_today()).strftime('%Y-%m-01'))]"/>
+                                    <filter name="group_instrument" string="Instrument"
+                        context="{'group_by': 'instrument_id'}"/>
+                    <filter name="group_category" string="Category"
+                        context="{'group_by': 'category_id'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_result" string="Overall Result"
+                        context="{'group_by': 'overall_result'}"/>
+                    <filter name="group_provider" string="Performed By"
+                        context="{'group_by': 'provider_type'}"/>
+                    <filter name="group_scheduled" string="Scheduled Month"
+                        context="{'group_by': 'scheduled_date:month'}"/>
+                    <filter name="group_performed" string="Performed Month"
+                        context="{'group_by': 'performed_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_record_pivot" model="ir.ui.view">
+        <field name="name">ls.calibration.record.pivot</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration Analysis">
+                <field name="category_id" type="row"/>
+                <field name="overall_result" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_record_graph" model="ir.ui.view">
+        <field name="name">ls.calibration.record.graph</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration Analysis" type="bar">
+                <field name="performed_date" interval="month"/>
+                <field name="overall_result"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_record_calendar" model="ir.ui.view">
+        <field name="name">ls.calibration.record.calendar</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <calendar string="Calibration Schedule" date_start="scheduled_date"
+                      color="instrument_id" mode="month">
+                <field name="instrument_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_record" model="ir.actions.act_window">
+        <field name="name">Calibration Records</field>
+        <field name="res_model">ls.calibration.record</field>
+        <field name="view_mode">list,form,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="view_ls_calibration_record_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a calibration</p>
+            <p>
+                A calibration record carries the as-found and as-left readings, the
+                reference standards used and the review and approval decisions.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_record_open" model="ir.actions.act_window">
+        <field name="name">Open Calibrations</field>
+        <field name="res_model">ls.calibration.record</field>
+        <field name="view_mode">list,form,calendar,pivot,graph</field>
+        <field name="search_view_id" ref="view_ls_calibration_record_search"/>
+        <field name="context">{'search_default_filter_open': 1, 'search_default_group_state': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No calibration is open</p>
+            <p>Calibrations that are not yet approved, rejected or cancelled appear here.</p>
+        </field>
+    </record>
+
+</odoo>

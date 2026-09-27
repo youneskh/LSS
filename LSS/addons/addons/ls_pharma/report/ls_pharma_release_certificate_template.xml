@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Printed batch release certificate.
+
+     The checklist is not written out in this template. It is read from
+     get_checklist_report_lines on the release model, which derives it from
+     RELEASE_CHECKLIST in constants.py, so that the printed certificate and
+     the stored record can never state different things. -->
+<odoo>
+
+    <template id="report_release_certificate_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+
+                <h2>Batch Release Certificate</h2>
+                <h3 t-field="doc.name"/>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Batch</strong>
+                        <div t-field="doc.batch_id"/>
+                        <strong>Product</strong>
+                        <div t-field="doc.product_id"/>
+                        <strong>Company</strong>
+                        <div t-field="doc.company_id"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Decision</strong>
+                        <div t-field="doc.decision"/>
+                        <strong>Decision Date</strong>
+                        <div t-field="doc.decision_date"/>
+                        <strong>Decided By</strong>
+                        <div t-field="doc.decided_by_user_id"/>
+                    </div>
+                </div>
+
+                <div class="row mt-3" t-if="doc.batch_id">
+                    <div class="col-3">
+                        <strong>Manufactured On</strong>
+                        <div t-field="doc.batch_id.date_manufacture"/>
+                    </div>
+                    <div class="col-3">
+                        <strong>Expires On</strong>
+                        <div t-field="doc.batch_id.date_expiry"/>
+                    </div>
+                    <div class="col-3">
+                        <strong>Actual Yield</strong>
+                        <div>
+                            <span t-field="doc.batch_id.actual_yield_qty"/>
+                            <span t-field="doc.batch_id.uom_id"/>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <strong>Yield (%)</strong>
+                        <div t-field="doc.batch_id.yield_percentage"/>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Release Checklist</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Confirmation</th>
+                            <th>Regulatory Reference</th>
+                            <th>Confirmed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.get_checklist_report_lines()" t-as="line">
+                            <td><span t-esc="line['label']"/></td>
+                            <td><span t-esc="line['reference']"/></td>
+                            <td>
+                                <span t-if="line['confirmed']">Yes</span>
+                                <span t-else="">No</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Statement</h4>
+                <div t-field="doc.statement"/>
+
+                <h4 class="mt-4">Integrity</h4>
+                <div>
+                    <strong>SHA-256 digest: </strong>
+                    <span t-field="doc.integrity_hash"/>
+                </div>
+                <div>
+                    <strong>Digest matches the stored record: </strong>
+                    <span t-if="doc.integrity_verified">Yes</span>
+                    <span t-else="">No</span>
+                </div>
+
+                <p class="mt-4 text-muted">
+                    21 CFR 211.192 requires all drug product production and
+                    control records to be reviewed and approved by the quality
+                    control unit before a batch is released or distributed.
+                    21 CFR 211.165 requires the finished product to conform to
+                    its acceptance criteria before it is released for
+                    distribution.
+                </p>
+                <p class="text-muted">
+                    The digest above detects modification of the stored
+                    decision. It is not an electronic signature within the
+                    meaning of FDA 21 CFR Part 11: this module implements
+                    neither the signature manifestation nor the identification
+                    and authentication controls required by that Part. A site
+                    that operates under 21 CFR Part 11 must obtain those
+                    controls elsewhere.
+                </p>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_release_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_pharma.report_release_certificate_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

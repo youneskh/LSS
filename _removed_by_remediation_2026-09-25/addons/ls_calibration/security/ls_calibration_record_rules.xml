@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!--
+        DESIGN NOTE - deliberately global rules.
+
+        The name of the many2many field linking ir.rule to res.groups in
+        Odoo 19 could not be verified from official documentation. Writing an
+        unverified field name into a data file would make the module fail to
+        install.
+
+        Every rule below is therefore GLOBAL: it declares no group and
+        applies to all users. Global rules are combined with AND, so they
+        constrain every user including the ones holding the Manager group.
+        They are used for multi-company isolation only.
+
+        Role-based restriction is delivered by two other mechanisms that do
+        not depend on the unverified field name:
+          1. ir.model.access.csv, which grants CRUD per group;
+          2. ORM-level checks in Python (state machines, segregation of
+             duties, immutability after approval), which hold regardless of
+             how the record is reached.
+
+        The computed field ir.rule.global is never written explicitly, since
+        it is derived by the framework from the absence of groups.
+    -->
+
+    <record id="rule_ls_calibration_instrument_category_company" model="ir.rule">
+        <field name="name">Instrument Category: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_instrument_category"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_instrument_company" model="ir.rule">
+        <field name="name">Instrument: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_instrument"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_point_company" model="ir.rule">
+        <field name="name">Calibration Point: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_point"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_standard_company" model="ir.rule">
+        <field name="name">Reference Standard: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_standard"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_plan_company" model="ir.rule">
+        <field name="name">Calibration Plan: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_plan"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_record_company" model="ir.rule">
+        <field name="name">Calibration Record: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_record"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_reading_company" model="ir.rule">
+        <field name="name">Calibration Reading: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_reading"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_certificate_company" model="ir.rule">
+        <field name="name">Calibration Certificate: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_certificate"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_calibration_oot_company" model="ir.rule">
+        <field name="name">Out-of-Tolerance Event: multi-company</field>
+        <field name="model_id" ref="model_ls_calibration_oot"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <menuitem id="menu_ls_supplier_root"
+              name="Supplier Qualification"
+              web_icon="ls_supplier_qualification,static/description/icon.svg"
+              groups="ls_supplier_qualification.group_ls_supplier_viewer"
+              sequence="95"/>
+
+    <menuitem id="menu_ls_supplier_qualification_section"
+              name="Qualification"
+              parent="menu_ls_supplier_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_supplier_qualification"
+              name="Qualification Dossiers"
+              parent="menu_ls_supplier_qualification_section"
+              action="action_ls_supplier_qualification"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_supplier_material"
+              name="Qualified Scope"
+              parent="menu_ls_supplier_qualification_section"
+              action="action_ls_supplier_material"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_supplier_qualification_expiring"
+              name="Expiring Approvals"
+              parent="menu_ls_supplier_qualification_section"
+              action="action_ls_supplier_qualification_expiring"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_supplier_evaluation_section"
+              name="Evaluation"
+              parent="menu_ls_supplier_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_supplier_assessment"
+              name="Assessments"
+              parent="menu_ls_supplier_evaluation_section"
+              action="action_ls_supplier_assessment"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_supplier_audit"
+              name="Audits"
+              parent="menu_ls_supplier_evaluation_section"
+              action="action_ls_supplier_audit"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_supplier_audit_finding"
+              name="Audit Findings"
+              parent="menu_ls_supplier_evaluation_section"
+              action="action_ls_supplier_audit_finding"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_supplier_monitoring_section"
+              name="Monitoring"
+              parent="menu_ls_supplier_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_supplier_performance"
+              name="Performance Evaluations"
+              parent="menu_ls_supplier_monitoring_section"
+              action="action_ls_supplier_performance"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_supplier_review"
+              name="Periodic Reviews"
+              parent="menu_ls_supplier_monitoring_section"
+              action="action_ls_supplier_review"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_supplier_signature"
+              name="Signature Log"
+              parent="menu_ls_supplier_monitoring_section"
+              action="action_ls_supplier_signature"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_supplier_configuration_section"
+              name="Configuration"
+              parent="menu_ls_supplier_root"
+              groups="ls_supplier_qualification.group_ls_supplier_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_ls_supplier_category"
+              name="Supplier Categories"
+              parent="menu_ls_supplier_configuration_section"
+              action="action_ls_supplier_category"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_supplier_criterion"
+              name="Assessment Criteria"
+              parent="menu_ls_supplier_configuration_section"
+              action="action_ls_supplier_criterion"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_supplier_assessment_template"
+              name="Assessment Templates"
+              parent="menu_ls_supplier_configuration_section"
+              action="action_ls_supplier_assessment_template"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_supplier_standard"
+              name="Reference Standards"
+              parent="menu_ls_supplier_configuration_section"
+              action="action_ls_supplier_standard"
+              sequence="40"/>
+
+</odoo>

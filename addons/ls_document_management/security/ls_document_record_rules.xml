@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- Multi-company isolation. Global rules (no group) intersect with the
+         group rules below. -->
+    <record id="rule_ls_document_folder_company" model="ir.rule">
+        <field name="name">Document Folder: multi-company</field>
+        <field name="model_id" ref="model_ls_document_folder"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_tag_company" model="ir.rule">
+        <field name="name">Document Tag: multi-company</field>
+        <field name="model_id" ref="model_ls_document_tag"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_retention_policy_company" model="ir.rule">
+        <field name="name">Document Retention Policy: multi-company</field>
+        <field name="model_id" ref="model_ls_document_retention_policy"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_document_company" model="ir.rule">
+        <field name="name">Controlled Document: multi-company</field>
+        <field name="model_id" ref="model_ls_document_document"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_version_company" model="ir.rule">
+        <field name="name">Document Version: multi-company</field>
+        <field name="model_id" ref="model_ls_document_version"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_approval_company" model="ir.rule">
+        <field name="name">Document Approval: multi-company</field>
+        <field name="model_id" ref="model_ls_document_approval"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_link_company" model="ir.rule">
+        <field name="name">Document Link: multi-company</field>
+        <field name="model_id" ref="model_ls_document_link"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Folder level access control.
+         A folder with no read group is readable by every holder of a
+         Life Sciences Document role. A folder with read groups is readable
+         only by users belonging to at least one of them. The same principle
+         applies to modification through the write groups.
+         Document Managers are exempt so that the configuration always
+         remains administrable. -->
+    <record id="rule_ls_document_document_folder_read" model="ir.rule">
+        <field name="name">Controlled Document: folder read groups</field>
+        <field name="model_id" ref="model_ls_document_document"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_viewer'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('folder_id.group_read_ids', '=', False), ('folder_id.group_read_ids', 'in', user.all_group_ids.ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_document_folder_write" model="ir.rule">
+        <field name="name">Controlled Document: folder write groups</field>
+        <field name="model_id" ref="model_ls_document_document"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_editor')), (4, ref('group_ls_document_approver'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">['|', ('folder_id.group_write_ids', '=', False), ('folder_id.group_write_ids', 'in', user.all_group_ids.ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_document_manager_all" model="ir.rule">
+        <field name="name">Controlled Document: manager full access</field>
+        <field name="model_id" ref="model_ls_document_document"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="rule_ls_document_version_folder_read" model="ir.rule">
+        <field name="name">Document Version: folder read groups</field>
+        <field name="model_id" ref="model_ls_document_version"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_viewer'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('document_id.folder_id.group_read_ids', '=', False), ('document_id.folder_id.group_read_ids', 'in', user.all_group_ids.ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_version_folder_write" model="ir.rule">
+        <field name="name">Document Version: folder write groups</field>
+        <field name="model_id" ref="model_ls_document_version"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_editor')), (4, ref('group_ls_document_approver'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">['|', ('document_id.folder_id.group_write_ids', '=', False), ('document_id.folder_id.group_write_ids', 'in', user.all_group_ids.ids)]</field>
+    </record>
+
+    <record id="rule_ls_document_version_manager_all" model="ir.rule">
+        <field name="name">Document Version: manager full access</field>
+        <field name="model_id" ref="model_ls_document_version"/>
+        <field name="groups" eval="[(4, ref('group_ls_document_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

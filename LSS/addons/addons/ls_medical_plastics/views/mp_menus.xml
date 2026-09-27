@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+      Menu structure.
+
+      The top level follows the navigation declared in the Life Sciences Suite
+      functional specification for the Medical Plastics module: Production,
+      Products, Tools and Reports. Configuration is added as a fifth section
+      because the material grade and scrap reason catalogues are configuration
+      data rather than operational records.
+    -->
+
+    <menuitem id="menu_mp_root"
+              name="Medical Plastics"
+              web_icon="ls_medical_plastics,static/description/icon.png"
+              groups="ls_medical_plastics.group_mp_viewer"
+              sequence="70"/>
+
+    <!-- Production -->
+    <menuitem id="menu_mp_production"
+              name="Production"
+              parent="menu_mp_root"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_injection_molding"
+              name="Injection Moulding"
+              parent="menu_mp_production"
+              action="action_mp_injection_molding"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_molding_parameter"
+              name="Moulding Parameters"
+              parent="menu_mp_production"
+              action="action_mp_molding_parameter"
+              sequence="20"/>
+
+    <menuitem id="menu_mp_reading"
+              name="Parameter Readings"
+              parent="menu_mp_production"
+              action="action_mp_injection_molding_reading"
+              sequence="30"/>
+
+    <!-- Products -->
+    <menuitem id="menu_mp_products"
+              name="Products"
+              parent="menu_mp_root"
+              sequence="20"/>
+
+    <menuitem id="menu_mp_component"
+              name="Components"
+              parent="menu_mp_products"
+              action="action_mp_component"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_component_packaging"
+              name="Packaging"
+              parent="menu_mp_products"
+              action="action_mp_component_packaging"
+              sequence="20"/>
+
+    <!-- Tools -->
+    <menuitem id="menu_mp_tools"
+              name="Tools"
+              parent="menu_mp_root"
+              sequence="30"/>
+
+    <menuitem id="menu_mp_tool"
+              name="Tool Register"
+              parent="menu_mp_tools"
+              action="action_mp_tool"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_tool_maintenance_due"
+              name="Due For Maintenance"
+              parent="menu_mp_tools"
+              action="action_mp_tool_maintenance_due"
+              sequence="20"/>
+
+    <menuitem id="menu_mp_tool_maintenance"
+              name="Maintenance Records"
+              parent="menu_mp_tools"
+              action="action_mp_tool_maintenance"
+              groups="ls_medical_plastics.group_mp_technician"
+              sequence="30"/>
+
+    <!-- Reports -->
+    <menuitem id="menu_mp_reports"
+              name="Reports"
+              parent="menu_mp_root"
+              sequence="40"/>
+
+    <menuitem id="menu_mp_traceability"
+              name="Traceability Enquiry"
+              parent="menu_mp_reports"
+              action="action_mp_traceability_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_molding_analysis"
+              name="Moulding Analysis"
+              parent="menu_mp_reports"
+              action="action_mp_injection_molding_analysis"
+              sequence="20"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_mp_configuration"
+              name="Configuration"
+              parent="menu_mp_root"
+              groups="ls_medical_plastics.group_mp_engineer"
+              sequence="90"/>
+
+    <menuitem id="menu_mp_material_grade"
+              name="Material Grades"
+              parent="menu_mp_configuration"
+              action="action_mp_material_grade"
+              sequence="10"/>
+
+    <menuitem id="menu_mp_scrap_reason"
+              name="Scrap Reasons"
+              parent="menu_mp_configuration"
+              action="action_mp_scrap_reason"
+              sequence="20"/>
+
+</odoo>

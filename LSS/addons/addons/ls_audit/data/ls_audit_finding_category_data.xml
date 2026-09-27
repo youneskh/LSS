@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The categories below are a widely used starting point, not a normative
+     classification imposed by any named standard. Organisations are expected
+     to adjust the labels, deadlines and CAPA requirements to their own
+     approved procedures. noupdate="1" ensures those adjustments survive a
+     module upgrade. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="finding_category_critical" model="ls.audit.finding.category">
+            <field name="name">Critical</field>
+            <field name="code">CRIT</field>
+            <field name="sequence">10</field>
+            <field name="severity">critical</field>
+            <field name="response_deadline_days">5</field>
+            <field name="requires_capa" eval="True"/>
+            <field name="requires_root_cause" eval="True"/>
+            <field name="color">1</field>
+            <field name="description">A departure that has resulted in, or may reasonably be expected to result in, a product that is harmful to the user or patient, or a departure involving falsification or misrepresentation of records.</field>
+        </record>
+
+        <record id="finding_category_major" model="ls.audit.finding.category">
+            <field name="name">Major</field>
+            <field name="code">MAJ</field>
+            <field name="sequence">20</field>
+            <field name="severity">major</field>
+            <field name="response_deadline_days">15</field>
+            <field name="requires_capa" eval="True"/>
+            <field name="requires_root_cause" eval="True"/>
+            <field name="color">2</field>
+            <field name="description">A departure that may result in a product not consistently meeting its specification, or the total absence of a required element of the quality system.</field>
+        </record>
+
+        <record id="finding_category_minor" model="ls.audit.finding.category">
+            <field name="name">Minor</field>
+            <field name="code">MIN</field>
+            <field name="sequence">30</field>
+            <field name="severity">minor</field>
+            <field name="response_deadline_days">30</field>
+            <field name="requires_capa" eval="False"/>
+            <field name="requires_root_cause" eval="True"/>
+            <field name="color">3</field>
+            <field name="description">An isolated departure that is neither critical nor major but that still requires correction.</field>
+        </record>
+
+        <record id="finding_category_observation" model="ls.audit.finding.category">
+            <field name="name">Observation</field>
+            <field name="code">OBS</field>
+            <field name="sequence">40</field>
+            <field name="severity">observation</field>
+            <field name="response_deadline_days">45</field>
+            <field name="requires_capa" eval="False"/>
+            <field name="requires_root_cause" eval="False"/>
+            <field name="color">4</field>
+            <field name="description">A situation that conforms to the audit criteria today but that could lead to a departure if left unattended.</field>
+        </record>
+
+        <record id="finding_category_improvement" model="ls.audit.finding.category">
+            <field name="name">Opportunity for Improvement</field>
+            <field name="code">OFI</field>
+            <field name="sequence">50</field>
+            <field name="severity">improvement</field>
+            <field name="response_deadline_days">60</field>
+            <field name="requires_capa" eval="False"/>
+            <field name="requires_root_cause" eval="False"/>
+            <field name="color">10</field>
+            <field name="description">A suggestion for improving effectiveness or efficiency where no requirement has been breached.</field>
+        </record>
+
+    </data>
+</odoo>

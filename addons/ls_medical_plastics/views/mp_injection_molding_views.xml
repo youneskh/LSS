@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_injection_molding_list" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.list</field>
+        <field name="model">ls.mp.injection_molding</field>
+        <field name="arch" type="xml">
+            <list string="Moulding Runs"
+                  decoration-danger="has_deviation"
+                  decoration-success="state == 'closed'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="component_id"/>
+                <field name="tool_id"/>
+                <field name="workcenter_id" optional="show"/>
+                <field name="lot_id" optional="show"/>
+                <field name="production_id" optional="hide"/>
+                <field name="shift" optional="hide"/>
+                <field name="operator_id" optional="show"/>
+                <field name="shot_count"/>
+                <field name="qty_produced"/>
+                <field name="qty_good"/>
+                <field name="qty_rejected"/>
+                <field name="reject_rate"/>
+                <field name="out_of_tolerance_count" optional="show"/>
+                <field name="has_deviation" optional="hide"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_form" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.form</field>
+        <field name="model">ls.mp.injection_molding</field>
+        <field name="arch" type="xml">
+            <form string="Moulding Run">
+                <header>
+                    <button name="action_start_setup" type="object" string="Start Setup"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_start_startup_check" type="object"
+                            string="Setup Complete" class="btn-primary"
+                            invisible="state != 'setup'"/>
+                    <button name="action_open_reading_wizard" type="object"
+                            string="Record Readings" class="btn-primary"
+                            invisible="state not in ('setup', 'startup_check', 'running', 'completed')"/>
+                    <button name="action_confirm_startup" type="object"
+                            string="Confirm Start-up and Run"
+                            invisible="state != 'startup_check'"/>
+                    <button name="action_complete" type="object" string="Complete Run"
+                            class="btn-primary" invisible="state != 'running'"/>
+                    <button name="action_review" type="object" string="Review"
+                            class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state != 'completed'"/>
+                    <button name="action_reject_review" type="object"
+                            string="Return For Correction"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state != 'completed'"/>
+                    <button name="action_close" type="object" string="Close Run"
+                            class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state != 'reviewed'"
+                            confirm="Closing the run freezes it permanently and advances the tool shot counter. Continue?"/>
+                    <button name="action_return_to_draft" type="object" string="Return To Draft"
+                            invisible="state not in ('setup', 'startup_check')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft', 'setup', 'startup_check')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,setup,startup_check,running,completed,reviewed,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_readings" type="object"
+                                class="oe_stat_button" icon="fa-thermometer-half">
+                            <field name="reading_count" widget="statinfo" string="Readings"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Closed" bg_color="text-bg-success"
+                            invisible="state != 'closed'"/>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not has_deviation">
+                        <strong>Out of tolerance readings recorded.</strong>
+                        A deviation reference must be recorded before this run can be reviewed.
+                    </div>
+                    <group>
+                        <group string="Production Context">
+                            <field name="component_id" readonly="state != 'draft'"/>
+                            <field name="tool_id" readonly="state != 'draft'"
+                                   domain="[('component_ids', 'in', component_id), ('state', '=', 'in_service')]"/>
+                            <field name="workcenter_id" readonly="state not in ('draft', 'setup')"/>
+                            <field name="production_id" readonly="state not in ('draft', 'setup')"/>
+                            <field name="lot_id" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Specification Applied">
+                            <field name="parameter_spec_id" readonly="state != 'draft'"/>
+                            <field name="parameter_spec_version" readonly="1"/>
+                            <field name="active_cavity_count"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Timing and Personnel">
+                            <field name="date_start" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="date_end" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="shift" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="operator_id" readonly="state != 'draft'"/>
+                            <field name="setter_id" readonly="state not in ('draft', 'setup')"/>
+                        </group>
+                        <group string="Counters and Output">
+                            <field name="shot_count_start" readonly="state not in ('draft', 'setup')"/>
+                            <field name="shot_count_end"
+                                   readonly="state in ('closed', 'cancelled', 'draft')"/>
+                            <field name="shot_count"/>
+                            <field name="qty_produced"
+                                   readonly="state in ('closed', 'cancelled', 'draft')"/>
+                            <field name="qty_startup_scrap"/>
+                            <field name="qty_rejected"/>
+                            <field name="qty_good"/>
+                            <field name="reject_rate"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Material Consumption" name="materials">
+                            <field name="material_line_ids"
+                                   readonly="state in ('closed', 'cancelled')">
+                                <list editable="bottom">
+                                    <field name="material_grade_id"/>
+                                    <field name="product_id" optional="show"/>
+                                    <field name="lot_id"/>
+                                    <field name="supplier_lot_reference"/>
+                                    <field name="quantity"/>
+                                    <field name="quantity_uom"/>
+                                    <field name="is_regrind"/>
+                                    <field name="drug_contact" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Parameter Readings" name="readings">
+                            <field name="reading_ids" readonly="1">
+                                <list decoration-danger="not in_tolerance"
+                                      decoration-muted="is_superseded"
+                                      decoration-bf="is_critical">
+                                    <field name="capture_date"/>
+                                    <field name="reading_type"/>
+                                    <field name="parameter_name"/>
+                                    <field name="parameter_uom"/>
+                                    <field name="min_value" optional="show"/>
+                                    <field name="target_value" optional="hide"/>
+                                    <field name="max_value" optional="show"/>
+                                    <field name="value_numeric"/>
+                                    <field name="value_text" optional="hide"/>
+                                    <field name="in_tolerance"/>
+                                    <field name="is_critical"/>
+                                    <field name="is_superseded"/>
+                                    <field name="correction_reason" optional="hide"/>
+                                    <field name="recorded_by_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Scrap" name="scrap">
+                            <field name="scrap_line_ids"
+                                   readonly="state in ('closed', 'cancelled')">
+                                <list editable="bottom"
+                                      decoration-warning="requires_investigation">
+                                    <field name="reason_id"/>
+                                    <field name="cavity_id"
+                                           domain="[('tool_id', '=', parent.tool_id)]"/>
+                                    <field name="quantity"/>
+                                    <field name="is_startup"/>
+                                    <field name="requires_investigation"/>
+                                    <field name="detection_date"/>
+                                    <field name="detected_by_id"/>
+                                    <field name="comment"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Cavities" name="cavities">
+                            <separator string="Cavities Blocked During This Run"/>
+                            <field name="blocked_cavity_ids" widget="many2many_tags"
+                                   readonly="state in ('closed', 'cancelled')"/>
+                        </page>
+                        <page string="Review and Closure" name="review">
+                            <group>
+                                <group string="Setup and Start-up">
+                                    <field name="setup_by_id" readonly="1"/>
+                                    <field name="setup_date" readonly="1"/>
+                                    <field name="startup_verified_by_id" readonly="1"/>
+                                    <field name="startup_verification_date" readonly="1"/>
+                                </group>
+                                <group string="Review and Closure">
+                                    <field name="reviewed_by_id" readonly="1"/>
+                                    <field name="review_date" readonly="1"/>
+                                    <field name="closed_by_id" readonly="1"/>
+                                    <field name="close_date" readonly="1"/>
+                                </group>
+                            </group>
+                            <group string="Deviations">
+                                <field name="out_of_tolerance_count"/>
+                                <field name="critical_out_of_tolerance_count"/>
+                                <field name="has_deviation"/>
+                                <field name="deviation_reference"
+                                       readonly="state in ('closed', 'cancelled')"
+                                       placeholder="Reference of the deviation raised under the site procedure"/>
+                            </group>
+                            <separator string="Review Comment"/>
+                            <field name="review_comment" readonly="state == 'closed'"/>
+                            <separator string="Cancellation Reason"
+                                       invisible="state != 'cancelled' and not cancellation_reason"/>
+                            <field name="cancellation_reason"
+                                   invisible="state != 'cancelled' and not cancellation_reason"
+                                   readonly="state == 'closed'"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" readonly="state == 'closed'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_search" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.search</field>
+        <field name="model">ls.mp.injection_molding</field>
+        <field name="arch" type="xml">
+            <search string="Moulding Runs">
+                <field name="name"/>
+                <field name="component_id"/>
+                <field name="tool_id"/>
+                <field name="lot_id"/>
+                <field name="workcenter_id"/>
+                <field name="operator_id"/>
+                <field name="production_id"/>
+                <field name="deviation_reference"/>
+                <filter name="filter_open" string="In Progress"
+                        domain="[('state', 'in', ('draft', 'setup', 'startup_check', 'running'))]"/>
+                <filter name="filter_awaiting_review" string="Awaiting Review"
+                        domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_closed" string="Closed" domain="[('state', '=', 'closed')]"/>
+                <filter name="filter_deviation" string="With Deviation"
+                        domain="[('has_deviation', '=', True)]"/>
+                <filter name="filter_critical_deviation" string="Critical Out Of Tolerance"
+                        domain="[('critical_out_of_tolerance_count', '>', 0)]"/>
+                <separator/>
+                <filter name="filter_today" string="Started Today"
+                        domain="[('date_start', '>=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <group name="group_by">
+                    <filter name="group_component" string="Component" context="{'group_by': 'component_id'}"/>
+                    <filter name="group_tool" string="Tool" context="{'group_by': 'tool_id'}"/>
+                    <filter name="group_workcenter" string="Work Centre" context="{'group_by': 'workcenter_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_shift" string="Shift" context="{'group_by': 'shift'}"/>
+                    <filter name="group_operator" string="Operator" context="{'group_by': 'operator_id'}"/>
+                    <filter name="group_date" string="Start Date" context="{'group_by': 'date_start'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_graph" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.graph</field>
+        <field name="model">ls.mp.injection_molding</field>
+        <field name="arch" type="xml">
+            <graph string="Moulding Analysis" type="bar" sample="1">
+                <field name="component_id"/>
+                <field name="qty_good" type="measure"/>
+                <field name="qty_rejected" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_pivot" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.pivot</field>
+        <field name="model">ls.mp.injection_molding</field>
+        <field name="arch" type="xml">
+            <pivot string="Moulding Analysis" sample="1">
+                <field name="tool_id" type="row"/>
+                <field name="component_id" type="col"/>
+                <field name="qty_produced" type="measure"/>
+                <field name="qty_rejected" type="measure"/>
+                <field name="shot_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_mp_injection_molding" model="ir.actions.act_window">
+        <field name="name">Injection Moulding</field>
+        <field name="res_model">ls.mp.injection_molding</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_mp_injection_molding_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a moulding run</p>
+            <p>A run captures one moulding campaign end to end: setup against the approved
+               parameter specification, start-up verification, in-process readings, material
+               lots consumed and rejects. Closing the run freezes it and advances the tool
+               shot counter.</p>
+        </field>
+    </record>
+
+    <record id="action_mp_injection_molding_analysis" model="ir.actions.act_window">
+        <field name="name">Moulding Analysis</field>
+        <field name="res_model">ls.mp.injection_molding</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_mp_injection_molding_search"/>
+        <field name="domain">[('state', '=', 'closed')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No closed moulding run to analyse yet</p>
+            <p>This analysis is restricted to closed runs so that reported output and reject
+               figures are based on reviewed production records only.</p>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_reading_list" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.reading.list</field>
+        <field name="model">ls.mp.injection_molding.reading</field>
+        <field name="arch" type="xml">
+            <list string="Parameter Readings" create="false" edit="false" delete="false"
+                  decoration-danger="not in_tolerance"
+                  decoration-muted="is_superseded">
+                <field name="run_id"/>
+                <field name="capture_date"/>
+                <field name="reading_type"/>
+                <field name="parameter_name"/>
+                <field name="parameter_uom"/>
+                <field name="min_value"/>
+                <field name="value_numeric"/>
+                <field name="max_value"/>
+                <field name="value_text" optional="hide"/>
+                <field name="in_tolerance"/>
+                <field name="is_critical"/>
+                <field name="is_superseded"/>
+                <field name="recorded_by_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_reading_form" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.reading.form</field>
+        <field name="model">ls.mp.injection_molding.reading</field>
+        <field name="arch" type="xml">
+            <form string="Parameter Reading" create="false" edit="false">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        Readings are append-only. To correct a value, capture a new reading
+                        that supersedes this one.
+                    </div>
+                    <group>
+                        <group string="Context">
+                            <field name="run_id"/>
+                            <field name="reading_type"/>
+                            <field name="capture_date"/>
+                            <field name="recorded_by_id"/>
+                        </group>
+                        <group string="Parameter">
+                            <field name="parameter_name"/>
+                            <field name="parameter_code"/>
+                            <field name="parameter_uom"/>
+                            <field name="is_critical"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Acceptance Criteria At Capture">
+                            <field name="value_type"/>
+                            <field name="min_value"/>
+                            <field name="target_value"/>
+                            <field name="max_value"/>
+                            <field name="expected_text"/>
+                        </group>
+                        <group string="Result">
+                            <field name="value_numeric"/>
+                            <field name="value_text"/>
+                            <field name="in_tolerance"/>
+                        </group>
+                    </group>
+                    <group string="Correction Chain">
+                        <field name="supersedes_id"/>
+                        <field name="correction_reason"/>
+                        <field name="is_superseded"/>
+                        <field name="superseded_by_ids" widget="many2many_tags"/>
+                        <field name="comment"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_injection_molding_reading_search" model="ir.ui.view">
+        <field name="name">ls.mp.injection_molding.reading.search</field>
+        <field name="model">ls.mp.injection_molding.reading</field>
+        <field name="arch" type="xml">
+            <search string="Parameter Readings">
+                <field name="run_id"/>
+                <field name="parameter_name"/>
+                <field name="recorded_by_id"/>
+                <filter name="filter_out_of_tolerance" string="Out Of Tolerance"
+                        domain="[('in_tolerance', '=', False)]"/>
+                <filter name="filter_critical" string="Critical Parameters"
+                        domain="[('is_critical', '=', True)]"/>
+                <filter name="filter_effective" string="Effective Readings"
+                        domain="[('is_superseded', '=', False)]"/>
+                <filter name="filter_corrections" string="Corrections"
+                        domain="[('supersedes_id', '!=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_run" string="Run" context="{'group_by': 'run_id'}"/>
+                    <filter name="group_parameter" string="Parameter" context="{'group_by': 'parameter_name'}"/>
+                    <filter name="group_type" string="Reading Type" context="{'group_by': 'reading_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mp_injection_molding_reading" model="ir.actions.act_window">
+        <field name="name">Parameter Readings</field>
+        <field name="res_model">ls.mp.injection_molding.reading</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_injection_molding_reading_search"/>
+        <field name="context">{'search_default_filter_effective': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No parameter reading recorded yet</p>
+            <p>Readings are captured from a moulding run and cannot be modified or deleted
+               afterwards. Each reading freezes the acceptance criteria in force when it
+               was taken.</p>
+        </field>
+    </record>
+
+</odoo>

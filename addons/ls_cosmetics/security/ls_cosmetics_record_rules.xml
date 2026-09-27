@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Design note. Every rule below is a global rule: no group is assigned to
+     it. The Many2many field linking ir.rule to res.groups is named "groups"
+     up to Odoo 18 and may have been renamed in Odoo 19 together with the
+     other group fields; this could not be confirmed from official Odoo 19
+     documentation. Assigning groups to a rule with the wrong field name
+     would make the module fail to install, so the module does not assign
+     any. Segregation of duties is therefore enforced through the access
+     control list and through the workflow methods on the models, both of
+     which use stable APIs.
+
+     Global rules combine with a logical AND for every user and are bypassed
+     by the superuser, which is the intended behaviour for a multi-company
+     scoping rule. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="rule_ls_cosmetic_restriction_company" model="ir.rule">
+            <field name="name">Cosmetic restriction: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_restriction"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_ingredient_company" model="ir.rule">
+            <field name="name">Cosmetic ingredient: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_ingredient"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_formulation_company" model="ir.rule">
+            <field name="name">Cosmetic formulation: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_formulation"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_formulation_line_company" model="ir.rule">
+            <field name="name">Cosmetic formulation line: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_formulation_line"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_safety_assessment_company" model="ir.rule">
+            <field name="name">Cosmetic safety report: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_safety_assessment"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_claim_company" model="ir.rule">
+            <field name="name">Cosmetic claim: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_claim"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_claim_evidence_company" model="ir.rule">
+            <field name="name">Cosmetic claim evidence: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_claim_evidence"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_label_company" model="ir.rule">
+            <field name="name">Cosmetic label: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_label"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_pif_company" model="ir.rule">
+            <field name="name">Cosmetic product information file: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_pif"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_cosmetic_dz_authorization_company" model="ir.rule">
+            <field name="name">Algerian prior authorisation: multi-company</field>
+            <field name="model_id" ref="model_ls_cosmetic_dz_authorization"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

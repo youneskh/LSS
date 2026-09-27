@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_pif_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.pif.list</field>
+        <field name="model">ls.cosmetic.pif</field>
+        <field name="arch" type="xml">
+            <list string="Product Information Files"
+                  decoration-muted="state == 'archived'"
+                  decoration-success="state == 'active'"
+                  decoration-warning="retention_elapsed">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <field name="responsible_person_id" optional="show"/>
+                <field name="safety_assessment_id" optional="show"/>
+                <field name="last_batch_market_date" optional="show"/>
+                <field name="retention_end_date" optional="show"/>
+                <field name="retention_elapsed" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'retention'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_pif_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.pif.form</field>
+        <field name="model">ls.cosmetic.pif</field>
+        <field name="arch" type="xml">
+            <form string="Product Information File">
+                <header>
+                    <button name="action_activate" type="object"
+                            string="Activate" class="btn-primary"
+                            invisible="state != 'draft'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_enter_retention" type="object"
+                            string="Enter Retention Period" class="btn-primary"
+                            invisible="state != 'active'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_archive_file" type="object"
+                            string="Archive"
+                            invisible="state != 'retention'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'active'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,retention,archived"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Retention Elapsed"
+                            bg_color="text-bg-warning"
+                            invisible="not retention_elapsed or state != 'retention'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1><field name="code" readonly="1"/></h1>
+                        <label for="name" class="oe_edit_only"/>
+                        <h2><field name="name" placeholder="File name"/></h2>
+                    </div>
+                    <group>
+                        <group string="Product">
+                            <field name="product_tmpl_id"/>
+                            <field name="formulation_id"/>
+                            <field name="label_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsible Person">
+                            <field name="responsible_person_id"/>
+                            <field name="responsible_person_basis"/>
+                            <field name="mandate_reference"
+                                   invisible="responsible_person_basis != 'mandated'"/>
+                            <field name="file_address"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert" invisible="state != 'draft'">
+                        Article 11(2) lists five items the file must contain. Each one
+                        has its own page below, and the file cannot be activated while
+                        an applicable item is missing.
+                    </div>
+                    <notebook>
+                        <page string="(a) Description" name="description">
+                            <field name="product_description"
+                                   placeholder="Description enabling the file to be clearly attributed to the cosmetic product"/>
+                        </page>
+                        <page string="(b) Safety Report" name="safety">
+                            <group>
+                                <field name="safety_assessment_id"/>
+                            </group>
+                        </page>
+                        <page string="(c) Manufacturing and GMP" name="gmp">
+                            <group>
+                                <group>
+                                    <field name="gmp_site_id"/>
+                                    <field name="gmp_standard"/>
+                                </group>
+                                <group>
+                                    <field name="gmp_certificate_reference"/>
+                                    <field name="gmp_certificate_date"/>
+                                </group>
+                            </group>
+                            <separator string="Description of the Method of Manufacturing"/>
+                            <field name="manufacturing_method"/>
+                            <separator string="Statement on GMP Compliance"/>
+                            <field name="gmp_statement"
+                                   placeholder="Statement on compliance with the good manufacturing practice referred to in Article 8"/>
+                        </page>
+                        <page string="(d) Claims" name="claims">
+                            <group>
+                                <field name="claim_count"/>
+                                <field name="unapproved_claim_count"/>
+                            </group>
+                            <field name="claim_ids">
+                                <list string="Claims">
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="criteria_met_count"/>
+                                    <field name="evidence_count"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                            <separator string="Justification for the Absence of Claims"/>
+                            <field name="no_claims_justification"/>
+                        </page>
+                        <page string="(e) Animal Testing" name="animal_testing">
+                            <group>
+                                <field name="no_animal_testing"/>
+                            </group>
+                            <field name="animal_testing_data"
+                                   placeholder="Data on any animal testing performed by the manufacturer, its agents or suppliers"/>
+                        </page>
+                        <page string="Notification and Retention" name="retention">
+                            <group>
+                                <group string="Notification">
+                                    <field name="notification_reference"/>
+                                    <field name="notification_date"/>
+                                </group>
+                                <group string="Market Dates">
+                                    <field name="first_placed_date"/>
+                                    <field name="last_batch_market_date"/>
+                                    <field name="retention_end_date"/>
+                                    <field name="retention_elapsed"/>
+                                    <field name="last_review_date"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                Article 11(1) fixes a retention period of ten years
+                                following the date on which the last batch was placed on
+                                the market. That date is entered manually: Odoo records
+                                commercial movements, not the regulatory act of placing a
+                                batch on the market.
+                            </div>
+                            <separator string="Algerian Prior Authorisations"/>
+                            <field name="dz_authorization_ids">
+                                <list string="Authorisations">
+                                    <field name="code"/>
+                                    <field name="authorization_type"/>
+                                    <field name="authorization_reference"/>
+                                    <field name="decision_date"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="File Contents" name="contents">
+                            <separator string="Languages"/>
+                            <field name="file_language_ids" widget="many2many_tags"/>
+                            <separator string="Attachments"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <group>
+                                <field name="activated_by_id"/>
+                                <field name="activated_date"/>
+                                <field name="archived_by_id"/>
+                                <field name="archived_date"/>
+                            </group>
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_pif_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.pif.search</field>
+        <field name="model">ls.cosmetic.pif</field>
+        <field name="arch" type="xml">
+            <search string="Product Information Files">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <field name="responsible_person_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_active" string="Active"
+                        domain="[('state', '=', 'active')]"/>
+                <filter name="filter_retention" string="In Retention"
+                        domain="[('state', '=', 'retention')]"/>
+                <filter name="filter_archived_state" string="Archived"
+                        domain="[('state', '=', 'archived')]"/>
+                <separator/>
+                <filter name="filter_retention_elapsed" string="Retention Elapsed"
+                        domain="[('retention_elapsed', '=', True)]"/>
+                <filter name="filter_unapproved_claims" string="Unapproved Claims Attached"
+                        domain="[('unapproved_claim_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived Records"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_responsible" string="Responsible Person"
+                            context="{'group_by': 'responsible_person_id'}"/>
+                    <filter name="group_retention" string="Retention End Date"
+                            context="{'group_by': 'retention_end_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_pif" model="ir.actions.act_window">
+        <field name="name">Product Information Files</field>
+        <field name="res_model">ls.cosmetic.pif</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_pif_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Open your first product information file</p>
+            <p>
+                Article 11(1) requires the responsible person to keep a product
+                information file for each cosmetic product placed on the market, for
+                ten years following the date on which the last batch was placed on
+                the market.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_pif_retention" model="ir.actions.act_window">
+        <field name="name">Retention Status</field>
+        <field name="res_model">ls.cosmetic.pif</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'retention')]</field>
+        <field name="context">{'search_default_group_retention': 1}</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_pif_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No file is in its retention period</p>
+            <p>
+                Files enter this list once the last batch has been placed on the
+                market, and may be archived once the ten year period of Article 11(1)
+                has elapsed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

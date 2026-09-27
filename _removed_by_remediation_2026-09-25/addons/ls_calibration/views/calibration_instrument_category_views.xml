@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_instrument_category_list" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.category.list</field>
+        <field name="model">ls.calibration.instrument.category</field>
+        <field name="arch" type="xml">
+            <list string="Instrument Categories">
+                <field name="code"/>
+                <field name="complete_name"/>
+                <field name="default_interval_value"/>
+                <field name="default_interval_uom"/>
+                <field name="default_criticality"/>
+                <field name="instrument_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_instrument_category_form" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.category.form</field>
+        <field name="model">ls.calibration.instrument.category</field>
+        <field name="arch" type="xml">
+            <form string="Instrument Category">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_instruments"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tachometer">
+                            <field name="instrument_count" widget="statinfo" string="Instruments"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Analytical balances"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="code"/>
+                            <field name="parent_id"/>
+                            <field name="complete_name"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Defaults for New Instruments">
+                            <label for="default_interval_value"/>
+                            <div class="o_row">
+                                <field name="default_interval_value"/>
+                                <field name="default_interval_uom"/>
+                            </div>
+                            <field name="default_criticality"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="Scope of the category and the instrument families it covers."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_instrument_category_search" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.category.search</field>
+        <field name="model">ls.calibration.instrument.category</field>
+        <field name="arch" type="xml">
+            <search string="Instrument Categories">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="parent_id"/>
+                <filter name="filter_root" string="Root Categories" domain="[('parent_id', '=', False)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_parent" string="Parent Category" context="{'group_by': 'parent_id'}"/>
+                    <filter name="group_criticality" string="Default Criticality" context="{'group_by': 'default_criticality'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_instrument_category" model="ir.actions.act_window">
+        <field name="name">Instrument Categories</field>
+        <field name="res_model">ls.calibration.instrument.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_instrument_category_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define an instrument category</p>
+            <p>
+                Categories group instruments into families and carry the default
+                calibration interval and criticality applied to new instruments.
+            </p>
+        </field>
+    </record>
+
+</odoo>

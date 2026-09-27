@@ -1,0 +1,38 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ls_audit_type_auditee,ls.audit.type auditee,model_ls_audit_type,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_type_manager,ls.audit.type manager,model_ls_audit_type,group_ls_audit_manager,1,1,1,1
+access_ls_audit_area_auditee,ls.audit.area auditee,model_ls_audit_area,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_area_manager,ls.audit.area manager,model_ls_audit_area,group_ls_audit_manager,1,1,1,1
+access_ls_audit_auditor_auditee,ls.audit.auditor auditee,model_ls_audit_auditor,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_auditor_manager,ls.audit.auditor manager,model_ls_audit_auditor,group_ls_audit_manager,1,1,1,1
+access_ls_audit_finding_category_auditee,ls.audit.finding.category auditee,model_ls_audit_finding_category,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_finding_category_manager,ls.audit.finding.category manager,model_ls_audit_finding_category,group_ls_audit_manager,1,1,1,1
+access_ls_audit_checklist_auditee,ls.audit.checklist auditee,model_ls_audit_checklist,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_checklist_lead,ls.audit.checklist lead auditor,model_ls_audit_checklist,group_ls_audit_lead_auditor,1,1,1,0
+access_ls_audit_checklist_manager,ls.audit.checklist manager,model_ls_audit_checklist,group_ls_audit_manager,1,1,1,1
+access_ls_audit_checklist_line_auditee,ls.audit.checklist.line auditee,model_ls_audit_checklist_line,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_checklist_line_lead,ls.audit.checklist.line lead auditor,model_ls_audit_checklist_line,group_ls_audit_lead_auditor,1,1,1,1
+access_ls_audit_checklist_line_manager,ls.audit.checklist.line manager,model_ls_audit_checklist_line,group_ls_audit_manager,1,1,1,1
+access_ls_audit_program_auditee,ls.audit.program auditee,model_ls_audit_program,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_program_lead,ls.audit.program lead auditor,model_ls_audit_program,group_ls_audit_lead_auditor,1,0,0,0
+access_ls_audit_program_manager,ls.audit.program manager,model_ls_audit_program,group_ls_audit_manager,1,1,1,1
+access_ls_audit_schedule_auditee,ls.audit.schedule auditee,model_ls_audit_schedule,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_schedule_auditor,ls.audit.schedule auditor,model_ls_audit_schedule,group_ls_audit_auditor,1,1,0,0
+access_ls_audit_schedule_lead,ls.audit.schedule lead auditor,model_ls_audit_schedule,group_ls_audit_lead_auditor,1,1,1,0
+access_ls_audit_schedule_manager,ls.audit.schedule manager,model_ls_audit_schedule,group_ls_audit_manager,1,1,1,1
+access_ls_audit_response_auditee,ls.audit.response auditee,model_ls_audit_response,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_response_auditor,ls.audit.response auditor,model_ls_audit_response,group_ls_audit_auditor,1,1,0,0
+access_ls_audit_response_lead,ls.audit.response lead auditor,model_ls_audit_response,group_ls_audit_lead_auditor,1,1,1,1
+access_ls_audit_response_manager,ls.audit.response manager,model_ls_audit_response,group_ls_audit_manager,1,1,1,1
+access_ls_audit_finding_auditee,ls.audit.finding auditee,model_ls_audit_finding,group_ls_audit_auditee,1,1,0,0
+access_ls_audit_finding_auditor,ls.audit.finding auditor,model_ls_audit_finding,group_ls_audit_auditor,1,1,1,0
+access_ls_audit_finding_lead,ls.audit.finding lead auditor,model_ls_audit_finding,group_ls_audit_lead_auditor,1,1,1,0
+access_ls_audit_finding_manager,ls.audit.finding manager,model_ls_audit_finding,group_ls_audit_manager,1,1,1,1
+access_ls_audit_report_auditee,ls.audit.report auditee,model_ls_audit_report,group_ls_audit_auditee,1,0,0,0
+access_ls_audit_report_auditor,ls.audit.report auditor,model_ls_audit_report,group_ls_audit_auditor,1,1,1,0
+access_ls_audit_report_lead,ls.audit.report lead auditor,model_ls_audit_report,group_ls_audit_lead_auditor,1,1,1,0
+access_ls_audit_report_manager,ls.audit.report manager,model_ls_audit_report,group_ls_audit_manager,1,1,1,1
+access_ls_audit_checklist_load_auditor,ls.audit.checklist.load auditor,model_ls_audit_checklist_load,group_ls_audit_lead_auditor,1,1,1,1
+access_ls_audit_finding_response_auditee,ls.audit.finding.response auditee,model_ls_audit_finding_response,group_ls_audit_auditee,1,1,1,1
+access_ls_audit_cancel_lead,ls.audit.cancel lead auditor,model_ls_audit_cancel,group_ls_audit_lead_auditor,1,1,1,1
+access_ls_audit_cancel_manager,ls.audit.cancel manager,model_ls_audit_cancel,group_ls_audit_manager,1,1,1,1

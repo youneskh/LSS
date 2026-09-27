@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="ls_qms_objective_view_list" model="ir.ui.view">
+        <field name="name">ls.qms.objective.list</field>
+        <field name="model">ls.qms.objective</field>
+        <field name="arch" type="xml">
+            <list string="Quality Objectives" decoration-success="performance_status == 'target_reached'" decoration-danger="performance_status == 'off_track'" decoration-warning="performance_status == 'at_risk'">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="responsible_id" widget="many2one_avatar_user"/>
+                <field name="date_target"/>
+                <field name="baseline_value" optional="hide"/>
+                <field name="target_value"/>
+                <field name="current_value"/>
+                <field name="uom_name" optional="hide"/>
+                <field name="achievement_rate" string="Achievement (%)"/>
+                <field name="performance_status"/>
+                <field name="state" widget="badge" decoration-success="state == 'achieved'" decoration-danger="state == 'not_achieved'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_view_form" model="ir.ui.view">
+        <field name="name">ls.qms.objective.form</field>
+        <field name="model">ls.qms.objective</field>
+        <field name="arch" type="xml">
+            <form string="Quality Objective">
+                <header>
+                    <button name="action_start" type="object" string="Start" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_close_achieved" type="object" string="Close as Achieved" class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_close_not_achieved" type="object" string="Close as Not Achieved" invisible="state != 'in_progress'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('cancelled', 'achieved', 'not_achieved')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state in ('draft', 'in_progress')" groups="ls_qms.group_ls_qms_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,achieved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_measurements" type="object" class="oe_stat_button" icon="fa-line-chart">
+                            <field name="measurement_count" widget="statinfo" string="Measurements"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Objective to be reached"/></h1>
+                        <h3><field name="reference" class="oe_inline"/></h3>
+                    </div>
+                    <group>
+                        <group string="Ownership">
+                            <field name="policy_id"/>
+                            <field name="department_id"/>
+                            <field name="responsible_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Period">
+                            <field name="date_start"/>
+                            <field name="date_target"/>
+                        </group>
+                        <group string="Indicator">
+                            <field name="direction"/>
+                            <field name="uom_name"/>
+                            <field name="baseline_value"/>
+                            <field name="target_value"/>
+                            <field name="tolerance" invisible="direction != 'maintain'"/>
+                        </group>
+                        <group string="Performance">
+                            <field name="current_value"/>
+                            <field name="last_measurement_date"/>
+                            <field name="achievement_rate" string="Achievement (%)"/>
+                            <field name="performance_status"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Measurements" name="measurements">
+                            <field name="measurement_ids">
+                                <list string="Measurements" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="value"/>
+                                    <field name="recorded_by_id" widget="many2one_avatar_user"/>
+                                    <field name="comment"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_view_graph" model="ir.ui.view">
+        <field name="name">ls.qms.objective.graph</field>
+        <field name="model">ls.qms.objective</field>
+        <field name="arch" type="xml">
+            <graph string="Objective Achievement" type="bar" sample="1">
+                <field name="department_id"/>
+                <field name="achievement_rate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_view_pivot" model="ir.ui.view">
+        <field name="name">ls.qms.objective.pivot</field>
+        <field name="model">ls.qms.objective</field>
+        <field name="arch" type="xml">
+            <pivot string="Objective Achievement" sample="1">
+                <field name="department_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="achievement_rate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_view_search" model="ir.ui.view">
+        <field name="name">ls.qms.objective.search</field>
+        <field name="model">ls.qms.objective</field>
+        <field name="arch" type="xml">
+            <search string="Quality Objectives">
+                <field name="reference"/>
+                <field name="name"/>
+                <field name="responsible_id"/>
+                <field name="department_id"/>
+                <field name="policy_id"/>
+                <filter name="filter_in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_achieved" string="Achieved" domain="[('state', '=', 'achieved')]"/>
+                <filter name="filter_not_achieved" string="Not Achieved" domain="[('state', '=', 'not_achieved')]"/>
+                <separator/>
+                <filter name="filter_below_target" string="Below Target" domain="[('achievement_rate', '&lt;', 100)]"/>
+                <filter name="filter_due_soon" string="Target Date Passed" domain="[('date_target', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_my_objectives" string="My Objectives" domain="[('responsible_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_department" string="Department" context="{'group_by': 'department_id'}"/>
+                    <filter name="group_responsible" string="Responsible" context="{'group_by': 'responsible_id'}"/>
+                    <filter name="group_policy" string="Policy" context="{'group_by': 'policy_id'}"/>
+                    <filter name="group_target_date" string="Target Date" context="{'group_by': 'date_target'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_action" model="ir.actions.act_window">
+        <field name="name">Quality Objectives</field>
+        <field name="res_model">ls.qms.objective</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="ls_qms_objective_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Set the first quality objective</p>
+            <p>An objective declares a baseline, a target and a target date. Measurements recorded over time produce the achievement rate.</p>
+        </field>
+    </record>
+
+    <record id="ls_qms_objective_action_analysis" model="ir.actions.act_window">
+        <field name="name">Objective Analysis</field>
+        <field name="res_model">ls.qms.objective</field>
+        <field name="view_mode">graph,pivot,list,form</field>
+        <field name="search_view_id" ref="ls_qms_objective_view_search"/>
+        <field name="context">{'search_default_filter_in_progress': 1}</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     API NOTE: ir.ui.menu uses "group_ids" in Odoo 19 (renamed from
+     "groups_id"). See doc/verification_notes.md. -->
+<odoo>
+
+    <menuitem id="menu_ls_training_root"
+              name="Training"
+              web_icon="ls_training,static/description/icon.png"
+              sequence="60"
+              groups="ls_training.group_ls_training_learner"/>
+
+    <!-- ================= OPERATIONS ================= -->
+    <menuitem id="menu_ls_training_operations"
+              name="Operations"
+              parent="menu_ls_training_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_training_session"
+              name="Sessions"
+              parent="menu_ls_training_operations"
+              action="ls_training_session_action"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_training_attendance"
+              name="Attendance"
+              parent="menu_ls_training_operations"
+              action="ls_training_attendance_action"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_training_certification"
+              name="Certifications"
+              parent="menu_ls_training_operations"
+              action="ls_training_certification_action"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_training_certification_expiring"
+              name="Expiring and Expired"
+              parent="menu_ls_training_operations"
+              action="ls_training_certification_action_expiring"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_training_assessment"
+              name="Competency Assessments"
+              parent="menu_ls_training_operations"
+              action="ls_training_competency_assessment_action"
+              sequence="50"/>
+
+    <!-- ================= REPORTING ================= -->
+    <menuitem id="menu_ls_training_reporting"
+              name="Reporting"
+              parent="menu_ls_training_root"
+              sequence="20"
+              groups="ls_training.group_ls_training_viewer"/>
+
+    <menuitem id="menu_ls_training_matrix"
+              name="Training Matrix"
+              parent="menu_ls_training_reporting"
+              action="ls_training_matrix_wizard_action"
+              sequence="10"/>
+
+    <!-- ================= CONFIGURATION ================= -->
+    <menuitem id="menu_ls_training_configuration"
+              name="Configuration"
+              parent="menu_ls_training_root"
+              sequence="90"
+              groups="ls_training.group_ls_training_manager"/>
+
+    <menuitem id="menu_ls_training_course"
+              name="Courses"
+              parent="menu_ls_training_configuration"
+              action="ls_training_course_action"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_training_requirement"
+              name="Training Requirements"
+              parent="menu_ls_training_configuration"
+              action="ls_training_requirement_action"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_training_competency"
+              name="Competencies"
+              parent="menu_ls_training_configuration"
+              action="ls_training_competency_action"
+              sequence="30"/>
+
+</odoo>

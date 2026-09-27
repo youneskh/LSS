@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_record_batch" model="ls.signature.test.record">
+            <field name="name">Batch Record BR-2026-0001</field>
+            <field name="state">review</field>
+            <field name="quantity">1000.0</field>
+            <field name="description">Demonstration record showing a two step review and release.</field>
+        </record>
+
+        <record id="demo_policy_release" model="ls.signature.policy">
+            <field name="name">Release requires approval</field>
+            <field name="model_id" ref="model_ls_signature_test_record"/>
+            <field name="trigger">transition</field>
+            <field name="field_name">state</field>
+            <field name="value_to">released</field>
+            <field name="meaning_id" ref="ls_electronic_signature.meaning_approved"/>
+            <field name="required_signature_count">1</field>
+            <field name="require_full_credentials" eval="True"/>
+            <field name="description">A record cannot move to Released until an approval signature that covers its current content is present.</field>
+        </record>
+
+    </data>
+</odoo>

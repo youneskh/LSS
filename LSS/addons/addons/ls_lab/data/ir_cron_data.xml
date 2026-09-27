@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+            All scheduled actions in this module are notification-only. None of
+            them changes a regulated state (business rule BRU-29).
+
+            The fields 'numbercall' and 'doall' are NOT declared: they were
+            removed from ir.cron and are absent from Odoo 19
+            (verified: odoo/addons/base/models/ir_cron.py contains neither).
+        -->
+
+        <record id="ls_lab_cron_stability_timepoint_due" model="ir.cron">
+            <field name="name">Laboratory: notify due stability time points</field>
+            <field name="model_id" ref="model_ls_lab_stability_study"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_due_timepoints()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="ls_lab_cron_sample_overdue" model="ir.cron">
+            <field name="name">Laboratory: notify overdue samples</field>
+            <field name="model_id" ref="model_ls_lab_sample"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_overdue_samples()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="ls_lab_cron_method_review_due" model="ir.cron">
+            <field name="name">Laboratory: notify test methods due for review</field>
+            <field name="model_id" ref="model_ls_lab_test_method"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_method_review_due()</field>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

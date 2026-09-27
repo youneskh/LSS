@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_execution_list" model="ir.ui.view">
+        <field name="name">ls.validation.execution.list</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="arch" type="xml">
+            <list string="Execution Records"
+                  decoration-danger="overall_result == 'fail'"
+                  decoration-success="state == 'approved'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="reference"/>
+                <field name="protocol_id"/>
+                <field name="protocol_type" optional="show"/>
+                <field name="item_id"/>
+                <field name="execution_round" optional="hide"/>
+                <field name="executed_by_id" optional="show"/>
+                <field name="date_start" optional="show"/>
+                <field name="passed_count" optional="hide"/>
+                <field name="failed_count" optional="show"/>
+                <field name="open_discrepancy_count" optional="show"/>
+                <field name="overall_result" widget="badge"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_execution_form" model="ir.ui.view">
+        <field name="name">ls.validation.execution.form</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="arch" type="xml">
+            <form string="Execution Record">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_regenerate_results" type="object"
+                            string="Refresh Test Cases"
+                            invisible="state not in ('draft', 'in_progress')"/>
+                    <button name="action_complete" type="object"
+                            string="Complete" class="btn-primary"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_review" type="object"
+                            string="Review and Sign" class="btn-primary"
+                            invisible="state != 'completed'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve and Sign" class="btn-primary"
+                            invisible="state != 'reviewed'"
+                            groups="ls_validation.group_ls_validation_approver"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state not in ('completed', 'reviewed')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('approved', 'cancelled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,completed,reviewed,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_discrepancies" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-triangle">
+                            <field name="discrepancy_count" widget="statinfo"
+                                   string="Discrepancies"/>
+                        </button>
+                        <button name="action_open_signatures" type="object"
+                                class="oe_stat_button" icon="fa-pencil-square-o">
+                            <field name="signature_count" widget="statinfo"
+                                   string="Signatures"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="subject" string="Subject">
+                            <field name="protocol_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="protocol_type"/>
+                            <field name="item_id"/>
+                            <field name="execution_round"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group name="execution" string="Execution">
+                            <field name="executed_by_id"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="reviewed_by_id"
+                                   invisible="not reviewed_by_id"/>
+                            <field name="review_date"
+                                   invisible="not review_date"/>
+                            <field name="approved_by_id"
+                                   invisible="not approved_by_id"/>
+                            <field name="approval_date"
+                                   invisible="not approval_date"/>
+                        </group>
+                    </group>
+                    <group name="summary" string="Result Summary">
+                        <group>
+                            <field name="test_count"/>
+                            <field name="passed_count"/>
+                            <field name="failed_count"/>
+                        </group>
+                        <group>
+                            <field name="pending_count"/>
+                            <field name="na_count"/>
+                            <field name="overall_result"/>
+                            <field name="open_discrepancy_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Results" name="results">
+                            <field name="result_ids"
+                                   readonly="state not in ('draft', 'in_progress')">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="code" readonly="1"/>
+                                    <field name="name" readonly="1"/>
+                                    <field name="acceptance_criteria"
+                                           readonly="1"/>
+                                    <field name="actual_result"/>
+                                    <field name="verdict"/>
+                                    <field name="is_critical" optional="show"
+                                           readonly="1"/>
+                                    <field name="discrepancy_id"
+                                           readonly="verdict != 'fail'"/>
+                                    <field name="performed_by_id" readonly="1"
+                                           optional="show"/>
+                                    <field name="performed_on" readonly="1"
+                                           optional="hide"/>
+                                    <field name="comment" optional="hide"/>
+                                    <button name="action_create_discrepancy"
+                                            type="object" icon="fa-exclamation-triangle"
+                                            title="Create a discrepancy"
+                                            invisible="verdict != 'fail' or discrepancy_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Discrepancies" name="discrepancies">
+                            <field name="discrepancy_ids" readonly="1">
+                                <list>
+                                    <field name="reference"/>
+                                    <field name="name"/>
+                                    <field name="classification"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Remarks" name="remarks">
+                            <field name="remarks"/>
+                        </page>
+                        <page string="Rejection" name="rejection"
+                              invisible="state != 'rejected' and not rejection_reason">
+                            <field name="rejection_reason"/>
+                        </page>
+                        <page string="Electronic Signatures" name="signatures">
+                            <field name="signature_ids" readonly="1" nolabel="1">
+                                <list>
+                                    <field name="signed_on"/>
+                                    <field name="user_id"/>
+                                    <field name="meaning"/>
+                                    <field name="reason"/>
+                                    <field name="signature_hash"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_execution_search" model="ir.ui.view">
+        <field name="name">ls.validation.execution.search</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="arch" type="xml">
+            <search string="Execution Records">
+                <field name="reference"/>
+                <field name="protocol_id"/>
+                <field name="item_id"/>
+                <field name="executed_by_id"/>
+                <filter name="filter_in_progress" string="In Progress"
+                        domain="[('state', '=', 'in_progress')]"/>
+                <filter name="filter_to_review" string="To Review"
+                        domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_to_approve" string="To Approve"
+                        domain="[('state', '=', 'reviewed')]"/>
+                <separator/>
+                <filter name="filter_failed" string="With Failures"
+                        domain="[('failed_count', '>', 0)]"/>
+                <filter name="filter_open_discrepancies"
+                        string="With Open Discrepancies"
+                        domain="[('open_discrepancy_count', '>', 0)]"/>
+                <filter name="filter_mine" string="Executed by Me"
+                        domain="[('executed_by_id', '=', uid)]"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_result" string="Overall Result"
+                        context="{'group_by': 'overall_result'}"/>
+                    <filter name="group_by_item" string="Validation Item"
+                        context="{'group_by': 'item_id'}"/>
+                    <filter name="group_by_type" string="Protocol Type"
+                        context="{'group_by': 'protocol_type'}"/>
+                    <filter name="group_by_start" string="Start Month"
+                        context="{'group_by': 'date_start:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_execution_graph" model="ir.ui.view">
+        <field name="name">ls.validation.execution.graph</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="arch" type="xml">
+            <graph string="Executions" type="bar">
+                <field name="protocol_type"/>
+                <field name="overall_result"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_ls_validation_execution_pivot" model="ir.ui.view">
+        <field name="name">ls.validation.execution.pivot</field>
+        <field name="model">ls.validation.execution</field>
+        <field name="arch" type="xml">
+            <pivot string="Executions">
+                <field name="item_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="failed_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_execution" model="ir.actions.act_window">
+        <field name="name">Execution Records</field>
+        <field name="res_model">ls.validation.execution</field>
+        <field name="view_mode">list,form,graph,pivot</field>
+        <field name="search_view_id" ref="view_ls_validation_execution_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No execution record yet
+            </p>
+            <p>
+                Execution records are created from an approved protocol and
+                hold the results observed during the tests.
+            </p>
+        </field>
+    </record>
+
+</odoo>

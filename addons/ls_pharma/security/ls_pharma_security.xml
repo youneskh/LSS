@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Privilege grouping.
+
+        Odoo 19 groups access rights under res.groups.privilege records and
+        references them from res.groups through privilege_id. Only the name
+        and the sequence are set, so that the record does not depend on any
+        further field of that model.
+    -->
+    <record id="privilege_ls_pharma" model="res.groups.privilege">
+        <field name="name">Pharmaceutical Manufacturing</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <!--
+        Role model.
+
+        The roles are deliberately not a single ascending ladder. The quality
+        assurance role does not inherit the production operator role, because
+        the module enforces that the person who declares a batch manufactured
+        is not the person who takes the release decision. Granting production
+        rights to the quality unit by inheritance would make that separation
+        harder to demonstrate during an inspection, even though the rule is
+        also enforced at record level.
+    -->
+    <record id="group_ls_pharma_viewer" model="res.groups">
+        <field name="name">Pharmaceutical / Viewer</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="comment">Read-only access to pharmaceutical records.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_pharma_operator" model="res.groups">
+        <field name="name">Pharmaceutical / Production Operator</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_pharma_viewer'))]"/>
+        <field name="comment">Executes batches and records batch record content.</field>
+    </record>
+
+    <record id="group_ls_pharma_production_manager" model="res.groups">
+        <field name="name">Pharmaceutical / Production Manager</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_pharma_operator'))]"/>
+        <field name="comment">Plans batches and maintains production master data.</field>
+    </record>
+
+    <record id="group_ls_pharma_qa" model="res.groups">
+        <field name="name">Pharmaceutical / Quality Assurance</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_pharma_viewer'))]"/>
+        <field name="comment">Reviews batch records and takes the release decision.</field>
+    </record>
+
+    <record id="group_ls_pharma_regulatory" model="res.groups">
+        <field name="name">Pharmaceutical / Regulatory Affairs</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="implied_ids" eval="[(4, ref('group_ls_pharma_viewer'))]"/>
+        <field name="comment">Maintains Common Technical Document dossiers.</field>
+    </record>
+
+    <record id="group_ls_pharma_manager" model="res.groups">
+        <field name="name">Pharmaceutical / Manager</field>
+        <field name="privilege_id" ref="privilege_ls_pharma"/>
+        <field name="implied_ids"
+                eval="[(4, ref('group_ls_pharma_production_manager')),
+                       (4, ref('group_ls_pharma_qa')),
+                       (4, ref('group_ls_pharma_regulatory'))]"/>
+        <field name="comment">Configures the module and holds every pharmaceutical role.</field>
+    </record>
+
+</odoo>

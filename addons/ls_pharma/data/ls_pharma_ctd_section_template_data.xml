@@ -1,0 +1,795 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Reusable Common Technical Document section structure.
+
+     Headings are taken from the two guidance documents named below, with the
+     bracketed qualifiers of the source headings (for example
+     "[name, manufacturer]" and "[name, dosage form]") removed, because those
+     qualifiers are filled in per drug substance or per dosage form by the
+     applicant and are not part of the fixed structure.
+
+     Sources:
+     * ICH M4(R4), reproduced by the United States Food and Drug
+       Administration as "M4 Organization of the Common Technical Document for
+       the Registration of Pharmaceuticals for Human Use", October 2017,
+       https://www.fda.gov/files/drugs/published/M4-Organization-of-the-Common-Technical-Document-for-the-Registration-of-Pharmaceuticals-for-Human-Use-Guidance-for-Industry.pdf
+       Provides: module level and sections 1.1 to 1.2, 2.1 to 2.7, 3.1 to 3.3,
+       4.1 to 4.3 and 5.1 to 5.4.
+     * ICH M4Q, reproduced by the United States Food and Drug Administration
+       as "M4Q: The CTD, Quality", August 2001,
+       https://www.fda.gov/media/71581/download
+       Provides: sub-sections of 2.3 and of 3.2.
+
+     Sub-sections of 2.6, 2.7, 4.2 and 5.3 are deliberately not shipped. Their
+     headings are defined in ICH M4S and ICH M4E, which were not consulted
+     when this file was written, and the two documents that were consulted do
+     not agree on the number of sub-sections of 2.7 (the granularity table of
+     M4(R4) shows six, M4Q lists five titles). Numbering those titles would be
+     a guess. A manufacturer adds them as configuration.
+
+     Module 1 is region specific. ICH M4(R4) states that its content and
+     format can be specified by the relevant regulatory authority, so only the
+     two headings given by the guidance are shipped. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="ctd_section_1_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">1</field>
+            <field name="code">1.1</field>
+            <field name="name">Table of Contents of the Submission Including Module 1</field>
+            <field name="sequence">10</field>
+        </record>
+        <record id="ctd_section_1_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">1</field>
+            <field name="code">1.2</field>
+            <field name="name">Documents Specific to Each Region</field>
+            <field name="sequence">20</field>
+        </record>
+        <record id="ctd_section_2_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.1</field>
+            <field name="name">CTD Table of Contents</field>
+            <field name="sequence">30</field>
+        </record>
+        <record id="ctd_section_2_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.2</field>
+            <field name="name">CTD Introduction</field>
+            <field name="sequence">40</field>
+        </record>
+        <record id="ctd_section_2_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3</field>
+            <field name="name">Quality Overall Summary</field>
+            <field name="sequence">50</field>
+        </record>
+        <record id="ctd_section_2_3_s" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S</field>
+            <field name="name">Drug Substance</field>
+            <field name="sequence">60</field>
+        </record>
+        <record id="ctd_section_2_3_s_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.1</field>
+            <field name="name">General Information</field>
+            <field name="sequence">70</field>
+        </record>
+        <record id="ctd_section_2_3_s_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.2</field>
+            <field name="name">Manufacture</field>
+            <field name="sequence">80</field>
+        </record>
+        <record id="ctd_section_2_3_s_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.3</field>
+            <field name="name">Characterization</field>
+            <field name="sequence">90</field>
+        </record>
+        <record id="ctd_section_2_3_s_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.4</field>
+            <field name="name">Control of Drug Substance</field>
+            <field name="sequence">100</field>
+        </record>
+        <record id="ctd_section_2_3_s_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.5</field>
+            <field name="name">Reference Standards or Materials</field>
+            <field name="sequence">110</field>
+        </record>
+        <record id="ctd_section_2_3_s_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.6</field>
+            <field name="name">Container Closure System</field>
+            <field name="sequence">120</field>
+        </record>
+        <record id="ctd_section_2_3_s_7" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.S.7</field>
+            <field name="name">Stability</field>
+            <field name="sequence">130</field>
+        </record>
+        <record id="ctd_section_2_3_p" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P</field>
+            <field name="name">Drug Product</field>
+            <field name="sequence">140</field>
+        </record>
+        <record id="ctd_section_2_3_p_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.1</field>
+            <field name="name">Description and Composition of the Drug Product</field>
+            <field name="sequence">150</field>
+        </record>
+        <record id="ctd_section_2_3_p_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.2</field>
+            <field name="name">Pharmaceutical Development</field>
+            <field name="sequence">160</field>
+        </record>
+        <record id="ctd_section_2_3_p_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.3</field>
+            <field name="name">Manufacture</field>
+            <field name="sequence">170</field>
+        </record>
+        <record id="ctd_section_2_3_p_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.4</field>
+            <field name="name">Control of Excipients</field>
+            <field name="sequence">180</field>
+        </record>
+        <record id="ctd_section_2_3_p_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.5</field>
+            <field name="name">Control of Drug Product</field>
+            <field name="sequence">190</field>
+        </record>
+        <record id="ctd_section_2_3_p_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.6</field>
+            <field name="name">Reference Standards or Materials</field>
+            <field name="sequence">200</field>
+        </record>
+        <record id="ctd_section_2_3_p_7" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.7</field>
+            <field name="name">Container Closure System</field>
+            <field name="sequence">210</field>
+        </record>
+        <record id="ctd_section_2_3_p_8" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.P.8</field>
+            <field name="name">Stability</field>
+            <field name="sequence">220</field>
+        </record>
+        <record id="ctd_section_2_3_a" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.A</field>
+            <field name="name">Appendices</field>
+            <field name="sequence">230</field>
+        </record>
+        <record id="ctd_section_2_3_a_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.A.1</field>
+            <field name="name">Facilities and Equipment</field>
+            <field name="sequence">240</field>
+        </record>
+        <record id="ctd_section_2_3_a_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.A.2</field>
+            <field name="name">Adventitious Agents Safety Evaluation</field>
+            <field name="sequence">250</field>
+        </record>
+        <record id="ctd_section_2_3_a_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.A.3</field>
+            <field name="name">Novel Excipients</field>
+            <field name="sequence">260</field>
+        </record>
+        <record id="ctd_section_2_3_r" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.3.R</field>
+            <field name="name">Regional Information</field>
+            <field name="sequence">270</field>
+        </record>
+        <record id="ctd_section_2_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.4</field>
+            <field name="name">Nonclinical Overview</field>
+            <field name="sequence">280</field>
+        </record>
+        <record id="ctd_section_2_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.5</field>
+            <field name="name">Clinical Overview</field>
+            <field name="sequence">290</field>
+        </record>
+        <record id="ctd_section_2_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.6</field>
+            <field name="name">Nonclinical Written and Tabulated Summaries</field>
+            <field name="sequence">300</field>
+        </record>
+        <record id="ctd_section_2_7" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">2</field>
+            <field name="code">2.7</field>
+            <field name="name">Clinical Summary</field>
+            <field name="sequence">310</field>
+        </record>
+        <record id="ctd_section_3_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.1</field>
+            <field name="name">Module 3 Table of Contents</field>
+            <field name="sequence">320</field>
+        </record>
+        <record id="ctd_section_3_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2</field>
+            <field name="name">Body of Data</field>
+            <field name="sequence">330</field>
+        </record>
+        <record id="ctd_section_3_2_s" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S</field>
+            <field name="name">Drug Substance</field>
+            <field name="sequence">340</field>
+        </record>
+        <record id="ctd_section_3_2_s_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.1</field>
+            <field name="name">General Information</field>
+            <field name="sequence">350</field>
+        </record>
+        <record id="ctd_section_3_2_s_1_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.1.1</field>
+            <field name="name">Nomenclature</field>
+            <field name="sequence">360</field>
+        </record>
+        <record id="ctd_section_3_2_s_1_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.1.2</field>
+            <field name="name">Structure</field>
+            <field name="sequence">370</field>
+        </record>
+        <record id="ctd_section_3_2_s_1_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.1.3</field>
+            <field name="name">General Properties</field>
+            <field name="sequence">380</field>
+        </record>
+        <record id="ctd_section_3_2_s_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2</field>
+            <field name="name">Manufacture</field>
+            <field name="sequence">390</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.1</field>
+            <field name="name">Manufacturers</field>
+            <field name="sequence">400</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.2</field>
+            <field name="name">Description of Manufacturing Process and Process Controls</field>
+            <field name="sequence">410</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.3</field>
+            <field name="name">Control of Materials</field>
+            <field name="sequence">420</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.4</field>
+            <field name="name">Controls of Critical Steps and Intermediates</field>
+            <field name="sequence">430</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.5</field>
+            <field name="name">Process Validation and/or Evaluation</field>
+            <field name="sequence">440</field>
+        </record>
+        <record id="ctd_section_3_2_s_2_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.2.6</field>
+            <field name="name">Manufacturing Process Development</field>
+            <field name="sequence">450</field>
+        </record>
+        <record id="ctd_section_3_2_s_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.3</field>
+            <field name="name">Characterization</field>
+            <field name="sequence">460</field>
+        </record>
+        <record id="ctd_section_3_2_s_3_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.3.1</field>
+            <field name="name">Elucidation of Structure and other Characteristics</field>
+            <field name="sequence">470</field>
+        </record>
+        <record id="ctd_section_3_2_s_3_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.3.2</field>
+            <field name="name">Impurities</field>
+            <field name="sequence">480</field>
+        </record>
+        <record id="ctd_section_3_2_s_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4</field>
+            <field name="name">Control of Drug Substance</field>
+            <field name="sequence">490</field>
+        </record>
+        <record id="ctd_section_3_2_s_4_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4.1</field>
+            <field name="name">Specification</field>
+            <field name="sequence">500</field>
+        </record>
+        <record id="ctd_section_3_2_s_4_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4.2</field>
+            <field name="name">Analytical Procedures</field>
+            <field name="sequence">510</field>
+        </record>
+        <record id="ctd_section_3_2_s_4_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4.3</field>
+            <field name="name">Validation of Analytical Procedures</field>
+            <field name="sequence">520</field>
+        </record>
+        <record id="ctd_section_3_2_s_4_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4.4</field>
+            <field name="name">Batch Analyses</field>
+            <field name="sequence">530</field>
+        </record>
+        <record id="ctd_section_3_2_s_4_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.4.5</field>
+            <field name="name">Justification of Specification</field>
+            <field name="sequence">540</field>
+        </record>
+        <record id="ctd_section_3_2_s_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.5</field>
+            <field name="name">Reference Standards or Materials</field>
+            <field name="sequence">550</field>
+        </record>
+        <record id="ctd_section_3_2_s_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.6</field>
+            <field name="name">Container Closure System</field>
+            <field name="sequence">560</field>
+        </record>
+        <record id="ctd_section_3_2_s_7" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.7</field>
+            <field name="name">Stability</field>
+            <field name="sequence">570</field>
+        </record>
+        <record id="ctd_section_3_2_s_7_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.7.1</field>
+            <field name="name">Stability Summary and Conclusions</field>
+            <field name="sequence">580</field>
+        </record>
+        <record id="ctd_section_3_2_s_7_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.7.2</field>
+            <field name="name">Postapproval Stability Protocol and Stability Commitment</field>
+            <field name="sequence">590</field>
+        </record>
+        <record id="ctd_section_3_2_s_7_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.S.7.3</field>
+            <field name="name">Stability Data</field>
+            <field name="sequence">600</field>
+        </record>
+        <record id="ctd_section_3_2_p" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P</field>
+            <field name="name">Drug Product</field>
+            <field name="sequence">610</field>
+        </record>
+        <record id="ctd_section_3_2_p_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.1</field>
+            <field name="name">Description and Composition of the Drug Product</field>
+            <field name="sequence">620</field>
+        </record>
+        <record id="ctd_section_3_2_p_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2</field>
+            <field name="name">Pharmaceutical Development</field>
+            <field name="sequence">630</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.1</field>
+            <field name="name">Components of the Drug Product</field>
+            <field name="sequence">640</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.2</field>
+            <field name="name">Drug Product</field>
+            <field name="sequence">650</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.3</field>
+            <field name="name">Manufacturing Process Development</field>
+            <field name="sequence">660</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.4</field>
+            <field name="name">Container Closure System</field>
+            <field name="sequence">670</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.5</field>
+            <field name="name">Microbiological Attributes</field>
+            <field name="sequence">680</field>
+        </record>
+        <record id="ctd_section_3_2_p_2_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.2.6</field>
+            <field name="name">Compatibility</field>
+            <field name="sequence">690</field>
+        </record>
+        <record id="ctd_section_3_2_p_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3</field>
+            <field name="name">Manufacture</field>
+            <field name="sequence">700</field>
+        </record>
+        <record id="ctd_section_3_2_p_3_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3.1</field>
+            <field name="name">Manufacturers</field>
+            <field name="sequence">710</field>
+        </record>
+        <record id="ctd_section_3_2_p_3_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3.2</field>
+            <field name="name">Batch Formula</field>
+            <field name="sequence">720</field>
+        </record>
+        <record id="ctd_section_3_2_p_3_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3.3</field>
+            <field name="name">Description of Manufacturing Process and Process Controls</field>
+            <field name="sequence">730</field>
+        </record>
+        <record id="ctd_section_3_2_p_3_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3.4</field>
+            <field name="name">Controls of Critical Steps and Intermediates</field>
+            <field name="sequence">740</field>
+        </record>
+        <record id="ctd_section_3_2_p_3_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.3.5</field>
+            <field name="name">Process Validation and/or Evaluation</field>
+            <field name="sequence">750</field>
+        </record>
+        <record id="ctd_section_3_2_p_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4</field>
+            <field name="name">Control of Excipients</field>
+            <field name="sequence">760</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.1</field>
+            <field name="name">Specifications</field>
+            <field name="sequence">770</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.2</field>
+            <field name="name">Analytical Procedures</field>
+            <field name="sequence">780</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.3</field>
+            <field name="name">Validation of Analytical Procedures</field>
+            <field name="sequence">790</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.4</field>
+            <field name="name">Justification of Specifications</field>
+            <field name="sequence">800</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.5</field>
+            <field name="name">Excipients of Human or Animal Origin</field>
+            <field name="sequence">810</field>
+        </record>
+        <record id="ctd_section_3_2_p_4_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.4.6</field>
+            <field name="name">Novel Excipients</field>
+            <field name="sequence">820</field>
+        </record>
+        <record id="ctd_section_3_2_p_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5</field>
+            <field name="name">Control of Drug Product</field>
+            <field name="sequence">830</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.1</field>
+            <field name="name">Specifications</field>
+            <field name="sequence">840</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.2</field>
+            <field name="name">Analytical Procedures</field>
+            <field name="sequence">850</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.3</field>
+            <field name="name">Validation of Analytical Procedures</field>
+            <field name="sequence">860</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.4</field>
+            <field name="name">Batch Analyses</field>
+            <field name="sequence">870</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_5" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.5</field>
+            <field name="name">Characterization of Impurities</field>
+            <field name="sequence">880</field>
+        </record>
+        <record id="ctd_section_3_2_p_5_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.5.6</field>
+            <field name="name">Justification of Specifications</field>
+            <field name="sequence">890</field>
+        </record>
+        <record id="ctd_section_3_2_p_6" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.6</field>
+            <field name="name">Reference Standards or Materials</field>
+            <field name="sequence">900</field>
+        </record>
+        <record id="ctd_section_3_2_p_7" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.7</field>
+            <field name="name">Container Closure System</field>
+            <field name="sequence">910</field>
+        </record>
+        <record id="ctd_section_3_2_p_8" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.8</field>
+            <field name="name">Stability</field>
+            <field name="sequence">920</field>
+        </record>
+        <record id="ctd_section_3_2_p_8_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.8.1</field>
+            <field name="name">Stability Summary and Conclusion</field>
+            <field name="sequence">930</field>
+        </record>
+        <record id="ctd_section_3_2_p_8_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.8.2</field>
+            <field name="name">Postapproval Stability Protocol and Stability Commitment</field>
+            <field name="sequence">940</field>
+        </record>
+        <record id="ctd_section_3_2_p_8_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.P.8.3</field>
+            <field name="name">Stability Data</field>
+            <field name="sequence">950</field>
+        </record>
+        <record id="ctd_section_3_2_a" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.A</field>
+            <field name="name">Appendices</field>
+            <field name="sequence">960</field>
+        </record>
+        <record id="ctd_section_3_2_a_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.A.1</field>
+            <field name="name">Facilities and Equipment</field>
+            <field name="sequence">970</field>
+        </record>
+        <record id="ctd_section_3_2_a_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.A.2</field>
+            <field name="name">Adventitious Agents Safety Evaluation</field>
+            <field name="sequence">980</field>
+        </record>
+        <record id="ctd_section_3_2_a_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.A.3</field>
+            <field name="name">Novel Excipients</field>
+            <field name="sequence">990</field>
+        </record>
+        <record id="ctd_section_3_2_r" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.2.R</field>
+            <field name="name">Regional Information</field>
+            <field name="sequence">1000</field>
+        </record>
+        <record id="ctd_section_3_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">3</field>
+            <field name="code">3.3</field>
+            <field name="name">Literature References</field>
+            <field name="sequence">1010</field>
+        </record>
+        <record id="ctd_section_4_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">4</field>
+            <field name="code">4.1</field>
+            <field name="name">Module 4 Table of Contents</field>
+            <field name="sequence">1020</field>
+        </record>
+        <record id="ctd_section_4_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">4</field>
+            <field name="code">4.2</field>
+            <field name="name">Study Reports</field>
+            <field name="sequence">1030</field>
+        </record>
+        <record id="ctd_section_4_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">4</field>
+            <field name="code">4.3</field>
+            <field name="name">Literature References</field>
+            <field name="sequence">1040</field>
+        </record>
+        <record id="ctd_section_5_1" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">5</field>
+            <field name="code">5.1</field>
+            <field name="name">Module 5 Table of Contents</field>
+            <field name="sequence">1050</field>
+        </record>
+        <record id="ctd_section_5_2" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">5</field>
+            <field name="code">5.2</field>
+            <field name="name">Tabular Listing of All Clinical Studies</field>
+            <field name="sequence">1060</field>
+        </record>
+        <record id="ctd_section_5_3" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">5</field>
+            <field name="code">5.3</field>
+            <field name="name">Clinical Study Reports</field>
+            <field name="sequence">1070</field>
+        </record>
+        <record id="ctd_section_5_4" model="ls.pharma.ctd.section">
+            <field name="is_template" eval="True"/>
+            <field name="module">5</field>
+            <field name="code">5.4</field>
+            <field name="name">Literature References</field>
+            <field name="sequence">1080</field>
+        </record>
+    </data>
+</odoo>

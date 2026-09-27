@@ -1,0 +1,22 @@
+#
+# LSS Foundation & Licensing - Arabic translation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: LSS Foundation 19.0\n"
+"Language: ar\n"
+
+msgid "Business Establishment Project"
+msgstr "مشروع تأسيس الشركة"
+
+msgid "Regulatory Authority"
+msgstr "السلطة التنظيمية"
+
+msgid "License"
+msgstr "رخصة"
+
+msgid "Regulatory Text"
+msgstr "النص التنظيمي"
+
+msgid "Generate Roadmap"
+msgstr "توليد خريطة الطريق"

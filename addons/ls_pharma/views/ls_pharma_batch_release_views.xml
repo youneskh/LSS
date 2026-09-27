@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     A release decision is append only. It is created by the release wizard
+     and can never be edited or deleted afterwards, which the model enforces
+     in its write and unlink methods. The views therefore disable creation,
+     editing and deletion so that the interface agrees with the model. -->
+<odoo>
+
+    <record id="view_ls_pharma_batch_release_list" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.release.list</field>
+        <field name="model">ls.pharma.batch.release</field>
+        <field name="arch" type="xml">
+            <list string="Batch Release Decisions"
+                  create="false" edit="false" delete="false"
+                  decoration-success="decision == 'released'"
+                  decoration-danger="decision == 'rejected'">
+                <field name="name"/>
+                <field name="batch_id"/>
+                <field name="product_id"/>
+                <field name="decision" widget="badge"/>
+                <field name="decision_date"/>
+                <field name="decided_by_user_id"/>
+                <field name="checklist_complete" optional="show"/>
+                <field name="integrity_verified" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_release_form" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.release.form</field>
+        <field name="model">ls.pharma.batch.release</field>
+        <field name="arch" type="xml">
+            <form string="Batch Release Decision"
+                  create="false" edit="false" delete="false">
+                <header>
+                    <button name="action_verify_integrity"
+                            string="Verify Integrity"
+                            type="object"
+                            class="oe_highlight"/>
+                    <button name="action_open_batch"
+                            string="Open Batch"
+                            type="object"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="decision != 'rejected'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Batch">
+                            <field name="batch_id" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="company_id" readonly="1"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Decision">
+                            <field name="decision" readonly="1"/>
+                            <field name="decision_date" readonly="1"/>
+                            <field name="decided_by_user_id" readonly="1"/>
+                            <field name="checklist_complete" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Checklist Confirmed at the Time of the Decision">
+                        <group>
+                            <field name="check_record_reviewed" readonly="1"/>
+                            <field name="check_discrepancies_closed" readonly="1"/>
+                            <field name="check_yield_within_limits" readonly="1"/>
+                            <field name="check_components_verified" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="check_qc_conform" readonly="1"/>
+                            <field name="check_labeling_reconciled" readonly="1"/>
+                            <field name="check_reserve_samples" readonly="1"/>
+                            <field name="check_stability_programme" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Statement">
+                        <field name="statement" nolabel="1" readonly="1"/>
+                    </group>
+                    <group string="Integrity">
+                        <field name="integrity_hash" readonly="1"/>
+                        <field name="integrity_verified" readonly="1"/>
+                    </group>
+                    <div class="text-muted">
+                        The integrity hash is a SHA-256 digest computed over the
+                        decision, its date, the deciding user, the batch, the
+                        statement and the eight checklist answers. It detects
+                        modification of the stored decision. It is not an
+                        electronic signature within the meaning of FDA 21 CFR
+                        Part 11, because this module does not implement the
+                        identification, authentication and signature-manifestation
+                        controls of that Part.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_batch_release_search" model="ir.ui.view">
+        <field name="name">ls.pharma.batch.release.search</field>
+        <field name="model">ls.pharma.batch.release</field>
+        <field name="arch" type="xml">
+            <search string="Batch Release Decisions">
+                <field name="name" string="Decision"/>
+                <field name="batch_id"/>
+                <field name="product_id"/>
+                <field name="decided_by_user_id"/>
+                <filter name="filter_released" string="Released"
+                        domain="[('decision', '=', 'released')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('decision', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_incomplete_checklist"
+                        string="Checklist Not Fully Confirmed"
+                        domain="[('checklist_complete', '=', False)]"/>
+                <separator/>
+                <filter name="filter_decision_date" string="Decision Date"
+                        date="decision_date"/>
+                <group name="group_by">
+                    <filter name="group_decision" string="Decision"
+                            context="{'group_by': 'decision'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_user" string="Decided By"
+                            context="{'group_by': 'decided_by_user_id'}"/>
+                    <filter name="group_decision_month" string="Decision Month"
+                            context="{'group_by': 'decision_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_batch_release" model="ir.actions.act_window">
+        <field name="name">Batch Release</field>
+        <field name="res_model">ls.pharma.batch.release</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_batch_release_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No release decision has been recorded yet
+            </p>
+            <p>
+                A release decision is recorded from a batch that is under
+                quality assurance review. Once recorded it can never be
+                modified or deleted.
+            </p>
+        </field>
+    </record>
+
+</odoo>

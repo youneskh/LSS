@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+            Global multi-company rules.
+            Global rules intersect with each other and with group rules, so a
+            record outside the allowed companies is never reachable, whatever
+            group the user belongs to.
+        -->
+        <record id="rule_ls_audit_program_company" model="ir.rule">
+            <field name="name">Audit programme: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_program"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_schedule_company" model="ir.rule">
+            <field name="name">Audit: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_schedule"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_finding_company" model="ir.rule">
+            <field name="name">Audit finding: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_report_company" model="ir.rule">
+            <field name="name">Audit report: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_report"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_response_company" model="ir.rule">
+            <field name="name">Audit response: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_response"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_checklist_company" model="ir.rule">
+            <field name="name">Audit checklist: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_checklist"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_type_company" model="ir.rule">
+            <field name="name">Audit type: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_type"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_area_company" model="ir.rule">
+            <field name="name">Auditable area: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_area"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_auditor_company" model="ir.rule">
+            <field name="name">Auditor qualification: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_auditor"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_ls_audit_finding_category_company" model="ir.rule">
+            <field name="name">Finding category: multi-company</field>
+            <field name="model_id" ref="model_ls_audit_finding_category"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!--
+            Group rules on findings.
+            Group rules unify with each other: an auditee who is also an
+            auditor gets the union of both domains. The auditee rule is
+            deliberately restrictive so that a plain auditee only sees the
+            findings they must answer.
+        -->
+        <record id="rule_ls_audit_finding_auditee_own" model="ir.rule">
+            <field name="name">Audit finding: auditee sees own findings</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+            <field name="domain_force">[('auditee_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_ls_audit_finding_auditor_all" model="ir.rule">
+            <field name="name">Audit finding: auditor sees all findings</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--
+            Group rules on audits.
+            A plain auditee only sees the audits they take part in, either as
+            auditee or through a finding assigned to them.
+        -->
+        <record id="rule_ls_audit_schedule_auditee_own" model="ir.rule">
+            <field name="name">Audit: auditee sees own audits</field>
+            <field name="model_id" ref="model_ls_audit_schedule"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+            <field name="domain_force">['|', ('auditee_ids', 'in', user.id), ('finding_ids.auditee_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_ls_audit_schedule_auditor_all" model="ir.rule">
+            <field name="name">Audit: auditor sees all audits</field>
+            <field name="model_id" ref="model_ls_audit_schedule"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--
+            Group rules on audit reports.
+            An auditee only sees issued reports they are on the distribution
+            list of; drafts under review stay confidential to the audit team.
+        -->
+        <record id="rule_ls_audit_report_auditee_distributed" model="ir.rule">
+            <field name="name">Audit report: auditee sees distributed reports</field>
+            <field name="model_id" ref="model_ls_audit_report"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+            <field name="domain_force">[('state', '=', 'issued'), ('distribution_ids', 'in', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_ls_audit_report_auditor_all" model="ir.rule">
+            <field name="name">Audit report: auditor sees all reports</field>
+            <field name="model_id" ref="model_ls_audit_report"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+        <!--
+            Group rules on checklist responses, mirroring the audit rules.
+        -->
+        <record id="rule_ls_audit_response_auditee_own" model="ir.rule">
+            <field name="name">Audit response: auditee sees own audits</field>
+            <field name="model_id" ref="model_ls_audit_response"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+            <field name="domain_force">[('audit_id.auditee_ids', 'in', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <record id="rule_ls_audit_response_auditor_all" model="ir.rule">
+            <field name="name">Audit response: auditor sees all responses</field>
+            <field name="model_id" ref="model_ls_audit_response"/>
+            <field name="groups" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+        </record>
+
+    </data>
+</odoo>

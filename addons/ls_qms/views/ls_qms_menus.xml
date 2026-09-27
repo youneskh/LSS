@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <menuitem id="menu_ls_qms_root"
+              name="Quality Management"
+              web_icon="ls_qms,static/description/icon.png"
+              sequence="55"
+              groups="ls_qms.group_ls_qms_viewer"/>
+
+    <menuitem id="menu_ls_qms_policy"
+              name="Quality Policy"
+              parent="menu_ls_qms_root"
+              action="ls_qms_policy_action"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_qms_objective"
+              name="Quality Objectives"
+              parent="menu_ls_qms_root"
+              action="ls_qms_objective_action"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_qms_sop"
+              name="Procedures"
+              parent="menu_ls_qms_root"
+              action="ls_qms_sop_action"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_qms_work_instruction"
+              name="Work Instructions"
+              parent="menu_ls_qms_root"
+              action="ls_qms_work_instruction_action"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_qms_quality_plan"
+              name="Quality Planning"
+              parent="menu_ls_qms_root"
+              action="ls_qms_quality_plan_action"
+              sequence="50"/>
+
+    <menuitem id="menu_ls_qms_quality_record"
+              name="Quality Records"
+              parent="menu_ls_qms_root"
+              action="ls_qms_quality_record_action"
+              sequence="60"/>
+
+    <menuitem id="menu_ls_qms_reporting"
+              name="Reporting"
+              parent="menu_ls_qms_root"
+              sequence="70"/>
+
+    <menuitem id="menu_ls_qms_reporting_objective"
+              name="Objective Analysis"
+              parent="menu_ls_qms_reporting"
+              action="ls_qms_objective_action_analysis"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_qms_reporting_measurement"
+              name="Measurements"
+              parent="menu_ls_qms_reporting"
+              action="ls_qms_objective_measurement_action"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_qms_reporting_review_due"
+              name="Procedures Due for Review"
+              parent="menu_ls_qms_reporting"
+              action="ls_qms_sop_action_review_due"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_qms_reporting_retention"
+              name="Records Past Retention"
+              parent="menu_ls_qms_reporting"
+              action="ls_qms_quality_record_action_retention"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_qms_configuration"
+              name="Configuration"
+              parent="menu_ls_qms_root"
+              sequence="90"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_ls_qms_configuration_parameters"
+              name="QMS Parameters"
+              parent="menu_ls_qms_configuration"
+              action="ls_qms_config_parameter_action"
+              sequence="10"
+              groups="base.group_system"/>
+
+</odoo>

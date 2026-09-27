@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_checklist_list" model="ir.ui.view">
+        <field name="name">ls.audit.checklist.list</field>
+        <field name="model">ls.audit.checklist</field>
+        <field name="arch" type="xml">
+            <list string="Checklists" decoration-muted="state == 'obsolete'" decoration-success="state == 'approved'">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="audit_type_id"/>
+                <field name="line_count"/>
+                <field name="approved_by_id" optional="show"/>
+                <field name="approval_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-muted="state == 'obsolete'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_checklist_form" model="ir.ui.view">
+        <field name="name">ls.audit.checklist.form</field>
+        <field name="model">ls.audit.checklist</field>
+        <field name="arch" type="xml">
+            <form string="Checklist">
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'approved'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <button name="action_new_version" type="object" string="New Version"
+                            invisible="state == 'draft'"
+                            groups="ls_audit.group_ls_audit_lead_auditor"/>
+                    <button name="action_set_obsolete" type="object" string="Set Obsolete"
+                            invisible="state != 'approved'"
+                            groups="ls_audit.group_ls_audit_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,obsolete"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Obsolete" bg_color="text-bg-danger" invisible="state != 'obsolete'"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Documentation Control Checklist"/></h1>
+                        <h3>
+                            <field name="code" placeholder="Code" class="oe_inline"/>
+                            <span class="oe_inline"> version </span>
+                            <field name="version" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="audit_type_id"/>
+                            <field name="line_count"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Questions" name="questions">
+                            <field name="line_ids" nolabel="1" readonly="state != 'draft'">
+                                <list string="Questions" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="reference_clause"/>
+                                    <field name="name"/>
+                                    <field name="guidance" optional="hide"/>
+                                    <field name="is_mandatory"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Applicable Areas" name="areas">
+                            <p class="text-muted">Leave empty when the checklist applies to every area.</p>
+                            <field name="area_ids" nolabel="1" widget="many2many_tags" readonly="state != 'draft'"/>
+                        </page>
+                        <page string="Purpose" name="purpose">
+                            <field name="description" nolabel="1" readonly="state != 'draft'"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_checklist_search" model="ir.ui.view">
+        <field name="name">ls.audit.checklist.search</field>
+        <field name="model">ls.audit.checklist</field>
+        <field name="arch" type="xml">
+            <search string="Checklists">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="audit_type_id"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_obsolete" string="Obsolete" domain="[('state', '=', 'obsolete')]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Audit Type" context="{'group_by': 'audit_type_id'}"/>
+                    <filter name="group_code" string="Checklist Code" context="{'group_by': 'code'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_checklist" model="ir.actions.act_window">
+        <field name="name">Checklists</field>
+        <field name="res_model">ls.audit.checklist</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_checklist_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Build your first checklist</p>
+            <p>Checklists are versioned and must be approved before they can be loaded into an audit. Approved checklists are never edited: create a new version instead.</p>
+        </field>
+    </record>
+
+</odoo>

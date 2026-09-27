@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_notified_body_list" model="ir.ui.view">
+        <field name="name">ls.md.notified_body.list</field>
+        <field name="model">ls.md.notified_body</field>
+        <field name="arch" type="xml">
+            <list string="Notified Bodies">
+                <field name="identification_number"/>
+                <field name="name"/>
+                <field name="country_id"/>
+                <field name="designation_verified_date"/>
+                <field name="ce_marking_count"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_notified_body_form" model="ir.ui.view">
+        <field name="name">ls.md.notified_body.form</field>
+        <field name="model">ls.md.notified_body</field>
+        <field name="arch" type="xml">
+            <form string="Notified Body">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_certificates" type="object" class="oe_stat_button" icon="fa-certificate">
+                            <field name="ce_marking_count" widget="statinfo" string="Certificates"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="identification_number"/>
+                            <field name="country_id"/>
+                            <field name="partner_id"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Designation Verification">
+                            <field name="designation_reference"/>
+                            <field name="designation_verified_date"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        No designation data is shipped with this module. Record the public source
+                        against which the designation was confirmed, together with the date of that
+                        confirmation, and repeat the check periodically.
+                    </div>
+                    <group string="Designation Scope">
+                        <field name="designation_scope" nolabel="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_notified_body_search" model="ir.ui.view">
+        <field name="name">ls.md.notified_body.search</field>
+        <field name="model">ls.md.notified_body</field>
+        <field name="arch" type="xml">
+            <search string="Notified Bodies">
+                <field name="name"/>
+                <field name="identification_number"/>
+                <field name="country_id"/>
+                <filter name="filter_unverified" string="Designation Not Verified" domain="[('designation_verified_date', '=', False)]"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_country" string="Country" context="{'group_by': 'country_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_notified_body" model="ir.actions.act_window">
+        <field name="name">Notified Bodies</field>
+        <field name="res_model">ls.md.notified_body</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_notified_body_search"/>
+    </record>
+
+</odoo>

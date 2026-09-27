@@ -1,0 +1,14 @@
+[flake8]
+max-line-length = 79
+# Odoo modules import models via __init__ side effects and use
+# star-free explicit imports; the exclusions below match OCA practice.
+exclude =
+    .git,
+    __pycache__,
+    setup,
+    .github
+per-file-ignores =
+    __init__.py: F401
+    __manifest__.py: B018
+# W503/W504 conflict with each other; black-compatible choice.
+ignore = W503,E203

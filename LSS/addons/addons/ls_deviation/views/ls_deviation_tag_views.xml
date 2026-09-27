@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_ls_deviation_tag_list" model="ir.ui.view">
+        <field name="name">ls.deviation.tag.list</field>
+        <field name="model">ls.deviation.tag</field>
+        <field name="arch" type="xml">
+            <list string="Deviation Tags" editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_ls_deviation_tag" model="ir.actions.act_window">
+        <field name="name">Deviation Tags</field>
+        <field name="res_model">ls.deviation.tag</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

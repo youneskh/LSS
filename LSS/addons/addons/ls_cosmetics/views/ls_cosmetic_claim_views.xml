@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_claim_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.claim.list</field>
+        <field name="model">ls.cosmetic.claim</field>
+        <field name="arch" type="xml">
+            <list string="Claims"
+                  decoration-muted="state in ('rejected', 'withdrawn')"
+                  decoration-success="state == 'approved'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_tmpl_id" optional="show"/>
+                <field name="formulation_id" optional="hide"/>
+                <field name="medium" optional="show"/>
+                <field name="criteria_met_count"/>
+                <field name="evidence_count"/>
+                <field name="is_no_animal_testing_claim" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'substantiation'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_claim_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.claim.form</field>
+        <field name="model">ls.cosmetic.claim</field>
+        <field name="arch" type="xml">
+            <form string="Claim">
+                <header>
+                    <button name="action_start_substantiation" type="object"
+                            string="Start Substantiation" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="btn-primary"
+                            invisible="state != 'substantiation'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'substantiation'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_withdraw" type="object" string="Withdraw"
+                            invisible="state != 'approved'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'rejected'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,substantiation,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Withdrawn" bg_color="text-bg-secondary"
+                            invisible="state != 'withdrawn'"/>
+                    <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger"
+                            invisible="state != 'rejected'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1><field name="code" readonly="1"/></h1>
+                        <label for="name" class="oe_edit_only" string="Claim Wording"/>
+                        <h2><field name="name" placeholder="Exact wording of the claim"/></h2>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="product_tmpl_id"/>
+                            <field name="formulation_id"/>
+                            <field name="medium"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Assessment">
+                            <field name="criteria_met_count"/>
+                            <field name="all_criteria_met"/>
+                            <field name="evidence_count"/>
+                            <field name="assessed_by_id"/>
+                            <field name="approved_by_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Common Criteria" name="criteria">
+                            <div class="alert alert-info" role="alert">
+                                The six common criteria of Commission Regulation (EU)
+                                No 655/2013 are of equal importance. A claim cannot be
+                                approved unless each one is marked as met and carries a
+                                written justification.
+                            </div>
+                            <group string="1. Legal Compliance">
+                                <field name="criterion_legal"/>
+                            </group>
+                            <field name="criterion_legal_note"
+                                   placeholder="Why the wording complies with the legal compliance criterion"/>
+                            <group string="2. Truthfulness">
+                                <field name="criterion_truth"/>
+                            </group>
+                            <field name="criterion_truth_note"/>
+                            <group string="3. Evidential Support">
+                                <field name="criterion_evidence"/>
+                            </group>
+                            <field name="criterion_evidence_note"/>
+                            <group string="4. Honesty">
+                                <field name="criterion_honesty"/>
+                            </group>
+                            <field name="criterion_honesty_note"/>
+                            <group string="5. Fairness">
+                                <field name="criterion_fairness"/>
+                            </group>
+                            <field name="criterion_fairness_note"/>
+                            <group string="6. Informed Decision-Making">
+                                <field name="criterion_informed"/>
+                            </group>
+                            <field name="criterion_informed_note"/>
+                        </page>
+                        <page string="Evidence" name="evidence">
+                            <field name="evidence_ids">
+                                <list string="Evidence" editable="bottom">
+                                    <field name="reference"/>
+                                    <field name="evidence_type"/>
+                                    <field name="evidence_date"/>
+                                    <field name="performed_by"/>
+                                    <field name="subject_count"/>
+                                    <field name="is_statistically_significant"/>
+                                    <field name="summary"/>
+                                </list>
+                                <form string="Evidence">
+                                    <group>
+                                        <group>
+                                            <field name="reference"/>
+                                            <field name="evidence_type"/>
+                                            <field name="evidence_date"/>
+                                        </group>
+                                        <group>
+                                            <field name="performed_by"/>
+                                            <field name="subject_count"/>
+                                            <field name="is_statistically_significant"/>
+                                        </group>
+                                    </group>
+                                    <separator string="Summary of Findings"/>
+                                    <field name="summary"/>
+                                    <separator string="Attachments"/>
+                                    <field name="attachment_ids" widget="many2many_binary"/>
+                                    <separator string="Note"/>
+                                    <field name="note"/>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Animal Testing" name="animal_testing">
+                            <group>
+                                <field name="is_no_animal_testing_claim"/>
+                            </group>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="not is_no_animal_testing_claim">
+                                Article 20(3) allows a reference to the absence of animal
+                                testing only where the manufacturer and its suppliers have
+                                not carried out or commissioned any animal tests on the
+                                finished product, its prototype or any of its ingredients,
+                                and have not used ingredients tested on animals by others
+                                for the purpose of developing new cosmetic products.
+                            </div>
+                            <field name="animal_testing_declaration"
+                                   invisible="not is_no_animal_testing_claim"
+                                   placeholder="Declarations obtained from the manufacturer and each supplier"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="decision_reason"/>
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_claim_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.claim.search</field>
+        <field name="model">ls.cosmetic.claim</field>
+        <field name="arch" type="xml">
+            <search string="Claims">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_substantiation" string="Under Substantiation"
+                        domain="[('state', '=', 'substantiation')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_incomplete" string="Criteria Incomplete"
+                        domain="[('all_criteria_met', '=', False)]"/>
+                <filter name="filter_no_evidence" string="No Evidence Recorded"
+                        domain="[('evidence_count', '=', 0)]"/>
+                <filter name="filter_animal" string="No Animal Testing Claims"
+                        domain="[('is_no_animal_testing_claim', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_claim" model="ir.actions.act_window">
+        <field name="name">Product Claims</field>
+        <field name="res_model">ls.cosmetic.claim</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_claim_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record and substantiate your claims</p>
+            <p>
+                Article 20 of Regulation (EC) No 1223/2009 and Commission Regulation
+                (EU) No 655/2013 govern what may be claimed about a cosmetic product
+                and how the claim must be justified.
+            </p>
+        </field>
+    </record>
+
+</odoo>

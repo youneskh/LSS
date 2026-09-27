@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_reading_wizard_form" model="ir.ui.view">
+        <field name="name">ls.mp.reading.wizard.form</field>
+        <field name="model">ls.mp.reading.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Record Parameter Readings">
+                <div class="alert alert-info" role="alert">
+                    Readings are append-only. To correct an earlier value, select it in the
+                    Corrects Reading column and state the reason for the correction.
+                </div>
+                <group>
+                    <group>
+                        <field name="run_id" readonly="1"/>
+                        <field name="reading_type"/>
+                    </group>
+                    <group>
+                        <field name="comment" placeholder="Optional comment applied to every reading"/>
+                    </group>
+                </group>
+                <field name="line_ids">
+                    <list editable="bottom" decoration-bf="is_critical" create="false">
+                        <field name="sequence" column_invisible="True"/>
+                        <field name="parameter_line_id" column_invisible="True"/>
+                        <field name="capture" string="Record"/>
+                        <field name="parameter_name" readonly="1"/>
+                        <field name="parameter_uom" readonly="1"/>
+                        <field name="value_type" readonly="1"/>
+                        <field name="min_value" readonly="1"/>
+                        <field name="target_value" readonly="1"/>
+                        <field name="max_value" readonly="1"/>
+                        <field name="value_numeric"
+                               readonly="value_type != 'numeric'"/>
+                        <field name="value_text"
+                               readonly="value_type != 'qualitative'"/>
+                        <field name="is_critical" readonly="1"/>
+                        <field name="supersedes_id"/>
+                        <field name="correction_reason"
+                               required="supersedes_id != False"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_record" type="object" string="Record Readings"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mp_reading_wizard" model="ir.actions.act_window">
+        <field name="name">Record Parameter Readings</field>
+        <field name="res_model">ls.mp.reading.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

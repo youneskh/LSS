@@ -1,0 +1,5 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Additional backend assets can be added here -->
+    </data>
+</odoo>

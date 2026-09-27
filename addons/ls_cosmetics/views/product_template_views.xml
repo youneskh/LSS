@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Design note. Only two anchors are used to extend the product form: the
+     button box, addressed by its name attribute, and the notebook. Both have
+     been stable across Odoo versions. Anchors on individual product fields
+     were deliberately avoided: the product type fields were reworked in
+     recent versions and an xpath that no longer resolves makes the whole
+     module fail to install. The list view of product.template is not
+     inherited at all, because its external identifier could not be confirmed
+     for Odoo 19. -->
+<odoo>
+
+    <record id="view_product_template_form_ls_cosmetics" model="ir.ui.view">
+        <field name="name">product.template.form.ls.cosmetics</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_ls_formulations" type="object"
+                        class="oe_stat_button" icon="fa-flask"
+                        invisible="not ls_is_cosmetic"
+                        groups="ls_cosmetics.group_ls_cosmetics_user">
+                    <field name="ls_formulation_count" widget="statinfo"
+                           string="Formulations"/>
+                </button>
+                <button name="action_view_ls_pifs" type="object"
+                        class="oe_stat_button" icon="fa-folder-open"
+                        invisible="not ls_is_cosmetic"
+                        groups="ls_cosmetics.group_ls_cosmetics_user">
+                    <field name="ls_pif_count" widget="statinfo"
+                           string="Information Files"/>
+                </button>
+                <button name="action_view_ls_labels" type="object"
+                        class="oe_stat_button" icon="fa-tag"
+                        invisible="not ls_is_cosmetic"
+                        groups="ls_cosmetics.group_ls_cosmetics_user">
+                    <field name="ls_label_count" widget="statinfo" string="Labels"/>
+                </button>
+                <button name="action_view_ls_claims" type="object"
+                        class="oe_stat_button" icon="fa-bullhorn"
+                        invisible="not ls_is_cosmetic"
+                        groups="ls_cosmetics.group_ls_cosmetics_user">
+                    <field name="ls_claim_count" widget="statinfo" string="Claims"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Cosmetics" name="ls_cosmetics"
+                      groups="ls_cosmetics.group_ls_cosmetics_user">
+                    <group>
+                        <group string="Classification">
+                            <field name="ls_is_cosmetic"/>
+                        </group>
+                        <group string="Regulatory Records">
+                            <field name="ls_formulation_count"/>
+                            <field name="ls_pif_count"/>
+                            <field name="ls_label_count"/>
+                            <field name="ls_claim_count"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert"
+                         invisible="not ls_is_cosmetic">
+                        Article 2(1)(a) of Regulation (EC) No 1223/2009 defines a
+                        cosmetic product by its area of application and the purpose of
+                        its use. A substance or mixture intended to be ingested,
+                        inhaled, injected or implanted into the human body is not a
+                        cosmetic product.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

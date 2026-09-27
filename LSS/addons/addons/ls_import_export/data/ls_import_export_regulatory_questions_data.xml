@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     These records seed the open regulatory questions listed in
+     doc/02_regulatory_analysis.md section 3. They are NOT regulatory
+     assertions: each is an open question to be closed by recording a
+     cited provision. noupdate="1" so that an upgrade never overwrites
+     a question the user has already answered or edited.
+-->
+<odoo noupdate="1">
+
+    <!-- ===== 3.1 ANPP and pharmaceutical authorisations ===== -->
+
+    <record id="regq_01_anpp_product_categories" model="ls.import_export.regulatory.question">
+        <field name="sequence">10</field>
+        <field name="name">Which pharmaceutical product categories require an ANPP authorisation prior to import, and under which current text?</field>
+        <field name="code">Q-01</field>
+        <field name="question_type">authorization_required</field>
+        <field name="context">Scope of ANPP pre-import authorisation by product category. Determines which product categories trigger an authorisation requirement in the compliance engine.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_02_api_licence" model="ls.import_export.regulatory.question">
+        <field name="sequence">11</field>
+        <field name="name">Is a separate import licence required for active pharmaceutical ingredients (API), and under which current text?</field>
+        <field name="code">Q-02</field>
+        <field name="question_type">authorization_required</field>
+        <field name="context">Whether APIs are subject to a distinct licence from finished pharmaceutical products.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_03_primary_packaging" model="ls.import_export.regulatory.question">
+        <field name="sequence">12</field>
+        <field name="name">Is a separate authorisation required for imported primary packaging materials in contact with pharmaceutical products, and under which text?</field>
+        <field name="code">Q-03</field>
+        <field name="question_type">authorization_required</field>
+        <field name="context">Primary packaging (resins, films, etc.) in contact with pharma products.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_04_anpp_file_documents" model="ls.import_export.regulatory.question">
+        <field name="sequence">13</field>
+        <field name="name">Which documents must accompany an ANPP import authorisation file, as established by the current applicable text?</field>
+        <field name="code">Q-04</field>
+        <field name="question_type">document_required</field>
+        <field name="context">Dossier content for ANPP authorisation files (pro forma invoice, certificate of analysis, GMP certificate, etc.).</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_05_anpp_validity_renewal" model="ls.import_export.regulatory.question">
+        <field name="sequence">14</field>
+        <field name="name">What are the validity, renewal and amendment rules for an ANPP authorisation, per the current text?</field>
+        <field name="code">Q-05</field>
+        <field name="question_type">deadline</field>
+        <field name="context">Drives expiry alerts on authorisations in Phase 3.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_06_anpp_notification" model="ls.import_export.regulatory.question">
+        <field name="sequence">15</field>
+        <field name="name">What are the current ANPP notification/reporting obligations on import (batch-level, quantity-level), and under which text?</field>
+        <field name="code">Q-06</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.2 Medical devices and cosmetics ===== -->
+
+    <record id="regq_07_md_authorisation" model="ls.import_export.regulatory.question">
+        <field name="sequence">20</field>
+        <field name="name">Which medical-device import authorisations or registrations are currently required, and by which authority under which text?</field>
+        <field name="code">Q-07</field>
+        <field name="question_type">authorization_required</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_08_cosmetics_authorisation" model="ls.import_export.regulatory.question">
+        <field name="sequence">21</field>
+        <field name="name">Are cosmetic raw materials / finished cosmetics subject to a specific import authorisation, and under which current text?</field>
+        <field name="code">Q-08</field>
+        <field name="question_type">authorization_required</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_09_conformity_certificates" model="ls.import_export.regulatory.question">
+        <field name="sequence">22</field>
+        <field name="name">Do medical-device and cosmetic imports require conformity certificates, and under which text?</field>
+        <field name="code">Q-09</field>
+        <field name="question_type">document_required</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.3 Customs ===== -->
+
+    <record id="regq_10_customs_regimes" model="ls.import_export.regulatory.question">
+        <field name="sequence">30</field>
+        <field name="name">Which customs regimes apply to life-sciences imports (consumption, temporary admission, warehouse...), and what is the current procedural text for each?</field>
+        <field name="code">Q-10</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_11_tariff_treatment" model="ls.import_export.regulatory.question">
+        <field name="sequence">31</field>
+        <field name="name">What is the current tariff treatment (HS headings and applicable duties/taxes) for the in-scope product categories?</field>
+        <field name="code">Q-11</field>
+        <field name="question_type">cost_component</field>
+        <field name="context">To be entered per HS heading, with the tariff schedule as source. Each regulated rate becomes a cost_component requirement backed by the tariff provision.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_12_customs_documents" model="ls.import_export.regulatory.question">
+        <field name="sequence">32</field>
+        <field name="name">What are the current document requirements for customs clearance of the in-scope product categories, per the customs procedural text?</field>
+        <field name="code">Q-12</field>
+        <field name="question_type">document_required</field>
+        <field name="context">Commercial invoice, packing list, bill of lading / air waybill, certificate of origin, etc.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_13_duty_exemptions" model="ls.import_export.regulatory.question">
+        <field name="sequence">33</field>
+        <field name="name">Are there current exemptions or suspensions of duty/tax applicable to pharma / device / cosmetic imports, and under which text?</field>
+        <field name="code">Q-13</field>
+        <field name="question_type">cost_component</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_14_declaration_procedure" model="ls.import_export.regulatory.question">
+        <field name="sequence">34</field>
+        <field name="name">What is the current declaration procedure (electronic system, forms), and under which text?</field>
+        <field name="code">Q-14</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.4 Banking and foreign trade ===== -->
+
+    <record id="regq_15_domiciliation" model="ls.import_export.regulatory.question">
+        <field name="sequence">40</field>
+        <field name="name">What is the current domiciliation requirement for imports and exports, and under which text (Bank of Algeria / currency regulation)?</field>
+        <field name="code">Q-15</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_16_proceeds_repatriation" model="ls.import_export.regulatory.question">
+        <field name="sequence">41</field>
+        <field name="name">What are the current rules on repatriation of export proceeds, and under which text?</field>
+        <field name="code">Q-16</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_17_fx_rules" model="ls.import_export.regulatory.question">
+        <field name="sequence">42</field>
+        <field name="name">What are the current foreign-exchange rules affecting payment for imports, and under which text?</field>
+        <field name="code">Q-17</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_18_domiciliation_timelimits" model="ls.import_export.regulatory.question">
+        <field name="sequence">43</field>
+        <field name="name">What are the current time limits and procedural steps of the domiciliation file, and under which text?</field>
+        <field name="code">Q-18</field>
+        <field name="question_type">deadline</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.5 Commerce extérieur and licensing ===== -->
+
+    <record id="regq_19_import_licensing" model="ls.import_export.regulatory.question">
+        <field name="sequence">50</field>
+        <field name="name">Which goods are currently subject to an import licence or a prior authorisation under the commerce-extérieur regime, and under which current text/list?</field>
+        <field name="code">Q-19</field>
+        <field name="question_type">authorization_required</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_20_import_bans" model="ls.import_export.regulatory.question">
+        <field name="sequence">51</field>
+        <field name="name">Are there current temporary or permanent import bans/restrictions affecting the in-scope categories, and under which text?</field>
+        <field name="code">Q-20</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_21_export_licensing" model="ls.import_export.regulatory.question">
+        <field name="sequence">52</field>
+        <field name="name">What are the current export licensing requirements for pharma / device / cosmetic finished products, and under which text?</field>
+        <field name="code">Q-21</field>
+        <field name="question_type">authorization_required</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.6 PPI and pricing ===== -->
+
+    <record id="regq_22_ppi_scope" model="ls.import_export.regulatory.question">
+        <field name="sequence">60</field>
+        <field name="name">What is the current scope and name of the import-pricing / PPI mechanism, and which text establishes it?</field>
+        <field name="code">Q-22</field>
+        <field name="question_type">procedure</field>
+        <field name="context">The mechanism's current applicability and name are treated as open and must not be assumed.</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_23_ppi_procedure" model="ls.import_export.regulatory.question">
+        <field name="sequence">61</field>
+        <field name="name">Where the import-pricing / PPI mechanism applies, what are the current procedural steps, documents and deadlines, and under which text?</field>
+        <field name="code">Q-23</field>
+        <field name="question_type">procedure</field>
+        <field name="status">open</field>
+    </record>
+
+    <!-- ===== 3.7 Documentation and traceability ===== -->
+
+    <record id="regq_24_mandatory_documents" model="ls.import_export.regulatory.question">
+        <field name="sequence">70</field>
+        <field name="name">What are the current mandatory documents per operation type (import vs export) and per product category, aggregating the answers above into the dossier engine?</field>
+        <field name="code">Q-24</field>
+        <field name="question_type">document_required</field>
+        <field name="context">Aggregate of Q-04, Q-09, Q-12 and others into the dossier engine (Phase 4).</field>
+        <field name="status">open</field>
+    </record>
+
+    <record id="regq_25_retention" model="ls.import_export.regulatory.question">
+        <field name="sequence">71</field>
+        <field name="name">What are the current record-retention requirements for foreign-trade documents, and under which text?</field>
+        <field name="code">Q-25</field>
+        <field name="question_type">deadline</field>
+        <field name="status">open</field>
+    </record>
+
+</odoo>

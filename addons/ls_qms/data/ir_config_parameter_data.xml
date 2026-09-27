@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="param_ls_qms_default_review_period" model="ir.config_parameter">
+            <field name="key">ls_qms.default_review_period_months</field>
+            <field name="value">24</field>
+        </record>
+
+        <record id="param_ls_qms_review_reminder_lead_days" model="ir.config_parameter">
+            <field name="key">ls_qms.review_reminder_lead_days</field>
+            <field name="value">30</field>
+        </record>
+
+        <record id="param_ls_qms_segregation_of_duties" model="ir.config_parameter">
+            <field name="key">ls_qms.enforce_segregation_of_duties</field>
+            <field name="value">True</field>
+        </record>
+
+        <record id="param_ls_qms_default_retention_period" model="ir.config_parameter">
+            <field name="key">ls_qms.default_retention_period_months</field>
+            <field name="value">60</field>
+        </record>
+
+    </data>
+</odoo>

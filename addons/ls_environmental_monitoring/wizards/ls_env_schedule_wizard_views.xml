@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data>
+        <record id="view_ls_env_schedule_wizard_form" model="ir.ui.view">
+            <field name="name">ls.env.schedule.wizard.form</field>
+            <field name="model">ls.env.schedule.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Generate Scheduled Samples">
+                    <group>
+                        <field name="date_to"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group string="Restrict to Plans (optional)">
+                        <field name="plan_ids" nolabel="1" widget="many2many_tags"/>
+                    </group>
+                    <p class="text-muted">
+                        Samples already generated for a due date are not created again,
+                        so this action can be run repeatedly without producing duplicates.
+                    </p>
+                    <footer>
+                        <button name="action_generate" type="object" string="Generate" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ls_env_schedule_wizard" model="ir.actions.act_window">
+            <field name="name">Generate Scheduled Samples</field>
+            <field name="res_model">ls.env.schedule.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_attendance_list_view" model="ir.ui.view">
+        <field name="name">ls.training.attendance.list</field>
+        <field name="model">ls.training.attendance</field>
+        <field name="arch" type="xml">
+            <list string="Training Attendance"
+                  decoration-success="result == 'passed'"
+                  decoration-danger="result == 'failed'">
+                <field name="employee_id"/>
+                <field name="course_id"/>
+                <field name="session_id"/>
+                <field name="date_start"/>
+                <field name="attended"/>
+                <field name="score" optional="show"/>
+                <field name="result" widget="badge"/>
+                <field name="session_state" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_training_attendance_form_view" model="ir.ui.view">
+        <field name="name">ls.training.attendance.form</field>
+        <field name="model">ls.training.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Training Attendance">
+                <sheet>
+                    <group>
+                        <group name="registration">
+                            <field name="session_id"
+                                   options="{'no_create': True}"/>
+                            <field name="employee_id"
+                                   options="{'no_create': True}"/>
+                            <field name="course_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group name="outcome">
+                            <field name="attended"/>
+                            <field name="requires_assessment"/>
+                            <field name="score"
+                                   readonly="not requires_assessment"/>
+                            <field name="pass_score"/>
+                            <field name="result"/>
+                        </group>
+                    </group>
+                    <group name="comment_group" string="Trainer Comment">
+                        <field name="comment" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_attendance_search_view" model="ir.ui.view">
+        <field name="name">ls.training.attendance.search</field>
+        <field name="model">ls.training.attendance</field>
+        <field name="arch" type="xml">
+            <search string="Training Attendance">
+                <field name="employee_id"/>
+                <field name="course_id"/>
+                <field name="session_id"/>
+                <filter name="filter_passed" string="Passed"
+                        domain="[('result', '=', 'passed')]"/>
+                <filter name="filter_failed" string="Failed"
+                        domain="[('result', '=', 'failed')]"/>
+                <filter name="filter_pending" string="Pending"
+                        domain="[('result', '=', 'pending')]"/>
+                <separator/>
+                <filter name="filter_my_attendance" string="My Attendance"
+                        domain="[('employee_id.user_id', '=', uid)]"/>
+                                    <filter name="group_by_employee" string="Employee"
+                        context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_by_course" string="Course"
+                        context="{'group_by': 'course_id'}"/>
+                    <filter name="group_by_result" string="Result"
+                        context="{'group_by': 'result'}"/>
+                    <filter name="group_by_month" string="Session Month"
+                        context="{'group_by': 'date_start:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_training_attendance_action" model="ir.actions.act_window">
+        <field name="name">Training Attendance</field>
+        <field name="res_model">ls.training.attendance</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="ls_training_attendance_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No attendance recorded yet
+            </p>
+            <p>
+                Attendance is created by registering employees on a
+                training session.
+            </p>
+        </field>
+    </record>
+
+</odoo>

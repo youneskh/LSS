@@ -1,0 +1,37 @@
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+{
+    "name": "Life Sciences - Complaint Management",
+    "summary": "Product quality complaint, investigation and adverse event handling",
+    "version": "19.0.1.0.1",
+    "category": "Life Sciences/Quality",
+    "author": "Life Sciences Suite Architecture Team",
+    "license": "AGPL-3",
+    "development_status": "Beta",
+    "depends": [
+        "base",
+        "mail",
+        "product",
+        "stock",
+    ],
+    "data": [
+        "security/ls_complaint_security.xml",
+        "security/ir.model.access.csv",
+        "data/ir_sequence_data.xml",
+        "data/mail_template_data.xml",
+        "data/ir_cron_data.xml",
+        "views/ls_complaint_category_views.xml",
+        "views/ls_complaint_investigation_views.xml",
+        "views/ls_complaint_resolution_views.xml",
+        "views/ls_complaint_adverse_event_views.xml",
+        "views/ls_complaint_views.xml",
+        "wizards/ls_complaint_close_wizard_views.xml",
+        "wizards/ls_complaint_cancel_wizard_views.xml",
+        "report/ls_complaint_report.xml",
+        "report/ls_complaint_report_templates.xml",
+        "views/ls_complaint_menus.xml",
+    ],
+    "demo": [
+        "demo/ls_complaint_demo.xml",
+    ],
+    "application": True,
+}

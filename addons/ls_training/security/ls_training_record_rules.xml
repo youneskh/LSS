@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Rule design
+     ===========
+     1. Multi-company rules are GLOBAL (no group assigned). Global rules
+        intersect, so they always restrict, whatever groups the user holds.
+     2. Self-scope rules are GROUP rules. Group rules unify, so the broad
+        rule granted to Viewer overrides the narrow Learner rule for any
+        user who holds both. Because Viewer implies Learner, a Viewer,
+        Trainer or Manager sees every record of the allowed companies while
+        a plain Learner sees only their own.
+
+     API NOTE
+     ========
+     The many2many linking ir.rule to res.groups is written here as
+     "groups", following the Odoo 19 field name for group associations.
+-->
+<odoo>
+
+    <!-- ============================================================
+         GLOBAL MULTI-COMPANY RULES
+         ============================================================ -->
+
+    <record id="ls_training_course_company_rule" model="ir.rule">
+        <field name="name">Training Course: multi-company</field>
+        <field name="model_id" ref="model_ls_training_course"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_session_company_rule" model="ir.rule">
+        <field name="name">Training Session: multi-company</field>
+        <field name="model_id" ref="model_ls_training_session"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_attendance_company_rule" model="ir.rule">
+        <field name="name">Training Attendance: multi-company</field>
+        <field name="model_id" ref="model_ls_training_attendance"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_certification_company_rule" model="ir.rule">
+        <field name="name">Training Certification: multi-company</field>
+        <field name="model_id" ref="model_ls_training_certification"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_competency_company_rule" model="ir.rule">
+        <field name="name">Training Competency: multi-company</field>
+        <field name="model_id" ref="model_ls_training_competency"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_assessment_company_rule" model="ir.rule">
+        <field name="name">Competency Assessment: multi-company</field>
+        <field name="model_id"
+               ref="model_ls_training_competency_assessment"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_training_requirement_company_rule" model="ir.rule">
+        <field name="name">Training Requirement: multi-company</field>
+        <field name="model_id" ref="model_ls_training_requirement"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- ============================================================
+         LEARNER SELF-SCOPE RULES
+         ============================================================ -->
+
+    <record id="ls_training_certification_learner_rule" model="ir.rule">
+        <field name="name">Training Certification: own records only</field>
+        <field name="model_id" ref="model_ls_training_certification"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_learner'))]"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="ls_training_attendance_learner_rule" model="ir.rule">
+        <field name="name">Training Attendance: own records only</field>
+        <field name="model_id" ref="model_ls_training_attendance"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_learner'))]"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="ls_training_assessment_learner_rule" model="ir.rule">
+        <field name="name">Competency Assessment: own records only</field>
+        <field name="model_id"
+               ref="model_ls_training_competency_assessment"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_learner'))]"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- ============================================================
+         VIEWER AND ABOVE: UNRESTRICTED WITHIN ALLOWED COMPANIES
+         ============================================================ -->
+
+    <record id="ls_training_certification_viewer_rule" model="ir.rule">
+        <field name="name">Training Certification: all records</field>
+        <field name="model_id" ref="model_ls_training_certification"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="ls_training_attendance_viewer_rule" model="ir.rule">
+        <field name="name">Training Attendance: all records</field>
+        <field name="model_id" ref="model_ls_training_attendance"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="ls_training_assessment_viewer_rule" model="ir.rule">
+        <field name="name">Competency Assessment: all records</field>
+        <field name="model_id"
+               ref="model_ls_training_competency_assessment"/>
+        <field name="groups" eval="[(4, ref('group_ls_training_viewer'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

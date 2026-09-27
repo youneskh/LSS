@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <record id="mail_template_qualification_approved" model="mail.template">
+        <field name="name">Supplier Qualification: Approved</field>
+        <field name="model_id" ref="model_ls_supplier_qualification"/>
+        <field name="subject">Supplier qualification {{ object.name }} approved</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.responsible_id.email_formatted }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin:0px;padding:0px;font-size:13px;">
+                <p>Hello,</p>
+                <p>
+                    The qualification dossier
+                    <t t-out="object.name"/>
+                    of supplier
+                    <t t-out="object.partner_id.display_name"/>
+                    has been approved.
+                </p>
+                <ul>
+                    <li>Status: <t t-out="dict(object._fields['state'].selection).get(object.state)"/></li>
+                    <li>Approved by: <t t-out="object.approved_by_id.display_name"/></li>
+                    <li>Approval date: <t t-out="object.approval_date"/></li>
+                    <li>Valid until: <t t-out="object.expiry_date"/></li>
+                </ul>
+                <p t-if="object.approval_conditions">
+                    Conditions attached to the approval:
+                    <br/>
+                    <t t-out="object.approval_conditions"/>
+                </p>
+                <p>Regards,</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="mail_template_qualification_expiring" model="mail.template">
+        <field name="name">Supplier Qualification: Expiring Soon</field>
+        <field name="model_id" ref="model_ls_supplier_qualification"/>
+        <field name="subject">Supplier qualification {{ object.name }} expires on {{ object.expiry_date }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.responsible_id.email_formatted }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin:0px;padding:0px;font-size:13px;">
+                <p>Hello,</p>
+                <p>
+                    The approval of supplier
+                    <t t-out="object.partner_id.display_name"/>
+                    (dossier <t t-out="object.name"/>)
+                    expires on
+                    <t t-out="object.expiry_date"/>.
+                </p>
+                <p>
+                    Plan the requalification activities so that the approval
+                    does not lapse.
+                </p>
+                <p>Regards,</p>
+            </div>
+        </field>
+    </record>
+
+    <record id="mail_template_audit_report_issued" model="mail.template">
+        <field name="name">Supplier Audit: Report Issued</field>
+        <field name="model_id" ref="model_ls_supplier_audit"/>
+        <field name="subject">Audit report {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="email_to">{{ object.auditee_contact_id.email_formatted }}</field>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html" type="html">
+            <div style="margin:0px;padding:0px;font-size:13px;">
+                <p>Dear Sir or Madam,</p>
+                <p>
+                    Please find below the outcome of audit
+                    <t t-out="object.name"/>
+                    conducted at your site.
+                </p>
+                <ul>
+                    <li>Audit dates: <t t-out="object.date_start"/> to <t t-out="object.date_stop"/></li>
+                    <li>Outcome: <t t-out="dict(object._fields['outcome'].selection).get(object.outcome)"/></li>
+                    <li>Critical findings: <t t-out="object.critical_count"/></li>
+                    <li>Major findings: <t t-out="object.major_count"/></li>
+                    <li>Minor findings: <t t-out="object.minor_count"/></li>
+                    <li>Observations: <t t-out="object.observation_count"/></li>
+                    <li>Response expected by: <t t-out="object.response_due_date"/></li>
+                </ul>
+                <p>
+                    We ask you to provide your root cause analysis and your
+                    corrective action plan by the date indicated above.
+                </p>
+                <p>Regards,</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

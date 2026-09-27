@@ -1,0 +1,27 @@
+<odoo>
+    <record id="view_lss_foundation_authority_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.authority.tree</field>
+        <field name="model">lss.foundation.authority</field>
+        <field name="arch" type="xml">
+            <tree><field name="name"/><field name="code"/><field name="type"/><field name="website"/></tree>
+        </field>
+    </record>
+    <record id="view_lss_foundation_authority_form" model="ir.ui.view">
+        <field name="name">lss.foundation.authority.form</field>
+        <field name="model">lss.foundation.authority</field>
+        <field name="arch" type="xml">
+            <form string="Regulatory Authority">
+                <sheet>
+                    <group><group><field name="name"/><field name="code"/><field name="type"/></group>
+                    <group><field name="jurisdiction"/><field name="website"/><field name="email"/><field name="phone"/></group></group>
+                    <field name="competencies"/><field name="services"/><field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_lss_foundation_authority" model="ir.actions.act_window">
+        <field name="name">Authorities</field>
+        <field name="res_model">lss.foundation.authority</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

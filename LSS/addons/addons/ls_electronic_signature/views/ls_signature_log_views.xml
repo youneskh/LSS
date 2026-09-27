@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_ls_signature_log_list" model="ir.ui.view">
+        <field name="name">ls.signature.log.list</field>
+        <field name="model">ls.signature.log</field>
+        <field name="arch" type="xml">
+            <list string="Electronic Signatures" create="false" edit="false" delete="false"
+                  decoration-warning="not is_current">
+                <field name="name"/>
+                <field name="signed_at"/>
+                <field name="signer_name"/>
+                <field name="signer_login" optional="show"/>
+                <field name="meaning_name"/>
+                <field name="res_model_name" optional="show"/>
+                <field name="res_name"/>
+                <field name="authentication_method" optional="hide"/>
+                <field name="is_current" string="Current"/>
+                <field name="chain_sequence" optional="hide"/>
+                <field name="chain_hash" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <button name="action_verify" type="object" string="Verify"
+                        icon="fa-shield" title="Verify integrity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_log_form" model="ir.ui.view">
+        <field name="name">ls.signature.log.form</field>
+        <field name="model">ls.signature.log</field>
+        <field name="arch" type="xml">
+            <form string="Electronic Signature" create="false" edit="false" delete="false">
+                <header>
+                    <button name="action_verify" type="object" string="Verify Integrity"
+                            class="btn-primary"/>
+                    <button name="action_open_signed_record" type="object"
+                            string="Open Signed Record"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-warning" role="alert" invisible="is_current">
+                        The signed record has changed since this signature was executed.
+                        This signature no longer attests to the present content of the record.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group string="Signature Manifestation (21 CFR 11.50)">
+                        <group>
+                            <field name="signer_name" string="Printed Name"/>
+                            <field name="signer_login" string="Identification Code"/>
+                            <field name="user_id" string="Account"/>
+                        </group>
+                        <group>
+                            <field name="signed_at" string="Date and Time (UTC)"/>
+                            <field name="meaning_name" string="Meaning"/>
+                            <field name="meaning_code" string="Meaning Code"/>
+                        </group>
+                    </group>
+                    <group string="Signed Record (21 CFR 11.70)">
+                        <group>
+                            <field name="res_model_name" string="Model"/>
+                            <field name="res_model" string="Technical Model"/>
+                            <field name="res_id" string="Record ID"/>
+                        </group>
+                        <group>
+                            <field name="res_name" string="Record"/>
+                            <field name="is_current" string="Covers Current Content"/>
+                        </group>
+                    </group>
+                    <group string="Execution Context">
+                        <group>
+                            <field name="authentication_method"/>
+                            <field name="policy_id"/>
+                            <field name="request_id"/>
+                        </group>
+                        <group>
+                            <field name="ip_address"/>
+                            <field name="session_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Reason" invisible="not reason">
+                        <field name="reason" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Integrity Evidence" name="integrity">
+                            <group>
+                                <field name="hash_algorithm"/>
+                                <field name="chain_sequence"/>
+                                <field name="previous_hash"/>
+                                <field name="record_hash"/>
+                                <field name="chain_hash"/>
+                            </group>
+                            <separator string="Signed Payload"/>
+                            <field name="payload_json" nolabel="1" widget="text"/>
+                        </page>
+                        <page string="Technical Context" name="technical">
+                            <group>
+                                <field name="user_agent"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_signature_log_search" model="ir.ui.view">
+        <field name="name">ls.signature.log.search</field>
+        <field name="model">ls.signature.log</field>
+        <field name="arch" type="xml">
+            <search string="Electronic Signatures">
+                <field name="name"/>
+                <field name="signer_name"/>
+                <field name="signer_login"/>
+                <field name="res_name"/>
+                <field name="meaning_id"/>
+                <field name="chain_hash"/>
+                <filter name="filter_mine" string="My Signatures"
+                        domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('signed_at', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)))]"/>
+                <filter name="filter_full_credentials" string="All Components Presented"
+                        domain="[('authentication_method', '=', 'full')]"/>
+                                    <filter name="group_signer" string="Signer"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_meaning" string="Meaning"
+                        context="{'group_by': 'meaning_id'}"/>
+                    <filter name="group_model" string="Model"
+                        context="{'group_by': 'res_model'}"/>
+                    <filter name="group_date" string="Signature Date"
+                        context="{'group_by': 'signed_at'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_signature_log" model="ir.actions.act_window">
+        <field name="name">Signature Log</field>
+        <field name="res_model">ls.signature.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_signature_log_search"/>
+        <field name="context">{'create': False}</field>
+    </record>
+
+    <record id="action_ls_signature_log_mine" model="ir.actions.act_window">
+        <field name="name">My Signatures</field>
+        <field name="res_model">ls.signature.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_signature_log_search"/>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+</odoo>

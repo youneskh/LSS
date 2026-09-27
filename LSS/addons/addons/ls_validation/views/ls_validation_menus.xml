@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <menuitem id="menu_ls_validation_root"
+              name="Validation"
+              web_icon="ls_validation,static/description/icon.png"
+              sequence="70"
+              groups="ls_validation.group_ls_validation_viewer"/>
+
+    <menuitem id="menu_ls_validation_planning"
+              name="Planning"
+              parent="menu_ls_validation_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_validation_master_plan"
+              name="Master Plans"
+              parent="menu_ls_validation_planning"
+              action="action_ls_validation_master_plan"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_validation_item"
+              name="Validation Items"
+              parent="menu_ls_validation_planning"
+              action="action_ls_validation_item"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_validation_item_expiring"
+              name="Expiring or Expired"
+              parent="menu_ls_validation_planning"
+              action="action_ls_validation_item_expiring"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_validation_execution_root"
+              name="Execution"
+              parent="menu_ls_validation_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_validation_protocol"
+              name="Protocols"
+              parent="menu_ls_validation_execution_root"
+              action="action_ls_validation_protocol"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_validation_execution"
+              name="Execution Records"
+              parent="menu_ls_validation_execution_root"
+              action="action_ls_validation_execution"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_validation_discrepancy"
+              name="Discrepancies"
+              parent="menu_ls_validation_execution_root"
+              action="action_ls_validation_discrepancy"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_validation_reporting"
+              name="Reporting"
+              parent="menu_ls_validation_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_validation_report"
+              name="Summary Reports"
+              parent="menu_ls_validation_reporting"
+              action="action_ls_validation_report"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_validation_signature"
+              name="Electronic Signatures"
+              parent="menu_ls_validation_reporting"
+              action="action_ls_validation_signature"
+              sequence="20"/>
+
+</odoo>

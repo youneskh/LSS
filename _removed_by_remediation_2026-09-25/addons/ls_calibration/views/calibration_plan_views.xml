@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_plan_list" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.list</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <list string="Calibration Plans"
+                  decoration-muted="state == 'closed'"
+                  decoration-warning="state == 'suspended'">
+                <field name="name"/>
+                <field name="instrument_code"/>
+                <field name="instrument_id"/>
+                <field name="category_id" optional="show"/>
+                <field name="interval_value"/>
+                <field name="interval_uom"/>
+                <field name="provider_type"/>
+                <field name="service_provider_id" optional="hide"/>
+                <field name="responsible_user_id" optional="show"/>
+                <field name="start_date"/>
+                <field name="end_date" optional="hide"/>
+                <field name="next_generation_date"/>
+                <field name="record_count" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-warning="state == 'suspended'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_plan_form" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.form</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <form string="Calibration Plan">
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'draft'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_suspend" type="object" string="Suspend"
+                            invisible="state != 'approved'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_resume" type="object" string="Resume"
+                            class="oe_highlight" invisible="state != 'suspended'"
+                            groups="ls_calibration.group_ls_calibration_approver"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state == 'closed'"
+                            groups="ls_calibration.group_ls_calibration_manager"
+                            confirm="Closing a calibration plan is permanent. Continue?"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_records" type="object"
+                                class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="record_count" widget="statinfo" string="Calibrations"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="SOP-CAL-014 annual balance calibration"/></h1>
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="instrument_id" readonly="state != 'draft'"/>
+                            <field name="instrument_code" readonly="1"/>
+                            <field name="category_id" readonly="1"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Periodicity">
+                            <label for="interval_value"/>
+                            <div class="o_row">
+                                <field name="interval_value" readonly="state == 'closed'"/>
+                                <field name="interval_uom" readonly="state == 'closed'"/>
+                            </div>
+                            <field name="start_date" readonly="state != 'draft'"/>
+                            <field name="end_date" readonly="state == 'closed'"/>
+                            <field name="next_generation_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Execution">
+                            <field name="provider_type" readonly="state == 'closed'"/>
+                            <field name="service_provider_id"
+                                   invisible="provider_type != 'external'"
+                                   required="provider_type == 'external'"
+                                   readonly="state == 'closed'"/>
+                            <field name="responsible_user_id" readonly="state == 'closed'"/>
+                            <field name="procedure_reference" readonly="state == 'closed'"/>
+                        </group>
+                        <group string="Approval">
+                            <field name="approved_by_user_id" readonly="1"/>
+                            <field name="approved_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Method" name="method">
+                            <field name="method_description" nolabel="1"
+                                   placeholder="Summary of the calibration method, the points verified and the reference standards required."/>
+                        </page>
+                        <page string="Suspension" name="suspension"
+                              invisible="state != 'suspended'">
+                            <field name="suspension_reason" nolabel="1"
+                                   placeholder="Reason the plan is suspended."/>
+                        </page>
+                        <page string="Closure" name="closure"
+                              invisible="state != 'closed'">
+                            <field name="closure_reason" nolabel="1"
+                                   placeholder="Reason the plan is closed."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_plan_search" model="ir.ui.view">
+        <field name="name">ls.calibration.plan.search</field>
+        <field name="model">ls.calibration.plan</field>
+        <field name="arch" type="xml">
+            <search string="Calibration Plans">
+                <field name="name" string="Plan"
+                       filter_domain="['|', ('name', 'ilike', self), ('instrument_code', 'ilike', self)]"/>
+                <field name="instrument_id"/>
+                <field name="category_id"/>
+                <field name="responsible_user_id"/>
+                <field name="service_provider_id"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_suspended" string="Suspended" domain="[('state', '=', 'suspended')]"/>
+                <separator/>
+                <filter name="filter_internal" string="Internal" domain="[('provider_type', '=', 'internal')]"/>
+                <filter name="filter_external" string="External" domain="[('provider_type', '=', 'external')]"/>
+                <separator/>
+                <filter name="filter_mine" string="My Plans" domain="[('responsible_user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_instrument" string="Instrument" context="{'group_by': 'instrument_id'}"/>
+                    <filter name="group_category" string="Category" context="{'group_by': 'category_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_provider" string="Performed By" context="{'group_by': 'provider_type'}"/>
+                    <filter name="group_responsible" string="Responsible" context="{'group_by': 'responsible_user_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_plan" model="ir.actions.act_window">
+        <field name="name">Calibration Plans</field>
+        <field name="res_model">ls.calibration.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_plan_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a calibration plan</p>
+            <p>
+                A plan states how often an instrument is calibrated, by whom and
+                against which written procedure. Approved plans are the source from
+                which scheduled calibrations are generated.
+            </p>
+        </field>
+    </record>
+
+</odoo>

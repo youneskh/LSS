@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_pms_report_wizard_form" model="ir.ui.view">
+        <field name="name">ls.md.pms.report.wizard.form</field>
+        <field name="model">ls.md.pms.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Open Periodic Reporting Period">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        This wizard creates one draft periodic report per selected device for the
+                        period defined below. It does not produce the content of the report: the
+                        analysis remains the work of the person preparing it.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="period_start" placeholder="Left empty, derived per device"/>
+                            <field name="period_end"/>
+                        </group>
+                        <group>
+                            <field name="use_device_interval"/>
+                        </group>
+                    </group>
+                    <group string="Devices">
+                        <field name="device_ids" nolabel="1" widget="many2many">
+                            <list>
+                                <field name="reference"/>
+                                <field name="name"/>
+                                <field name="device_class_id"/>
+                                <field name="periodic_report_type"/>
+                                <field name="last_periodic_report_date"/>
+                                <field name="next_periodic_report_due"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_create_reports" type="object" string="Create Reports" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_md_pms_report_wizard" model="ir.actions.act_window">
+        <field name="name">Open Periodic Reporting Period</field>
+        <field name="res_model">ls.md.pms.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

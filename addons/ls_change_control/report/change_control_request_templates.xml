@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_change_control_request_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.requester_id.lang)"/>
+            <div class="page">
+
+                <h2 class="text-center">Change Control Record</h2>
+                <h4 class="text-center">
+                    <span t-field="doc.name"/> - <span t-field="doc.title"/>
+                </h4>
+
+                <div class="row mt32 mb16">
+                    <div class="col-6">
+                        <strong>Category:</strong>
+                        <span t-field="doc.category_id"/><br/>
+                        <strong>Change Type:</strong>
+                        <span t-field="doc.change_type"/><br/>
+                        <t t-if="doc.change_type == 'temporary'">
+                            <strong>Temporary Change End Date:</strong>
+                            <span t-field="doc.temporary_end_date"/><br/>
+                        </t>
+                        <strong>Classification:</strong>
+                        <span t-field="doc.classification"/><br/>
+                        <strong>Status:</strong>
+                        <span t-field="doc.state"/>
+                    </div>
+                    <div class="col-6">
+                        <strong>Requester:</strong>
+                        <span t-field="doc.requester_id"/><br/>
+                        <strong>Department:</strong>
+                        <span t-field="doc.department_id"/><br/>
+                        <strong>Change Control Manager:</strong>
+                        <span t-field="doc.manager_id"/><br/>
+                        <strong>Request Date:</strong>
+                        <span t-field="doc.date_request"/>
+                    </div>
+                </div>
+
+                <h4>1. Description of the Change</h4>
+                <p><strong>Current situation</strong></p>
+                <p style="white-space: pre-wrap;" t-field="doc.current_situation"/>
+                <p><strong>Proposed change</strong></p>
+                <p style="white-space: pre-wrap;" t-field="doc.proposed_change"/>
+                <p><strong>Justification</strong></p>
+                <p style="white-space: pre-wrap;" t-field="doc.justification"/>
+
+                <h4>2. Impact Declaration</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%;">GMP impact</td>
+                            <td><span t-field="doc.gmp_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Product quality impact</td>
+                            <td><span t-field="doc.product_quality_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Regulatory impact</td>
+                            <td><span t-field="doc.regulatory_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Requires revalidation</td>
+                            <td><span t-field="doc.validation_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Requires training</td>
+                            <td><span t-field="doc.training_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Requires document update</td>
+                            <td><span t-field="doc.documentation_impact"/></td>
+                        </tr>
+                        <tr>
+                            <td>Requires customer notification</td>
+                            <td><span t-field="doc.customer_notification_required"/></td>
+                        </tr>
+                        <tr>
+                            <td>Risk assessment reference</td>
+                            <td><span t-field="doc.risk_assessment_reference"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>3. Impact Assessments</h4>
+                <t t-if="doc.assessment_ids">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Impact Area</th>
+                                <th>Impact</th>
+                                <th>Assessment</th>
+                                <th>Actions Required</th>
+                                <th>Completed By</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.assessment_ids" t-as="assessment">
+                                <td><span t-field="assessment.impact_area_id"/></td>
+                                <td><span t-field="assessment.impact"/></td>
+                                <td style="white-space: pre-wrap;">
+                                    <span t-field="assessment.assessment"/>
+                                </td>
+                                <td style="white-space: pre-wrap;">
+                                    <span t-field="assessment.actions_required"/>
+                                </td>
+                                <td><span t-field="assessment.completed_by_id"/></td>
+                                <td><span t-field="assessment.date_completed"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>No impact assessment has been recorded.</p>
+                </t>
+
+                <h4>4. Approvals</h4>
+                <t t-if="doc.approval_ids">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Approver</th>
+                                <th>Mandatory</th>
+                                <th>Decision</th>
+                                <th>Meaning</th>
+                                <th>Decided By</th>
+                                <th>Date (UTC)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.approval_ids" t-as="approval">
+                                <td><span t-field="approval.approval_role"/></td>
+                                <td><span t-field="approval.user_id"/></td>
+                                <td><span t-field="approval.mandatory"/></td>
+                                <td><span t-field="approval.state"/></td>
+                                <td><span t-field="approval.signature_meaning"/></td>
+                                <td><span t-field="approval.decided_by_id"/></td>
+                                <td><span t-out="approval.date_decision"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>No approval has been recorded.</p>
+                </t>
+
+                <h4>5. Implementation</h4>
+                <t t-if="doc.implementation_ids">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Action</th>
+                                <th>Type</th>
+                                <th>Responsible</th>
+                                <th>Planned</th>
+                                <th>Completed</th>
+                                <th>Evidence</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.implementation_ids" t-as="action">
+                                <td><span t-field="action.name"/></td>
+                                <td><span t-field="action.action_type"/></td>
+                                <td><span t-field="action.responsible_id"/></td>
+                                <td><span t-field="action.date_planned"/></td>
+                                <td><span t-field="action.date_done"/></td>
+                                <td><span t-field="action.evidence_reference"/></td>
+                                <td><span t-field="action.state"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>No implementation action has been planned.</p>
+                </t>
+
+                <h4>6. Effectiveness Verification</h4>
+                <t t-if="doc.verification_ids">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Verification</th>
+                                <th>Method</th>
+                                <th>Acceptance Criteria</th>
+                                <th>Conclusion</th>
+                                <th>Result</th>
+                                <th>Completed By</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.verification_ids" t-as="verification">
+                                <td><span t-field="verification.name"/></td>
+                                <td><span t-field="verification.method"/></td>
+                                <td style="white-space: pre-wrap;">
+                                    <span t-field="verification.acceptance_criteria"/>
+                                </td>
+                                <td style="white-space: pre-wrap;">
+                                    <span t-field="verification.conclusion"/>
+                                </td>
+                                <td><span t-field="verification.result"/></td>
+                                <td><span t-field="verification.completed_by_id"/></td>
+                                <td><span t-field="verification.date_done"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <p>No effectiveness verification has been recorded.</p>
+                </t>
+
+                <h4>7. Outcome</h4>
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%;">Approval date (UTC)</td>
+                            <td><span t-out="doc.date_approved"/></td>
+                        </tr>
+                        <tr>
+                            <td>Planned implementation date</td>
+                            <td><span t-field="doc.date_planned_implementation"/></td>
+                        </tr>
+                        <tr>
+                            <td>Actual implementation date</td>
+                            <td><span t-field="doc.date_actual_implementation"/></td>
+                        </tr>
+                        <tr>
+                            <td>Planned verification date</td>
+                            <td><span t-field="doc.date_verification_planned"/></td>
+                        </tr>
+                        <tr>
+                            <td>Closure date (UTC)</td>
+                            <td><span t-out="doc.date_closed"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-if="doc.closure_statement">
+                    <p><strong>Closure statement</strong></p>
+                    <p style="white-space: pre-wrap;" t-field="doc.closure_statement"/>
+                </t>
+                <t t-if="doc.rejection_reason">
+                    <p><strong>Rejection reason</strong></p>
+                    <p style="white-space: pre-wrap;" t-field="doc.rejection_reason"/>
+                </t>
+                <t t-if="doc.cancellation_reason">
+                    <p><strong>Cancellation reason</strong></p>
+                    <p style="white-space: pre-wrap;" t-field="doc.cancellation_reason"/>
+                </t>
+
+                <div class="mt32" style="border-top: 1px solid #cccccc; padding-top: 8px;">
+                    <p class="text-muted" style="font-size: 10px;">
+                        Uncontrolled when printed. Printed by
+                        <span t-out="user.name"/> on
+                        <span t-out="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>.
+                        The controlled record is the electronic record held in
+                        the system.
+                    </p>
+                </div>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_change_control_request">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_change_control.report_change_control_request_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

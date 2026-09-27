@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_report_form" model="ir.ui.view">
+        <field name="name">ls.recall.report.form</field>
+        <field name="model">ls.recall.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_review" type="object"
+                            string="Review" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve"
+                            class="oe_highlight"
+                            groups="ls_recall.group_ls_recall_manager"
+                            invisible="state != 'reviewed'"/>
+                    <button name="action_submit" type="object"
+                            string="Record Submission"
+                            invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,reviewed,approved,submitted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="execution_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="report_type"
+                                   readonly="state != 'draft'"/>
+                            <field name="report_date"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="period_start"/>
+                            <field name="period_end"/>
+                            <field name="prepared_by_user_id"/>
+                            <field name="reviewed_by_user_id"/>
+                            <field name="approved_by_user_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content" name="content">
+                            <separator string="Situation Summary"/>
+                            <field name="summary"/>
+                            <separator string="Actions Taken"/>
+                            <field name="actions_taken"/>
+                            <separator string="Product Disposition"/>
+                            <field name="disposition"/>
+                            <separator string="Conclusion"/>
+                            <field name="conclusion"/>
+                        </page>
+                        <page string="Frozen Figures" name="snapshot"
+                              invisible="state == 'draft'">
+                            <div class="alert alert-info" role="alert">
+                                These figures were copied from the recall
+                                when the report was approved and do not
+                                change afterwards.
+                            </div>
+                            <group>
+                                <group string="Quantities">
+                                    <field name="snapshot_qty_distributed"/>
+                                    <field name="snapshot_qty_returned"/>
+                                    <field name="snapshot_qty_destroyed"/>
+                                    <field name="snapshot_qty_not_recovered"/>
+                                    <field name="snapshot_qty_accounted"/>
+                                    <field name="snapshot_qty_outstanding"/>
+                                    <field name="snapshot_reconciliation_rate"/>
+                                </group>
+                                <group string="Consignees and Checks">
+                                    <field name="snapshot_consignee_count"/>
+                                    <field name="snapshot_responded_count"/>
+                                    <field name="snapshot_checks_required"/>
+                                    <field name="snapshot_checks_performed"/>
+                                    <field name="snapshot_checks_successful"/>
+                                    <field name="snapshot_taken_on"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Submission" name="submission">
+                            <group>
+                                <field name="submitted_partner_ids"
+                                       widget="many2many_tags"/>
+                                <field name="submission_date"/>
+                                <field name="submission_reference"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_report_list" model="ir.ui.view">
+        <field name="name">ls.recall.report.list</field>
+        <field name="model">ls.recall.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="execution_id"/>
+                <field name="report_type"/>
+                <field name="report_date"/>
+                <field name="prepared_by_user_id" optional="show"/>
+                <field name="approved_by_user_id" optional="hide"/>
+                <field name="submission_date" optional="hide"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_recall_report_search" model="ir.ui.view">
+        <field name="name">ls.recall.report.search</field>
+        <field name="model">ls.recall.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="execution_id"/>
+                <filter name="filter_final" string="Final Reports"
+                        domain="[('report_type', '=', 'final')]"/>
+                <filter name="filter_open" string="Not Yet Approved"
+                        domain="[('state', 'in', ['draft', 'reviewed'])]"/>
+                <group>
+                    <filter name="group_execution" string="Recall"
+                            context="{'group_by': 'execution_id'}"/>
+                    <filter name="group_type" string="Type"
+                            context="{'group_by': 'report_type'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_report" model="ir.actions.act_window">
+        <field name="name">Recall Reports</field>
+        <field name="res_model">ls.recall.report</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

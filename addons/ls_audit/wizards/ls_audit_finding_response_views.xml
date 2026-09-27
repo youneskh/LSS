@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_audit_finding_response_form" model="ir.ui.view">
+        <field name="name">ls.audit.finding.response.form</field>
+        <field name="model">ls.audit.finding.response</field>
+        <field name="arch" type="xml">
+            <form string="Finding Response">
+                <group>
+                    <field name="finding_id" readonly="1"/>
+                    <field name="requires_root_cause" invisible="1"/>
+                    <field name="requires_capa" invisible="1"/>
+                    <field name="action_due_date"/>
+                    <field name="capa_reference" required="requires_capa"/>
+                </group>
+                <group string="Root Cause">
+                    <field name="root_cause" nolabel="1" required="requires_root_cause"
+                           placeholder="Why did the non-conformity occur? Investigate beyond the immediate symptom."/>
+                </group>
+                <group string="Immediate Correction">
+                    <field name="correction" nolabel="1"
+                           placeholder="What was done to deal with the detected non-conformity itself?"/>
+                </group>
+                <group string="Corrective Action">
+                    <field name="corrective_action" nolabel="1"
+                           placeholder="What will be done to eliminate the cause so that it does not recur?"/>
+                </group>
+                <footer>
+                    <button name="action_submit" type="object" string="Submit Response" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

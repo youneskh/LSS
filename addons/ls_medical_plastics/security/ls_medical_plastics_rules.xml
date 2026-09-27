@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!--
+          Multi-company isolation.
+
+          Every rule below is declared without a groups field and is therefore
+          a global rule: it applies to all users and is combined with any
+          group-specific rule using AND. This is the intended behaviour for
+          company isolation, which must never be widened by holding an
+          additional role.
+
+          The groups field is deliberately not used. The field name carrying
+          group links on ir.rule in Odoo 19 could not be verified from official
+          documentation, so role restriction is implemented through
+          ir.model.access.csv and through explicit checks in Python instead.
+
+          The computed field ir.rule.global is never written here: it is
+          derived by the framework from the absence of group links.
+        -->
+
+        <record id="rule_mp_material_grade_company" model="ir.rule">
+            <field name="name">Medical Plastics Material Grade: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_material_grade"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_component_company" model="ir.rule">
+            <field name="name">Medical Plastics Component: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_component"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_tool_company" model="ir.rule">
+            <field name="name">Medical Plastics Tool: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_tool"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_tool_cavity_company" model="ir.rule">
+            <field name="name">Medical Plastics Tool Cavity: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_tool_cavity"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_tool_maintenance_company" model="ir.rule">
+            <field name="name">Medical Plastics Tool Maintenance: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_tool_maintenance"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_molding_parameter_company" model="ir.rule">
+            <field name="name">Medical Plastics Parameter Specification: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_molding_parameter"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_molding_parameter_line_company" model="ir.rule">
+            <field name="name">Medical Plastics Parameter Line: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_molding_parameter_line"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_scrap_reason_company" model="ir.rule">
+            <field name="name">Medical Plastics Scrap Reason: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_scrap_reason"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_injection_molding_company" model="ir.rule">
+            <field name="name">Medical Plastics Moulding Run: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_injection_molding"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_injection_molding_reading_company" model="ir.rule">
+            <field name="name">Medical Plastics Parameter Reading: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_injection_molding_reading"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_injection_molding_material_company" model="ir.rule">
+            <field name="name">Medical Plastics Material Consumption: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_injection_molding_material"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <record id="rule_mp_injection_molding_scrap_company" model="ir.rule">
+            <field name="name">Medical Plastics Moulding Scrap: multi-company</field>
+            <field name="model_id" ref="model_ls_mp_injection_molding_scrap"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Sources for the periodic reporting values below:
+
+       * Article 85 of Regulation (EU) 2017/745: manufacturers of class I
+         devices prepare a post-market surveillance report; it is updated when
+         necessary, so no fixed maximum interval is shipped for class I.
+       * Article 86(1) of Regulation (EU) 2017/745: manufacturers of class IIa,
+         class IIb and class III devices prepare a periodic safety update
+         report. Class IIb and class III update it at least annually; class IIa
+         updates it when necessary and at least every two years.
+       * Article 61(11) of Regulation (EU) 2017/745: for class III devices and
+         implantable devices the PMCF evaluation report is updated at least
+         annually.
+
+     The notified body involvement flags reflect the structure of the
+     conformity assessment provisions of the Regulation. They are shipped as
+     editable configuration, and the implementing organisation is responsible
+     for confirming each value against the Official Journal text before use.
+
+     A December 2025 European Commission proposal (COM/2025/1023) contemplates
+     changes to PSUR update frequencies. That proposal had not been adopted at
+     the time this module was prepared, so the values below follow the
+     Regulation as in force. Verify the position before relying on them.
+-->
+<odoo>
+    <data noupdate="1">
+
+        <record id="device_class_i" model="ls.md.device_class">
+            <field name="name">Class I</field>
+            <field name="code">I</field>
+            <field name="sequence">10</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="False"/>
+            <field name="periodic_report_type">pmsr</field>
+            <field name="periodic_report_interval_months">0</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">Lowest risk class. A post-market surveillance report is prepared under Article 85 and updated when necessary.</field>
+        </record>
+
+        <record id="device_class_is" model="ls.md.device_class">
+            <field name="name">Class Is</field>
+            <field name="code">Is</field>
+            <field name="sequence">20</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="notified_body_scope_note">Notified body involvement is limited to the aspects relating to the establishment, securing and maintenance of sterile conditions. Confirm the scope against the applicable provisions before use.</field>
+            <field name="periodic_report_type">pmsr</field>
+            <field name="periodic_report_interval_months">0</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">Class I device placed on the market in a sterile condition.</field>
+        </record>
+
+        <record id="device_class_im" model="ls.md.device_class">
+            <field name="name">Class Im</field>
+            <field name="code">Im</field>
+            <field name="sequence">30</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="notified_body_scope_note">Notified body involvement is limited to the aspects relating to conformity with metrological requirements. Confirm the scope against the applicable provisions before use.</field>
+            <field name="periodic_report_type">pmsr</field>
+            <field name="periodic_report_interval_months">0</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">Class I device with a measuring function.</field>
+        </record>
+
+        <record id="device_class_ir" model="ls.md.device_class">
+            <field name="name">Class Ir</field>
+            <field name="code">Ir</field>
+            <field name="sequence">40</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="notified_body_scope_note">Notified body involvement is limited to the aspects relating to reuse of the device. Confirm the scope against the applicable provisions before use.</field>
+            <field name="periodic_report_type">pmsr</field>
+            <field name="periodic_report_interval_months">0</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">Class I reusable surgical instrument.</field>
+        </record>
+
+        <record id="device_class_iia" model="ls.md.device_class">
+            <field name="name">Class IIa</field>
+            <field name="code">IIa</field>
+            <field name="sequence">50</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="periodic_report_type">psur</field>
+            <field name="periodic_report_interval_months">24</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">A periodic safety update report is prepared under Article 86 and updated when necessary and at least every two years.</field>
+        </record>
+
+        <record id="device_class_iib" model="ls.md.device_class">
+            <field name="name">Class IIb</field>
+            <field name="code">IIb</field>
+            <field name="sequence">60</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="periodic_report_type">psur</field>
+            <field name="periodic_report_interval_months">12</field>
+            <field name="annual_pmcf_update_required" eval="False"/>
+            <field name="description">A periodic safety update report is prepared under Article 86 and updated at least annually.</field>
+        </record>
+
+        <record id="device_class_iii" model="ls.md.device_class">
+            <field name="name">Class III</field>
+            <field name="code">III</field>
+            <field name="sequence">70</field>
+            <field name="regulatory_framework">Regulation (EU) 2017/745</field>
+            <field name="notified_body_required" eval="True"/>
+            <field name="periodic_report_type">psur</field>
+            <field name="periodic_report_interval_months">12</field>
+            <field name="annual_pmcf_update_required" eval="True"/>
+            <field name="description">Highest risk class. A periodic safety update report is prepared under Article 86 and updated at least annually, and the PMCF evaluation report is updated at least annually under Article 61(11).</field>
+        </record>
+
+    </data>
+</odoo>

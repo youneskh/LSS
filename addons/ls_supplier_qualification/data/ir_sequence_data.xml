@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!--
+        The sequences are created without a company so that a single
+        definition serves every company of the database. `next_by_code`
+        selects a sequence whose company is either the requested one or
+        empty, so `with_company(...)` keeps working as expected.
+    -->
+
+    <record id="seq_ls_supplier_qualification" model="ir.sequence">
+        <field name="name">Supplier Qualification Dossier</field>
+        <field name="code">ls.supplier.qualification</field>
+        <field name="prefix">SQ/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_supplier_assessment" model="ir.sequence">
+        <field name="name">Supplier Assessment</field>
+        <field name="code">ls.supplier.assessment</field>
+        <field name="prefix">SA/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_supplier_audit" model="ir.sequence">
+        <field name="name">Supplier Audit</field>
+        <field name="code">ls.supplier.audit</field>
+        <field name="prefix">SAU/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_supplier_performance" model="ir.sequence">
+        <field name="name">Supplier Performance Evaluation</field>
+        <field name="code">ls.supplier.performance</field>
+        <field name="prefix">SP/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_supplier_review" model="ir.sequence">
+        <field name="name">Supplier Periodic Review</field>
+        <field name="code">ls.supplier.review</field>
+        <field name="prefix">SR/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">standard</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

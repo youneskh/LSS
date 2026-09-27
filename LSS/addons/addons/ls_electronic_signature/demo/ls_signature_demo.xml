@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details.
+
+     Demonstration users, one per role, so that the segregation of duties built
+     into the security model can be shown without creating accounts by hand.
+     No demonstration signatures are supplied: a signature can only be produced
+     by a person presenting their own credentials, and manufacturing one in a
+     data file would contradict the control the module exists to provide. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_user_signer" model="res.users">
+            <field name="name">Demo Signer (Production)</field>
+            <field name="login">demo.signer</field>
+            <field name="email">demo.signer@example.invalid</field>
+            <field name="group_ids" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('ls_electronic_signature.group_ls_signature_signer'))]"/>
+        </record>
+
+        <record id="demo_user_approver" model="res.users">
+            <field name="name">Demo Approver (Quality Assurance)</field>
+            <field name="login">demo.approver</field>
+            <field name="email">demo.approver@example.invalid</field>
+            <field name="group_ids" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('ls_electronic_signature.group_ls_signature_viewer'))]"/>
+        </record>
+
+        <record id="demo_user_auditor" model="res.users">
+            <field name="name">Demo Auditor</field>
+            <field name="login">demo.auditor</field>
+            <field name="email">demo.auditor@example.invalid</field>
+            <field name="group_ids" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('ls_electronic_signature.group_ls_signature_auditor'))]"/>
+        </record>
+
+        <record id="demo_user_security" model="res.users">
+            <field name="name">Demo System Security Unit</field>
+            <field name="login">demo.security</field>
+            <field name="email">demo.security@example.invalid</field>
+            <field name="group_ids" eval="[
+                (4, ref('base.group_user')),
+                (4, ref('ls_electronic_signature.group_ls_signature_security'))]"/>
+        </record>
+
+    </data>
+</odoo>

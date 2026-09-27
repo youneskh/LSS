@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Starter categories. The criticality levels and the intervals below are
+     PROPOSALS chosen by this module to give a working configuration on
+     day one. They are not taken from any regulation. Each organisation must
+     review and approve them as part of its own quality system before use.
+-->
+<odoo noupdate="1">
+
+    <record id="category_api_manufacturer" model="ls.supplier.category">
+        <field name="name">Active Substance Manufacturer</field>
+        <field name="code">API</field>
+        <field name="criticality">critical</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requires_initial_audit" eval="True"/>
+        <field name="requires_periodic_audit" eval="True"/>
+        <field name="audit_interval_months">36</field>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="category_excipient_supplier" model="ls.supplier.category">
+        <field name="name">Excipient Supplier</field>
+        <field name="code">EXC</field>
+        <field name="criticality">major</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requires_initial_audit" eval="False"/>
+        <field name="requires_periodic_audit" eval="False"/>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="category_primary_packaging" model="ls.supplier.category">
+        <field name="name">Primary Packaging Manufacturer</field>
+        <field name="code">PKGP</field>
+        <field name="criticality">critical</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requires_initial_audit" eval="True"/>
+        <field name="requires_periodic_audit" eval="True"/>
+        <field name="audit_interval_months">36</field>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="category_secondary_packaging" model="ls.supplier.category">
+        <field name="name">Secondary Packaging Supplier</field>
+        <field name="code">PKGS</field>
+        <field name="criticality">minor</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requalification_interval_months">48</field>
+        <field name="review_interval_months">24</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="category_contract_manufacturer" model="ls.supplier.category">
+        <field name="name">Contract Manufacturer</field>
+        <field name="code">CMO</field>
+        <field name="criticality">critical</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requires_initial_audit" eval="True"/>
+        <field name="requires_periodic_audit" eval="True"/>
+        <field name="audit_interval_months">24</field>
+        <field name="requalification_interval_months">24</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="category_contract_laboratory" model="ls.supplier.category">
+        <field name="name">Contract Laboratory</field>
+        <field name="code">LAB</field>
+        <field name="criticality">critical</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requires_initial_audit" eval="True"/>
+        <field name="requires_periodic_audit" eval="True"/>
+        <field name="audit_interval_months">36</field>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="category_calibration_provider" model="ls.supplier.category">
+        <field name="name">Calibration and Metrology Provider</field>
+        <field name="code">CAL</field>
+        <field name="criticality">major</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">70</field>
+    </record>
+
+    <record id="category_equipment_supplier" model="ls.supplier.category">
+        <field name="name">Equipment Supplier</field>
+        <field name="code">EQP</field>
+        <field name="criticality">major</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requalification_interval_months">48</field>
+        <field name="review_interval_months">24</field>
+        <field name="sequence">80</field>
+    </record>
+
+    <record id="category_logistics_provider" model="ls.supplier.category">
+        <field name="name">Transport and Storage Provider</field>
+        <field name="code">LOG</field>
+        <field name="criticality">major</field>
+        <field name="requires_assessment" eval="True"/>
+        <field name="requalification_interval_months">36</field>
+        <field name="review_interval_months">12</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record id="category_general_supplier" model="ls.supplier.category">
+        <field name="name">General Goods and Services Supplier</field>
+        <field name="code">GEN</field>
+        <field name="criticality">minor</field>
+        <field name="requires_assessment" eval="False"/>
+        <field name="requalification_interval_months">60</field>
+        <field name="review_interval_months">24</field>
+        <field name="sequence">100</field>
+    </record>
+
+</odoo>

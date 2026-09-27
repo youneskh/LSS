@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_audit_report_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            Audit Report
+                            <span t-field="doc.reference"/>
+                        </h2>
+                        <h4 t-field="doc.name"/>
+
+                        <h5>1. Audit Identification</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td style="width:30%"><strong>Audit reference</strong></td>
+                                <td><span t-field="doc.audit_id.reference"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit title</strong></td>
+                                <td><span t-field="doc.audit_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit type</strong></td>
+                                <td><span t-field="doc.audit_id.audit_type_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Programme</strong></td>
+                                <td><span t-field="doc.audit_id.program_id.display_name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audited areas</strong></td>
+                                <td>
+                                    <t t-foreach="doc.audit_id.area_ids" t-as="area">
+                                        <span t-field="area.complete_name"/><br/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fieldwork dates</strong></td>
+                                <td>
+                                    <span t-field="doc.audit_id.date_start"/>
+                                    to
+                                    <span t-field="doc.audit_id.date_end"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lead auditor</strong></td>
+                                <td><span t-field="doc.audit_id.lead_auditor_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Audit team</strong></td>
+                                <td>
+                                    <t t-foreach="doc.audit_id.auditor_ids" t-as="auditor">
+                                        <span t-field="auditor.name"/><br/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Auditees</strong></td>
+                                <td>
+                                    <t t-foreach="doc.audit_id.auditee_ids" t-as="auditee">
+                                        <span t-field="auditee.name"/><br/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Checklist used</strong></td>
+                                <td><span t-field="doc.audit_id.checklist_id.display_name"/></td>
+                            </tr>
+                        </table>
+
+                        <h5>2. Objective, Scope and Criteria</h5>
+                        <p><strong>Objective</strong></p>
+                        <p style="white-space:pre-wrap;" t-field="doc.audit_id.objective"/>
+                        <p><strong>Scope</strong></p>
+                        <p style="white-space:pre-wrap;" t-field="doc.audit_id.scope"/>
+                        <p><strong>Audit criteria</strong></p>
+                        <p style="white-space:pre-wrap;" t-field="doc.audit_id.criteria"/>
+
+                        <h5>3. Executive Summary</h5>
+                        <p style="white-space:pre-wrap;" t-field="doc.executive_summary"/>
+
+                        <h5>4. Results</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td style="width:40%"><strong>Questions assessed</strong></td>
+                                <td>
+                                    <span t-field="doc.audit_id.assessed_count"/>
+                                    of
+                                    <span t-field="doc.audit_id.response_count"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Conformity rate</strong></td>
+                                <td><span t-field="doc.audit_id.conformity_rate"/> %</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Findings raised</strong></td>
+                                <td><span t-field="doc.audit_id.finding_count"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Critical / major findings</strong></td>
+                                <td>
+                                    <span t-field="doc.audit_id.critical_finding_count"/>
+                                    /
+                                    <span t-field="doc.audit_id.major_finding_count"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h5>5. Findings Register</h5>
+                        <t t-if="doc.audit_id.finding_ids">
+                            <table class="table table-sm o_main_table">
+                                <thead>
+                                    <tr>
+                                        <th>Reference</th>
+                                        <th>Area</th>
+                                        <th>Category</th>
+                                        <th>Statement</th>
+                                        <th>Auditee</th>
+                                        <th>Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.audit_id.finding_ids" t-as="finding">
+                                        <td><span t-field="finding.reference"/></td>
+                                        <td><span t-field="finding.area_id.complete_name"/></td>
+                                        <td><span t-field="finding.category_id.name"/></td>
+                                        <td><span t-field="finding.name"/></td>
+                                        <td><span t-field="finding.auditee_id.name"/></td>
+                                        <td><span t-field="finding.response_due_date"/></td>
+                                        <td><span t-field="finding.state"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p>No finding was raised during this audit.</p>
+                        </t>
+
+                        <h5>6. Positive Observations</h5>
+                        <t t-if="doc.positive_observations">
+                            <p style="white-space:pre-wrap;" t-field="doc.positive_observations"/>
+                        </t>
+                        <t t-else="">
+                            <p>None recorded.</p>
+                        </t>
+
+                        <h5>7. Conclusion</h5>
+                        <p style="white-space:pre-wrap;" t-field="doc.conclusion"/>
+
+                        <h5>8. Approval</h5>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Prepared by</td>
+                                    <td><span t-field="doc.prepared_by_id.name"/></td>
+                                    <td><span t-field="doc.report_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Reviewed by</td>
+                                    <td><span t-field="doc.reviewed_by_id.name"/></td>
+                                    <td><span t-field="doc.review_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Approved by</td>
+                                    <td><span t-field="doc.approved_by_id.name"/></td>
+                                    <td><span t-field="doc.approval_date"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-muted" style="font-size:9px;">
+                            The names and dates above are recorded by the system on the
+                            action of the identified user. They are not electronic
+                            signatures within the meaning of FDA 21 CFR Part 11 subpart C.
+                        </p>
+
+                        <h5>9. Distribution</h5>
+                        <t t-foreach="doc.distribution_ids" t-as="recipient">
+                            <span t-field="recipient.name"/><br/>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

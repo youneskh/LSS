@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="cron_ls_complaint_overdue" model="ir.cron">
+            <field name="name">Life Sciences: Overdue Complaint Notification</field>
+            <field name="model_id" ref="model_ls_complaint"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_overdue_complaints()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_complaint_adverse_event_due" model="ir.cron">
+            <field name="name">Life Sciences: Adverse Event Reporting Deadline Notification</field>
+            <field name="model_id" ref="model_ls_complaint_adverse_event"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_due_adverse_event_reports()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

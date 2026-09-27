@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_label_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.label.list</field>
+        <field name="model">ls.cosmetic.label</field>
+        <field name="arch" type="xml">
+            <list string="Labels"
+                  decoration-muted="state == 'superseded'"
+                  decoration-success="state == 'approved'">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="formulation_id"/>
+                <field name="product_tmpl_id" optional="show"/>
+                <field name="responsible_person_id" optional="show"/>
+                <field name="durability_mode" optional="show"/>
+                <field name="is_imported" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_label_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.label.form</field>
+        <field name="model">ls.cosmetic.label</field>
+        <field name="arch" type="xml">
+            <form string="Labelling Particulars">
+                <header>
+                    <button name="action_open_generate_wizard" type="object"
+                            string="Generate Ingredient List"
+                            invisible="state in ('approved', 'superseded')"/>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="btn-primary"
+                            invisible="state != 'review'"
+                            groups="ls_cosmetics.group_ls_cosmetics_regulatory_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Return to Draft"
+                            invisible="state != 'review'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Superseded" bg_color="text-bg-secondary"
+                            invisible="state != 'superseded'"/>
+                    <div class="oe_title">
+                        <label for="code"/>
+                        <h1>
+                            <field name="code" readonly="1"/>
+                            <span> v</span><field name="version" readonly="1" class="oe_inline"/>
+                        </h1>
+                        <label for="name" class="oe_edit_only"/>
+                        <h2><field name="name" placeholder="Label name"/></h2>
+                    </div>
+                    <group>
+                        <group string="Subject">
+                            <field name="formulation_id"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Approval">
+                            <field name="approved_by_id"/>
+                            <field name="approved_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Article 19(1) Particulars" name="particulars">
+                            <group string="(a) Responsible Person">
+                                <field name="responsible_person_id"/>
+                                <field name="responsible_person_address"/>
+                                <field name="is_imported"/>
+                                <field name="country_of_origin_id"
+                                       invisible="not is_imported"
+                                       required="is_imported"/>
+                            </group>
+                            <group string="(b) Nominal Content">
+                                <field name="nominal_content"
+                                       invisible="content_exempt"/>
+                                <field name="content_exempt"/>
+                                <field name="content_exempt_reason"
+                                       invisible="not content_exempt"
+                                       required="content_exempt"/>
+                            </group>
+                            <group string="(c) Durability">
+                                <field name="durability_mode"/>
+                                <field name="stated_durability_months"/>
+                                <field name="minimum_durability_date"
+                                       invisible="durability_mode != 'min_durability'"/>
+                                <field name="durability_conditions"
+                                       invisible="durability_mode != 'min_durability'"/>
+                                <field name="pao_months"
+                                       invisible="durability_mode != 'pao'"/>
+                            </group>
+                            <group string="(e) Batch Identification">
+                                <field name="batch_reference_rule"/>
+                                <field name="batch_on_packaging_only"/>
+                            </group>
+                            <group string="(f) Function of the Product">
+                                <field name="function_clear_from_presentation"/>
+                                <field name="product_function"
+                                       invisible="function_clear_from_presentation"/>
+                            </group>
+                        </page>
+                        <page string="(d) Precautions" name="precautions">
+                            <group>
+                                <field name="is_professional_use"/>
+                            </group>
+                            <separator string="Wording Required by the Annexes"/>
+                            <field name="annex_wording" readonly="1"/>
+                            <separator string="Particular Precautions for Use"/>
+                            <field name="precautions"
+                                   placeholder="Precautions to be observed in use, and at least those listed in Annexes III to VI"/>
+                        </page>
+                        <page string="(g) List of Ingredients" name="ingredients">
+                            <group>
+                                <group>
+                                    <field name="ingredient_list_prefix"/>
+                                    <field name="colorants_last"/>
+                                    <field name="may_contain"
+                                           invisible="not colorants_last"/>
+                                </group>
+                                <group>
+                                    <field name="ingredient_list_generated_on"/>
+                                </group>
+                            </group>
+                            <button name="action_generate_ingredient_list" type="object"
+                                    string="Regenerate from Formulation"
+                                    class="btn-secondary"
+                                    invisible="state in ('approved', 'superseded')"/>
+                            <field name="ingredient_list"
+                                   placeholder="Generated from the formulation"/>
+                        </page>
+                        <page string="Presentation and Languages" name="presentation">
+                            <group>
+                                <field name="information_on_leaflet"/>
+                                <field name="notice_in_proximity"/>
+                            </group>
+                            <separator string="Label Languages"/>
+                            <field name="language_ids" widget="many2many_tags"/>
+                            <separator string="Artwork"/>
+                            <field name="artwork_attachment_ids" widget="many2many_binary"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_label_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.label.search</field>
+        <field name="model">ls.cosmetic.label</field>
+        <field name="arch" type="xml">
+            <search string="Labels">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="formulation_id"/>
+                <field name="product_tmpl_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_review" string="Under Review"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_imported" string="Imported Products"
+                        domain="[('is_imported', '=', True)]"/>
+                <filter name="filter_pao" string="Period After Opening"
+                        domain="[('durability_mode', '=', 'pao')]"/>
+                <filter name="filter_no_list" string="No Ingredient List"
+                        domain="[('ingredient_list', '=', False)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                    <filter name="group_durability" string="Durability Indication"
+                            context="{'group_by': 'durability_mode'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_label" model="ir.actions.act_window">
+        <field name="name">Labelling</field>
+        <field name="res_model">ls.cosmetic.label</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_label_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record your labelling particulars</p>
+            <p>
+                Article 19(1) requires the container and packaging to bear seven
+                particulars in indelible, easily legible and visible lettering. Each
+                one has a field on this form, and the list of ingredients is
+                generated from the approved formulation.
+            </p>
+        </field>
+    </record>
+
+</odoo>

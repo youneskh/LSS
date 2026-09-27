@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_meaning_signer,ls.signature.meaning signer,model_ls_signature_meaning,group_ls_signature_signer,1,0,0,0
+access_meaning_manager,ls.signature.meaning manager,model_ls_signature_meaning,group_ls_signature_manager,1,1,1,1
+access_policy_signer,ls.signature.policy signer,model_ls_signature_policy,group_ls_signature_signer,1,0,0,0
+access_policy_manager,ls.signature.policy manager,model_ls_signature_policy,group_ls_signature_manager,1,1,1,1
+access_log_signer,ls.signature.log signer,model_ls_signature_log,group_ls_signature_signer,1,0,1,0
+access_log_viewer,ls.signature.log viewer,model_ls_signature_log,group_ls_signature_viewer,1,0,0,0
+access_log_auditor,ls.signature.log auditor,model_ls_signature_log,group_ls_signature_auditor,1,0,0,0
+access_log_manager,ls.signature.log manager,model_ls_signature_log,group_ls_signature_manager,1,0,0,0
+access_attempt_auditor,ls.signature.attempt auditor,model_ls_signature_attempt,group_ls_signature_auditor,1,0,0,0
+access_attempt_manager,ls.signature.attempt manager,model_ls_signature_attempt,group_ls_signature_manager,1,0,0,0
+access_session_signer,ls.signature.session signer,model_ls_signature_session,group_ls_signature_signer,1,0,0,0
+access_session_auditor,ls.signature.session auditor,model_ls_signature_session,group_ls_signature_auditor,1,0,0,0
+access_session_manager,ls.signature.session manager,model_ls_signature_session,group_ls_signature_manager,1,1,0,0
+access_request_signer,ls.signature.request signer,model_ls_signature_request,group_ls_signature_signer,1,1,1,0
+access_request_viewer,ls.signature.request viewer,model_ls_signature_request,group_ls_signature_viewer,1,0,0,0
+access_request_manager,ls.signature.request manager,model_ls_signature_request,group_ls_signature_manager,1,1,1,1
+access_integrity_auditor,ls.signature.integrity.check auditor,model_ls_signature_integrity_check,group_ls_signature_auditor,1,0,0,0
+access_integrity_manager,ls.signature.integrity.check manager,model_ls_signature_integrity_check,group_ls_signature_manager,1,0,1,0
+access_wizard_signer,ls.signature.wizard signer,model_ls_signature_wizard,group_ls_signature_signer,1,1,1,1
+access_decline_wizard_signer,ls.signature.decline.wizard signer,model_ls_signature_decline_wizard,group_ls_signature_signer,1,1,1,1

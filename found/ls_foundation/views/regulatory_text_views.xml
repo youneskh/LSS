@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_lss_foundation_regulatory_text_tree" model="ir.ui.view">
+        <field name="name">lss.foundation.regulatory_text.tree</field>
+        <field name="model">lss.foundation.regulatory_text</field>
+        <field name="arch" type="xml">
+            <tree><field name="title"/><field name="type"/><field name="number"/><field name="authority_id"/><field name="issue_date"/><field name="status" widget="badge"/></tree>
+        </field>
+    </record>
+    <record id="action_lss_foundation_regulatory_text" model="ir.actions.act_window">
+        <field name="name">Regulatory Texts</field>
+        <field name="res_model">lss.foundation.regulatory_text</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

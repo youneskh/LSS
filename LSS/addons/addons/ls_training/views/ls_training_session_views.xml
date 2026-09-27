@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_session_list_view" model="ir.ui.view">
+        <field name="name">ls.training.session.list</field>
+        <field name="model">ls.training.session</field>
+        <field name="arch" type="xml">
+            <list string="Training Sessions"
+                  decoration-muted="state == 'cancelled'"
+                  decoration-success="state == 'done'"
+                  decoration-info="state == 'in_progress'">
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="date_start"/>
+                <field name="date_end" optional="hide"/>
+                <field name="trainer_employee_id" optional="show"/>
+                <field name="location" optional="hide"/>
+                <field name="attendee_count"/>
+                <field name="passed_count"/>
+                <field name="failed_count" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'in_progress'"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_training_session_form_view" model="ir.ui.view">
+        <field name="name">ls.training.session.form</field>
+        <field name="model">ls.training.session</field>
+        <field name="arch" type="xml">
+            <form string="Training Session">
+                <header>
+                    <button name="action_open_register_wizard" type="object"
+                            string="Register Employees"
+                            class="btn-secondary"
+                            invisible="state not in ('draft', 'confirmed', 'in_progress')"
+                            groups="ls_training.group_ls_training_trainer"/>
+                    <button name="action_confirm" type="object"
+                            string="Confirm" class="btn-primary"
+                            invisible="state != 'draft'"
+                            groups="ls_training.group_ls_training_trainer"/>
+                    <button name="action_start" type="object"
+                            string="Start" class="btn-primary"
+                            invisible="state != 'confirmed'"
+                            groups="ls_training.group_ls_training_trainer"/>
+                    <button name="action_close" type="object"
+                            string="Close and Issue Certifications"
+                            class="btn-primary"
+                            invisible="state != 'in_progress'"
+                            confirm="Closing the session issues certifications to every attendee who passed and freezes the attendance evidence. Continue?"
+                            groups="ls_training.group_ls_training_trainer"/>
+                    <button name="action_cancel" type="object"
+                            string="Cancel"
+                            invisible="state in ('done', 'cancelled')"
+                            groups="ls_training.group_ls_training_trainer"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'cancelled'"
+                            groups="ls_training.group_ls_training_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_certifications"
+                                type="object" class="oe_stat_button"
+                                icon="fa-certificate"
+                                invisible="state != 'done'">
+                            <field name="certification_count"
+                                   widget="statinfo"
+                                   string="Certifications"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="course" string="Course">
+                            <field name="course_id"
+                                   options="{'no_create': True}"
+                                   readonly="state == 'done'"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"
+                                   options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                        <group name="schedule" string="Schedule">
+                            <field name="date_start"
+                                   readonly="state == 'done'"/>
+                            <field name="date_end"
+                                   readonly="state == 'done'"/>
+                            <field name="location"/>
+                            <field name="capacity"/>
+                        </group>
+                        <group name="trainer" string="Trainer">
+                            <field name="trainer_employee_id"
+                                   options="{'no_create': True}"
+                                   readonly="state == 'done'"/>
+                            <field name="trainer_external"
+                                   readonly="state == 'done'"/>
+                        </group>
+                        <group name="results" string="Results">
+                            <field name="attendee_count"/>
+                            <field name="passed_count"/>
+                            <field name="failed_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="attendees" string="Attendees">
+                            <field name="attendance_ids"
+                                   readonly="state in ('done', 'cancelled')"
+                                   context="{'default_session_id': id}">
+                                <list editable="bottom">
+                                    <field name="employee_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="attended"/>
+                                    <field name="requires_assessment"
+                                           column_invisible="True"/>
+                                    <field name="score"
+                                           readonly="not requires_assessment"/>
+                                    <field name="pass_score"
+                                           optional="hide"/>
+                                    <field name="result" widget="badge"
+                                           decoration-success="result == 'passed'"
+                                           decoration-danger="result == 'failed'"/>
+                                    <field name="comment" optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page name="notes" string="Notes">
+                            <field name="note"
+                                   placeholder="Observations recorded during the session"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_session_calendar_view" model="ir.ui.view">
+        <field name="name">ls.training.session.calendar</field>
+        <field name="model">ls.training.session</field>
+        <field name="arch" type="xml">
+            <calendar string="Training Sessions" date_start="date_start"
+                      date_stop="date_end" color="course_id" mode="month">
+                <field name="course_id"/>
+                <field name="attendee_count"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="ls_training_session_search_view" model="ir.ui.view">
+        <field name="name">ls.training.session.search</field>
+        <field name="model">ls.training.session</field>
+        <field name="arch" type="xml">
+            <search string="Training Sessions">
+                <field name="name"/>
+                <field name="course_id"/>
+                <field name="trainer_employee_id"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('draft', 'confirmed', 'in_progress'))]"/>
+                <filter name="filter_done" string="Closed"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="filter_upcoming" string="Upcoming"
+                        domain="[('date_start', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_this_month" string="This Month"
+                        date="date_start"/>
+                                    <filter name="group_by_course" string="Course"
+                        context="{'group_by': 'course_id'}"/>
+                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_trainer" string="Trainer"
+                        context="{'group_by': 'trainer_employee_id'}"/>
+                    <filter name="group_by_month" string="Start Month"
+                        context="{'group_by': 'date_start:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_training_session_action" model="ir.actions.act_window">
+        <field name="name">Training Sessions</field>
+        <field name="res_model">ls.training.session</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="search_view_id"
+               ref="ls_training_session_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Schedule your first training session
+            </p>
+            <p>
+                A session delivers an approved course to a group of
+                employees. Closing the session issues a certification to
+                every attendee who passed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

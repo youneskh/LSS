@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details.
+
+     The functional specification (section 7.14) places the menus under a
+     "Security" root. Odoo reserves the Settings application for that purpose
+     and does not offer a "Security" application menu, so the module supplies
+     its own root menu instead. The submenu names follow the specification. -->
+<odoo>
+
+    <menuitem id="menu_ls_signature_root"
+              name="Electronic Signatures"
+              web_icon="ls_electronic_signature,static/description/icon.png"
+              sequence="80"
+              groups="ls_electronic_signature.group_ls_signature_signer"/>
+
+    <menuitem id="menu_ls_signature_operations"
+              name="Signatures"
+              parent="menu_ls_signature_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_signature_request"
+              name="Signature Requests"
+              parent="menu_ls_signature_operations"
+              action="action_ls_signature_request"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_signature_log_mine"
+              name="My Signatures"
+              parent="menu_ls_signature_operations"
+              action="action_ls_signature_log_mine"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_signature_log"
+              name="Signature Log"
+              parent="menu_ls_signature_operations"
+              action="action_ls_signature_log"
+              sequence="30"
+              groups="ls_electronic_signature.group_ls_signature_viewer"/>
+
+    <menuitem id="menu_ls_signature_monitoring"
+              name="Monitoring"
+              parent="menu_ls_signature_root"
+              sequence="20"
+              groups="ls_electronic_signature.group_ls_signature_auditor"/>
+
+    <menuitem id="menu_ls_signature_attempt"
+              name="Signature Attempts"
+              parent="menu_ls_signature_monitoring"
+              action="action_ls_signature_attempt"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_signature_session"
+              name="Signing Sessions"
+              parent="menu_ls_signature_monitoring"
+              action="action_ls_signature_session"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_signature_integrity"
+              name="Integrity Checks"
+              parent="menu_ls_signature_monitoring"
+              action="action_ls_signature_integrity_check"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_signature_integrity_run"
+              name="Verify Chain Now"
+              parent="menu_ls_signature_monitoring"
+              action="action_ls_signature_integrity_run"
+              sequence="40"
+              groups="ls_electronic_signature.group_ls_signature_manager"/>
+
+    <menuitem id="menu_ls_signature_configuration"
+              name="Configuration"
+              parent="menu_ls_signature_root"
+              sequence="90"
+              groups="ls_electronic_signature.group_ls_signature_manager"/>
+
+    <menuitem id="menu_ls_signature_meaning"
+              name="Signature Meanings"
+              parent="menu_ls_signature_configuration"
+              action="action_ls_signature_meaning"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_signature_policy"
+              name="Signature Policies"
+              parent="menu_ls_signature_configuration"
+              action="action_ls_signature_policy"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_signature_settings"
+              name="Settings"
+              parent="menu_ls_signature_configuration"
+              action="action_ls_signature_settings"
+              sequence="90"/>
+
+</odoo>

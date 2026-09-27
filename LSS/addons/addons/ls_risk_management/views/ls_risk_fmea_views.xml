@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_fmea_line_list" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.line.list</field>
+        <field name="model">ls.risk.fmea.line</field>
+        <field name="arch" type="xml">
+            <list string="Failure Modes" editable="bottom"
+                  decoration-danger="action_required and action_state != 'completed'"
+                  decoration-success="revised_rpn &gt; 0 and revised_rpn &lt; rpn">
+                <field name="sequence" widget="handle"/>
+                <field name="item"/>
+                <field name="item_function"/>
+                <field name="failure_mode"/>
+                <field name="failure_effect"/>
+                <field name="severity"/>
+                <field name="failure_cause"/>
+                <field name="occurrence"/>
+                <field name="current_controls"/>
+                <field name="detection"/>
+                <field name="rpn"/>
+                <field name="action_required" readonly="1"/>
+                <field name="recommended_action"/>
+                <field name="responsible_id" optional="show"/>
+                <field name="target_date" optional="show"/>
+                <field name="action_state"/>
+                <field name="actions_taken" optional="hide"/>
+                <field name="revised_severity" optional="hide"/>
+                <field name="revised_occurrence" optional="hide"/>
+                <field name="revised_detection" optional="hide"/>
+                <field name="revised_rpn" optional="show"/>
+                <field name="rpn_reduction" optional="hide"/>
+                <field name="risk_id" optional="hide"/>
+                <button name="action_create_risk" type="object" icon="fa-exclamation-triangle"
+                        title="Raise a risk register entry from this failure mode"
+                        invisible="risk_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_fmea_line_form" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.line.form</field>
+        <field name="model">ls.risk.fmea.line</field>
+        <field name="arch" type="xml">
+            <form string="Failure Mode">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="fmea_id"/>
+                            <field name="item"/>
+                            <field name="item_function"/>
+                            <field name="failure_mode"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="severity"/>
+                            <field name="occurrence"/>
+                            <field name="detection"/>
+                            <field name="rpn"/>
+                            <field name="action_required"/>
+                        </group>
+                    </group>
+                    <group string="Analysis">
+                        <field name="failure_effect"/>
+                        <field name="failure_cause"/>
+                        <field name="current_controls"/>
+                    </group>
+                    <group string="Action">
+                        <group>
+                            <field name="recommended_action"/>
+                            <field name="responsible_id"/>
+                            <field name="target_date"/>
+                            <field name="action_state"/>
+                        </group>
+                        <group>
+                            <field name="actions_taken"/>
+                            <field name="risk_id"/>
+                        </group>
+                    </group>
+                    <group string="Rating After Action">
+                        <group>
+                            <field name="revised_severity"/>
+                            <field name="revised_occurrence"/>
+                            <field name="revised_detection"/>
+                        </group>
+                        <group>
+                            <field name="revised_rpn"/>
+                            <field name="rpn_reduction"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_fmea_list" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.list</field>
+        <field name="model">ls.risk.fmea</field>
+        <field name="arch" type="xml">
+            <list string="FMEA Worksheets"
+                  decoration-danger="open_action_count &gt; 0"
+                  decoration-muted="state in ('closed', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="fmea_type"/>
+                <field name="revision"/>
+                <field name="facilitator_id" widget="many2one_avatar_user"/>
+                <field name="start_date"/>
+                <field name="line_count"/>
+                <field name="max_rpn"/>
+                <field name="rpn_threshold" optional="show"/>
+                <field name="action_required_count" optional="show"/>
+                <field name="open_action_count"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_fmea_form" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.form</field>
+        <field name="model">ls.risk.fmea</field>
+        <field name="arch" type="xml">
+            <form string="FMEA Worksheet">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="oe_highlight"
+                            invisible="state != 'in_progress'"/>
+                    <button name="action_review" type="object" string="Record Review"
+                            invisible="state != 'review' or reviewed_by_id"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight"
+                            invisible="state != 'review' or not reviewed_by_id"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state != 'approved'"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state not in ('approved', 'closed')"/>
+                    <button name="action_open_cancel_wizard" type="object"
+                            string="Cancel"
+                            invisible="state in ('closed', 'cancelled')"
+                            groups="ls_risk_management.group_risk_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,in_progress,review,approved,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                            invisible="state != 'cancelled'"/>
+                    <div class="alert alert-info" role="alert">
+                        The 1-10 severity, occurrence and detection scales and the Risk
+                        Priority Number are an industry convention, not a requirement of
+                        ISO 14971:2019. The action thresholds below are defined by this
+                        organisation.
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h2><field name="title" readonly="state in ('closed', 'cancelled')"/></h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fmea_type" readonly="state != 'draft'"/>
+                            <field name="revision" readonly="1"/>
+                            <field name="facilitator_id" readonly="state in ('closed', 'cancelled')"/>
+                            <field name="start_date" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'draft'"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="rpn_threshold" readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="severity_action_threshold"
+                                   readonly="state not in ('draft', 'in_progress')"/>
+                            <field name="line_count"/>
+                            <field name="max_rpn"/>
+                            <field name="action_required_count"/>
+                            <field name="open_action_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Failure Modes" name="lines">
+                            <field name="line_ids"
+                                   readonly="state in ('closed', 'cancelled')"/>
+                        </page>
+                        <page string="Scope" name="scope">
+                            <group string="Scope">
+                                <field name="scope" nolabel="1"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                            <group string="Assumptions and Boundaries">
+                                <field name="assumptions" nolabel="1"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                            <group string="Revision">
+                                <field name="revision_reason"
+                                       readonly="state in ('closed', 'cancelled')"/>
+                            </group>
+                        </page>
+                        <page string="Team" name="team">
+                            <field name="team_member_ids" widget="many2many_tags"
+                                   readonly="state in ('closed', 'cancelled')"/>
+                        </page>
+                        <page string="Review and Approval" name="approval">
+                            <group>
+                                <group>
+                                    <field name="reviewed_by_id"/>
+                                    <field name="review_date"/>
+                                </group>
+                                <group>
+                                    <field name="approved_by_id"/>
+                                    <field name="approval_date"/>
+                                </group>
+                            </group>
+                            <group string="Cancellation" invisible="state != 'cancelled'">
+                                <field name="cancel_reason" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_fmea_search" model="ir.ui.view">
+        <field name="name">ls.risk.fmea.search</field>
+        <field name="model">ls.risk.fmea</field>
+        <field name="arch" type="xml">
+            <search string="Search FMEA Worksheets">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="scope"/>
+                <field name="facilitator_id"/>
+                <field name="team_member_ids"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ('draft', 'in_progress', 'review'))]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_open_actions" string="Has Open Actions"
+                        domain="[('open_action_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="FMEA Type"
+                        context="{'group_by': 'fmea_type'}"/>
+                    <filter name="group_facilitator" string="Facilitator"
+                        context="{'group_by': 'facilitator_id'}"/>
+                    <filter name="group_start_date" string="Start Date"
+                        context="{'group_by': 'start_date'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_fmea" model="ir.actions.act_window">
+        <field name="name">FMEA</field>
+        <field name="res_model">ls.risk.fmea</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_fmea_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create an FMEA worksheet</p>
+            <p>
+                An FMEA worksheet records failure modes, their effects and causes,
+                the severity, occurrence and detection ratings, and the actions
+                required. Failure modes can raise entries in the risk register.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_fmea_line" model="ir.actions.act_window">
+        <field name="name">Failure Modes</field>
+        <field name="res_model">ls.risk.fmea.line</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

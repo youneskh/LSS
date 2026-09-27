@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_complaint_adverse_event_view_list" model="ir.ui.view">
+        <field name="name">ls.complaint.adverse_event.list</field>
+        <field name="model">ls.complaint.adverse_event</field>
+        <field name="arch" type="xml">
+            <list string="Adverse Events"
+                  decoration-danger="is_report_overdue"
+                  decoration-warning="seriousness == 'serious' and state in ['draft', 'assessed']">
+                <field name="name"/>
+                <field name="complaint_id"/>
+                <field name="awareness_date"/>
+                <field name="event_date" optional="show"/>
+                <field name="seriousness"/>
+                <field name="outcome" optional="show"/>
+                <field name="causality_assessment" optional="hide"/>
+                <field name="reportable"/>
+                <field name="report_due_date"/>
+                <field name="report_submitted_date" optional="show"/>
+                <field name="is_report_overdue" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'submitted'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_complaint_adverse_event_view_form" model="ir.ui.view">
+        <field name="name">ls.complaint.adverse_event.form</field>
+        <field name="model">ls.complaint.adverse_event</field>
+        <field name="arch" type="xml">
+            <form string="Adverse Event">
+                <header>
+                    <button name="action_assess" type="object" string="Assess"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_submit" type="object" string="Record Submission"
+                            class="btn-primary"
+                            invisible="state != 'assessed' or not reportable"
+                            groups="ls_complaint.group_ls_complaint_investigator"/>
+                    <button name="action_close" type="object" string="Close"
+                            class="btn-primary"
+                            invisible="state not in ['assessed', 'submitted']"
+                            groups="ls_complaint.group_ls_complaint_reviewer"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,assessed,submitted,closed"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Reporting Overdue"
+                            bg_color="text-bg-danger" invisible="not is_report_overdue"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="context" string="Context">
+                            <field name="complaint_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="event_date"/>
+                            <field name="awareness_date"/>
+                        </group>
+                        <group name="qualification" string="Qualification">
+                            <field name="seriousness"/>
+                            <field name="outcome"/>
+                            <field name="causality_assessment"/>
+                            <field name="follow_up_required"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="event" string="Event">
+                            <label for="event_description"/>
+                            <field name="event_description"/>
+                            <label for="seriousness_criteria"/>
+                            <field name="seriousness_criteria"/>
+                            <label for="causality_rationale"/>
+                            <field name="causality_rationale"/>
+                        </page>
+                        <page name="subject" string="Subject">
+                            <div class="alert alert-info" role="alert">
+                                Record pseudonymised data only. Directly identifying
+                                personal data must not be entered in these fields.
+                            </div>
+                            <group>
+                                <field name="patient_reference"/>
+                                <field name="patient_age_range"/>
+                                <field name="patient_sex"/>
+                            </group>
+                        </page>
+                        <page name="reporting" string="Regulatory Reporting">
+                            <group>
+                                <group>
+                                    <field name="reportable"/>
+                                    <field name="authority_id"
+                                           required="reportable and state != 'draft'"/>
+                                    <field name="report_due_date"/>
+                                    <field name="is_report_overdue"/>
+                                </group>
+                                <group>
+                                    <field name="report_submitted_date"/>
+                                    <field name="report_reference"/>
+                                    <field name="submitted_by_id"/>
+                                </group>
+                            </group>
+                            <label for="reportability_rationale"/>
+                            <field name="reportability_rationale"
+                                   placeholder="Regulation and article applied, and the reasoning followed"/>
+                        </page>
+                        <page name="follow_up" string="Follow-up and Closure">
+                            <label for="follow_up_notes"/>
+                            <field name="follow_up_notes"/>
+                            <label for="closure_notes"/>
+                            <field name="closure_notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_complaint_adverse_event_view_search" model="ir.ui.view">
+        <field name="name">ls.complaint.adverse_event.search</field>
+        <field name="model">ls.complaint.adverse_event</field>
+        <field name="arch" type="xml">
+            <search string="Adverse Events">
+                <field name="name"/>
+                <field name="complaint_id"/>
+                <field name="event_description"/>
+                <field name="authority_id"/>
+                <filter name="filter_reportable" string="Reportable"
+                        domain="[('reportable', '=', True)]"/>
+                <filter name="filter_serious" string="Serious"
+                        domain="[('seriousness', '=', 'serious')]"/>
+                <filter name="filter_overdue" string="Reporting Overdue"
+                        domain="[('is_report_overdue', '=', True)]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', '!=', 'closed')]"/>
+                <filter name="filter_awareness_date" string="Awareness Date"
+                        date="awareness_date"/>
+                                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_seriousness" string="Seriousness"
+                        context="{'group_by': 'seriousness'}"/>
+                    <filter name="group_by_outcome" string="Outcome"
+                        context="{'group_by': 'outcome'}"/>
+                    <filter name="group_by_causality" string="Causality"
+                        context="{'group_by': 'causality_assessment'}"/>
+                    <filter name="group_by_awareness_month" string="Awareness Month"
+                        context="{'group_by': 'awareness_date:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_complaint_adverse_event_view_graph" model="ir.ui.view">
+        <field name="name">ls.complaint.adverse_event.graph</field>
+        <field name="model">ls.complaint.adverse_event</field>
+        <field name="arch" type="xml">
+            <graph string="Adverse Events" type="bar">
+                <field name="awareness_date" interval="month" type="row"/>
+                <field name="seriousness" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_complaint_adverse_event_action" model="ir.actions.act_window">
+        <field name="name">Adverse Events</field>
+        <field name="res_model">ls.complaint.adverse_event</field>
+        <field name="view_mode">list,form,graph</field>
+        <field name="search_view_id" ref="ls_complaint_adverse_event_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No adverse event recorded yet</p>
+            <p>Adverse events are created from the complaint they belong to.</p>
+        </field>
+    </record>
+
+</odoo>

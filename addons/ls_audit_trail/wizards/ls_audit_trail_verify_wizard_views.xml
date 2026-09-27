@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_audit_trail_verify_wizard_form" model="ir.ui.view">
+        <field name="name">ls.audit_trail.verify.wizard.form</field>
+        <field name="model">ls.audit_trail.verify.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Verify Audit Trail Integrity">
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="scope" widget="radio"/>
+                    <field name="window_days" invisible="scope != 'window'"
+                           required="scope == 'window'"/>
+                    <field name="date_from" invisible="scope != 'range'"
+                           required="scope == 'range'"/>
+                    <field name="date_to" invisible="scope != 'range'"
+                           required="scope == 'range'"/>
+                    <field name="entry_estimate" readonly="1"/>
+                </group>
+                <div class="alert alert-info" role="alert">
+                    The verification recomputes the payload digest and the chain
+                    digest of every entry in scope and compares them with the
+                    stored values. The outcome is written to an immutable
+                    verification record, whether it passes or fails.
+                </div>
+                <footer>
+                    <button name="action_verify" type="object" string="Verify"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_verify_wizard" model="ir.actions.act_window">
+        <field name="name">Verify Integrity</field>
+        <field name="res_model">ls.audit_trail.verify.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

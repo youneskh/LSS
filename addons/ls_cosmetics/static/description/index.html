@@ -1,0 +1,101 @@
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<section style="padding:32px 0;font-family:Roboto,-apple-system,Segoe UI,sans-serif;color:#1f2d33;">
+  <div style="max-width:920px;margin:0 auto;">
+
+    <div style="background:linear-gradient(135deg,#205460,#12343e);color:#fff;padding:40px;border-radius:8px;">
+      <h1 style="margin:0 0 8px;font-size:34px;font-weight:300;">Life Sciences — Cosmetics</h1>
+      <p style="margin:0;font-size:17px;opacity:.9;">
+        Formulations, safety reports, Product Information Files, claim
+        substantiation and labelling for Regulation (EC) No 1223/2009.
+      </p>
+      <p style="margin:16px 0 0;font-size:13px;opacity:.75;">
+        Odoo 19.0 Community Edition · AGPL-3.0 · 13 models · 316 fields
+      </p>
+    </div>
+
+    <div style="background:#fdf6e6;border-left:4px solid #e8c48a;padding:20px 24px;margin:28px 0;border-radius:4px;">
+      <h3 style="margin:0 0 8px;font-size:16px;">What this module does not do</h3>
+      <p style="margin:0 0 8px;font-size:14px;line-height:1.6;">
+        It <strong>supports</strong> the implementation of processes required by
+        Regulation (EC) No 1223/2009. It does not certify compliance, and
+        installing it does not make an organisation compliant.
+      </p>
+      <p style="margin:0;font-size:14px;line-height:1.6;">
+        It ships <strong>no annex substance data</strong>, because Annexes II–VI are
+        amended several times a year and an embedded snapshot would be stale
+        and falsely authoritative. Until you link an ingredient to an annex
+        entry you have loaded yourself, the module reports its status as
+        <em>not evaluated</em> — never as compliant.
+      </p>
+    </div>
+
+    <h2 style="font-size:22px;font-weight:400;border-bottom:2px solid #205460;padding-bottom:8px;">
+      The regulation, mapped to fields
+    </h2>
+
+    <table style="width:100%;border-collapse:collapse;font-size:14px;margin:20px 0;">
+      <tr style="background:#f2f6f7;">
+        <th style="text-align:left;padding:10px;border-bottom:1px solid #dde5e7;">Provision</th>
+        <th style="text-align:left;padding:10px;border-bottom:1px solid #dde5e7;">How it is enforced</th>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Annex I</strong><br/>Safety report</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">Part A §1–10 and Part B §1–4 reproduced as fields. Part B cannot start until all ten Part A sections are documented, because Part B §3 requires the reasoning to rest on them.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Art. 10(2)</strong><br/>Assessor qualification</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">Name, address and qualification evidence recorded; approval refused for any user other than the account named in section B4. The module records the evidence — it cannot verify a diploma.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Art. 11(1)</strong><br/>Ten-year retention</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">Retention end date computed from the last batch placed on the market. Archiving before it is refused; deletion outside draft is blocked.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Art. 11(2)</strong><br/>Five file items</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">One page each. Activation names whatever is missing, and refuses an unapproved safety report, a "not safe" conclusion, or an unapproved claim.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Art. 19(1)</strong><br/>Seven particulars</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">One field per particular. The ingredient list is generated from the approved formulation, applying descending weight order, the <code>(nano)</code> suffix, <code>parfum</code>, colorant ordering and the <code>+/-</code> marker. The 30-month durability rule is enforced.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>EU 655/2013</strong><br/>Claim criteria</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">Six criteria, each with a tick <em>and</em> a written justification. A tick alone will not approve a claim.</td>
+      </tr>
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;vertical-align:top;"><strong>Algeria</strong><br/>Prior authorisation</td>
+        <td style="padding:10px;border-bottom:1px solid #eef2f3;">The sixteen dossier items, the 45-day decision period and the 1-month compliance period, per décret exécutif n° 97-37 as modified by n° 10-114. Cosmetics fall under the Ministère du Commerce — <strong>no ANPP requirement is asserted</strong>.</td>
+      </tr>
+    </table>
+
+    <h2 style="font-size:22px;font-weight:400;border-bottom:2px solid #205460;padding-bottom:8px;">
+      Data integrity
+    </h2>
+    <ul style="font-size:14px;line-height:1.9;">
+      <li>Approved formulations, safety reports and labels are <strong>frozen</strong> — changes go through a new version, which supersedes its predecessor only when itself approved.</li>
+      <li>Segregation of duties is enforced <strong>at ORM level</strong>: the submitter cannot approve, and the safety report can only be signed by the named assessor.</li>
+      <li>Scheduled actions <strong>post notices, never decide</strong>. No cron archives a dossier or withdraws an authorisation.</li>
+      <li>Absence of reference data is reported as <em>not evaluated</em>, never as compliant.</li>
+    </ul>
+
+    <div style="background:#f2f6f7;padding:20px 24px;margin:28px 0;border-radius:4px;">
+      <h3 style="margin:0 0 10px;font-size:16px;">Delivery status: conditional pass</h3>
+      <p style="margin:0 0 8px;font-size:14px;line-height:1.6;">
+        <strong>Verified:</strong> all Python parses; all XML well-formed under two
+        independent parsers; a custom static checker reports zero findings
+        across twelve categories — and that checker was itself validated
+        against thirteen deliberately injected faults before its output was
+        trusted.
+      </p>
+      <p style="margin:0;font-size:14px;line-height:1.6;">
+        <strong>Not verified:</strong> the ~100 tests are written but have never been
+        executed, no coverage has been measured, <code>flake8</code> and
+        <code>pylint-odoo</code> have not been run, and the module has never been
+        installed against a live Odoo 19 server. No pass rate and no coverage
+        figure are claimed. See <code>docs/OUTSTANDING_QUALIFICATION.md</code>.
+      </p>
+    </div>
+
+  </div>
+</section>

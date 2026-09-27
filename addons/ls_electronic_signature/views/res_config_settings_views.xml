@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+
+    <record id="view_res_config_settings_ls_signature" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ls.signature</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Electronic Signatures" name="ls_electronic_signature"
+                     groups="ls_electronic_signature.group_ls_signature_manager">
+                    <block title="Signature Components"
+                           help="Controls required by 21 CFR 11.200 and 11.300.">
+                        <setting string="Continuous Session Timeout"
+                                 help="Idle period after which all signature components are required again.">
+                            <field name="ls_signature_session_idle_minutes"/>
+                            <span class="text-muted">minutes</span>
+                        </setting>
+                        <setting string="Failures Before Lockout"
+                                 help="Consecutive failed attempts that block further signing.">
+                            <field name="ls_signature_max_failed_attempts"/>
+                        </setting>
+                        <setting string="Lockout Duration">
+                            <field name="ls_signature_lockout_minutes"/>
+                            <span class="text-muted">minutes</span>
+                        </setting>
+                    </block>
+                    <block title="Signer Statement"
+                           help="Shown above the credential fields in the signature dialog.">
+                        <setting string="Binding Statement">
+                            <field name="ls_signature_binding_statement"/>
+                        </setting>
+                    </block>
+                    <block title="Technical" help="Change only on documented justification.">
+                        <setting string="Password Verification API">
+                            <field name="ls_signature_credential_api_mode"/>
+                        </setting>
+                        <setting string="Database Immutability Trigger"
+                                 help="Whether PostgreSQL refuses UPDATE and DELETE on the signature log.">
+                            <field name="ls_signature_db_trigger_state" readonly="1"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_ls_signature_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'ls_electronic_signature'}</field>
+    </record>
+
+</odoo>

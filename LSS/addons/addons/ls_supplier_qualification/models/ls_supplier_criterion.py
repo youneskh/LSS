@@ -1,0 +1,103 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+"""Reusable library of supplier assessment criteria."""
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+
+CRITERION_DOMAIN_SELECTION = [
+    ("qms", "Quality Management System"),
+    ("regulatory", "Regulatory Status"),
+    ("documentation", "Documentation and Records"),
+    ("manufacturing", "Manufacturing and Process Control"),
+    ("laboratory", "Laboratory and Testing"),
+    ("materials", "Material and Component Control"),
+    ("logistics", "Storage, Transport and Logistics"),
+    ("change_control", "Change and Deviation Notification"),
+    ("data_integrity", "Data Integrity and Computerised Systems"),
+    ("personnel", "Personnel and Training"),
+    ("hse", "Health, Safety and Environment"),
+    ("commercial", "Commercial and Financial Stability"),
+]
+
+
+class LsSupplierCriterion(models.Model):
+    """A single question used to score a supplier during an assessment.
+
+    Criteria are configuration data. Their wording is written by the quality
+    department; the module ships a starter set that is generic and does not
+    quote any standard.
+    """
+
+    _name = "ls.supplier.criterion"
+    _description = "Life Sciences Supplier Assessment Criterion"
+    _order = "domain, sequence, name"
+
+    name = fields.Char(string="Criterion", required=True, translate=True)
+    code = fields.Char(required=True)
+    sequence = fields.Integer(default=10)
+    active = fields.Boolean(default=True)
+    domain = fields.Selection(selection=CRITERION_DOMAIN_SELECTION,
+                              required=True,
+                              default="qms")
+    description = fields.Text(
+        translate=True,
+        help="Guidance shown to the assessor: what evidence to look for and "
+             "how to score the criterion.",
+    )
+    default_weight = fields.Float(
+        default=1.0,
+        required=True,
+        digits=(6, 2),
+        help="Relative weight proposed when the criterion is added to a "
+             "template. The weight can be overridden per template.",
+    )
+    is_mandatory = fields.Boolean(
+        string="Mandatory by Default",
+        help="A mandatory criterion scored below the minimum acceptable "
+             "score blocks a 'Pass' result.",
+    )
+    standard_ids = fields.Many2many(
+        comodel_name="ls.supplier.standard",
+        relation="ls_supplier_criterion_standard_rel",
+        column1="criterion_id",
+        column2="standard_id",
+        string="Related Frameworks",
+        help="Frameworks the organisation associates with this criterion. "
+             "The association is an internal traceability aid.",
+    )
+    internal_reference = fields.Char(
+        help="Reference to the organisation's own procedure or clause "
+             "mapping. Free text maintained by the quality department.",
+    )
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        required=True,
+        default=lambda self: self.env.company,
+        index=True,
+    )
+
+    _code_company_uniq = models.Constraint(
+        "UNIQUE(code, company_id)",
+        "The criterion code must be unique per company.",
+    )
+
+    _weight_positive = models.Constraint(
+        "CHECK(default_weight > 0)",
+        "The default weight must be strictly positive.",
+    )
+
+    @api.constrains("default_weight")
+    def _check_default_weight(self):
+        """Guard the weight at ORM level in addition to the SQL check."""
+        for record in self:
+            if record.default_weight <= 0:
+                raise ValidationError(
+                    _("The default weight of criterion '%s' must be strictly "
+                      "positive.", record.name)
+                )
+
+    @api.depends("name", "code")
+    def _compute_display_name(self):
+        """Show 'CODE - Criterion' in relational widgets."""
+        for record in self:
+            record.display_name = "%s - %s" % (record.code, record.name)

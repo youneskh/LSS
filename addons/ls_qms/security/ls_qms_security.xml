@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Odoo 19 introduced res.groups.privilege between ir.module.category and
+     res.groups. Groups therefore carry privilege_id, not category_id.
+     Reference: Odoo 19.0 developer tutorial "Restrict access to data". -->
+<odoo>
+
+    <record id="module_category_ls_qms" model="ir.module.category">
+        <field name="name">Life Sciences</field>
+        <field name="description">Quality and compliance applications of the Life Sciences Suite.</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="res_groups_privilege_ls_qms" model="res.groups.privilege">
+        <field name="name">Quality Management</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_ls_qms"/>
+    </record>
+
+    <record id="group_ls_qms_viewer" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_qms"/>
+        <field name="comment">Read only access to published quality documents.</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_qms_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_qms"/>
+        <field name="comment">Creates and edits quality documents, objectives and records.</field>
+        <field name="implied_ids" eval="[(4, ref('ls_qms.group_ls_qms_viewer'))]"/>
+    </record>
+
+    <record id="group_ls_qms_approver" model="res.groups">
+        <field name="name">Approver</field>
+        <field name="sequence">30</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_qms"/>
+        <field name="comment">Approves, rejects and publishes quality documents.</field>
+        <field name="implied_ids" eval="[(4, ref('ls_qms.group_ls_qms_user'))]"/>
+    </record>
+
+    <record id="group_ls_qms_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="sequence">40</field>
+        <field name="privilege_id" ref="res_groups_privilege_ls_qms"/>
+        <field name="comment">Full control of the quality management system, including withdrawal of documents and disposal of records.</field>
+        <field name="implied_ids" eval="[(4, ref('ls_qms.group_ls_qms_approver'))]"/>
+    </record>
+
+    <!-- Record rules.
+
+         Each model carries a single global rule combining two conditions with
+         a logical AND:
+           1. multi-company isolation;
+           2. restriction of QMS viewers to published revisions.
+
+         A global rule is used deliberately. Group rules are combined with a
+         logical OR, so a user holding two groups obtains the union of their
+         domains; expressing "viewers see less" under OR semantics needs a
+         second permissive rule and is fragile. The domain below is a Python
+         expression evaluated per user. It also avoids depending on the name
+         of the many2many field of ir.rule, which changed between Odoo
+         versions.
+
+         An extending module that must widen viewer visibility overrides the
+         domain_force of the rule record concerned. -->
+
+    <record id="rule_ls_qms_policy" model="ir.rule">
+        <field name="name">Quality policy: company isolation and viewer restriction</field>
+        <field name="model_id" ref="model_ls_qms_policy"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)] + ([] if user.has_group('ls_qms.group_ls_qms_user') else [('state', '=', 'published')])</field>
+    </record>
+
+    <record id="rule_ls_qms_sop" model="ir.rule">
+        <field name="name">Procedure: company isolation and viewer restriction</field>
+        <field name="model_id" ref="model_ls_qms_sop"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)] + ([] if user.has_group('ls_qms.group_ls_qms_user') else [('state', '=', 'published')])</field>
+    </record>
+
+    <record id="rule_ls_qms_work_instruction" model="ir.rule">
+        <field name="name">Work instruction: company isolation and viewer restriction</field>
+        <field name="model_id" ref="model_ls_qms_work_instruction"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)] + ([] if user.has_group('ls_qms.group_ls_qms_user') else [('state', '=', 'published')])</field>
+    </record>
+
+    <record id="rule_ls_qms_quality_plan" model="ir.rule">
+        <field name="name">Quality plan: company isolation and viewer restriction</field>
+        <field name="model_id" ref="model_ls_qms_quality_plan"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)] + ([] if user.has_group('ls_qms.group_ls_qms_user') else [('state', '=', 'published')])</field>
+    </record>
+
+    <record id="rule_ls_qms_quality_plan_line" model="ir.rule">
+        <field name="name">Quality plan line: company isolation</field>
+        <field name="model_id" ref="model_ls_qms_quality_plan_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_qms_objective" model="ir.rule">
+        <field name="name">Quality objective: company isolation</field>
+        <field name="model_id" ref="model_ls_qms_objective"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_qms_objective_measurement" model="ir.rule">
+        <field name="name">Objective measurement: company isolation</field>
+        <field name="model_id" ref="model_ls_qms_objective_measurement"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_qms_quality_record" model="ir.rule">
+        <field name="name">Quality record: company isolation</field>
+        <field name="model_id" ref="model_ls_qms_quality_record"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Demonstration data. It creates its own partners, product and lot
+        rather than referencing records from another module's demo data,
+        so that it does not depend on which other demo sets are loaded.
+
+        The demonstration recall is left in the Planned state. It is not
+        advanced through the workflow here, because doing so would create
+        communications and effectiveness checks that were never really
+        issued or performed, which is exactly the kind of record a
+        regulated organisation must not have in its database.
+    -->
+
+    <record id="demo_partner_authority" model="res.partner">
+        <field name="name">National Medicines Agency (demo)</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="demo_partner_consignee_1" model="res.partner">
+        <field name="name">Central Hospital Pharmacy (demo)</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="demo_partner_consignee_2" model="res.partner">
+        <field name="name">Regional Wholesaler (demo)</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="demo_partner_consignee_3" model="res.partner">
+        <field name="name">City Pharmacy Group (demo)</field>
+        <field name="company_type">company</field>
+    </record>
+
+    <record id="demo_product" model="product.product">
+        <field name="name">Paracetamol 500 mg tablets (demo)</field>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="True"/>
+        <field name="tracking">lot</field>
+    </record>
+
+    <record id="demo_lot" model="stock.lot">
+        <field name="name">LOT-DEMO-2601</field>
+        <field name="product_id" ref="demo_product"/>
+    </record>
+
+    <record id="demo_plan_sterile" model="ls.recall.plan">
+        <field name="name">Recall plan - finished medicinal products</field>
+        <field name="scope_type">all</field>
+        <field name="description" type="html">
+            <div>
+                <p>Decision route: the recall coordinator convenes the
+                    decision team within four hours of a quality defect
+                    being classified as potentially recall-relevant.</p>
+                <p>Out-of-hours: the deputy coordinator holds the duty
+                    telephone and may initiate a class I recall alone.</p>
+                <p>Disposition: returned product is quarantined in the
+                    blocked-stock location pending a disposition decision
+                    by the quality unit.</p>
+            </div>
+        </field>
+        <field name="default_effectiveness_level">a</field>
+        <field name="target_reconciliation_rate">98.0</field>
+        <field name="initiation_target_hours">24</field>
+        <field name="mock_recall_interval_months">12</field>
+        <field name="authority_partner_ids"
+                eval="[Command.link(ref('demo_partner_authority'))]"/>
+    </record>
+
+    <record id="demo_execution" model="ls.recall.execution">
+        <field name="action_type">recall</field>
+        <field name="product_id" ref="demo_product"/>
+        <field name="lot_ids" eval="[Command.link(ref('demo_lot'))]"/>
+        <field name="classification">class_ii</field>
+        <field name="depth">retail</field>
+        <field name="reason">Out-of-specification dissolution result
+            obtained during ongoing stability testing at the 12 month
+            time point.</field>
+        <field name="defect_reference">DEV-DEMO-0042</field>
+        <field name="effectiveness_level">a</field>
+    </record>
+
+</odoo>

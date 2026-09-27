@@ -1,0 +1,13 @@
+<odoo>
+    <record id="reg_text_law_18_11" model="lss.foundation.regulatory_text">
+        <field name="title">Loi n° 18-11 relative à la santé</field>
+        <field name="type">law</field>
+        <field name="number">18-11</field>
+        <field name="issue_date">2018-06-10</field>
+        <field name="effective_date">2018-06-10</field>
+        <field name="authority_id" ref="authority_anpp"/>
+        <field name="sector">pharma</field>
+        <field name="keywords">santé, médicaments, ANPP</field>
+        <field name="status">in_force</field>
+    </record>
+</odoo>

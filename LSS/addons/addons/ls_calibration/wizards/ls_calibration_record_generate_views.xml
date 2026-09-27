@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_calibration_record_generate_view_form" model="ir.ui.view">
+        <field name="name">ls.calibration.record.generate.form</field>
+        <field name="model">ls.calibration.record.generate</field>
+        <field name="arch" type="xml">
+            <form string="Generate Calibration Records">
+                <group>
+                    <field name="date_to" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                    <field
+                        name="plan_ids"
+                        widget="many2many_tags"
+                        placeholder="Leave empty to consider every active calibration plan"
+                    />
+                </group>
+                <footer>
+                    <button
+                        name="action_generate"
+                        string="Generate"
+                        type="object"
+                        class="btn-primary"
+                        data-hotkey="q"
+                    />
+                    <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                        data-hotkey="x"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_generate_action" model="ir.actions.act_window">
+        <field name="name">Generate Calibration Records</field>
+        <field name="res_model">ls.calibration.record.generate</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

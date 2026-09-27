@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="view_ls_deviation_stage_log_list" model="ir.ui.view">
+        <field name="name">ls.deviation.stage.log.list</field>
+        <field name="model">ls.deviation.stage.log</field>
+        <field name="arch" type="xml">
+            <list string="Transition Log" create="false" edit="false" delete="false">
+                <field name="create_date" string="Timestamp"/>
+                <field name="deviation_id"/>
+                <field name="from_state"/>
+                <field name="to_state"/>
+                <field name="user_id"/>
+                <field name="reason"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_deviation_stage_log_search" model="ir.ui.view">
+        <field name="name">ls.deviation.stage.log.search</field>
+        <field name="model">ls.deviation.stage.log</field>
+        <field name="arch" type="xml">
+            <search string="Transition Log">
+                <field name="deviation_id"/>
+                <field name="user_id"/>
+                <field name="to_state"/>
+                <group>
+                    <filter name="group_deviation" string="Deviation"
+                            context="{'group_by': 'deviation_id'}"/>
+                    <filter name="group_user" string="Performed By"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter name="group_to_state" string="Target State"
+                            context="{'group_by': 'to_state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_deviation_stage_log" model="ir.actions.act_window">
+        <field name="name">Transition Log</field>
+        <field name="res_model">ls.deviation.stage.log</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_ls_deviation_stage_log_search"/>
+    </record>
+</odoo>

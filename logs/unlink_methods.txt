@@ -1,0 +1,1676 @@
+Total E8140 locations: 90
+======================================================================
+
+[1] addons/ls_audit/models/ls_audit_finding.py:380
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid deletion of a finding that was issued.
+
+        :return: ``True``.
+        :rtype: bool
+        :raise UserError: when an issued finding would be deleted.
+        """
+        issued = self.filtered(lambda finding: finding.state != "draft")
+        if issued:
+            raise UserError(
+                _(
+                    "Finding(s) %(refs)s were issued and cannot be deleted. "
+                    "Cancel them instead so that the record and its audit "
+                    "trail are retained.",
+                    refs=", ".join(issued.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Constraints
+    # ------------------------------------------------------------------
+
+
+[2] addons/ls_audit/models/ls_audit_report.py:198
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid deletion of a report that left the draft status.
+
+        :return: ``True``.
+        :rtype: bool
+        :raise UserError: when a submitted report would be deleted.
+        """
+        submitted = self.filtered(lambda report: report.state != "draft")
+        if submitted:
+            raise UserError(
+                _(
+                    "Report(s) %(refs)s left the draft status and cannot be "
+                    "deleted. Cancel them instead so that the record and its "
+                    "audit trail are retained.",
+                    refs=", ".join(submitted.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+
+[3] addons/ls_audit/models/ls_audit_response.py:157
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid deletion once the audit fieldwork has started.
+
+        :return: ``True``.
+        :rtype: bool
+        :raise UserError: when the parent audit is no longer scheduled.
+        """
+        locked = self.filtered(
+            lambda response: response.audit_id.state != "scheduled"
+        )
+        if locked:
+            raise UserError(
+                _(
+                    "Checklist responses can only be removed while the audit "
+                    "is still scheduled."
+                )
+            )
+        return super().unlink()
+
+
+[4] addons/ls_audit/models/ls_audit_schedule.py:424
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid deletion of an audit that left the planned status.
+
+        :return: ``True``.
+        :rtype: bool
+        :raise UserError: when a started audit would be deleted.
+        """
+        started = self.filtered(lambda audit: audit.state != "planned")
+        if started:
+            raise UserError(
+                _(
+                    "Audit(s) %(refs)s cannot be deleted because they left "
+                    "the planned status. Cancel them instead so that the "
+                    "record and its audit trail are retained.",
+                    refs=", ".join(started.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Constraints
+    # ------------------------------------------------------------------
+
+
+[5] addons/ls_audit_trail/models/ls_audit_trail_evidence_pack.py:200
+----------------------------------------------------------------------
+    def unlink(self):
+        """Reject every deletion.
+
+        :raise AccessError: always.
+        """
+        raise AccessError(
+            _(
+                "Evidence packs cannot be deleted. Archive the pack instead, "
+                "which keeps it available for inspection."
+            )
+        )
+
+
+[6] addons/ls_audit_trail/models/ls_audit_trail_log.py:264
+----------------------------------------------------------------------
+    def unlink(self):
+        """Reject every deletion performed through the ORM.
+
+        Entries are removed only by an approved retention run, which deletes
+        rows with a parameterised SQL statement after recording a retention
+        anchor. See ``ls.audit_trail.purge.wizard``.
+
+        :raise AccessError: always.
+        """
+        raise AccessError(
+            _(
+                "Audit trail entries cannot be deleted. Use the Retention Run "
+                "wizard, which records a retention anchor preserving the "
+                "integrity of the chain."
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Configuration cache
+    # ------------------------------------------------------------------
+
+[7] addons/ls_audit_trail/models/ls_audit_trail_log_line.py:187
+----------------------------------------------------------------------
+    def unlink(self):
+        """Reject every deletion performed through the ORM.
+
+        Lines are removed by the database only, through the foreign key cascade
+        of an approved retention run on the parent entry.
+
+        :raise AccessError: always.
+        """
+        raise AccessError(_("Audit trail field changes cannot be deleted."))
+
+[8] addons/ls_audit_trail/models/ls_audit_trail_verification.py:120
+----------------------------------------------------------------------
+    def unlink(self):
+        """Reject every deletion.
+
+        :raise AccessError: always.
+        """
+        raise AccessError(
+            _("Integrity verification records cannot be deleted.")
+        )
+
+
+[9] addons/ls_calibration/models/calibration_certificate.py:171
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Forbid deletion of issued certificates.
+
+        A certificate is issued evidence. Superseded certificates are archived
+        so that the audit trail of what was issued remains complete.
+        """
+        raise UserError(
+            self.env._(
+                "Calibration certificates cannot be deleted. Archive the "
+                "certificate instead."
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Actions
+    # ------------------------------------------------------------------
+
+[10] addons/ls_calibration/models/calibration_instrument.py:470
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Forbid deletion of instruments that carry calibration history.
+
+        Calibration records are Good Practice evidence. Once an instrument has
+        any record attached, the instrument master data must be retired rather
+        than deleted so that the record remains interpretable.
+        """
+        for instrument in self:
+            if instrument.record_ids:
+                raise UserError(
+                    self.env._(
+                        "Instrument %(code)s carries %(count)s calibration "
+                        "record(s) and cannot be deleted. Retire it instead.",
+                        code=instrument.code,
+                        count=len(instrument.record_ids),
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Lifecycle actions
+    # ------------------------------------------------------------------
+
+[11] addons/ls_calibration/models/calibration_oot.py:243
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Permit deletion only while the event is still open."""
+        for event in self:
+            if event.state != constants.OOT_STATE_OPEN:
+                raise UserError(
+                    self.env._(
+                        "Out-of-tolerance event %(event)s is in state "
+                        "'%(state)s' and cannot be deleted.",
+                        event=event.name,
+                        state=event.state,
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[12] addons/ls_calibration/models/calibration_plan.py:461
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Forbid deletion of plans that already produced calibration records."""
+        for plan in self:
+            if plan.record_ids:
+                raise UserError(
+                    self.env._(
+                        "Calibration plan '%(plan)s' has generated "
+                        "%(count)s record(s) and cannot be deleted. "
+                        "Close it instead.",
+                        plan=plan.name,
+                        count=len(plan.record_ids),
+                    )
+                )
+        return super().unlink()
+
+[13] addons/ls_calibration/models/calibration_point.py:240
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Forbid deletion of points that already carry recorded readings."""
+        for point in self:
+            if point.reading_ids:
+                raise UserError(
+                    self.env._(
+                        "Calibration point '%(point)s' carries recorded "
+                        "readings and cannot be deleted. Archive it instead.",
+                        point=point.name,
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Evaluation
+    # ------------------------------------------------------------------
+
+[14] addons/ls_calibration/models/calibration_record.py:600
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Permit deletion only of draft records.
+
+        Any calibration that has reached the in-progress state is Good Practice
+        evidence and must be cancelled with a recorded reason rather than
+        removed.
+        """
+        for record in self:
+            if record.state != constants.RECORD_STATE_DRAFT:
+                raise UserError(
+                    self.env._(
+                        "Calibration record %(record)s is in state "
+                        "'%(state)s' and cannot be deleted. Cancel it "
+                        "instead.",
+                        record=record.name,
+                        state=record.state,
+                    )
+                )
+        return super().unlink()
+
+
+[15] addons/ls_calibration/models/calibration_standard.py:111
+----------------------------------------------------------------------
+    def unlink(self) -> bool:
+        """Forbid deletion of standards already cited by a calibration record."""
+        for standard in self:
+            if standard.record_ids:
+                raise UserError(
+                    self.env._(
+                        "Reference standard %(code)s is cited by "
+                        "%(count)s calibration record(s) and cannot be "
+                        "deleted. Archive it instead.",
+                        code=standard.code,
+                        count=len(standard.record_ids),
+                    )
+                )
+        return super().unlink()
+
+
+[16] addons/ls_calibration/models/ls_calibration_certificate.py:188
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse the deletion of a certificate that has been issued."""
+        not_draft = self.filtered(
+            lambda certificate: certificate.state != "draft"
+        )
+        if not_draft:
+            raise UserError(
+                self.env._(
+                    "Certificate %s has been issued and cannot be deleted.",
+                    not_draft[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[17] addons/ls_calibration/models/ls_calibration_record.py:375
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse the deletion of a record that left the draft state."""
+        not_draft = self.filtered(lambda record: record.state != "draft")
+        if not_draft:
+            raise UserError(
+                self.env._(
+                    "Calibration record %s is not in the draft state and "
+                    "cannot be deleted. Cancel it instead.",
+                    not_draft[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[18] addons/ls_capa/models/capa_issue.py:422
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of CAPA records that left the Identified state.
+
+        Records that have progressed carry GxP-relevant evidence and are
+        archived rather than deleted.
+
+        :return: True when the deletion succeeded.
+        :rtype: bool
+        """
+        blocked = self.filtered(lambda r: r.state != "identified")
+        if blocked:
+            raise UserError(
+                _(
+                    "The following CAPA records cannot be deleted because "
+                    "they progressed beyond the Identified status: %(refs)s. "
+                    "Archive them instead.",
+                    refs=", ".join(blocked.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow helpers
+    # ------------------------------------------------------------------
+
+[19] addons/ls_change_control/models/change_control_approval.py:164
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of an approval that carries a decision."""
+        decided = self.filtered(lambda a: a.state != "pending")
+        if decided:
+            raise UserError(
+                _(
+                    "Approval %(name)s carries a decision and cannot be "
+                    "deleted.",
+                    name=decided[0].display_name,
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Decision
+    # ------------------------------------------------------------------
+
+[20] addons/ls_change_control/models/change_control_assessment.py:125
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a completed assessment."""
+        completed = self.filtered(lambda a: a.state == "completed")
+        if completed:
+            raise UserError(
+                _(
+                    "Assessment %(name)s is completed and cannot be deleted.",
+                    name=completed[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[21] addons/ls_change_control/models/change_control_implementation.py:142
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of an action that has been started."""
+        started = self.filtered(lambda a: a.state != "pending")
+        if started:
+            raise UserError(
+                _(
+                    "Implementation action %(name)s has been started and "
+                    "cannot be deleted.",
+                    name=started[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[22] addons/ls_change_control/models/change_control_request.py:653
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a submitted request.
+
+        Deleting a submitted change request would destroy quality records.
+        Only Draft requests, which carry no decision, may be deleted.
+        """
+        submitted = self.filtered(lambda r: r.state != "draft")
+        if submitted:
+            raise UserError(
+                _(
+                    "The following change requests cannot be deleted because "
+                    "they have been submitted: %(names)s.",
+                    names=", ".join(submitted.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+
+[23] addons/ls_change_control/models/change_control_verification.py:151
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a completed verification."""
+        completed = self.filtered(lambda v: v.state == "completed")
+        if completed:
+            raise UserError(
+                _(
+                    "Verification %(name)s is completed and cannot be "
+                    "deleted.",
+                    name=completed[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[24] addons/ls_cosmetics/models/ls_cosmetic_claim.py:260
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only while the claim is still a draft."""
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Claim %(code)s is not a draft and cannot be deleted. "
+                    "Withdraw it instead so that the substantiation record "
+                    "remains available.",
+                    code=blocked[0].code,
+                )
+            )
+        return super().unlink()
+
+
+[25] addons/ls_cosmetics/models/ls_cosmetic_dz_authorization.py:346
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only while the dossier is still a draft."""
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Dossier %(code)s has been submitted and cannot be "
+                    "deleted.",
+                    code=blocked[0].code,
+                )
+            )
+        return super().unlink()
+
+
+[26] addons/ls_cosmetics/models/ls_cosmetic_formulation.py:324
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only while the formulation is still a draft."""
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Formulation %(name)s is not a draft and cannot be deleted. "
+                    "Cancel it instead so that the record remains available for "
+                    "the retention period of Article 11(1).",
+                    name=blocked[0].display_name,
+                )
+            )
+        return super().unlink()
+
+
+[27] addons/ls_cosmetics/models/ls_cosmetic_label.py:436
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only while the label is still a draft."""
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Label %(code)s is not a draft and cannot be deleted.",
+                    code=blocked[0].code,
+                )
+            )
+        return super().unlink()
+
+
+[28] addons/ls_cosmetics/models/ls_cosmetic_pif.py:423
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse deletion outside the draft state.
+
+        Article 11(1) fixes a ten year retention period; deleting a file that
+        has been active would destroy the record the competent authority is
+        entitled to inspect.
+        """
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "File %(code)s has left the draft state and cannot be "
+                    "deleted. Article 11(1) requires it to be kept for ten "
+                    "years after the last batch was placed on the market.",
+                    code=blocked[0].code,
+                )
+            )
+        return super().unlink()
+
+
+[29] addons/ls_cosmetics/models/ls_cosmetic_safety_assessment.py:486
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only while the report is still a draft."""
+        blocked = self.filtered(lambda record: record.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Safety report %(code)s is not a draft and cannot be "
+                    "deleted. Cancel it instead.",
+                    code=blocked[0].code,
+                )
+            )
+        return super().unlink()
+
+
+[30] addons/ls_document_management/models/ls_document_approval.py:158
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid deletion of decided approvals."""
+        for approval in self:
+            if approval.state in ("approved", "rejected"):
+                raise UserError(
+                    _(
+                        "A recorded approval decision cannot be deleted "
+                        "(document '%(reference)s').",
+                        reference=approval.document_id.reference,
+                    )
+                )
+        return super().unlink()
+
+[31] addons/ls_document_management/models/ls_document_document.py:281
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only for drafts that were never published."""
+        for document in self:
+            if document.state != STATE_DRAFT:
+                raise UserError(
+                    _(
+                        "Document '%(reference)s' cannot be deleted because "
+                        "it is in status '%(state)s'. Only draft documents "
+                        "may be deleted.",
+                        reference=document.reference,
+                        state=dict(
+                            self._fields["state"].selection
+                        )[document.state],
+                    )
+                )
+            if document.current_version_id:
+                raise UserError(
+                    _(
+                        "Document '%(reference)s' cannot be deleted because "
+                        "it has already been published at least once. Archive "
+                        "it instead.",
+                        reference=document.reference,
+                    )
+                )
+        return super().unlink()
+
+
+[32] addons/ls_document_management/models/ls_document_document.py:293
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only for drafts that were never published."""
+        for document in self:
+            if document.state != STATE_DRAFT:
+                raise UserError(
+                    _(
+                        "Document '%(reference)s' cannot be deleted because "
+                        "it is in status '%(state)s'. Only draft documents "
+                        "may be deleted.",
+                        reference=document.reference,
+                        state=dict(
+                            self._fields["state"].selection
+                        )[document.state],
+                    )
+                )
+            if document.current_version_id:
+                raise UserError(
+                    _(
+                        "Document '%(reference)s' cannot be deleted because "
+                        "it has already been published at least once. Archive "
+                        "it instead.",
+                        reference=document.reference,
+                    )
+                )
+        return super().unlink()
+
+
+[33] addons/ls_document_management/models/ls_document_folder.py:180
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of folders that still hold content."""
+        for folder in self:
+            if folder.document_ids:
+                raise ValidationError(
+                    _(
+                        "Folder '%(name)s' cannot be deleted because it still "
+                        "contains %(count)s document(s). Move or archive them "
+                        "first.",
+                        name=folder.name,
+                        count=len(folder.document_ids),
+                    )
+                )
+            if folder.child_ids:
+                raise ValidationError(
+                    _(
+                        "Folder '%(name)s' cannot be deleted because it still "
+                        "contains sub-folders.",
+                        name=folder.name,
+                    )
+                )
+        return super().unlink()
+
+
+[34] addons/ls_document_management/models/ls_document_folder.py:190
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of folders that still hold content."""
+        for folder in self:
+            if folder.document_ids:
+                raise ValidationError(
+                    _(
+                        "Folder '%(name)s' cannot be deleted because it still "
+                        "contains %(count)s document(s). Move or archive them "
+                        "first.",
+                        name=folder.name,
+                        count=len(folder.document_ids),
+                    )
+                )
+            if folder.child_ids:
+                raise ValidationError(
+                    _(
+                        "Folder '%(name)s' cannot be deleted because it still "
+                        "contains sub-folders.",
+                        name=folder.name,
+                    )
+                )
+        return super().unlink()
+
+
+[35] addons/ls_document_management/models/ls_document_version.py:187
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only of unused versions of a draft document."""
+        for version in self:
+            if version.is_current:
+                raise UserError(
+                    _(
+                        "Version %(version)s of document '%(reference)s' is "
+                        "the effective version and cannot be deleted.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.document_id.state != "draft":
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because "
+                        "document '%(reference)s' is not in draft status.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.approval_ids:
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because it "
+                        "carries approval records.",
+                        version=version.version_number,
+                    )
+                )
+        return super().unlink()
+
+
+[36] addons/ls_document_management/models/ls_document_version.py:196
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only of unused versions of a draft document."""
+        for version in self:
+            if version.is_current:
+                raise UserError(
+                    _(
+                        "Version %(version)s of document '%(reference)s' is "
+                        "the effective version and cannot be deleted.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.document_id.state != "draft":
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because "
+                        "document '%(reference)s' is not in draft status.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.approval_ids:
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because it "
+                        "carries approval records.",
+                        version=version.version_number,
+                    )
+                )
+        return super().unlink()
+
+
+[37] addons/ls_document_management/models/ls_document_version.py:205
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only of unused versions of a draft document."""
+        for version in self:
+            if version.is_current:
+                raise UserError(
+                    _(
+                        "Version %(version)s of document '%(reference)s' is "
+                        "the effective version and cannot be deleted.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.document_id.state != "draft":
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because "
+                        "document '%(reference)s' is not in draft status.",
+                        version=version.version_number,
+                        reference=version.document_id.reference,
+                    )
+                )
+            if version.approval_ids:
+                raise UserError(
+                    _(
+                        "Version %(version)s cannot be deleted because it "
+                        "carries approval records.",
+                        version=version.version_number,
+                    )
+                )
+        return super().unlink()
+
+
+[38] addons/ls_electronic_signature/models/ls_signature_attempt.py:112
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse every deletion.
+
+        :raises UserError: Always.
+        """
+        raise UserError(
+            _("Signature attempt records are a security log and cannot be deleted.")
+        )
+
+    # ------------------------------------------------------------------
+    # Configuration
+    # ------------------------------------------------------------------
+
+[39] addons/ls_electronic_signature/models/ls_signature_log.py:302
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse every deletion.
+
+        :raises UserError: Always.
+        """
+        raise UserError(
+            _(
+                "Electronic signature records cannot be deleted. They are the "
+                "evidence that a signature was executed."
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Chain construction
+    # ------------------------------------------------------------------
+
+[40] addons/ls_environmental_monitoring/models/ls_env_excursion.py:342
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of excursions.
+
+        An excursion is evidence that a breach occurred and is cancelled
+        rather than removed.
+        """
+        raise UserError(
+            self.env._(
+                "An excursion cannot be deleted. Cancel it instead so that the "
+                "record is retained."
+            )
+        )
+
+[41] addons/ls_environmental_monitoring/models/ls_env_limit.py:439
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of a limit that has been approved.
+
+        An approved limit is part of the evidence trail for every result
+        evaluated against it and is superseded rather than removed.
+        """
+        for record in self:
+            if record.state != LIMIT_STATE_DRAFT:
+                raise UserError(
+                    self.env._(
+                        "Only a draft limit can be deleted. Supersede the limit "
+                        "instead."
+                    )
+                )
+        return super().unlink()
+
+[42] addons/ls_environmental_monitoring/models/ls_env_plan.py:207
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of a plan that has been approved."""
+        for record in self:
+            if record.state in (PLAN_APPROVED, PLAN_SUPERSEDED):
+                raise UserError(
+                    self.env._(
+                        "A plan that has been approved cannot be deleted."
+                    )
+                )
+        return super().unlink()
+
+[43] addons/ls_environmental_monitoring/models/ls_env_result.py:463
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of a result once its sample has been collected."""
+        for record in self:
+            if record.sample_state not in ("draft", "scheduled"):
+                raise UserError(
+                    self.env._(
+                        "A result can only be removed while its sample is still "
+                        "awaiting collection."
+                    )
+                )
+        return super().unlink()
+
+
+[44] addons/ls_environmental_monitoring/models/ls_env_sample.py:307
+----------------------------------------------------------------------
+    def unlink(self):
+        """Restrict deletion to samples that were never collected."""
+        for record in self:
+            if record.state != SAMPLE_DRAFT:
+                raise UserError(
+                    self.env._(
+                        "Only a draft sample can be deleted. Cancel the sample "
+                        "instead so that the record is retained."
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # State machine
+    # ------------------------------------------------------------------
+
+[45] addons/ls_lab/models/ls_lab_coa.py:175
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse deletion of a certificate that has been issued."""
+        issued = self.filtered(lambda coa: coa.state != "draft")
+        if issued:
+            raise UserError(
+                self.env._(
+                    "%(count)s certificate(s) have left the draft state and "
+                    "cannot be deleted.",
+                    count=len(issued),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[46] addons/ls_lab/models/ls_lab_mixin.py:93
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse deletion of records that have left the draft state."""
+        undeletable = self.filtered(lambda rec: rec.state != "draft")
+        if undeletable:
+            raise UserError(
+                self.env._(
+                    "Only draft records may be deleted. %(count)s record(s) have "
+                    "left the draft state and must be made obsolete or cancelled "
+                    "instead, so that the audit history is preserved.",
+                    count=len(undeletable),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Version succession
+    # ------------------------------------------------------------------
+
+[47] addons/ls_lab/models/ls_lab_oos.py:246
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse deletion of an investigation in any state."""
+        raise UserError(
+            self.env._(
+                "Investigations cannot be deleted. Cancel the investigation with "
+                "a recorded reason so that the history is preserved."
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[48] addons/ls_lab/models/ls_lab_test_result.py:303
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse deletion of a result that carries recorded data."""
+        recorded = self.filtered(lambda res: res.state != "draft")
+        if recorded:
+            raise UserError(
+                self.env._(
+                    "%(count)s result(s) carry recorded data and cannot be "
+                    "deleted. The audit history must be preserved.",
+                    count=len(recorded),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[49] addons/ls_medical_device/models/ce_marking.py:277
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of records that left the draft status."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    self.env._(
+                        "Certificate record '%(name)s' can no longer be "
+                        "deleted.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[50] addons/ls_medical_device/models/clinical_evaluation.py:315
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded evaluations."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "Clinical evaluation '%(name)s' can no longer be "
+                        "deleted. Cancel it instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[51] addons/ls_medical_device/models/pmcf_evaluation.py:264
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded reports."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "PMCF evaluation report '%(name)s' can no longer be "
+                        "deleted. Cancel it instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[52] addons/ls_medical_device/models/pms.py:263
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded plans."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "Surveillance plan '%(name)s' can no longer be "
+                        "deleted. Cancel it instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[53] addons/ls_medical_device/models/pms_report.py:365
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded reports."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "Report '%(name)s' can no longer be deleted. Cancel it "
+                        "instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[54] addons/ls_medical_device/models/risk_assessment.py:244
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded files."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "Risk management file '%(name)s' can no longer be "
+                        "deleted. Cancel it instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[55] addons/ls_medical_device/models/technical_file.py:257
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of approved or superseded documentation sets."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    self.env._(
+                        "Technical documentation '%(name)s' can no longer be "
+                        "deleted. Cancel it instead.",
+                        name=record.name or "",
+                    )
+                )
+        return super().unlink()
+
+
+[56] addons/ls_medical_device/models/udi.py:333
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of identifiers that left the draft status."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    self.env._(
+                        "Identifier '%(identifier)s' has been assigned and "
+                        "cannot be deleted. Mark it obsolete instead.",
+                        identifier=record.udi_di or "",
+                    )
+                )
+        return super().unlink()
+
+
+[57] addons/ls_medical_plastics/models/mp_injection_molding.py:829
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion only for runs that never produced a record of value."""
+        for run in self:
+            if run.state not in RUN_DELETABLE_STATES:
+                raise ValidationError(
+                    self.env._(
+                        "Run %(name)s is in status %(state)s and cannot be deleted. "
+                        "Production records are retained.",
+                        name=run.name,
+                        state=dict(RUN_STATES)[run.state],
+                    )
+                )
+        return super().unlink()
+
+[58] addons/ls_medical_plastics/models/mp_injection_molding_reading.py:260
+----------------------------------------------------------------------
+    def unlink(self):
+        """Block deletion of captured readings."""
+        raise ValidationError(
+            self.env._(
+                "Moulding parameter readings cannot be deleted. To correct a value, "
+                "capture a new reading that supersedes it."
+            )
+        )
+
+[59] addons/ls_medical_plastics/models/mp_molding_parameter.py:557
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of specifications that have been approved or used."""
+        for spec in self:
+            if spec.state not in ("draft", "cancelled"):
+                raise ValidationError(
+                    self.env._(
+                        "Specification %(name)s has left the draft stage and cannot "
+                        "be deleted.",
+                        name=spec.name,
+                    )
+                )
+            if spec.run_ids:
+                raise ValidationError(
+                    self.env._(
+                        "Specification %(name)s is referenced by moulding runs and "
+                        "cannot be deleted.",
+                        name=spec.name,
+                    )
+                )
+        return super().unlink()
+
+
+[60] addons/ls_medical_plastics/models/mp_molding_parameter.py:565
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of specifications that have been approved or used."""
+        for spec in self:
+            if spec.state not in ("draft", "cancelled"):
+                raise ValidationError(
+                    self.env._(
+                        "Specification %(name)s has left the draft stage and cannot "
+                        "be deleted.",
+                        name=spec.name,
+                    )
+                )
+            if spec.run_ids:
+                raise ValidationError(
+                    self.env._(
+                        "Specification %(name)s is referenced by moulding runs and "
+                        "cannot be deleted.",
+                        name=spec.name,
+                    )
+                )
+        return super().unlink()
+
+
+[61] addons/ls_medical_plastics/models/mp_tool_maintenance.py:225
+----------------------------------------------------------------------
+    def unlink(self):
+        """Prevent deletion of completed maintenance events."""
+        for record in self:
+            if record.state == "done":
+                raise ValidationError(
+                    self.env._(
+                        "Completed maintenance event %(name)s cannot be deleted "
+                        "because it forms part of the tool history.",
+                        name=record.name,
+                    )
+                )
+        return super().unlink()
+
+[62] addons/ls_pharma/models/ls_pharma_batch.py:591
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a batch that carries a quality decision."""
+        for batch in self:
+            if batch.state != "draft":
+                raise UserError(
+                    self.env._(
+                        "Batch %(name)s has left the draft state and can no "
+                        "longer be deleted. Cancel it instead so that the "
+                        "record is retained.",
+                        name=batch.name,
+                    )
+                )
+        return super().unlink()
+
+
+[63] addons/ls_pharma/models/ls_pharma_batch_record.py:329
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a record that has left the draft state."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    self.env._(
+                        "Batch record %(name)s has left the draft state and "
+                        "can no longer be deleted.",
+                        name=record.name,
+                    )
+                )
+        return super().unlink()
+
+
+[64] addons/ls_pharma/models/ls_pharma_batch_release.py:302
+----------------------------------------------------------------------
+    def unlink(self):
+        """Refuse to delete a recorded decision."""
+        raise UserError(
+            self.env._(
+                "A batch release decision cannot be deleted. It is the "
+                "evidence that the quality unit reviewed and approved the "
+                "batch production and control records before release, as "
+                "required by 21 CFR 211.192."
+            )
+        )
+
+
+[65] addons/ls_pharma/models/ls_pharma_ctd_dossier.py:171
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a dossier that has been submitted."""
+        for dossier in self:
+            if dossier.state not in ("draft", "in_preparation"):
+                raise UserError(
+                    self.env._(
+                        "Dossier %(name)s has been submitted and can no "
+                        "longer be deleted.",
+                        name=dossier.name,
+                    )
+                )
+        return super().unlink()
+
+
+[66] addons/ls_pharma/models/ls_pharma_serialization.py:196
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a unit that has been commissioned."""
+        for unit in self:
+            if unit.state != "generated":
+                raise UserError(
+                    self.env._(
+                        "Unit %(name)s has been commissioned and can no "
+                        "longer be deleted. Decommission it instead so that "
+                        "the record is retained.",
+                        name=unit.display_name,
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # State machine
+    # ------------------------------------------------------------------
+
+[67] addons/ls_pharma/models/ls_pharma_stability_study.py:267
+----------------------------------------------------------------------
+    def unlink(self):
+        """Forbid the deletion of a study that has left the draft state."""
+        for study in self:
+            if study.state != "draft":
+                raise UserError(
+                    self.env._(
+                        "Study %(name)s has left the draft state and can no "
+                        "longer be deleted.",
+                        name=study.name,
+                    )
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Schedule generation
+    # ------------------------------------------------------------------
+
+[68] addons/ls_qms/models/ls_qms_document_mixin.py:345
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion of draft revisions only."""
+        undeletable = self.filtered(lambda doc: doc.state != "draft")
+        if undeletable:
+            raise UserError(
+                _(
+                    "Only draft documents may be deleted. %(references)s "
+                    "must be set to obsolete instead.",
+                    references=", ".join(undeletable.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Business helpers
+    # ------------------------------------------------------------------
+
+[69] addons/ls_qms/models/ls_qms_objective.py:320
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion of draft objectives only."""
+        undeletable = self.filtered(lambda obj: obj.state != "draft")
+        if undeletable:
+            raise UserError(
+                _(
+                    "Only draft objectives may be deleted. Cancel "
+                    "%(references)s instead.",
+                    references=", ".join(undeletable.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+
+[70] addons/ls_qms/models/ls_qms_quality_record.py:260
+----------------------------------------------------------------------
+    def unlink(self):
+        """Allow deletion of draft records only."""
+        undeletable = self.filtered(lambda rec: rec.state != "draft")
+        if undeletable:
+            raise UserError(
+                _(
+                    "Only draft quality records may be deleted. Records "
+                    "%(references)s must be retained until the end of their "
+                    "retention period.",
+                    references=", ".join(undeletable.mapped("reference")),
+                )
+            )
+        return super().unlink()
+
+
+[71] addons/ls_risk_management/models/ls_risk_assessment.py:294
+----------------------------------------------------------------------
+    def unlink(self):
+        """Restrict deletion to draft assessments.
+
+        :raise UserError: when any record has left the draft state.
+        :return: ``True`` when deletion succeeded.
+        :rtype: bool
+        """
+        blocked = self.filtered(lambda a: a.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Only draft assessments can be deleted. Cancel the others "
+                    "instead. Blocked references: %(refs)s",
+                    refs=", ".join(blocked.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[72] addons/ls_risk_management/models/ls_risk_fmea.py:179
+----------------------------------------------------------------------
+    def unlink(self):
+        """Restrict deletion to draft and cancelled worksheets.
+
+        :raise UserError: when any record is beyond the draft or cancelled state.
+        :return: ``True`` when deletion succeeded.
+        :rtype: bool
+        """
+        blocked = self.filtered(lambda fmea: fmea.state not in ("draft", "cancelled"))
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Only draft or cancelled FMEA worksheets can be deleted. "
+                    "Blocked references: %(refs)s",
+                    refs=", ".join(blocked.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+
+[73] addons/ls_risk_management/models/ls_risk_mitigation.py:245
+----------------------------------------------------------------------
+    def unlink(self):
+        """Restrict deletion to draft measures.
+
+        :raise UserError: when any record has left the draft state.
+        :return: ``True`` when deletion succeeded.
+        :rtype: bool
+        """
+        blocked = self.filtered(lambda m: m.state != "draft")
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Only draft risk control measures can be deleted. Cancel "
+                    "the others instead. Blocked references: %(refs)s",
+                    refs=", ".join(blocked.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow actions
+    # ------------------------------------------------------------------
+
+[74] addons/ls_risk_management/models/ls_risk_register.py:401
+----------------------------------------------------------------------
+    def unlink(self):
+        """Restrict deletion to draft and cancelled risks.
+
+        Risks that have entered assessment form part of the risk management
+        file and are archived rather than deleted.
+
+        :raise UserError: when any record is beyond the draft or cancelled state.
+        :return: ``True`` when deletion succeeded.
+        :rtype: bool
+        """
+        blocked = self.filtered(lambda risk: risk.state not in ("draft", "cancelled"))
+        if blocked:
+            raise UserError(
+                self.env._(
+                    "Risks that have been assessed cannot be deleted because "
+                    "they form part of the risk management file. Archive them "
+                    "instead. Blocked references: %(refs)s",
+                    refs=", ".join(blocked.mapped("name")),
+                )
+            )
+        return super().unlink()
+
+
+[75] addons/ls_supplier_qualification/models/ls_supplier_assessment.py:306
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled assessments may be deleted."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _("Assessment %s cannot be deleted once it has been "
+                      "started. Cancel it instead.", record.name)
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[76] addons/ls_supplier_qualification/models/ls_supplier_audit.py:284
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled audits may be deleted."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _("Audit %s cannot be deleted once it has been planned. "
+                      "Cancel it instead.", record.name)
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[77] addons/ls_supplier_qualification/models/ls_supplier_performance.py:371
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled evaluations may be deleted."""
+        for record in self:
+            if record.state == "confirmed":
+                raise UserError(
+                    _("Confirmed evaluation %s cannot be deleted. Cancel it "
+                      "instead.", record.name)
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[78] addons/ls_supplier_qualification/models/ls_supplier_qualification.py:679
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft dossiers may be deleted, to preserve the audit trail."""
+        for record in self:
+            if record.state != "draft":
+                raise UserError(
+                    _("Dossier %s cannot be deleted because it has reached "
+                      "the '%s' status. Archive it instead.",
+                      record.name,
+                      dict(STATE_SELECTION).get(record.state))
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[79] addons/ls_supplier_qualification/models/ls_supplier_review.py:192
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled reviews may be deleted."""
+        for record in self:
+            if record.state == "done":
+                raise UserError(
+                    _("Completed review %s cannot be deleted.", record.name)
+                )
+        return super().unlink()
+
+
+[80] addons/ls_supplier_qualification/models/ls_supplier_signature.py:133
+----------------------------------------------------------------------
+    def unlink(self):
+        """Reject deletion of log entries."""
+        raise UserError(
+            _("Signature log entries are append-only and cannot be deleted.")
+        )
+
+    # ------------------------------------------------------------------
+    # Signing
+    # ------------------------------------------------------------------
+
+[81] addons/ls_training/models/ls_training_attendance.py:171
+----------------------------------------------------------------------
+    def unlink(self):
+        """Attendance of a closed session is retained as GxP evidence."""
+        for record in self:
+            if record.session_id.state == "done":
+                raise UserError(
+                    _("Attendance '%s' belongs to a closed session and "
+                      "cannot be deleted.")
+                    % record.display_name
+                )
+        return super().unlink()
+
+
+[82] addons/ls_training/models/ls_training_certification.py:267
+----------------------------------------------------------------------
+    def unlink(self):
+        """Certifications are permanent evidence and are never deleted."""
+        raise UserError(
+            _("Training certifications are retained as quality evidence and "
+              "cannot be deleted. Revoke the certification instead.")
+        )
+
+
+[83] addons/ls_training/models/ls_training_competency_assessment.py:184
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft assessments may be deleted."""
+        for record in self:
+            if record.state == "confirmed":
+                raise UserError(
+                    _("Assessment '%s' is confirmed and cannot be deleted.")
+                    % record.display_name
+                )
+        return super().unlink()
+
+
+[84] addons/ls_training/models/ls_training_session.py:248
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled sessions may be deleted."""
+        for record in self:
+            if record.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _("Session '%s' is in state '%s' and cannot be deleted. "
+                      "Cancel it instead.")
+                    % (record.display_name, record.state)
+                )
+        return super().unlink()
+
+
+[85] addons/ls_validation/models/ls_validation_discrepancy.py:166
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only open discrepancies without impacted test case may be deleted."""
+        for discrepancy in self:
+            if discrepancy.state != "open":
+                raise UserError(
+                    _(
+                        "Discrepancy %s cannot be deleted because it is under "
+                        "investigation or closed."
+                    )
+                    % discrepancy.display_name
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[86] addons/ls_validation/models/ls_validation_execution.py:256
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled executions may be deleted."""
+        for execution in self:
+            if execution.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _(
+                        "Execution %s cannot be deleted because results have "
+                        "been recorded."
+                    )
+                    % execution.display_name
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Search methods for computed fields
+    # ------------------------------------------------------------------
+
+[87] addons/ls_validation/models/ls_validation_master_plan.py:203
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled plans may be deleted."""
+        for plan in self:
+            if plan.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _(
+                        "Master plan %s cannot be deleted because it is not "
+                        "draft or cancelled."
+                    )
+                    % plan.display_name
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[88] addons/ls_validation/models/ls_validation_protocol.py:225
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled protocols may be deleted."""
+        for protocol in self:
+            if protocol.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _(
+                        "Protocol %s cannot be deleted because it is not draft "
+                        "or cancelled."
+                    )
+                    % protocol.display_name
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[89] addons/ls_validation/models/ls_validation_report.py:259
+----------------------------------------------------------------------
+    def unlink(self):
+        """Only draft or cancelled reports may be deleted."""
+        for report in self:
+            if report.state not in ("draft", "cancelled"):
+                raise UserError(
+                    _(
+                        "Report %s cannot be deleted because it is under "
+                        "review or approved."
+                    )
+                    % report.display_name
+                )
+        return super().unlink()
+
+    # ------------------------------------------------------------------
+    # Workflow
+    # ------------------------------------------------------------------
+
+[90] addons/ls_validation/models/ls_validation_signature.py:188
+----------------------------------------------------------------------
+    def unlink(self):
+        """Block every deletion: the signature log is append-only."""
+        raise UserError(
+            _("Electronic signatures cannot be deleted once recorded.")
+        )
+
+    # ------------------------------------------------------------------
+    # Integrity verification
+    # ------------------------------------------------------------------

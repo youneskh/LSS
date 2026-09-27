@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="ls_lab_report_oos_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center">OOS / OOT Investigation Report</h2>
+                        <div class="text-center mb-4">
+                            <strong t-field="doc.name"/>
+                        </div>
+
+                        <table class="table table-sm table-borderless">
+                            <tr>
+                                <td style="width:25%"><strong>Type</strong></td>
+                                <td style="width:25%"><span t-field="doc.oos_type"/></td>
+                                <td style="width:25%"><strong>Status</strong></td>
+                                <td style="width:25%"><span t-field="doc.state"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Product</strong></td>
+                                <td><span t-field="doc.product_id"/></td>
+                                <td><strong>Sample</strong></td>
+                                <td><span t-field="doc.sample_id.name"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Test Method</strong></td>
+                                <td><span t-field="doc.test_method_id.name"/></td>
+                                <td><strong>Opened</strong></td>
+                                <td><span t-field="doc.opened_date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recorded Value</strong></td>
+                                <td><span t-field="doc.recorded_value"/></td>
+                                <td><strong>Acceptance Criterion</strong></td>
+                                <td><span t-field="doc.acceptance_criterion"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Investigator</strong></td>
+                                <td><span t-field="doc.investigator_id"/></td>
+                                <td><strong>Quality Approver</strong></td>
+                                <td><span t-field="doc.qa_approver_id"/></td>
+                            </tr>
+                        </table>
+
+                        <h4 class="mt-4">Phase I — Laboratory Investigation</h4>
+                        <table class="table table-sm">
+                            <tr>
+                                <td>Analyst interviewed</td>
+                                <td><span t-field="doc.chk_analyst_interview"/></td>
+                                <td>Calculation verified</td>
+                                <td><span t-field="doc.chk_calculation_verified"/></td>
+                            </tr>
+                            <tr>
+                                <td>Instrument performance verified</td>
+                                <td><span t-field="doc.chk_instrument_verified"/></td>
+                                <td>Standards and reagents verified</td>
+                                <td><span t-field="doc.chk_standard_verified"/></td>
+                            </tr>
+                            <tr>
+                                <td>Sample integrity verified</td>
+                                <td><span t-field="doc.chk_sample_integrity"/></td>
+                                <td>Method adherence verified</td>
+                                <td><span t-field="doc.chk_method_followed"/></td>
+                            </tr>
+                        </table>
+                        <p><strong>Findings: </strong><span t-field="doc.phase1_findings"/></p>
+                        <p><strong>Conclusion: </strong><span t-field="doc.phase1_conclusion"/></p>
+
+                        <div t-if="doc.phase2_findings or doc.root_cause">
+                            <h4 class="mt-4">Phase II — Investigation Beyond The Laboratory</h4>
+                            <p><strong>Findings: </strong><span t-field="doc.phase2_findings"/></p>
+                            <p><strong>Manufacturing review: </strong><span t-field="doc.manufacturing_review"/></p>
+                            <p><strong>Root cause: </strong><span t-field="doc.root_cause"/></p>
+                        </div>
+
+                        <div t-if="doc.retest_authorised or doc.resample_authorised">
+                            <h4 class="mt-4">Additional Testing Authorisation</h4>
+                            <p t-if="doc.retest_authorised">
+                                <strong>Retest authorised by </strong>
+                                <span t-field="doc.retest_authorised_by_id"/>
+                                <strong> on </strong>
+                                <span t-field="doc.retest_authorisation_date"/>.
+                                <br/>
+                                <strong>Justification: </strong>
+                                <span t-field="doc.retest_justification"/>
+                            </p>
+                            <p t-if="doc.resample_authorised">
+                                <strong>Resample authorised by </strong>
+                                <span t-field="doc.resample_authorised_by_id"/>
+                                <strong> on </strong>
+                                <span t-field="doc.resample_authorisation_date"/>.
+                                <br/>
+                                <strong>Justification: </strong>
+                                <span t-field="doc.resample_justification"/>
+                            </p>
+                        </div>
+
+                        <h4 class="mt-4">Conclusion And Disposition</h4>
+                        <p><strong>Final conclusion: </strong><span t-field="doc.final_conclusion"/></p>
+                        <p><strong>Product disposition: </strong><span t-field="doc.product_disposition"/></p>
+                        <p><strong>Justification: </strong><span t-field="doc.disposition_justification"/></p>
+                        <p t-if="doc.capa_reference">
+                            <strong>CAPA reference: </strong><span t-field="doc.capa_reference"/>
+                        </p>
+                        <p t-if="doc.closure_date">
+                            <strong>Closed on: </strong><span t-field="doc.closure_date"/>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

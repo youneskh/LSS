@@ -1,0 +1,227 @@
+{"kind":"deck","id":"pr/6m7dov","name":"Deck"}
+{"kind":"layout","layoutId":"152eca85-1f08-44f2-b7a7-85f8d54676f5","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"d4cf8410-631a-4f20-826d-d6e2adb43b55","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/qhscvm","slide":1,"title":"LSS","textShapes":5}
+{"kind":"shape","id":"sh/w3u9cb2x","slide":1,"bbox":[72,68,132,8]}
+{"kind":"textbox","id":"sh/vilsjqlc","slide":1,"text":"LSS","textPreview":"LSS","textChars":3,"textLines":1,"bbox":[72,112,260,100]}
+{"kind":"textbox","id":"sh/ahcralkr","slide":1,"text":"Life Sciences Suite","textPreview":"Life Sciences Suite","textChars":19,"textLines":1,"bbox":[76,210,620,54]}
+{"kind":"textbox","id":"sh/9g3ahg36","slide":1,"text":"Connect Operations.\nControl Quality.\nTrace Everything.","textPreview":"Connect Operations. | Control Quality. | Trace Everything.","textChars":54,"textLines":3,"bbox":[72,310,650,210]}
+{"kind":"textbox","id":"sh/8fu98b2l","slide":1,"text":"Commercial launch narrative","textPreview":"Commercial launch narrative","textChars":27,"textLines":1,"bbox":[76,570,450,32]}
+{"kind":"textbox","id":"sh/ne1sf6l0","slide":1,"text":"2026","textPreview":"2026","textChars":4,"textLines":1,"bbox":[76,610,120,28]}
+{"kind":"shape","id":"sh/mdsr61kf","slide":1,"bbox":[922,110,56,56]}
+{"kind":"shape","id":"sh/lcjadw3a","slide":1,"bbox":[1086,214,28,28]}
+{"kind":"shape","id":"sh/0ba94r2p","slide":1,"bbox":[912,390,36,36]}
+{"kind":"shape","id":"sh/uh8zitoj","slide":1,"bbox":[1066,496,68,68]}
+{"kind":"shape","id":"sh/fih0re54","slide":1,"bbox":[813,563,24,24]}
+{"kind":"shape","id":"sh/gjqhkj69","slide":1,"bbox":[820,408,280,5]}
+{"kind":"shape","id":"sh/hkjitonu","slide":1,"bbox":[950,138,150,3]}
+{"kind":"notes","id":"nt/qhscvm","slide":1,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/y76rrz","slide":2,"title":"LSS - LIFE SCIENCES SUITE","textShapes":14}
+{"kind":"textbox","id":"sh/q5s7a903","slide":2,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/d836l4ju","slide":2,"text":"The batch story is often scattered.","textPreview":"The batch story is often scattered.","textChars":35,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/s7apczi9","slide":2,"text":"When operations and quality live apart, each investigation begins with reconstruction.","textPreview":"When operations and quality live apart, each investigation begins with reconstruction.","textChars":86,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/falone10","slide":2,"bbox":[140,350,190,148]}
+{"kind":"textbox","id":"sh/e9c7e90f","slide":2,"text":"ERP","textPreview":"ERP","textChars":3,"textLines":1,"bbox":[160,376,150,30]}
+{"kind":"textbox","id":"sh/1w36pojq","slide":2,"text":"Transactions","textPreview":"Transactions","textChars":12,"textLines":1,"bbox":[160,420,150,24]}
+{"kind":"shape","id":"sh/0vupgji5","slide":2,"bbox":[160,466,110,4]}
+{"kind":"shape","id":"sh/vehobu1g","slide":2,"bbox":[390,350,190,148]}
+{"kind":"textbox","id":"sh/ud8n2p0v","slide":2,"text":"QMS","textPreview":"QMS","textChars":3,"textLines":1,"bbox":[410,376,150,30]}
+{"kind":"textbox","id":"sh/0bmtk7q9","slide":2,"text":"Decisions","textPreview":"Decisions","textChars":9,"textLines":1,"bbox":[410,420,150,24]}
+{"kind":"shape","id":"sh/lcvutcre","slide":2,"bbox":[410,466,110,4]}
+{"kind":"shape","id":"sh/y94bih83","slide":2,"bbox":[640,350,190,148]}
+{"kind":"textbox","id":"sh/zadcr29o","slide":2,"text":"Documents","textPreview":"Documents","textChars":9,"textLines":1,"bbox":[660,376,150,30]}
+{"kind":"textbox","id":"sh/8f6dorq5","slide":2,"text":"Approvals","textPreview":"Approvals","textChars":9,"textLines":1,"bbox":[660,420,150,24]}
+{"kind":"shape","id":"sh/9gfuxwrq","slide":2,"bbox":[660,466,110,4]}
+{"kind":"shape","id":"sh/md4bmh8z","slide":2,"bbox":[890,350,190,148]}
+{"kind":"textbox","id":"sh/nedcvm9k","slide":2,"text":"Manual files","textPreview":"Manual files","textChars":12,"textLines":1,"bbox":[910,376,150,30]}
+{"kind":"textbox","id":"sh/oj2tcnq1","slide":2,"text":"Exceptions","textPreview":"Exceptions","textChars":10,"textLines":1,"bbox":[910,420,150,24]}
+{"kind":"shape","id":"sh/pkbulsrm","slide":2,"bbox":[910,466,110,4]}
+{"kind":"textbox","id":"sh/5ojitkfy","slide":2,"text":"The question is not “Do we have data?”\nIt is “Can we follow the decision?”","textPreview":"The question is not “Do we have data?” | It is “Can we follow the decision?”","textChars":74,"textLines":2,"bbox":[72,555,780,70]}
+{"kind":"textbox","id":"sh/kna10fed","slide":2,"text":"LSS  /  02","textPreview":"LSS  /  02","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/j210ruxs","slide":2,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/y76rrz","slide":2,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/ip1332","slide":3,"title":"LSS - LIFE SCIENCES SUITE","textShapes":10}
+{"kind":"textbox","id":"sh/a5kbi5wb","slide":3,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/x8bat0v2","slide":3,"text":"A connected environment changes the conversation.","textPreview":"A connected environment changes the conversation.","textChars":49,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/w72tkveh","slide":3,"text":"LSS is designed to link operational context and quality workflows.","textPreview":"LSS is designed to link operational context and quality workflows.","textChars":66,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/nitsnqxk","slide":3,"bbox":[260,430,380,3]}
+{"kind":"shape","id":"sh/mh0relwf","slide":3,"bbox":[176,380,168,100]}
+{"kind":"textbox","id":"sh/9kbap0fq","slide":3,"text":"OPERATIONS","textPreview":"OPERATIONS","textChars":10,"textLines":1,"bbox":[188,406,144,48]}
+{"kind":"shape","id":"sh/oj2tgve5","slide":3,"bbox":[640,310,5,3]}
+{"kind":"shape","id":"sh/7edszad4","slide":3,"bbox":[638,310,4,120]}
+{"kind":"shape","id":"sh/6d4bqpwj","slide":3,"bbox":[556,260,168,100]}
+{"kind":"textbox","id":"sh/cbi1kn29","slide":3,"text":"QUALITY","textPreview":"QUALITY","textChars":7,"textLines":1,"bbox":[568,286,144,48]}
+{"kind":"shape","id":"sh/xcr2dsju","slide":3,"bbox":[640,430,380,3]}
+{"kind":"shape","id":"sh/a9gjixkj","slide":3,"bbox":[936,380,168,100]}
+{"kind":"textbox","id":"sh/bapkb21o","slide":3,"text":"TRACEABILITY","textPreview":"TRACEABILITY","textChars":12,"textLines":1,"bbox":[948,406,144,48]}
+{"kind":"shape","id":"sh/o7y1gn2d","slide":3,"bbox":[640,430,5,3]}
+{"kind":"shape","id":"sh/p8729sjy","slide":3,"bbox":[638,430,4,120]}
+{"kind":"shape","id":"sh/25gjedk7","slide":3,"bbox":[556,500,168,100]}
+{"kind":"textbox","id":"sh/n6pk7i1s","slide":3,"text":"CONTROLLED\nWORKFLOWS","textPreview":"CONTROLLED | WORKFLOWS","textChars":20,"textLines":2,"bbox":[568,526,144,48]}
+{"kind":"textbox","id":"sh/0jy1c321","slide":3,"text":"LSS","textPreview":"LSS","textChars":3,"textLines":1,"bbox":[570,402,140,54]}
+{"kind":"textbox","id":"sh/147i58jm","slide":3,"text":"LSS  /  03","textPreview":"LSS  /  03","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/h0zi94vq","slide":3,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/ip1332","slide":3,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/4s94cm","slide":4,"title":"LSS - LIFE SCIENCES SUITE","textShapes":13}
+{"kind":"textbox","id":"sh/25cbqlcn","slide":4,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/p8na1gvy","slide":4,"text":"LSS starts with a modular architecture.","textPreview":"LSS starts with a modular architecture.","textChars":39,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/47utsvud","slide":4,"text":"Each layer has a distinct job - and each customer scope is verified before it is marketed.","textPreview":"Each layer has a distinct job - and each customer scope is verified before it is marketed.","textChars":90,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/v2lsv6dw","slide":4,"bbox":[144,315,992,68]}
+{"kind":"textbox","id":"sh/u1cr21cb","slide":4,"text":"Industry extensions","textPreview":"Industry extensions","textChars":19,"textLines":1,"bbox":[175,326,300,28]}
+{"kind":"textbox","id":"sh/h43axgv2","slide":4,"text":"Pharmaceutical  /  Device  /  Plastics  /  Cosmetics  /  Laboratory","textPreview":"Pharmaceutical  /  Device  /  Plastics  /  Cosmetics  /  Laboratory","textChars":67,"textLines":1,"bbox":[490,329,600,24]}
+{"kind":"shape","id":"sh/g3ut4buh","slide":4,"bbox":[144,399,992,68]}
+{"kind":"textbox","id":"sh/7e1sr6d0","slide":4,"text":"Life Sciences Core","textPreview":"Life Sciences Core","textChars":18,"textLines":1,"bbox":[175,410,300,28]}
+{"kind":"textbox","id":"sh/6dsry1cf","slide":4,"text":"QMS  /  controlled workflows  /  traceability","textPreview":"QMS  /  controlled workflows  /  traceability","textChars":45,"textLines":1,"bbox":[490,413,600,24]}
+{"kind":"shape","id":"sh/k7alof6h","slide":4,"bbox":[144,483,992,68]}
+{"kind":"textbox","id":"sh/l8j2hk72","slide":4,"text":"Community extensions","textPreview":"Community extensions","textChars":20,"textLines":1,"bbox":[175,494,300,28]}
+{"kind":"textbox","id":"sh/y5s3m5or","slide":4,"text":"OCA components and supporting services","textPreview":"OCA components and supporting services","textChars":38,"textLines":1,"bbox":[490,497,600,24]}
+{"kind":"shape","id":"sh/j61kfapc","slide":4,"bbox":[144,567,992,68]}
+{"kind":"textbox","id":"sh/w3qlkv6l","slide":4,"text":"ERP foundation","textPreview":"ERP foundation","textChars":14,"textLines":1,"bbox":[175,578,300,28]}
+{"kind":"textbox","id":"sh/x4j2d076","slide":4,"text":"Odoo 19 Community  /  PostgreSQL","textPreview":"Odoo 19 Community  /  PostgreSQL","textChars":32,"textLines":1,"bbox":[490,581,600,24]}
+{"kind":"textbox","id":"sh/ah83i5of","slide":4,"text":"LSS  /  04","textPreview":"LSS  /  04","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/b2hkbap0","slide":4,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/4s94cm","slide":4,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/a01lvi","slide":5,"title":"LSS - LIFE SCIENCES SUITE","textShapes":16}
+{"kind":"textbox","id":"sh/hgfad83y","slide":5,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/udobitkn","slide":5,"text":"Show the workflow - not the menu.","textPreview":"Show the workflow - not the menu.","textChars":33,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/fexsbyls","slide":5,"text":"A credible demonstration answers a real operational question end to end.","textPreview":"A credible demonstration answers a real operational question end to end.","textChars":72,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/4j6to32p","slide":5,"bbox":[155,438,970,8]}
+{"kind":"shape","id":"sh/pkfah83a","slide":5,"bbox":[130,413,50,50]}
+{"kind":"textbox","id":"sh/2hobmdkj","slide":5,"text":"RECEIVE","textPreview":"RECEIVE","textChars":7,"textLines":1,"bbox":[75,490,160,28]}
+{"kind":"textbox","id":"sh/3ixsfil4","slide":5,"text":"Material\nand lot","textPreview":"Material | and lot","textChars":16,"textLines":2,"bbox":[83,530,144,48]}
+{"kind":"shape","id":"sh/cnqtsn2l","slide":5,"bbox":[372,413,50,50]}
+{"kind":"textbox","id":"sh/d8zals36","slide":5,"text":"ASSESS","textPreview":"ASSESS","textChars":6,"textLines":1,"bbox":[317,490,160,28]}
+{"kind":"textbox","id":"sh/pcvut0ne","slide":5,"text":"Status\nand checks","textPreview":"Status | and checks","textChars":17,"textLines":2,"bbox":[325,530,144,48]}
+{"kind":"shape","id":"sh/4rmd0vmt","slide":5,"bbox":[614,413,50,50]}
+{"kind":"textbox","id":"sh/3qdcrq58","slide":5,"text":"MAKE","textPreview":"MAKE","textChars":4,"textLines":1,"bbox":[559,490,160,28]}
+{"kind":"textbox","id":"sh/2p4vy54n","slide":5,"text":"Batch\ncontext","textPreview":"Batch | context","textChars":13,"textLines":2,"bbox":[567,530,144,48]}
+{"kind":"shape","id":"sh/dgfexkna","slide":5,"bbox":[856,413,50,50]}
+{"kind":"textbox","id":"sh/cf6d4fm5","slide":5,"text":"DECIDE","textPreview":"DECIDE","textChars":6,"textLines":1,"bbox":[801,490,160,28]}
+{"kind":"textbox","id":"sh/rexwva5k","slide":5,"text":"Quality\nworkflow","textPreview":"Quality | workflow","textChars":16,"textLines":2,"bbox":[809,530,144,48]}
+{"kind":"shape","id":"sh/qd4v254z","slide":5,"bbox":[1098,413,50,50]}
+{"kind":"textbox","id":"sh/tkbulgn6","slide":5,"text":"TRACE","textPreview":"TRACE","textChars":5,"textLines":1,"bbox":[1043,490,160,28]}
+{"kind":"textbox","id":"sh/sj2dsbml","slide":5,"text":"Linked\nstory","textPreview":"Linked | story","textChars":12,"textLines":2,"bbox":[1051,530,144,48]}
+{"kind":"textbox","id":"sh/k36d8buh","slide":5,"text":"Every stage creates context for the next decision.","textPreview":"Every stage creates context for the next decision.","textChars":50,"textLines":1,"bbox":[260,620,760,38]}
+{"kind":"textbox","id":"sh/l4fe1gv2","slide":5,"text":"LSS  /  05","textPreview":"LSS  /  05","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/y1ov6lcb","slide":5,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/a01lvi","slide":5,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/nm8sc8","slide":6,"title":"LSS - LIFE SCIENCES SUITE","textShapes":12}
+{"kind":"textbox","id":"sh/zy903q54","slide":6,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/0zi1wvmp","slide":6,"text":"The value is better-connected context.","textPreview":"The value is better-connected context.","textChars":38,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/l0b250na","slide":6,"text":"Not “compliance in a box.” A more coherent place to execute, assess, and explain the work.","textPreview":"Not “compliance in a box.” A more coherent place to execute, assess, and explain the work.","textChars":90,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"textbox","id":"sh/m1kjy54v","slide":6,"text":"LESS","textPreview":"LESS","textChars":4,"textLines":1,"bbox":[105,360,300,58]}
+{"kind":"shape","id":"sh/n2tk7a5g","slide":6,"bbox":[105,438,210,3]}
+{"kind":"textbox","id":"sh/83210fml","slide":6,"text":"manual reconstruction","textPreview":"manual reconstruction","textChars":21,"textLines":1,"bbox":[105,464,290,40]}
+{"kind":"textbox","id":"sh/9ob29kn6","slide":6,"text":"MORE","textPreview":"MORE","textChars":4,"textLines":1,"bbox":[470,360,300,58]}
+{"kind":"shape","id":"sh/apkj254r","slide":6,"bbox":[470,438,210,3]}
+{"kind":"textbox","id":"sh/vqtkba5c","slide":6,"text":"visible ownership","textPreview":"visible ownership","textChars":17,"textLines":1,"bbox":[470,464,290,40]}
+{"kind":"textbox","id":"sh/fyp0zip0","slide":6,"text":"CLEARER","textPreview":"CLEARER","textChars":7,"textLines":1,"bbox":[835,360,300,58]}
+{"kind":"shape","id":"sh/exgzqdof","slide":6,"bbox":[835,438,210,3]}
+{"kind":"textbox","id":"sh/107i1s76","slide":6,"text":"operational context","textPreview":"operational context","textChars":19,"textLines":1,"bbox":[835,464,290,40]}
+{"kind":"textbox","id":"sh/gzyhsn6l","slide":6,"text":"Intended outcomes are confirmed against your workflow, configuration, and validation programme.","textPreview":"Intended outcomes are confirmed against your workflow, configuration, and validation programme.","textChars":95,"textLines":1,"bbox":[72,600,1136,38]}
+{"kind":"textbox","id":"sh/ru50vyp4","slide":6,"text":"LSS  /  06","textPreview":"LSS  /  06","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/6twzmt8j","slide":6,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/nm8sc8","slide":6,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/2w7rpd","slide":7,"title":"LSS - LIFE SCIENCES SUITE","textShapes":8}
+{"kind":"textbox","id":"sh/of61k3i9","slide":7,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/3ex0ryho","slide":7,"text":"One strong idea. Many useful formats.","textPreview":"One strong idea. Many useful formats.","textChars":37,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/2tozit03","slide":7,"text":"“See the complete journey of a batch” turns into ads, social content, PLV, and a workflow demo.","textPreview":"“See the complete journey of a batch” turns into ads, social content, PLV, and a workflow demo.","textChars":95,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"textbox","id":"sh/qh8jmd0f","slide":7,"text":"ADVERTISING","textPreview":"ADVERTISING","textChars":11,"textLines":1,"bbox":[72,578,200,24]}
+{"kind":"textbox","id":"sh/tovilozm","slide":7,"text":"SOCIAL","textPreview":"SOCIAL","textChars":6,"textLines":1,"bbox":[612,578,160,24]}
+{"kind":"textbox","id":"sh/snmhcji1","slide":7,"text":"RETARGETING","textPreview":"RETARGETING","textChars":11,"textLines":1,"bbox":[902,490,200,24]}
+{"kind":"textbox","id":"sh/et83idob","slide":7,"text":"LSS  /  07","textPreview":"LSS  /  07","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/fuh4bypw","slide":7,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"image","id":"im/snu1g32d","slide":7,"name":"","geometry":"roundRect","alt":"LSS marketing campaign visual","bbox":[72,300,500,260]}
+{"kind":"image","id":"im/to3298jy","slide":7,"name":"","geometry":"roundRect","alt":"LSS marketing campaign visual","bbox":[612,300,250,250]}
+{"kind":"image","id":"im/6lcjetkn","slide":7,"name":"","geometry":"roundRect","alt":"LSS marketing campaign visual","bbox":[902,300,306,160]}
+{"kind":"notes","id":"nt/2w7rpd","slide":7,"text":"[Sources]\n- LSS Advertising, Social Media & PLV Package / internally produced campaign assets.\n[/Sources]"}
+{"kind":"slide","id":"sl/qfklg6","slide":8,"title":"LSS - LIFE SCIENCES SUITE","textShapes":13}
+{"kind":"textbox","id":"sh/dsb2xcz6","slide":8,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/qp0jmh0v","slide":8,"text":"Different buyers enter through different problems.","textPreview":"Different buyers enter through different problems.","textChars":50,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/rq9kvmhg","slide":8,"text":"Lead with the handoff they own, then connect their need to the wider operating story.","textPreview":"Lead with the handoff they own, then connect their need to the wider operating story.","textChars":85,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/4ni1k7ip","slide":8,"bbox":[95,312,20,20]}
+{"kind":"textbox","id":"sh/5or2tcza","slide":8,"text":"CEO / COO","textPreview":"CEO / COO","textChars":9,"textLines":1,"bbox":[135,300,230,30]}
+{"kind":"textbox","id":"sh/i10jix0j","slide":8,"text":"Visibility and decision confidence","textPreview":"Visibility and decision confidence","textChars":34,"textLines":1,"bbox":[390,302,700,28]}
+{"kind":"shape","id":"sh/329kr214","slide":8,"bbox":[95,390,20,20]}
+{"kind":"textbox","id":"sh/gzi1gnit","slide":8,"text":"Quality","textPreview":"Quality","textChars":7,"textLines":1,"bbox":[135,378,230,30]}
+{"kind":"textbox","id":"sh/h0r2psjy","slide":8,"text":"Deviations, CAPA, documents, evidence","textPreview":"Deviations, CAPA, documents, evidence","textChars":37,"textLines":1,"bbox":[390,380,700,28]}
+{"kind":"shape","id":"sh/9ozax0ve","slide":8,"bbox":[95,468,20,20]}
+{"kind":"textbox","id":"sh/onqt4vet","slide":8,"text":"Operations","textPreview":"Operations","textChars":10,"textLines":1,"bbox":[135,456,230,30]}
+{"kind":"textbox","id":"sh/nmhsvqd8","slide":8,"text":"Material status, batch execution, handoffs","textPreview":"Material status, batch execution, handoffs","textChars":42,"textLines":1,"bbox":[390,458,700,28]}
+{"kind":"shape","id":"sh/ml8b2lwn","slide":8,"bbox":[95,546,20,20]}
+{"kind":"textbox","id":"sh/1kzatgv2","slide":8,"text":"IT / CIO","textPreview":"IT / CIO","textChars":8,"textLines":1,"bbox":[135,534,230,30]}
+{"kind":"textbox","id":"sh/0jqt0veh","slide":8,"text":"Architecture, integration, governance","textPreview":"Architecture, integration, governance","textChars":37,"textLines":1,"bbox":[390,536,700,28]}
+{"kind":"textbox","id":"sh/zixsrqdc","slide":8,"text":"LSS  /  08","textPreview":"LSS  /  08","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/ehobylwr","slide":8,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/qfklg6","slide":8,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/r5ld25","slide":9,"title":"LSS - LIFE SCIENCES SUITE","textShapes":15}
+{"kind":"textbox","id":"sh/ul8jixkj","slide":9,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/h8j2tcju","slide":9,"text":"Industry relevance makes the story credible.","textPreview":"Industry relevance makes the story credible.","textChars":44,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/wnalk729","slide":9,"text":"The platform conversation changes with the product, process, and regulatory context.","textPreview":"The platform conversation changes with the product, process, and regulatory context.","textChars":84,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/7ihkni1s","slide":9,"bbox":[74,303,50,5]}
+{"kind":"textbox","id":"sh/mh8jexk7","slide":9,"text":"PHARMACEUTICAL","textPreview":"PHARMACEUTICAL","textChars":14,"textLines":1,"bbox":[145,285,260,26]}
+{"kind":"textbox","id":"sh/9kz2psjy","slide":9,"text":"Material to batch to decision","textPreview":"Material to batch to decision","textChars":29,"textLines":1,"bbox":[455,285,530,26]}
+{"kind":"shape","id":"sh/8jq1gn2d","slide":9,"bbox":[74,368,50,5]}
+{"kind":"textbox","id":"sh/relkzm1w","slide":9,"text":"MEDICAL DEVICES","textPreview":"MEDICAL DEVICES","textChars":15,"textLines":1,"bbox":[145,350,260,26]}
+{"kind":"textbox","id":"sh/qds3qh0r","slide":9,"text":"Device record and controlled change","textPreview":"Device record and controlled change","textChars":35,"textLines":1,"bbox":[455,350,530,26]}
+{"kind":"shape","id":"sh/8n61sfat","slide":9,"bbox":[74,433,50,5]}
+{"kind":"textbox","id":"sh/9of21kre","slide":9,"text":"MEDICAL PLASTICS","textPreview":"MEDICAL PLASTICS","textChars":16,"textLines":1,"bbox":[145,415,260,26]}
+{"kind":"textbox","id":"sh/mlojq5sn","slide":9,"text":"Process parameters and lot context","textPreview":"Process parameters and lot context","textChars":34,"textLines":1,"bbox":[455,415,530,26]}
+{"kind":"shape","id":"sh/7mxkza98","slide":9,"bbox":[74,498,50,5]}
+{"kind":"textbox","id":"sh/kzm1ofax","slide":9,"text":"COSMETICS","textPreview":"COSMETICS","textChars":9,"textLines":1,"bbox":[145,480,260,26]}
+{"kind":"textbox","id":"sh/lkfixkri","slide":9,"text":"Formula, ingredient, packaging context","textPreview":"Formula, ingredient, packaging context","textChars":38,"textLines":1,"bbox":[455,480,530,26]}
+{"kind":"shape","id":"sh/yx4jm5sr","slide":9,"bbox":[74,563,50,5]}
+{"kind":"textbox","id":"sh/zyd0va9c","slide":9,"text":"LABORATORIES","textPreview":"LABORATORIES","textChars":12,"textLines":1,"bbox":[145,545,260,26]}
+{"kind":"textbox","id":"sh/cvm1kval","slide":9,"text":"Sample, result, and release context","textPreview":"Sample, result, and release context","textChars":35,"textLines":1,"bbox":[455,545,530,26]}
+{"kind":"textbox","id":"sh/xwvit0r6","slide":9,"text":"LSS  /  09","textPreview":"LSS  /  09","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/dsnyxw3u","slide":9,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/r5ld25","slide":9,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/21nnne","slide":10,"title":"LSS - LIFE SCIENCES SUITE","textShapes":9}
+{"kind":"textbox","id":"sh/uxwnmtcf","slide":10,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/hkn6h8v6","slide":10,"text":"Trust starts with precise claims.","textPreview":"Trust starts with precise claims.","textChars":33,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/gje5o3ul","slide":10,"text":"The strongest launch language is specific about what LSS is designed to support - and candid about what must be verified.","textPreview":"The strongest launch language is specific about what LSS is designed to support - and candid about what must be verified.","textChars":121,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/7ulobyd4","slide":10,"bbox":[120,330,450,160]}
+{"kind":"textbox","id":"sh/6tcnitwj","slide":10,"text":"Use","textPreview":"Use","textChars":3,"textLines":1,"bbox":[155,360,100,30]}
+{"kind":"textbox","id":"sh/tw36d8va","slide":10,"text":"Designed to support\nConfigured and validated\naccording to requirements","textPreview":"Designed to support | Configured and validated | according to requirements","textChars":70,"textLines":3,"bbox":[155,398,330,72]}
+{"kind":"shape","id":"sh/svu5k3up","slide":10,"bbox":[710,330,450,160]}
+{"kind":"textbox","id":"sh/rqponid8","slide":10,"text":"Never say","textPreview":"Never say","textChars":9,"textLines":1,"bbox":[745,360,160,30]}
+{"kind":"textbox","id":"sh/qpgnuxcn","slide":10,"text":"Guaranteed compliance\nFDA approved\n100% compliant","textPreview":"Guaranteed compliance | FDA approved | 100% compliant","textChars":49,"textLines":3,"bbox":[745,398,330,72]}
+{"kind":"textbox","id":"sh/s7yxsbq1","slide":10,"text":"LSS  /  10","textPreview":"LSS  /  10","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/t87ylgr6","slide":10,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/21nnne","slide":10,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/b5e895","slide":11,"title":"LSS - LIFE SCIENCES SUITE","textShapes":16}
+{"kind":"textbox","id":"sh/gvuhoryt","slide":11,"text":"LSS - LIFE SCIENCES SUITE","textPreview":"LSS - LIFE SCIENCES SUITE","textChars":25,"textLines":1,"bbox":[72,44,600,22]}
+{"kind":"textbox","id":"sh/fu10fmx8","slide":11,"text":"Launch the message only when the proof is ready.","textPreview":"Launch the message only when the proof is ready.","textChars":48,"textLines":1,"bbox":[72,92,1100,100]}
+{"kind":"textbox","id":"sh/etszmhgn","slide":11,"text":"The capability matrix turns an architectural story into a responsible commercial programme.","textPreview":"The capability matrix turns an architectural story into a responsible commercial programme.","textChars":91,"textLines":1,"bbox":[72,202,860,50]}
+{"kind":"shape","id":"sh/p03ilwfa","slide":11,"bbox":[82,335,110,110]}
+{"kind":"textbox","id":"sh/ozuhsbyp","slide":11,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[82,352,110,34]}
+{"kind":"textbox","id":"sh/3yl0j6xk","slide":11,"text":"PRODUCT\nTRUTH","textPreview":"PRODUCT | TRUTH","textChars":13,"textLines":2,"bbox":[208,354,88,46]}
+{"kind":"shape","id":"sh/2xczq1gz","slide":11,"bbox":[307,335,110,110]}
+{"kind":"textbox","id":"sh/donipgfm","slide":11,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[307,352,110,34]}
+{"kind":"textbox","id":"sh/cnehwby1","slide":11,"text":"DEMO\nTRUTH","textPreview":"DEMO | TRUTH","textChars":10,"textLines":2,"bbox":[433,354,88,46]}
+{"kind":"shape","id":"sh/21cz6tsj","slide":11,"bbox":[532,335,110,110]}
+{"kind":"textbox","id":"sh/n2lgzeto","slide":11,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[532,352,110,34]}
+{"kind":"textbox","id":"sh/o3uh8ja9","slide":11,"text":"REGULATORY\nTRUTH","textPreview":"REGULATORY | TRUTH","textChars":16,"textLines":2,"bbox":[658,354,88,46]}
+{"kind":"shape","id":"sh/p43y1obu","slide":11,"bbox":[757,335,110,110]}
+{"kind":"textbox","id":"sh/a5czatsf","slide":11,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[757,352,110,34]}
+{"kind":"textbox","id":"sh/b6l03yt0","slide":11,"text":"BRAND\nTRUTH","textPreview":"BRAND | TRUTH","textChars":11,"textLines":2,"bbox":[883,354,88,46]}
+{"kind":"shape","id":"sh/c7ehc3al","slide":11,"bbox":[982,335,110,110]}
+{"kind":"textbox","id":"sh/x8ni58b6","slide":11,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[982,352,110,34]}
+{"kind":"textbox","id":"sh/q9szy9sb","slide":11,"text":"SALES\nTRUTH","textPreview":"SALES | TRUTH","textChars":11,"textLines":2,"bbox":[1108,354,88,46]}
+{"kind":"textbox","id":"sh/ra1grutw","slide":11,"text":"Verification gives marketing a better story - because the story can be demonstrated.","textPreview":"Verification gives marketing a better story - because the story can be demonstrated.","textChars":84,"textLines":1,"bbox":[150,570,980,40]}
+{"kind":"textbox","id":"sh/v2d4j65c","slide":11,"text":"LSS  /  11","textPreview":"LSS  /  11","textChars":10,"textLines":1,"bbox":[72,680,200,18]}
+{"kind":"textbox","id":"sh/u14na14r","slide":11,"text":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textPreview":"Designed to support regulated workflows - configuration and validation remain the organisation's responsibility.","textChars":112,"textLines":1,"bbox":[382,680,826,18]}
+{"kind":"notes","id":"nt/b5e895","slide":11,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}
+{"kind":"slide","id":"sl/2w2j8l","slide":12,"title":"Bring one difficult","textShapes":5}
+{"kind":"shape","id":"sh/ru18byl4","slide":12,"bbox":[72,70,132,8]}
+{"kind":"textbox","id":"sh/cvapk32p","slide":12,"text":"Bring one difficult\nworkflow.","textPreview":"Bring one difficult | workflow.","textChars":29,"textLines":2,"bbox":[72,146,650,145]}
+{"kind":"textbox","id":"sh/dwjqd83a","slide":12,"text":"We will map the records, roles, decisions, and evidence it needs.","textPreview":"We will map the records, roles, decisions, and evidence it needs.","textChars":65,"textLines":1,"bbox":[76,330,690,62]}
+{"kind":"shape","id":"sh/ehs7mdkv","slide":12,"bbox":[76,460,430,70]}
+{"kind":"textbox","id":"sh/zi18fil0","slide":12,"text":"REQUEST A WORKFLOW DEMO","textPreview":"REQUEST A WORKFLOW DEMO","textChars":23,"textLines":1,"bbox":[98,480,386,28]}
+{"kind":"textbox","id":"sh/0ja9on2l","slide":12,"text":"[website]  /  [email]  /  [phone]","textPreview":"[website]  /  [email]  /  [phone]","textChars":33,"textLines":1,"bbox":[76,600,460,26]}
+{"kind":"textbox","id":"sh/1k3qhs36","slide":12,"text":"LSS - Life Sciences Suite","textPreview":"LSS - Life Sciences Suite","textChars":25,"textLines":1,"bbox":[76,660,360,24]}
+{"kind":"shape","id":"sh/mlcrqxkr","slide":12,"bbox":[938,168,84,84]}
+{"kind":"shape","id":"sh/nml8ji1c","slide":12,"bbox":[1072,302,36,36]}
+{"kind":"shape","id":"sh/nah8bepc","slide":12,"bbox":[908,418,54,54]}
+{"kind":"shape","id":"sh/2po7itor","slide":12,"bbox":[1074,499,72,72]}
+{"kind":"notes","id":"nt/2w2j8l","slide":12,"text":"[Sources]\n- LSS Marketing & Advertising Master Plan / supplied LSS architectural documentation.\n[/Sources]"}

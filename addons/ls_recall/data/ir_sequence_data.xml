@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!--
+        Sequences are loaded with noupdate="1" so that a module upgrade
+        never resets a counter that has already allocated references to
+        real records.
+    -->
+
+    <record id="seq_ls_recall_plan" model="ir.sequence">
+        <field name="name">Recall Plan</field>
+        <field name="code">ls.recall.plan</field>
+        <field name="prefix">RCP/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_recall_execution" model="ir.sequence">
+        <field name="name">Recall</field>
+        <field name="code">ls.recall.execution</field>
+        <field name="prefix">RCL/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_recall_communication" model="ir.sequence">
+        <field name="name">Recall Communication</field>
+        <field name="code">ls.recall.communication</field>
+        <field name="prefix">RCC/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="seq_ls_recall_report" model="ir.sequence">
+        <field name="name">Recall Report</field>
+        <field name="code">ls.recall.report</field>
+        <field name="prefix">RCR/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+        <field name="implementation">no_gap</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

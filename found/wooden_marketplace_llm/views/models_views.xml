@@ -1,0 +1,83 @@
+<odoo>
+    <!-- Product Template Form View -->
+    <record id="view_product_template_form_inherit" model="ir.ui.view">
+        <field name="name">product.template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="base.product_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page[@string='Details']" position="inside">
+                <group string="Vendor Information">
+                    <field name="vendor_id"/>
+                    <field name="approval_state"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Sale Order Line Form View -->
+    <record id="view_sale_order_line_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.line.form.inherit</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_order_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook/page[@string='Product']" position="inside">
+                <group string="Commission Information">
+                    <field name="admin_commission_amount"/>
+                    <field name="vendor_net_revenue"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Website Product Template List View -->
+    <template id="assets_backend" inherit_id="web.assets_backend" name="custom_product_template_list">
+        <xpath expr="//t[@id='product_template_list_form']" position="after">
+            <script type="text/javascript">
+                $(function () {
+                    $("a[data-action='action_product_template_tree']").on('click', function (e) {
+                        e.preventDefault();
+                        var treeView = $(".oe_list_view");
+                        if (!treeView.length) {
+                            window.location.href = '/web/view/tree?model=product.template';
+                        }
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Website Product Template Form View -->
+    <template id="assets_backend" inherit_id="web.assets_backend" name="custom_product_template_form">
+        <xpath expr="//t[@id='product_template_form']" position="after">
+            <script type="text/javascript">
+                $(function () {
+                    $("a[data-action='action_product_template_tree']").on('click', function (e) {
+                        e.preventDefault();
+                        var treeView = $(".oe_list_view");
+                        if (!treeView.length) {
+                            window.location.href = '/web/view/tree?model=product.template';
+                        }
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+
+    <!-- Website Product Template Kanban View -->
+    <template id="assets_backend" inherit_id="web.assets_backend" name="custom_product_template_kanban">
+        <xpath expr="//t[@id='product_template_kanban']" position="after">
+            <script type="text/javascript">
+                $(function () {
+                    $("a[data-action='action_product_template_tree']").on('click', function (e) {
+                        e.preventDefault();
+                        var treeView = $(".oe_list_view");
+                        if (!treeView.length) {
+                            window.location.href = '/web/view/tree?model=product.template';
+                        }
+                    });
+                });
+            </script>
+        </xpath>
+    </template>
+
+</odoo>

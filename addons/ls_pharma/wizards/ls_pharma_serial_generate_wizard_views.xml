@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_serial_generate_wizard_form" model="ir.ui.view">
+        <field name="name">ls.pharma.serial.generate.wizard.form</field>
+        <field name="model">ls.pharma.serial.generate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Serial Numbers">
+                <group>
+                    <group string="Batch">
+                        <field name="batch_id" options="{'no_create': True}"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="batch_number"/>
+                        <field name="expiry_date"/>
+                    </group>
+                    <group string="Identification">
+                        <field name="gtin"/>
+                        <field name="national_number"/>
+                        <field name="quantity"/>
+                        <field name="serial_length"/>
+                    </group>
+                </group>
+                <div class="text-muted">
+                    Article 4 of Commission Delegated Regulation (EU) 2016/161
+                    requires the serial number to be a sequence of numeric or
+                    alphanumeric characters whose value it is not possible to
+                    deduce. Serial numbers are therefore drawn from the
+                    cryptographically strong random source of the Python
+                    standard library, not from a sequence.
+                </div>
+                <footer>
+                    <button name="action_generate"
+                            string="Generate"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_serial_generate_wizard" model="ir.actions.act_window">
+        <field name="name">Generate Serial Numbers</field>
+        <field name="res_model">ls.pharma.serial.generate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ls_pharma_serial_generate_wizard_form"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_competency_list_view" model="ir.ui.view">
+        <field name="name">ls.training.competency.list</field>
+        <field name="model">ls.training.competency</field>
+        <field name="arch" type="xml">
+            <list string="Competencies">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="minimum_level"/>
+                <field name="reassessment_months"/>
+                <field name="assessment_count"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_training_competency_form_view" model="ir.ui.view">
+        <field name="name">ls.training.competency.form</field>
+        <field name="model">ls.training.competency</field>
+        <field name="arch" type="xml">
+            <form string="Competency">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_assessments" type="object"
+                                class="oe_stat_button" icon="fa-check-square-o">
+                            <field name="assessment_count" widget="statinfo"
+                                   string="Assessments"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived"
+                            bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Competency"/></h1>
+                    </div>
+                    <group>
+                        <group name="identification">
+                            <field name="code"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group name="assessment_rules">
+                            <field name="minimum_level"/>
+                            <field name="reassessment_months"/>
+                        </group>
+                    </group>
+                    <group name="description_group" string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page name="courses" string="Granting Courses">
+                            <field name="course_ids" readonly="1">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_competency_search_view" model="ir.ui.view">
+        <field name="name">ls.training.competency.search</field>
+        <field name="model">ls.training.competency</field>
+        <field name="arch" type="xml">
+            <search string="Competencies">
+                <field name="name"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
+                       string="Competency"/>
+                <field name="course_ids"/>
+                <filter name="filter_periodic" string="Periodic Reassessment"
+                        domain="[('reassessment_months', '&gt;', 0)]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_by_level" string="Minimum Level"
+                        context="{'group_by': 'minimum_level'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_training_competency_action" model="ir.actions.act_window">
+        <field name="name">Competencies</field>
+        <field name="res_model">ls.training.competency</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="ls_training_competency_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define your first competency
+            </p>
+            <p>
+                Competencies describe what an employee is able to do. They
+                are granted by courses and evidenced by assessments.
+            </p>
+        </field>
+    </record>
+
+</odoo>

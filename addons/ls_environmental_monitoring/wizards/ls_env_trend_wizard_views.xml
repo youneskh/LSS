@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data>
+        <record id="view_ls_env_trend_wizard_form" model="ir.ui.view">
+            <field name="name">ls.env.trend.wizard.form</field>
+            <field name="model">ls.env.trend.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Run Trend Analysis">
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group>
+                            <field name="change_threshold"/>
+                        </group>
+                    </group>
+                    <group string="Scope (leave empty for all)">
+                        <field name="area_ids" widget="many2many_tags"/>
+                        <field name="sampling_point_ids" widget="many2many_tags"/>
+                        <field name="parameter_ids" widget="many2many_tags"/>
+                    </group>
+                    <p class="text-muted">
+                        Only results on approved samples are included, so the analysis
+                        reflects released data.
+                    </p>
+                    <footer>
+                        <button name="action_run" type="object" string="Run Analysis" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ls_env_trend_wizard" model="ir.actions.act_window">
+            <field name="name">Run Trend Analysis</field>
+            <field name="res_model">ls.env.trend.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

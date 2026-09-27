@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_calibration_standard_list" model="ir.ui.view">
+        <field name="name">ls.calibration.standard.list</field>
+        <field name="model">ls.calibration.standard</field>
+        <field name="arch" type="xml">
+            <list string="Reference Standards"
+                  decoration-danger="not is_valid">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="manufacturer" optional="show"/>
+                <field name="serial_number" optional="show"/>
+                <field name="traceability_reference"/>
+                <field name="issuing_body" optional="show"/>
+                <field name="certificate_date" optional="hide"/>
+                <field name="valid_until"/>
+                <field name="is_valid" widget="boolean_toggle" readonly="1"/>
+                <field name="record_count" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_standard_form" model="ir.ui.view">
+        <field name="name">ls.calibration.standard.form</field>
+        <field name="model">ls.calibration.standard</field>
+        <field name="arch" type="xml">
+            <form string="Reference Standard">
+                <sheet>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-danger"
+                            invisible="is_valid"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Class E2 mass set, 1 mg to 200 g"/></h1>
+                        <h2><field name="code"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="manufacturer"/>
+                            <field name="model_reference"/>
+                            <field name="serial_number"/>
+                            <field name="active"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Traceability">
+                            <field name="traceability_reference"/>
+                            <field name="issuing_body"/>
+                            <field name="accreditation_reference"/>
+                            <field name="certificate_date"/>
+                            <field name="valid_until"/>
+                            <field name="is_valid" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Measurement Uncertainty">
+                            <field name="uncertainty"/>
+                            <field name="uncertainty_unit"/>
+                        </group>
+                        <group string="Certificate Document">
+                            <field name="certificate_document" filename="certificate_filename"/>
+                            <field name="certificate_filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                    <p class="text-muted">
+                        The accreditation reference is recorded as supplied on the
+                        certificate. This module performs no verification against any
+                        accreditation register.
+                    </p>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_calibration_standard_search" model="ir.ui.view">
+        <field name="name">ls.calibration.standard.search</field>
+        <field name="model">ls.calibration.standard</field>
+        <field name="arch" type="xml">
+            <search string="Reference Standards">
+                <field name="name" string="Standard"
+                       filter_domain="['|', '|', ('name', 'ilike', self), ('code', 'ilike', self), ('serial_number', 'ilike', self)]"/>
+                <field name="traceability_reference"/>
+                <field name="issuing_body"/>
+                <filter name="filter_valid" string="Currently Valid" domain="[('is_valid', '=', True)]"/>
+                <filter name="filter_expired" string="Expired" domain="[('is_valid', '=', False)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                                    <filter name="group_issuer" string="Issuing Laboratory"
+                        context="{'group_by': 'issuing_body'}"/>
+                    <filter name="group_valid_until" string="Valid Until Month"
+                        context="{'group_by': 'valid_until:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_calibration_standard" model="ir.actions.act_window">
+        <field name="name">Reference Standards</field>
+        <field name="res_model">ls.calibration.standard</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_calibration_standard_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a reference standard</p>
+            <p>
+                Reference standards are the measuring artefacts against which
+                instruments are calibrated. Recording their own traceability is what
+                makes a calibration result defensible.
+            </p>
+        </field>
+    </record>
+
+</odoo>

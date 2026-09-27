@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Odoo 19 restructured access rights: res.groups.category_id was
+        replaced by res.groups.privilege_id, pointing at the new
+        res.groups.privilege model, which in turn carries the module
+        category. The structure below follows that model.
+    -->
+
+    <record id="module_category_life_sciences" model="ir.module.category">
+        <field name="name">Life Sciences</field>
+        <field name="description">Quality and regulatory applications for
+            regulated manufacturing.</field>
+        <field name="sequence">90</field>
+    </record>
+
+    <record id="privilege_ls_recall" model="res.groups.privilege">
+        <field name="name">Recall Management</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_life_sciences"/>
+    </record>
+
+    <!--
+        Three roles, each implying the one below it, so that a manager
+        automatically holds every right a coordinator holds.
+    -->
+
+    <record id="group_ls_recall_viewer" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="privilege_id" ref="privilege_ls_recall"/>
+        <field name="comment">Read-only access to recall plans, recalls
+            and their evidence. Intended for auditors, inspectors'
+            escorts and management.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_recall_coordinator" model="res.groups">
+        <field name="name">Coordinator</field>
+        <field name="privilege_id" ref="privilege_ls_recall"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_ls_recall_viewer'))]"/>
+        <field name="comment">Conducts recalls: traces distribution,
+            records consignee responses, prepares and issues
+            communications, performs effectiveness checks and drafts
+            reports. Cannot approve recall plans, cannot delete records
+            and cannot override closure checks.</field>
+    </record>
+
+    <record id="group_ls_recall_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="privilege_ls_recall"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_ls_recall_coordinator'))]"/>
+        <field name="comment">Owns the recall process: approves recall
+            plans, approves reports, closes recalls and is the only role
+            that may close a recall whose quality checks have failed.</field>
+    </record>
+
+    <!--
+        Multi-company isolation.
+
+        These are global rules, declared without a group, following the
+        pattern given in the Odoo 19 multi-company guidelines. Being
+        global they intersect with every other rule and cannot be
+        escaped by adding a user to another group.
+
+        No further record rules are defined: within a company, everyone
+        holding a recall role sees every recall. Restricting a recall to
+        its coordinator would work against the purpose of the record,
+        which is to make the field action visible to the quality
+        organisation as a whole.
+    -->
+
+    <record id="rule_ls_recall_plan_company" model="ir.rule">
+        <field name="name">Recall Plan: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_plan"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_recall_execution_company" model="ir.rule">
+        <field name="name">Recall: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_execution"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_recall_line_company" model="ir.rule">
+        <field name="name">Recall Consignee Line: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_recall_communication_company" model="ir.rule">
+        <field name="name">Recall Communication: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_communication"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_recall_effectiveness_company" model="ir.rule">
+        <field name="name">Recall Effectiveness Check: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_effectiveness"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_recall_report_company" model="ir.rule">
+        <field name="name">Recall Report: multi-company</field>
+        <field name="model_id" ref="model_ls_recall_report"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

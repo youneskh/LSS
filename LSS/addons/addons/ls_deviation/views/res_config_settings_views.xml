@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form.inherit.ls.deviation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Deviation Management" name="ls_deviation"
+                     logo="/ls_deviation/static/description/icon.png">
+                    <block title="Closure Targets"
+                           name="ls_deviation_closure_targets"
+                           help="Number of days after detection by which a deviation is expected to be closed. Used to propose the target closure date and to drive the overdue notification.">
+                        <setting string="Minor Deviation"
+                                 help="Target closure interval for a minor deviation, in days.">
+                            <field name="ls_deviation_target_days_minor"/>
+                        </setting>
+                        <setting string="Major Deviation"
+                                 help="Target closure interval for a major deviation, in days.">
+                            <field name="ls_deviation_target_days_major"/>
+                        </setting>
+                        <setting string="Critical Deviation"
+                                 help="Target closure interval for a critical deviation, in days.">
+                            <field name="ls_deviation_target_days_critical"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

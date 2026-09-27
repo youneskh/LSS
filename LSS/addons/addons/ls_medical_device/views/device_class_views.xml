@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_device_class_list" model="ir.ui.view">
+        <field name="name">ls.md.device_class.list</field>
+        <field name="model">ls.md.device_class</field>
+        <field name="arch" type="xml">
+            <list string="Device Risk Classes" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="regulatory_framework"/>
+                <field name="notified_body_required"/>
+                <field name="periodic_report_type"/>
+                <field name="periodic_report_interval_months"/>
+                <field name="annual_pmcf_update_required"/>
+                <field name="device_count"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_device_class_form" model="ir.ui.view">
+        <field name="name">ls.md.device_class.form</field>
+        <field name="model">ls.md.device_class</field>
+        <field name="arch" type="xml">
+            <form string="Device Risk Class">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_devices" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <field name="device_count" widget="statinfo" string="Devices"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Class IIa"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="regulatory_framework"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Conformity Assessment">
+                            <field name="notified_body_required"/>
+                        </group>
+                    </group>
+                    <group string="Post-Market Reporting Obligations">
+                        <group>
+                            <field name="periodic_report_type"/>
+                            <field name="periodic_report_interval_months"/>
+                        </group>
+                        <group>
+                            <field name="annual_pmcf_update_required"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        The values above are configuration defaults. Confirm each of them against the
+                        applicable regulation before relying on the obligations derived from this class.
+                    </div>
+                    <group string="Notified Body Scope Note">
+                        <field name="notified_body_scope_note" nolabel="1"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_device_class_search" model="ir.ui.view">
+        <field name="name">ls.md.device_class.search</field>
+        <field name="model">ls.md.device_class</field>
+        <field name="arch" type="xml">
+            <search string="Device Risk Classes">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="regulatory_framework"/>
+                <filter name="filter_notified_body" string="Notified Body Required" domain="[('notified_body_required', '=', True)]"/>
+                <filter name="filter_psur" string="PSUR Required" domain="[('periodic_report_type', '=', 'psur')]"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_framework" string="Framework" context="{'group_by': 'regulatory_framework'}"/>
+                    <filter name="group_by_report_type" string="Report Type" context="{'group_by': 'periodic_report_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_device_class" model="ir.actions.act_window">
+        <field name="name">Device Risk Classes</field>
+        <field name="res_model">ls.md.device_class</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_device_class_search"/>
+    </record>
+
+</odoo>

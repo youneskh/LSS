@@ -1,0 +1,21 @@
+<odoo>
+    <record id="doc_type_rc" model="lss.foundation.document.type">
+        <field name="name">Registre du Commerce</field>
+        <field name="code">RC</field>
+        <field name="category">legal</field>
+        <field name="required">1</field>
+    </record>
+    <record id="doc_type_nif" model="lss.foundation.document.type">
+        <field name="name">NIF</field>
+        <field name="code">NIF</field>
+        <field name="category">legal</field>
+        <field name="required">1</field>
+    </record>
+    <record id="doc_type_amm" model="lss.foundation.document.type">
+        <field name="name">Autorisation de Mise sur le Marché</field>
+        <field name="code">AMM</field>
+        <field name="category">regulatory</field>
+        <field name="regulatory_reference" ref="reg_text_law_18_11"/>
+        <field name="required">1</field>
+    </record>
+</odoo>

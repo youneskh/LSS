@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="view_ls_risk_matrix_level_list" model="ir.ui.view">
+        <field name="name">ls.risk.matrix.level.list</field>
+        <field name="model">ls.risk.matrix.level</field>
+        <field name="arch" type="xml">
+            <list string="Levels" editable="bottom">
+                <field name="value"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="scale" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_matrix_cell_list" model="ir.ui.view">
+        <field name="name">ls.risk.matrix.cell.list</field>
+        <field name="model">ls.risk.matrix.cell</field>
+        <field name="arch" type="xml">
+            <list string="Cells" editable="bottom"
+                  decoration-danger="acceptability == 'not_acceptable'"
+                  decoration-warning="acceptability == 'acceptable_with_control'">
+                <field name="severity_value"/>
+                <field name="probability_value"/>
+                <field name="risk_level"/>
+                <field name="acceptability"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_matrix_list" model="ir.ui.view">
+        <field name="name">ls.risk.matrix.list</field>
+        <field name="model">ls.risk.matrix</field>
+        <field name="arch" type="xml">
+            <list string="Risk Matrices" decoration-muted="state == 'obsolete'">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="reference_document" optional="show"/>
+                <field name="severity_level_count" string="Severity Levels"/>
+                <field name="probability_level_count" string="Probability Levels"/>
+                <field name="is_complete"/>
+                <field name="is_default"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_matrix_form" model="ir.ui.view">
+        <field name="name">ls.risk.matrix.form</field>
+        <field name="model">ls.risk.matrix</field>
+        <field name="arch" type="xml">
+            <form string="Risk Matrix">
+                <header>
+                    <button name="action_generate_cells" type="object"
+                            string="Generate Missing Cells"
+                            invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_set_obsolete" type="object"
+                            string="Set Obsolete" invisible="state != 'approved'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,obsolete"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Obsolete" bg_color="text-bg-danger"
+                            invisible="state != 'obsolete'"/>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="state != 'draft'">
+                        ISO 14971:2019 requires the manufacturer to establish objective
+                        criteria for risk acceptability and does not itself prescribe
+                        acceptable risk levels. Review every level definition and every
+                        cell against this organisation's own risk management plan before
+                        approving this matrix. An unapproved matrix cannot be used to
+                        approve an assessment.
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="state != 'draft'"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" readonly="state != 'draft'"/>
+                            <field name="reference_document" readonly="state != 'draft'"/>
+                            <field name="is_default"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'draft'"/>
+                            <field name="active" invisible="1"/>
+                            <field name="sequence" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="is_complete"/>
+                            <field name="cell_count"/>
+                            <field name="expected_cell_count"/>
+                            <field name="approved_by_id" invisible="state == 'draft'"/>
+                            <field name="approval_date" invisible="state == 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Severity Scale" name="severity">
+                            <field name="severity_level_ids" readonly="state != 'draft'"
+                                   context="{'default_scale': 'severity'}"/>
+                        </page>
+                        <page string="Probability Scale" name="probability">
+                            <field name="probability_level_ids" readonly="state != 'draft'"
+                                   context="{'default_scale': 'probability'}"/>
+                        </page>
+                        <page string="Cells" name="cells">
+                            <field name="cell_ids" readonly="state != 'draft'"/>
+                        </page>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"
+                                   readonly="state != 'draft'"/>
+                            <group string="Obsolescence" invisible="state != 'obsolete'">
+                                <field name="obsolete_reason" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <field name="level_ids" invisible="1"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_risk_matrix_search" model="ir.ui.view">
+        <field name="name">ls.risk.matrix.search</field>
+        <field name="model">ls.risk.matrix</field>
+        <field name="arch" type="xml">
+            <search string="Search Risk Matrices">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_default" string="Default"
+                        domain="[('is_default', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_risk_matrix" model="ir.actions.act_window">
+        <field name="name">Risk Matrices</field>
+        <field name="res_model">ls.risk.matrix</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_risk_matrix_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define a risk matrix</p>
+            <p>
+                A risk matrix holds this organisation's risk acceptability criteria:
+                its severity scale, its probability scale, and the acceptability
+                decision for each combination. One approved matrix must exist before
+                any risk can be assessed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

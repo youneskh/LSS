@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_ingredient_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.ingredient.list</field>
+        <field name="model">ls.cosmetic.ingredient</field>
+        <field name="arch" type="xml">
+            <list string="Ingredients" decoration-danger="prohibited">
+                <field name="inci_name"/>
+                <field name="chemical_name" optional="hide"/>
+                <field name="cas_number" optional="show"/>
+                <field name="ec_number" optional="hide"/>
+                <field name="technical_function" optional="show"/>
+                <field name="regulatory_category"/>
+                <field name="is_nanomaterial"/>
+                <field name="is_cmr" optional="show"/>
+                <field name="prohibited"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_ingredient_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.ingredient.form</field>
+        <field name="model">ls.cosmetic.ingredient</field>
+        <field name="arch" type="xml">
+            <form string="Ingredient">
+                <sheet>
+                    <widget name="web_ribbon" title="Prohibited" bg_color="text-bg-danger"
+                            invisible="not prohibited"/>
+                    <div class="oe_title">
+                        <label for="inci_name"/>
+                        <h1><field name="inci_name" placeholder="INCI name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="chemical_name"/>
+                            <field name="cas_number"/>
+                            <field name="ec_number"/>
+                            <field name="technical_function"/>
+                            <field name="active" invisible="1"/>
+                            <field name="prohibited" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Regulatory Status">
+                            <field name="regulatory_category"/>
+                            <field name="colour_index"
+                                   invisible="regulatory_category != 'colorant'"/>
+                            <field name="is_nanomaterial"/>
+                            <field name="is_cmr"/>
+                            <field name="cmr_category" invisible="not is_cmr"
+                                   required="is_cmr"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Perfume and Aromatic Compositions">
+                            <field name="is_perfume_component"/>
+                            <field name="perfume_term" invisible="not is_perfume_component"
+                                   required="is_perfume_component"/>
+                            <field name="perfume_composition_code"
+                                   invisible="not is_perfume_component"/>
+                            <field name="perfume_supplier_id"
+                                   invisible="not is_perfume_component"/>
+                            <field name="requires_individual_listing"/>
+                        </group>
+                        <group string="Labelling Exclusions">
+                            <field name="is_impurity"/>
+                            <field name="is_processing_aid"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Annex Entries" name="restrictions">
+                            <field name="restriction_ids">
+                                <list string="Annex Entries">
+                                    <field name="annex"/>
+                                    <field name="reference_number"/>
+                                    <field name="substance_name"/>
+                                    <field name="has_numeric_limit"/>
+                                    <field name="max_concentration" digits="[16, 6]"/>
+                                    <field name="consolidation_date"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Toxicological Profile" name="toxicology">
+                            <group>
+                                <field name="toxicological_reference"/>
+                            </group>
+                            <field name="toxicological_profile"
+                                   placeholder="Toxicological profile for all relevant endpoints - Annex I Part A section 8"/>
+                        </page>
+                        <page string="Sourcing" name="sourcing">
+                            <group>
+                                <field name="product_id"/>
+                            </group>
+                            <field name="supplier_ids" widget="many2many_tags"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_ingredient_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.ingredient.search</field>
+        <field name="model">ls.cosmetic.ingredient</field>
+        <field name="arch" type="xml">
+            <search string="Ingredients">
+                <field name="inci_name"/>
+                <field name="chemical_name"/>
+                <field name="cas_number"/>
+                <field name="ec_number"/>
+                <field name="technical_function"/>
+                <filter name="filter_prohibited" string="Prohibited"
+                        domain="[('prohibited', '=', True)]"/>
+                <filter name="filter_nano" string="Nanomaterials"
+                        domain="[('is_nanomaterial', '=', True)]"/>
+                <filter name="filter_cmr" string="CMR Substances"
+                        domain="[('is_cmr', '=', True)]"/>
+                <filter name="filter_perfume" string="Perfume Components"
+                        domain="[('is_perfume_component', '=', True)]"/>
+                <separator/>
+                <filter name="filter_preservative" string="Preservatives"
+                        domain="[('regulatory_category', '=', 'preservative')]"/>
+                <filter name="filter_colorant" string="Colorants"
+                        domain="[('regulatory_category', '=', 'colorant')]"/>
+                <filter name="filter_uv" string="UV-filters"
+                        domain="[('regulatory_category', '=', 'uv_filter')]"/>
+                <separator/>
+                <filter name="filter_no_annex" string="No Annex Entry Linked"
+                        domain="[('restriction_ids', '=', False)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_category" string="Regulatory Category"
+                            context="{'group_by': 'regulatory_category'}"/>
+                    <filter name="group_cmr" string="CMR Category"
+                            context="{'group_by': 'cmr_category'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_ingredient" model="ir.actions.act_window">
+        <field name="name">Ingredient Register</field>
+        <field name="res_model">ls.cosmetic.ingredient</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_ingredient_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register the substances you formulate with</p>
+            <p>
+                Each ingredient carries its INCI name, chemical identity and, where
+                applicable, the annex entries that restrict it. Article 19(1)(g)
+                requires the label list to use the common ingredient name, so the
+                INCI name recorded here is what will appear on the label.
+            </p>
+        </field>
+    </record>
+
+</odoo>

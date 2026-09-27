@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details.
+
+     GENERATED FILE - produced by tools_generate_data.py. Edit the generator
+     rather than this file. -->
+
+<odoo noupdate="1">
+
+    <record id="risk_matrix_example" model="ls.risk.matrix">
+        <field name="name">EXAMPLE 5x5 Risk Matrix - review and approve before use</field>
+        <field name="code">EXAMPLE-5X5</field>
+        <field name="description">EXAMPLE matrix supplied as a starting template only. ISO 14971:2019 requires the manufacturer to
+establish objective criteria for risk acceptability and does not prescribe acceptable risk levels.
+Review every level definition and every cell against the organisation's own risk management plan,
+then approve the matrix. This record is delivered in the Draft state and is not flagged as the
+default matrix, so it cannot be used on an assessment until it is approved. Every level definition
+above is an EXAMPLE. Replace each one with the objective definition recorded in this organisation's
+risk management plan.</field>
+        <field name="reference_document">To be completed by the organisation</field>
+        <field name="state">draft</field>
+        <field name="is_default" eval="False"/>
+    </record>
+
+    <record id="risk_matrix_example_sev_1" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">severity</field>
+        <field name="value">1</field>
+        <field name="name">Negligible</field>
+        <field name="description">EXAMPLE. No effect on product quality or patient.</field>
+    </record>
+    <record id="risk_matrix_example_sev_2" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">severity</field>
+        <field name="value">2</field>
+        <field name="name">Minor</field>
+        <field name="description">EXAMPLE. Detectable, no effect on safety or efficacy.</field>
+    </record>
+    <record id="risk_matrix_example_sev_3" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">severity</field>
+        <field name="value">3</field>
+        <field name="name">Moderate</field>
+        <field name="description">EXAMPLE. Rework, reprocessing or extra testing needed.</field>
+    </record>
+    <record id="risk_matrix_example_sev_4" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">severity</field>
+        <field name="value">4</field>
+        <field name="name">Major</field>
+        <field name="description">EXAMPLE. Out of specification, or reversible injury.</field>
+    </record>
+    <record id="risk_matrix_example_sev_5" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">severity</field>
+        <field name="value">5</field>
+        <field name="name">Critical</field>
+        <field name="description">EXAMPLE. Irreversible injury, death, or recall.</field>
+    </record>
+
+    <record id="risk_matrix_example_prob_1" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">probability</field>
+        <field name="value">1</field>
+        <field name="name">Improbable</field>
+        <field name="description">EXAMPLE. Not expected during the product lifecycle.</field>
+    </record>
+    <record id="risk_matrix_example_prob_2" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">probability</field>
+        <field name="value">2</field>
+        <field name="name">Remote</field>
+        <field name="description">EXAMPLE. Unlikely but conceivable.</field>
+    </record>
+    <record id="risk_matrix_example_prob_3" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">probability</field>
+        <field name="value">3</field>
+        <field name="name">Occasional</field>
+        <field name="description">EXAMPLE. May occur a few times in the lifecycle.</field>
+    </record>
+    <record id="risk_matrix_example_prob_4" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">probability</field>
+        <field name="value">4</field>
+        <field name="name">Probable</field>
+        <field name="description">EXAMPLE. Expected to occur several times.</field>
+    </record>
+    <record id="risk_matrix_example_prob_5" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="scale">probability</field>
+        <field name="value">5</field>
+        <field name="name">Frequent</field>
+        <field name="description">EXAMPLE. Expected to occur routinely.</field>
+    </record>
+
+    <record id="risk_matrix_example_cell_1_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">negligible</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_1_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">negligible</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_1_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">negligible</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_1_4" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">4</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_1_5" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">5</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_2_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">negligible</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_2_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_2_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_2_4" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">4</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_2_5" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">5</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_3_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">negligible</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_3_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_3_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_3_4" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">4</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_3_5" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">5</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_4_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">4</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_4_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">4</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_4_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">4</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_4_4" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">4</field>
+        <field name="probability_value">4</field>
+        <field name="risk_level">very_high</field>
+        <field name="acceptability">not_acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_4_5" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">4</field>
+        <field name="probability_value">5</field>
+        <field name="risk_level">very_high</field>
+        <field name="acceptability">not_acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_5_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">5</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_5_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">5</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_5_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">5</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="risk_matrix_example_cell_5_4" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">5</field>
+        <field name="probability_value">4</field>
+        <field name="risk_level">very_high</field>
+        <field name="acceptability">not_acceptable</field>
+    </record>
+    <record id="risk_matrix_example_cell_5_5" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="risk_matrix_example"/>
+        <field name="severity_value">5</field>
+        <field name="probability_value">5</field>
+        <field name="risk_level">very_high</field>
+        <field name="acceptability">not_acceptable</field>
+    </record>
+
+</odoo>

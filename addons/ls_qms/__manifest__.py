@@ -1,0 +1,47 @@
+# Copyright 2026 Life Sciences Suite Architecture Team
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+{
+    "name": "Life Sciences QMS",
+    "summary": "Controlled quality documentation, objectives and quality"
+    " records for regulated Life Sciences organisations.",
+    "version": "19.0.1.0.1",
+    "category": "Life Sciences/Quality",
+    "author": "Life Sciences Suite Architecture Team",
+    "website": "https://github.com/OCA",
+    "license": "AGPL-3",
+    "development_status": "Alpha",
+    "depends": [
+        "base",
+        "mail",
+        "hr",
+    ],
+    "data": [
+        "security/ls_qms_security.xml",
+        "security/ir.model.access.csv",
+        "data/ir_sequence_data.xml",
+        "data/mail_activity_type_data.xml",
+        "data/ir_config_parameter_data.xml",
+        "data/ir_cron_data.xml",
+        "wizards/ls_qms_new_revision_wizard_views.xml",
+        "wizards/ls_qms_reject_wizard_views.xml",
+        "views/ls_qms_policy_views.xml",
+        "views/ls_qms_objective_views.xml",
+        "views/ls_qms_objective_measurement_views.xml",
+        "views/ls_qms_sop_views.xml",
+        "views/ls_qms_work_instruction_views.xml",
+        "views/ls_qms_quality_plan_views.xml",
+        "views/ls_qms_quality_record_views.xml",
+        "views/ls_qms_config_views.xml",
+        "views/ls_qms_menus.xml",
+        "report/ls_qms_common_templates.xml",
+        "report/ls_qms_report_actions.xml",
+        "report/ls_qms_policy_templates.xml",
+        "report/ls_qms_sop_templates.xml",
+        "report/ls_qms_quality_plan_templates.xml",
+    ],
+    "demo": [
+        "demo/ls_qms_demo.xml",
+    ],
+    "images": ["static/description/icon.png"],
+    "application": True,
+}

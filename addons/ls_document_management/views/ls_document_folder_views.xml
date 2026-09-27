@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_document_folder_list" model="ir.ui.view">
+        <field name="name">ls.document.folder.list</field>
+        <field name="model">ls.document.folder</field>
+        <field name="arch" type="xml">
+            <list string="Document Folders">
+                <field name="complete_name" string="Folder"/>
+                <field name="retention_policy_id"/>
+                <field name="document_count"/>
+                <field name="child_count"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_document_folder_form" model="ir.ui.view">
+        <field name="name">ls.document.folder.form</field>
+        <field name="model">ls.document.folder</field>
+        <field name="arch" type="xml">
+            <form string="Document Folder">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_documents" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="document_count" widget="statinfo" string="Documents"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Folder Name"/>
+                        <h1><field name="name" placeholder="e.g. Standard Operating Procedures"/></h1>
+                        <field name="complete_name" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="Structure">
+                            <field name="parent_id"/>
+                            <field name="sequence"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Defaults for New Documents">
+                            <field name="retention_policy_id"/>
+                            <field name="default_approver_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group string="Access Control">
+                        <field name="group_read_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        <field name="group_write_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1" placeholder="Purpose of this folder"/>
+                    </group>
+                    <notebook>
+                        <page string="Sub-folders" name="children">
+                            <field name="child_ids" readonly="1">
+                                <list string="Sub-folders">
+                                    <field name="name"/>
+                                    <field name="document_count"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_document_folder_search" model="ir.ui.view">
+        <field name="name">ls.document.folder.search</field>
+        <field name="model">ls.document.folder</field>
+        <field name="arch" type="xml">
+            <search string="Document Folders">
+                <field name="complete_name" string="Folder"/>
+                <field name="parent_id"/>
+                <field name="retention_policy_id"/>
+                <filter name="filter_root" string="Root Folders" domain="[('parent_id', '=', False)]"/>
+                <filter name="filter_restricted" string="Access Restricted" domain="[('group_read_ids', '!=', [])]"/>
+                <filter name="filter_inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_by_parent" string="Parent Folder" context="{'group_by': 'parent_id'}"/>
+                    <filter name="group_by_policy" string="Retention Policy" context="{'group_by': 'retention_policy_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_document_folder" model="ir.actions.act_window">
+        <field name="name">Folders</field>
+        <field name="res_model">ls.document.folder</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_document_folder_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first document folder</p>
+            <p>Folders organise controlled documents and carry the access control configuration applied to them.</p>
+        </field>
+    </record>
+
+</odoo>

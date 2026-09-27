@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_ls_pharma_batch" model="ir.sequence">
+            <field name="name">Pharmaceutical Batch</field>
+            <field name="code">ls.pharma.batch</field>
+            <field name="prefix">BAT/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_pharma_batch_record" model="ir.sequence">
+            <field name="name">Batch Production and Control Record</field>
+            <field name="code">ls.pharma.batch_record</field>
+            <field name="prefix">EBR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_pharma_batch_release" model="ir.sequence">
+            <field name="name">Batch Release Decision</field>
+            <field name="code">ls.pharma.batch.release</field>
+            <field name="prefix">REL/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_pharma_stability_study" model="ir.sequence">
+            <field name="name">Stability Study</field>
+            <field name="code">ls.pharma.stability_study</field>
+            <field name="prefix">STB/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_pharma_ctd_dossier" model="ir.sequence">
+            <field name="name">CTD Dossier</field>
+            <field name="code">ls.pharma.ctd_dossier</field>
+            <field name="prefix">CTD/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

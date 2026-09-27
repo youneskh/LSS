@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_action_report_coa" model="ir.actions.report">
+        <field name="name">Certificate of Analysis</field>
+        <field name="model">ls.lab.coa</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_lab.ls_lab_report_coa_document</field>
+        <field name="report_file">ls_lab.ls_lab_report_coa_document</field>
+        <field name="print_report_name">'CoA - %s v%s' % (object.name, object.version)</field>
+        <field name="binding_model_id" ref="model_ls_lab_coa"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="ls_lab_action_report_oos" model="ir.actions.report">
+        <field name="name">OOS Investigation Report</field>
+        <field name="model">ls.lab.oos</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_lab.ls_lab_report_oos_document</field>
+        <field name="report_file">ls_lab.ls_lab_report_oos_document</field>
+        <field name="print_report_name">'Investigation - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_ls_lab_oos"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

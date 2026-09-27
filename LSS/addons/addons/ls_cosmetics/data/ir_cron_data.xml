@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Design note. The legacy repetition fields numbercall and doall are not
+     written here. They existed up to Odoo 17 and are reported as removed
+     from Odoo 18 onwards, but this could not be confirmed from official
+     Odoo 19 documentation. Writing a field that does not exist would make
+     the module fail to install, so the post-init hook sets them only when
+     the running server still declares them. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="cron_ls_cosmetic_pif_retention" model="ir.cron">
+            <field name="name">Cosmetics: monitor product information file retention</field>
+            <field name="model_id" ref="model_ls_cosmetic_pif"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_monitor_retention()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_cosmetic_assessment_review" model="ir.cron">
+            <field name="name">Cosmetics: notify safety report reviews due</field>
+            <field name="model_id" ref="model_ls_cosmetic_safety_assessment"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_review_due()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_cosmetic_dz_deadlines" model="ir.cron">
+            <field name="name">Cosmetics: monitor Algerian authorisation deadlines</field>
+            <field name="model_id" ref="model_ls_cosmetic_dz_authorization"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_monitor_deadlines()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

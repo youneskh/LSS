@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_clinical_evidence_source_list" model="ir.ui.view">
+        <field name="name">ls.md.clinical_evidence_source.list</field>
+        <field name="model">ls.md.clinical_evidence_source</field>
+        <field name="arch" type="xml">
+            <list string="Clinical Evidence Sources" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_clinical_evidence_source_form" model="ir.ui.view">
+        <field name="name">ls.md.clinical_evidence_source.form</field>
+        <field name="model">ls.md.clinical_evidence_source</field>
+        <field name="arch" type="xml">
+            <form string="Clinical Evidence Source">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name" string="Name"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_md_clinical_evidence_source" model="ir.actions.act_window">
+        <field name="name">Clinical Evidence Sources</field>
+        <field name="res_model">ls.md.clinical_evidence_source</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Configure a clinical evidence source</p>
+            <p>
+                Clinical evidence sources are the categories of data a clinical evaluation may
+                rely upon. They are configuration data and can be adapted to the practice of
+                the organisation.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_ls_md_clinical_evaluation_list" model="ir.ui.view">
+        <field name="name">ls.md.clinical_evaluation.list</field>
+        <field name="model">ls.md.clinical_evaluation</field>
+        <field name="arch" type="xml">
+            <list string="Clinical Evaluations" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="version"/>
+                <field name="evaluator_id" optional="show"/>
+                <field name="equivalence_claimed" optional="hide"/>
+                <field name="clinical_investigation_performed" optional="hide"/>
+                <field name="pmcf_applicable" optional="show"/>
+                <field name="conformity_confirmed" optional="show"/>
+                <field name="next_review_date" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_clinical_evaluation_form" model="ir.ui.view">
+        <field name="name">ls.md.clinical_evaluation.form</field>
+        <field name="model">ls.md.clinical_evaluation</field>
+        <field name="arch" type="xml">
+            <form string="Clinical Evaluation">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <label for="title" string="Title"/>
+                        <h2><field name="title" placeholder="Clinical evaluation report title"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="version"/>
+                            <field name="next_review_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsibilities">
+                            <field name="evaluator_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Evaluation Plan" name="plan">
+                            <group string="Scope">
+                                <field name="plan_scope" nolabel="1" placeholder="Scope of the clinical evaluation"/>
+                            </group>
+                            <group>
+                                <field name="gspr_requiring_clinical_data" placeholder="General safety and performance requirements that require clinical data"/>
+                                <field name="intended_clinical_benefits" placeholder="Intended clinical benefits with relevant clinical outcome parameters"/>
+                                <field name="target_population" placeholder="Target population and indications"/>
+                                <field name="acceptance_criteria" placeholder="Acceptance criteria for the benefit-risk ratio"/>
+                                <field name="literature_search_protocol" placeholder="Literature search and review protocol"/>
+                            </group>
+                            <group string="Evaluator Qualification">
+                                <field name="evaluator_qualification" nolabel="1" placeholder="Qualification and experience of the evaluator"/>
+                            </group>
+                        </page>
+                        <page string="Clinical Evidence" name="evidence">
+                            <group>
+                                <field name="evidence_source_ids" widget="many2many_tags"/>
+                            </group>
+                            <group string="Equivalence">
+                                <field name="equivalence_claimed"/>
+                                <field name="equivalent_device_description" invisible="not equivalence_claimed" placeholder="Identification of the equivalent device"/>
+                                <field name="equivalence_demonstration" invisible="not equivalence_claimed" required="equivalence_claimed" placeholder="Demonstration of equivalence on the technical, biological and clinical characteristics"/>
+                            </group>
+                            <group string="Clinical Investigation">
+                                <field name="clinical_investigation_performed"/>
+                                <field name="clinical_investigation_reference" invisible="not clinical_investigation_performed" placeholder="Identifier of the clinical investigation"/>
+                                <field name="clinical_investigation_justification" invisible="clinical_investigation_performed" placeholder="Justification for not performing a clinical investigation"/>
+                            </group>
+                        </page>
+                        <page string="Appraisal and Analysis" name="analysis">
+                            <group string="Data Appraisal">
+                                <field name="data_appraisal" nolabel="1" placeholder="Appraisal of the relevance and quality of each data set"/>
+                            </group>
+                            <group string="Data Analysis">
+                                <field name="data_analysis" nolabel="1" placeholder="Analysis of the appraised clinical data"/>
+                            </group>
+                        </page>
+                        <page string="Conclusion" name="conclusion">
+                            <group>
+                                <field name="conformity_confirmed"/>
+                            </group>
+                            <group string="Benefit-Risk Conclusion">
+                                <field name="benefit_risk_conclusion" nolabel="1" placeholder="Conclusion on the benefit-risk determination"/>
+                            </group>
+                            <group string="Residual Gaps">
+                                <field name="residual_gaps" nolabel="1" placeholder="Residual risks and gaps in the clinical evidence"/>
+                            </group>
+                        </page>
+                        <page string="Post-Market Clinical Follow-up" name="pmcf">
+                            <group>
+                                <field name="pmcf_applicable"/>
+                                <field name="pmcf_plan_summary" invisible="not pmcf_applicable" placeholder="Summary of the post-market clinical follow-up plan"/>
+                                <field name="pmcf_justification" invisible="pmcf_applicable" placeholder="Justification recorded where post-market clinical follow-up is not applicable"/>
+                            </group>
+                            <field name="pmcf_evaluation_ids" nolabel="1" readonly="1">
+                                <list string="PMCF Evaluation Reports">
+                                    <field name="name"/>
+                                    <field name="period_start"/>
+                                    <field name="period_end"/>
+                                    <field name="benefit_risk_remains_acceptable"/>
+                                    <field name="next_update_due"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_clinical_evaluation_search" model="ir.ui.view">
+        <field name="name">ls.md.clinical_evaluation.search</field>
+        <field name="model">ls.md.clinical_evaluation</field>
+        <field name="arch" type="xml">
+            <search string="Clinical Evaluations">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="evaluator_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_equivalence" string="Equivalence Claimed" domain="[('equivalence_claimed', '=', True)]"/>
+                <filter name="filter_investigation" string="Clinical Investigation Performed" domain="[('clinical_investigation_performed', '=', True)]"/>
+                <filter name="filter_pmcf" string="PMCF Applicable" domain="[('pmcf_applicable', '=', True)]"/>
+                <filter name="filter_not_confirmed" string="Conformity Not Confirmed" domain="[('conformity_confirmed', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_evaluator" string="Evaluator" context="{'group_by': 'evaluator_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_clinical_evaluation" model="ir.actions.act_window">
+        <field name="name">Clinical Evaluations</field>
+        <field name="res_model">ls.md.clinical_evaluation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_clinical_evaluation_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a clinical evaluation</p>
+            <p>
+                A clinical evaluation records the plan, the clinical evidence, its appraisal and
+                analysis, and the conclusion on the benefit-risk determination for one device.
+            </p>
+        </field>
+    </record>
+
+</odoo>

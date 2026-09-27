@@ -1,0 +1,27 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ls_qms_policy_viewer,ls.qms.policy viewer,model_ls_qms_policy,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_policy_user,ls.qms.policy user,model_ls_qms_policy,group_ls_qms_user,1,1,1,0
+access_ls_qms_policy_manager,ls.qms.policy manager,model_ls_qms_policy,group_ls_qms_manager,1,1,1,1
+access_ls_qms_sop_viewer,ls.qms.sop viewer,model_ls_qms_sop,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_sop_user,ls.qms.sop user,model_ls_qms_sop,group_ls_qms_user,1,1,1,0
+access_ls_qms_sop_manager,ls.qms.sop manager,model_ls_qms_sop,group_ls_qms_manager,1,1,1,1
+access_ls_qms_work_instruction_viewer,ls.qms.work_instruction viewer,model_ls_qms_work_instruction,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_work_instruction_user,ls.qms.work_instruction user,model_ls_qms_work_instruction,group_ls_qms_user,1,1,1,0
+access_ls_qms_work_instruction_manager,ls.qms.work_instruction manager,model_ls_qms_work_instruction,group_ls_qms_manager,1,1,1,1
+access_ls_qms_quality_plan_viewer,ls.qms.quality_plan viewer,model_ls_qms_quality_plan,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_quality_plan_user,ls.qms.quality_plan user,model_ls_qms_quality_plan,group_ls_qms_user,1,1,1,0
+access_ls_qms_quality_plan_manager,ls.qms.quality_plan manager,model_ls_qms_quality_plan,group_ls_qms_manager,1,1,1,1
+access_ls_qms_quality_plan_line_viewer,ls.qms.quality_plan.line viewer,model_ls_qms_quality_plan_line,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_quality_plan_line_user,ls.qms.quality_plan.line user,model_ls_qms_quality_plan_line,group_ls_qms_user,1,1,1,1
+access_ls_qms_quality_plan_line_manager,ls.qms.quality_plan.line manager,model_ls_qms_quality_plan_line,group_ls_qms_manager,1,1,1,1
+access_ls_qms_objective_viewer,ls.qms.objective viewer,model_ls_qms_objective,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_objective_user,ls.qms.objective user,model_ls_qms_objective,group_ls_qms_user,1,1,1,0
+access_ls_qms_objective_manager,ls.qms.objective manager,model_ls_qms_objective,group_ls_qms_manager,1,1,1,1
+access_ls_qms_objective_measurement_viewer,ls.qms.objective.measurement viewer,model_ls_qms_objective_measurement,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_objective_measurement_user,ls.qms.objective.measurement user,model_ls_qms_objective_measurement,group_ls_qms_user,1,1,1,1
+access_ls_qms_objective_measurement_manager,ls.qms.objective.measurement manager,model_ls_qms_objective_measurement,group_ls_qms_manager,1,1,1,1
+access_ls_qms_quality_record_viewer,ls.qms.quality_record viewer,model_ls_qms_quality_record,group_ls_qms_viewer,1,0,0,0
+access_ls_qms_quality_record_user,ls.qms.quality_record user,model_ls_qms_quality_record,group_ls_qms_user,1,1,1,0
+access_ls_qms_quality_record_manager,ls.qms.quality_record manager,model_ls_qms_quality_record,group_ls_qms_manager,1,1,1,1
+access_ls_qms_new_revision_wizard_user,ls.qms.new.revision.wizard user,model_ls_qms_new_revision_wizard,group_ls_qms_user,1,1,1,1
+access_ls_qms_reject_wizard_approver,ls.qms.reject.wizard approver,model_ls_qms_reject_wizard,group_ls_qms_approver,1,1,1,1

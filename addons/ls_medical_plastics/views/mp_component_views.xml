@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_mp_component_list" model="ir.ui.view">
+        <field name="name">ls.mp.component.list</field>
+        <field name="model">ls.mp.component</field>
+        <field name="arch" type="xml">
+            <list string="Components"
+                  decoration-muted="state == 'obsolete'"
+                  decoration-warning="state == 'on_hold'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="category"/>
+                <field name="criticality"/>
+                <field name="drug_contact"/>
+                <field name="is_primary_packaging" optional="hide"/>
+                <field name="primary_material_grade_id" optional="show"/>
+                <field name="customer_id" optional="hide"/>
+                <field name="state"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mp_component_form" model="ir.ui.view">
+        <field name="name">ls.mp.component.form</field>
+        <field name="model">ls.mp.component</field>
+        <field name="arch" type="xml">
+            <form string="Component">
+                <header>
+                    <button name="action_release" type="object" string="Release"
+                            class="btn-primary"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state not in ('draft', 'on_hold')"/>
+                    <button name="action_hold" type="object" string="Place On Hold"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state != 'released'"/>
+                    <button name="action_set_obsolete" type="object" string="Set Obsolete"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state == 'obsolete'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            groups="ls_medical_plastics.group_mp_manager"
+                            invisible="state not in ('on_hold', 'obsolete')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,released"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_tools" type="object"
+                                class="oe_stat_button" icon="fa-wrench">
+                            <field name="tool_count" widget="statinfo" string="Tools"/>
+                        </button>
+                        <button name="action_view_parameter_specs" type="object"
+                                class="oe_stat_button" icon="fa-sliders">
+                            <field name="parameter_spec_count" widget="statinfo" string="Specifications"/>
+                        </button>
+                        <button name="action_view_runs" type="object"
+                                class="oe_stat_button" icon="fa-industry">
+                            <field name="run_count" widget="statinfo" string="Runs"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Component name"/></h1>
+                        <label for="code"/>
+                        <h2><field name="code" placeholder="Component code"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="product_id"/>
+                            <field name="category"/>
+                            <field name="is_primary_packaging"/>
+                            <field name="criticality"/>
+                            <field name="customer_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Product Contact and Sterility">
+                            <field name="drug_contact"/>
+                            <field name="sterile_supply"/>
+                            <field name="sterilization_method"
+                                   readonly="not sterile_supply"/>
+                            <field name="approved_spec_count" string="Approved Specifications"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Materials" name="materials">
+                            <group>
+                                <field name="primary_material_grade_id"
+                                       domain="[('id', 'in', material_grade_ids)]"/>
+                            </group>
+                            <field name="material_grade_ids">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="polymer_type"/>
+                                    <field name="qualification_state"/>
+                                    <field name="drug_contact"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Dimensions and Weight" name="dimensions">
+                            <group>
+                                <group>
+                                    <field name="nominal_part_weight"/>
+                                    <field name="part_weight_tolerance"/>
+                                    <field name="part_weight_uom"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Documentation" name="documentation">
+                            <group>
+                                <group>
+                                    <field name="drawing_reference"/>
+                                    <field name="drawing_revision"/>
+                                </group>
+                                <group>
+                                    <field name="specification_reference"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Tools" name="tools">
+                            <field name="tool_ids">
+                                <list>
+                                    <field name="code"/>
+                                    <field name="name"/>
+                                    <field name="tool_type"/>
+                                    <field name="cavity_count"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mp_component_search" model="ir.ui.view">
+        <field name="name">ls.mp.component.search</field>
+        <field name="model">ls.mp.component</field>
+        <field name="arch" type="xml">
+            <search string="Components">
+                <field name="name" string="Component"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="product_id"/>
+                <field name="customer_id"/>
+                <field name="primary_material_grade_id"/>
+                <filter name="filter_released" string="Released" domain="[('state', '=', 'released')]"/>
+                <filter name="filter_primary_packaging" string="Primary Packaging"
+                        domain="[('is_primary_packaging', '=', True)]"/>
+                <filter name="filter_drug_contact" string="Direct Drug Contact"
+                        domain="[('drug_contact', '=', True)]"/>
+                <filter name="filter_critical" string="Critical"
+                        domain="[('criticality', '=', 'critical')]"/>
+                <filter name="filter_sterile" string="Supplied Sterile"
+                        domain="[('sterile_supply', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_category" string="Category" context="{'group_by': 'category'}"/>
+                    <filter name="group_criticality" string="Criticality" context="{'group_by': 'criticality'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_customer" string="Customer" context="{'group_by': 'customer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mp_component" model="ir.actions.act_window">
+        <field name="name">Components</field>
+        <field name="res_model">ls.mp.component</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_component_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a moulded component</p>
+            <p>A component links an inventory product to its regulated attributes:
+               criticality, product contact, approved material grades and the tools
+               that produce it.</p>
+        </field>
+    </record>
+
+    <record id="action_mp_component_packaging" model="ir.actions.act_window">
+        <field name="name">Packaging Components</field>
+        <field name="res_model">ls.mp.component</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mp_component_search"/>
+        <field name="domain">[('is_primary_packaging', '=', True)]</field>
+        <field name="context">{'default_category': 'primary_packaging'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a packaging component</p>
+            <p>This view lists the components whose category forms part of a container
+               closure system: primary packaging parts, closures, syringe barrels and
+               plungers, droppers, measuring devices and oral dispensers.</p>
+        </field>
+    </record>
+
+</odoo>

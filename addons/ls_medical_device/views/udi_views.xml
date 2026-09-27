@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_udi_list" model="ir.ui.view">
+        <field name="name">ls.md.udi.list</field>
+        <field name="model">ls.md.udi</field>
+        <field name="arch" type="xml">
+            <list string="UDI Assignments" decoration-muted="state == 'obsolete'">
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="udi_kind"/>
+                <field name="udi_di"/>
+                <field name="issuing_entity"/>
+                <field name="packaging_level"/>
+                <field name="quantity_per_package" optional="hide"/>
+                <field name="carrier_type" optional="hide"/>
+                <field name="is_direct_marking" optional="hide"/>
+                <field name="assignment_date"/>
+                <field name="database_name" optional="hide"/>
+                <field name="database_submission_date" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'published'" decoration-info="state == 'assigned'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_udi_form" model="ir.ui.view">
+        <field name="name">ls.md.udi.form</field>
+        <field name="model">ls.md.udi</field>
+        <field name="arch" type="xml">
+            <form string="UDI Assignment">
+                <header>
+                    <button name="action_assign" type="object" string="Assign" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_publish" type="object" string="Publish to Database" class="oe_highlight" invisible="state != 'assigned'"/>
+                    <button name="action_mark_obsolete" type="object" string="Mark Obsolete" invisible="state not in ('assigned', 'published')"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state != 'assigned'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,assigned,published"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Assignment">
+                            <field name="device_id" readonly="state != 'draft'"/>
+                            <field name="udi_kind" readonly="state in ('published', 'obsolete')"/>
+                            <field name="udi_di" readonly="state in ('published', 'obsolete')" placeholder="Identifier issued by the issuing entity"/>
+                            <field name="issuing_entity" readonly="state in ('published', 'obsolete')"/>
+                            <field name="issuing_entity_note" invisible="issuing_entity != 'other'" required="issuing_entity == 'other'"/>
+                            <field name="assignment_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Packaging and Carrier">
+                            <field name="packaging_level" readonly="state in ('published', 'obsolete')"/>
+                            <field name="quantity_per_package"/>
+                            <field name="carrier_type"/>
+                            <field name="is_direct_marking"/>
+                            <field name="direct_marking_identical" invisible="not is_direct_marking"/>
+                        </group>
+                    </group>
+                    <group string="Production Identifier Components">
+                        <group>
+                            <field name="pi_lot_number"/>
+                            <field name="pi_serial_number"/>
+                            <field name="pi_manufacturing_date"/>
+                        </group>
+                        <group>
+                            <field name="pi_expiry_date"/>
+                            <field name="pi_software_version"/>
+                            <field name="pi_component_summary" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Database Submission" name="database">
+                            <group>
+                                <group>
+                                    <field name="database_name" placeholder="Name of the target UDI database"/>
+                                    <field name="database_submission_date"/>
+                                    <field name="database_reference"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Obsolescence" name="obsolescence" invisible="state not in ('published', 'obsolete', 'assigned')">
+                            <group>
+                                <field name="obsolete_date" readonly="1"/>
+                                <field name="obsolete_reason" placeholder="Justification for retiring the identifier"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_udi_search" model="ir.ui.view">
+        <field name="name">ls.md.udi.search</field>
+        <field name="model">ls.md.udi</field>
+        <field name="arch" type="xml">
+            <search string="UDI Assignments">
+                <field name="udi_di"/>
+                <field name="name"/>
+                <field name="device_id"/>
+                <field name="database_reference"/>
+                <filter name="filter_basic" string="Basic UDI-DI" domain="[('udi_kind', '=', 'basic_udi_di')]"/>
+                <filter name="filter_di" string="UDI-DI" domain="[('udi_kind', '=', 'udi_di')]"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_assigned" string="Assigned" domain="[('state', '=', 'assigned')]"/>
+                <filter name="filter_published" string="Published" domain="[('state', '=', 'published')]"/>
+                <filter name="filter_not_published" string="Not Yet Published" domain="[('state', 'in', ('draft', 'assigned'))]"/>
+                <separator/>
+                <filter name="filter_direct_marking" string="Direct Marking" domain="[('is_direct_marking', '=', True)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_kind" string="Identifier Kind" context="{'group_by': 'udi_kind'}"/>
+                    <filter name="group_by_level" string="Packaging Level" context="{'group_by': 'packaging_level'}"/>
+                    <filter name="group_by_entity" string="Issuing Entity" context="{'group_by': 'issuing_entity'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_udi" model="ir.actions.act_window">
+        <field name="name">UDI Assignments</field>
+        <field name="res_model">ls.md.udi</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_udi_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a UDI assignment</p>
+            <p>
+                Article 27(7) of Regulation (EU) 2017/745 requires the manufacturer to keep an
+                up-to-date list of all unique device identifiers it has assigned. This register is
+                that list. Identifiers are entered from the issuing entity system rather than
+                generated here.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <template id="report_ls_risk_register_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            Risk Record
+                            <span t-field="doc.name"/>
+                        </h2>
+                        <h4 t-field="doc.title"/>
+
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Status</strong></td>
+                                    <td><span t-field="doc.state"/></td>
+                                    <td><strong>Risk Type</strong></td>
+                                    <td><span t-field="doc.risk_type"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Category</strong></td>
+                                    <td><span t-field="doc.category_id"/></td>
+                                    <td><strong>Risk Owner</strong></td>
+                                    <td><span t-field="doc.owner_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Identified By</strong></td>
+                                    <td><span t-field="doc.identified_by_id"/></td>
+                                    <td><strong>Identification Date</strong></td>
+                                    <td><span t-field="doc.identified_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Risk Matrix</strong></td>
+                                    <td><span t-field="doc.matrix_id"/></td>
+                                    <td><strong>Company</strong></td>
+                                    <td><span t-field="doc.company_id"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Risk Analysis</h4>
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td style="width:30%"><strong>Description</strong></td>
+                                    <td><span t-field="doc.description"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Intended Use and Foreseeable Misuse</strong></td>
+                                    <td><span t-field="doc.intended_use"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Characteristics Related to Safety</strong></td>
+                                    <td><span t-field="doc.safety_characteristics"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hazard</strong></td>
+                                    <td><span t-field="doc.hazard"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sequence of Events</strong></td>
+                                    <td><span t-field="doc.sequence_of_events"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hazardous Situation</strong></td>
+                                    <td><span t-field="doc.hazardous_situation"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Harm</strong></td>
+                                    <td><span t-field="doc.harm"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Assessment History</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Severity</th>
+                                    <th>Probability</th>
+                                    <th>Risk Level</th>
+                                    <th>Acceptability</th>
+                                    <th>Assessed By</th>
+                                    <th>Approved By</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.assessment_ids" t-as="assessment">
+                                    <td><span t-field="assessment.name"/></td>
+                                    <td><span t-field="assessment.assessment_type"/></td>
+                                    <td><span t-field="assessment.assessment_date"/></td>
+                                    <td><span t-field="assessment.severity_level_id"/></td>
+                                    <td><span t-field="assessment.probability_level_id"/></td>
+                                    <td><span t-field="assessment.risk_level"/></td>
+                                    <td><span t-field="assessment.acceptability"/></td>
+                                    <td><span t-field="assessment.assessed_by_id"/></td>
+                                    <td><span t-field="assessment.approved_by_id"/></td>
+                                    <td><span t-field="assessment.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Risk Control Measures</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Reference</th>
+                                    <th>Title</th>
+                                    <th>Control Option</th>
+                                    <th>Responsible</th>
+                                    <th>Due Date</th>
+                                    <th>New Risk</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.mitigation_ids" t-as="measure">
+                                    <td><span t-field="measure.name"/></td>
+                                    <td><span t-field="measure.title"/></td>
+                                    <td><span t-field="measure.control_option"/></td>
+                                    <td><span t-field="measure.responsible_id"/></td>
+                                    <td><span t-field="measure.due_date"/></td>
+                                    <td><span t-field="measure.introduces_new_risk"/></td>
+                                    <td><span t-field="measure.state"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h4>Residual Risk and Review</h4>
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td style="width:30%"><strong>Risk Control Completeness Confirmed</strong></td>
+                                    <td><span t-field="doc.control_completeness_confirmed"/></td>
+                                    <td><strong>By</strong></td>
+                                    <td><span t-field="doc.control_completeness_by_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Residual Risk Accepted</strong></td>
+                                    <td><span t-field="doc.residual_risk_accepted"/></td>
+                                    <td><strong>By</strong></td>
+                                    <td><span t-field="doc.residual_risk_accepted_by_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Acceptance Justification</strong></td>
+                                    <td colspan="3"><span t-field="doc.residual_risk_justification"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Benefit-Risk Analysis</strong></td>
+                                    <td colspan="3"><span t-field="doc.benefit_risk_analysis"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Overall Residual Risk</strong></td>
+                                    <td colspan="3"><span t-field="doc.overall_residual_risk_assessment"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Last Review</strong></td>
+                                    <td><span t-field="doc.last_review_date"/></td>
+                                    <td><strong>Next Review</strong></td>
+                                    <td><span t-field="doc.next_review_date"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div t-if="doc.state == 'closed'">
+                            <h4>Closure</h4>
+                            <p>
+                                Closed by <span t-field="doc.closed_by_id"/>
+                                on <span t-field="doc.closed_date"/>.
+                            </p>
+                            <p t-field="doc.closure_reason"/>
+                        </div>
+
+                        <p class="text-muted mt-4">
+                            This report is a record extracted from the risk management
+                            system. It does not by itself constitute a claim of
+                            compliance with, or certification against, any regulatory
+                            framework.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

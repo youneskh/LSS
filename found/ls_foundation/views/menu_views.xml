@@ -1,0 +1,22 @@
+<odoo>
+    <menuitem id="menu_lss_foundation_root" name="LSS Foundation &amp; Licensing" sequence="5"
+              web_icon="lss_foundation,static/description/icon.png"/>
+    <menuitem id="menu_lss_foundation_projects" name="Projects" parent="menu_lss_foundation_root"
+              action="action_lss_foundation_project"/>
+    <menuitem id="menu_lss_foundation_authorities" name="Authorities" parent="menu_lss_foundation_root"
+              action="action_lss_foundation_authority"/>
+    <menuitem id="menu_lss_foundation_procedures" name="Procedures" parent="menu_lss_foundation_root"
+              action="action_lss_foundation_procedure"/>
+    <menuitem id="menu_lss_foundation_licenses" name="Licenses" parent="menu_lss_foundation_root"
+              action="action_lss_foundation_license"/>
+    <menuitem id="menu_lss_foundation_regulatory_texts" name="Regulatory Texts" parent="menu_lss_foundation_root"
+              action="action_lss_foundation_regulatory_text"/>
+    <menuitem id="menu_lss_foundation_configuration" name="Configuration" parent="menu_lss_foundation_root" sequence="100"
+              groups="base.group_system"/>
+    <menuitem id="menu_lss_foundation_document_types" name="Document Types" parent="menu_lss_foundation_configuration"
+              action="action_lss_foundation_document_type"/>
+    <menuitem id="menu_lss_foundation_license_types" name="License Types" parent="menu_lss_foundation_configuration"
+              action="action_lss_foundation_license_type"/>
+    <menuitem id="menu_lss_foundation_step_templates" name="Step Templates" parent="menu_lss_foundation_configuration"
+              action="action_lss_foundation_step_template"/>
+</odoo>

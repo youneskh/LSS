@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="capa_category_production" model="ls.capa.category">
+            <field name="name">Production</field>
+            <field name="code">PROD</field>
+            <field name="sequence">10</field>
+            <field name="default_due_days">30</field>
+            <field name="description">Issues arising from manufacturing and packaging operations.</field>
+        </record>
+
+        <record id="capa_category_laboratory" model="ls.capa.category">
+            <field name="name">Laboratory</field>
+            <field name="code">LAB</field>
+            <field name="sequence">20</field>
+            <field name="default_due_days">30</field>
+            <field name="description">Issues arising from quality control and analytical laboratories.</field>
+        </record>
+
+        <record id="capa_category_quality_system" model="ls.capa.category">
+            <field name="name">Quality System</field>
+            <field name="code">QS</field>
+            <field name="sequence">30</field>
+            <field name="default_due_days">60</field>
+            <field name="description">Issues affecting quality management system processes and documentation.</field>
+        </record>
+
+        <record id="capa_category_supplier" model="ls.capa.category">
+            <field name="name">Supplier</field>
+            <field name="code">SUP</field>
+            <field name="sequence">40</field>
+            <field name="default_due_days">60</field>
+            <field name="description">Issues attributable to suppliers or contract manufacturers.</field>
+        </record>
+
+        <record id="capa_category_facility" model="ls.capa.category">
+            <field name="name">Facility and Equipment</field>
+            <field name="code">FAC</field>
+            <field name="sequence">50</field>
+            <field name="default_due_days">45</field>
+            <field name="description">Issues affecting premises, utilities, equipment and instruments.</field>
+        </record>
+
+    </data>
+</odoo>

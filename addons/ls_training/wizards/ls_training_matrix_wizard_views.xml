@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_matrix_wizard_form_view" model="ir.ui.view">
+        <field name="name">ls.training.matrix.wizard.form</field>
+        <field name="model">ls.training.matrix.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Training Matrix">
+                <group>
+                    <group name="scope" string="Scope">
+                        <field name="company_id"
+                               groups="base.group_multi_company"
+                               options="{'no_create': True}"/>
+                        <field name="department_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                        <field name="job_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <group name="options" string="Options">
+                        <field name="mandatory_only"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_generate" type="object"
+                            string="Generate Matrix" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_matrix_wizard_action"
+            model="ir.actions.act_window">
+        <field name="name">Training Matrix</field>
+        <field name="res_model">ls.training.matrix.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="ls_training_matrix_line_list_view" model="ir.ui.view">
+        <field name="name">ls.training.matrix.line.list</field>
+        <field name="model">ls.training.matrix.line</field>
+        <field name="arch" type="xml">
+            <list string="Training Matrix" create="false" edit="false"
+                  decoration-danger="status in ('not_trained', 'expired', 'revoked')"
+                  decoration-warning="status == 'expiring'"
+                  decoration-success="status == 'valid'">
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="job_id"/>
+                <field name="course_id"/>
+                <field name="mandatory"/>
+                <field name="date_granted"/>
+                <field name="date_expiry"/>
+                <field name="status" widget="badge"
+                       decoration-success="status == 'valid'"
+                       decoration-warning="status == 'expiring'"
+                       decoration-danger="status in ('not_trained', 'expired', 'revoked')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_training_matrix_line_pivot_view" model="ir.ui.view">
+        <field name="name">ls.training.matrix.line.pivot</field>
+        <field name="model">ls.training.matrix.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Training Matrix">
+                <field name="employee_id" type="row"/>
+                <field name="course_id" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_training_matrix_line_search_view" model="ir.ui.view">
+        <field name="name">ls.training.matrix.line.search</field>
+        <field name="model">ls.training.matrix.line</field>
+        <field name="arch" type="xml">
+            <search string="Training Matrix">
+                <field name="employee_id"/>
+                <field name="course_id"/>
+                <filter name="filter_gap" string="Gaps"
+                        domain="[('status', 'in', ('not_trained', 'expired', 'revoked'))]"/>
+                <filter name="filter_expiring" string="Expiring Soon"
+                        domain="[('status', '=', 'expiring')]"/>
+                <filter name="filter_valid" string="Valid"
+                        domain="[('status', '=', 'valid')]"/>
+                                    <filter name="group_by_employee" string="Employee"
+                        context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_by_course" string="Course"
+                        context="{'group_by': 'course_id'}"/>
+                    <filter name="group_by_department" string="Department"
+                        context="{'group_by': 'department_id'}"/>
+                    <filter name="group_by_job" string="Job Position"
+                        context="{'group_by': 'job_id'}"/>
+                    <filter name="group_by_status" string="Status"
+                        context="{'group_by': 'status'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_training_matrix_line_action"
+            model="ir.actions.act_window">
+        <field name="name">Training Matrix</field>
+        <field name="res_model">ls.training.matrix.line</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id"
+               ref="ls_training_matrix_line_search_view"/>
+    </record>
+
+</odoo>

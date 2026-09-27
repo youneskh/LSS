@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_md_pms_list" model="ir.ui.view">
+        <field name="name">ls.md.pms.list</field>
+        <field name="model">ls.md.pms</field>
+        <field name="arch" type="xml">
+            <list string="Post-Market Surveillance Plans" decoration-muted="state in ('superseded', 'cancelled')">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="version"/>
+                <field name="effective_date" optional="show"/>
+                <field name="periodic_report_type" optional="show"/>
+                <field name="periodic_report_interval_months" optional="hide"/>
+                <field name="pmcf_plan_included" optional="show"/>
+                <field name="report_count" optional="hide"/>
+                <field name="next_review_date" optional="show"/>
+                <field name="state" widget="badge" decoration-success="state == 'approved'" decoration-info="state == 'under_review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pms_form" model="ir.ui.view">
+        <field name="name">ls.md.pms.form</field>
+        <field name="model">ls.md.pms</field>
+        <field name="arch" type="xml">
+            <form string="Post-Market Surveillance Plan">
+                <header>
+                    <button name="action_submit_for_review" type="object" string="Submit for Review" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="oe_highlight" invisible="state != 'under_review'"/>
+                    <button name="action_reset_to_draft" type="object" string="Return to Draft" invisible="state != 'under_review'"/>
+                    <button name="action_supersede" type="object" string="Supersede" invisible="state != 'approved'"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state in ('approved', 'superseded', 'cancelled')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,under_review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_reports" type="object" class="oe_stat_button" icon="fa-line-chart">
+                            <field name="report_count" widget="statinfo" string="Reports"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Reference"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                        <label for="title" string="Title"/>
+                        <h2><field name="title" placeholder="Post-market surveillance plan title"/></h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="device_id"/>
+                            <field name="version"/>
+                            <field name="effective_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Responsibilities">
+                            <field name="responsible_id"/>
+                            <field name="approver_id" readonly="1"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Periodic Reporting">
+                            <field name="periodic_report_type" readonly="1"/>
+                            <field name="periodic_report_interval_months" readonly="1"/>
+                        </group>
+                        <group string="Plan Review">
+                            <field name="review_frequency_months"/>
+                            <field name="next_review_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Data Collection" name="collection">
+                            <group string="Information Sources">
+                                <field name="information_sources" nolabel="1" placeholder="Sources of post-market information monitored under this plan"/>
+                            </group>
+                            <group string="Collection Process">
+                                <field name="collection_process" nolabel="1" placeholder="Process used to collect and record the information"/>
+                            </group>
+                            <group string="Traceability Tools">
+                                <field name="traceability_tools" nolabel="1" placeholder="Tools used to trace the devices concerned"/>
+                            </group>
+                        </page>
+                        <page string="Analysis" name="analysis">
+                            <group string="Indicators and Thresholds">
+                                <field name="indicators_and_thresholds" nolabel="1" placeholder="Indicators monitored and the thresholds that trigger an assessment"/>
+                            </group>
+                            <group string="Analysis Methods">
+                                <field name="analysis_methods" nolabel="1" placeholder="Methods used to analyse the collected data"/>
+                            </group>
+                            <group string="Communication Methods">
+                                <field name="communication_methods" nolabel="1" placeholder="Methods used to communicate with authorities, notified bodies, economic operators and users"/>
+                            </group>
+                            <group string="Corrective Action Process">
+                                <field name="corrective_action_process" nolabel="1" placeholder="Process followed when preventive or corrective action is needed"/>
+                            </group>
+                            <group string="Referenced Procedures">
+                                <field name="referenced_procedures" nolabel="1" placeholder="Procedures of the quality management system referenced by this plan"/>
+                            </group>
+                        </page>
+                        <page string="PMCF" name="pmcf">
+                            <group>
+                                <field name="pmcf_plan_included"/>
+                                <field name="pmcf_plan_reference" invisible="not pmcf_plan_included" placeholder="Reference of the post-market clinical follow-up plan"/>
+                                <field name="pmcf_not_applicable_justification" invisible="pmcf_plan_included" placeholder="Justification recorded where a post-market clinical follow-up plan is not included"/>
+                            </group>
+                        </page>
+                        <page string="Periodic Reports" name="reports">
+                            <field name="report_ids" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="report_type"/>
+                                    <field name="period_start"/>
+                                    <field name="period_end"/>
+                                    <field name="conclusion"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_md_pms_search" model="ir.ui.view">
+        <field name="name">ls.md.pms.search</field>
+        <field name="model">ls.md.pms</field>
+        <field name="arch" type="xml">
+            <search string="Post-Market Surveillance Plans">
+                <field name="name"/>
+                <field name="title"/>
+                <field name="device_id"/>
+                <field name="responsible_id"/>
+                <separator/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_under_review" string="Under Review" domain="[('state', '=', 'under_review')]"/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <separator/>
+                <filter name="filter_pmcf" string="With PMCF Plan" domain="[('pmcf_plan_included', '=', True)]"/>
+                <filter name="filter_no_pmcf" string="Without PMCF Plan" domain="[('pmcf_plan_included', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_by_device" string="Device" context="{'group_by': 'device_id'}"/>
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_report_type" string="Periodic Report Type" context="{'group_by': 'periodic_report_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_md_pms" model="ir.actions.act_window">
+        <field name="name">Surveillance Plans</field>
+        <field name="res_model">ls.md.pms</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_md_pms_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a post-market surveillance plan</p>
+            <p>
+                A post-market surveillance plan records the information sources monitored, the
+                indicators and thresholds applied, the analysis and communication methods and
+                the process followed when preventive or corrective action is needed.
+            </p>
+        </field>
+    </record>
+
+</odoo>

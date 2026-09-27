@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <template id="report_ls_deviation_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Deviation Report</h2>
+                        <h3 t-out="doc.name">DEV/2026/00001</h3>
+
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Title</th>
+                                <td t-out="doc.title"/>
+                                <th>Status</th>
+                                <td t-out="dict(doc._fields['state'].selection).get(doc.state, '')"/>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td t-out="doc.deviation_type_id.name"/>
+                                <th>Category</th>
+                                <td t-out="doc.category_id.name"/>
+                            </tr>
+                            <tr>
+                                <th>Severity</th>
+                                <td t-out="dict(doc._fields['severity'].selection).get(doc.severity, '')"/>
+                                <th>Planned</th>
+                                <td t-out="'Yes' if doc.is_planned else 'No'"/>
+                            </tr>
+                            <tr>
+                                <th>Occurred</th>
+                                <td t-out="doc.occurrence_date"/>
+                                <th>Detected</th>
+                                <td t-out="doc.detection_date"/>
+                            </tr>
+                            <tr>
+                                <th>Reported By</th>
+                                <td t-out="doc.reporter_id.name"/>
+                                <th>Investigator</th>
+                                <td t-out="doc.owner_id.name"/>
+                            </tr>
+                            <tr>
+                                <th>Target Closure</th>
+                                <td t-out="doc.due_date"/>
+                                <th>Days Open</th>
+                                <td t-out="doc.days_open"/>
+                            </tr>
+                        </table>
+
+                        <h4>Description</h4>
+                        <p t-out="doc.description"/>
+
+                        <t t-if="doc.justification">
+                            <h4>Justification (21 CFR 211.100(b))</h4>
+                            <p t-out="doc.justification"/>
+                        </t>
+
+                        <h4>Subject of the Deviation</h4>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Product</th>
+                                <td t-out="doc.product_id.display_name"/>
+                                <th>Quantity Affected</th>
+                                <td>
+                                    <span t-out="doc.quantity_affected"/>
+                                    <span t-out="doc.product_uom_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Manufacturing Order</th>
+                                <td t-out="doc.production_id.name"/>
+                                <th>Equipment</th>
+                                <td t-out="doc.equipment_id.name"/>
+                            </tr>
+                            <tr>
+                                <th>Affected Lots</th>
+                                <td colspan="3"
+                                    t-out="', '.join(doc.lot_ids.mapped('name'))"/>
+                            </tr>
+                        </table>
+
+                        <h4>Impact Assessment</h4>
+                        <ul>
+                            <li>Patient safety: <span t-out="'Yes' if doc.impact_patient_safety else 'No'"/></li>
+                            <li>Product quality: <span t-out="'Yes' if doc.impact_product_quality else 'No'"/></li>
+                            <li>Regulatory: <span t-out="'Yes' if doc.impact_regulatory else 'No'"/></li>
+                            <li>Validation: <span t-out="'Yes' if doc.impact_validation else 'No'"/></li>
+                            <li>Other batches: <span t-out="'Yes' if doc.impact_other_batches else 'No'"/></li>
+                        </ul>
+                        <p t-out="doc.impact_assessment"/>
+
+                        <t t-if="doc.immediate_action_ids">
+                            <h4>Immediate Actions</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Type</th>
+                                        <th>Responsible</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.immediate_action_ids" t-as="act">
+                                        <td t-out="act.name"/>
+                                        <td t-out="dict(act._fields['action_type'].selection).get(act.action_type, '')"/>
+                                        <td t-out="act.responsible_id.name"/>
+                                        <td t-out="dict(act._fields['state'].selection).get(act.state, '')"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="doc.investigation_ids">
+                            <h4>Investigation</h4>
+                            <t t-foreach="doc.investigation_ids" t-as="inv">
+                                <p>
+                                    <strong t-out="inv.name"/>
+                                    (<span t-out="inv.rca_method_id.name"/>,
+                                    <span t-out="inv.investigator_id.name"/>)
+                                </p>
+                                <p><em>Findings:</em> <span t-out="inv.findings"/></p>
+                                <p><em>Root cause:</em> <span t-out="inv.root_cause"/></p>
+                            </t>
+                        </t>
+
+                        <h4>Extension to Other Batches (21 CFR 211.192)</h4>
+                        <p>
+                            <em>Batches evaluated:</em>
+                            <span t-out="', '.join(doc.other_batches_lot_ids.mapped('name')) or 'None'"/>
+                        </p>
+                        <p t-out="doc.extension_rationale"/>
+
+                        <t t-if="doc.disposition_ids">
+                            <h4>Product Disposition</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Lot</th>
+                                        <th>Quantity</th>
+                                        <th>Decision</th>
+                                        <th>Approved By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="doc.disposition_ids" t-as="disp">
+                                        <td t-out="disp.product_id.display_name"/>
+                                        <td t-out="disp.lot_id.name"/>
+                                        <td t-out="disp.quantity"/>
+                                        <td t-out="dict(disp._fields['decision'].selection).get(disp.decision, '')"/>
+                                        <td t-out="disp.approved_by_id.name"/>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <h4>Conclusions (21 CFR 211.192)</h4>
+                        <p t-out="doc.conclusion"/>
+                        <h4>Follow-up</h4>
+                        <p t-out="doc.followup"/>
+
+                        <h4>CAPA Decision</h4>
+                        <p>
+                            <span t-out="'CAPA required' if doc.capa_required else 'No CAPA required'"/>
+                            <span t-if="doc.capa_reference">
+                                (reference <span t-out="doc.capa_reference"/>)
+                            </span>
+                        </p>
+                        <p t-out="doc.capa_decision_rationale"/>
+
+                        <h4>Transition Log</h4>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Performed By</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.stage_log_ids" t-as="log">
+                                    <td t-out="log.create_date"/>
+                                    <td t-out="log.from_state"/>
+                                    <td t-out="log.to_state"/>
+                                    <td t-out="log.user_id.name"/>
+                                    <td t-out="log.reason"/>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4">
+                            <p class="text-muted" style="font-size:9px;">
+                                This report is a printed extract of an electronic
+                                record. It is not an electronic signature record
+                                within the meaning of FDA 21 CFR Part 11.
+                            </p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

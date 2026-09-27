@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <menuitem id="menu_ls_calibration_root"
+              name="Calibration"
+              web_icon="ls_calibration,static/description/icon.png"
+              sequence="45"
+              groups="ls_calibration.group_ls_calibration_viewer"/>
+
+    <!-- Instruments -->
+    <menuitem id="menu_ls_calibration_instruments"
+              name="Instruments"
+              parent="menu_ls_calibration_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_calibration_instrument"
+              name="Instrument Register"
+              parent="menu_ls_calibration_instruments"
+              action="action_ls_calibration_instrument"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_calibration_instrument_due"
+              name="Calibration Status"
+              parent="menu_ls_calibration_instruments"
+              action="action_ls_calibration_instrument_due"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_calibration_point"
+              name="Calibration Points"
+              parent="menu_ls_calibration_instruments"
+              action="action_ls_calibration_point"
+              sequence="30"/>
+
+    <!-- Planning -->
+    <menuitem id="menu_ls_calibration_planning"
+              name="Planning"
+              parent="menu_ls_calibration_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_calibration_plan"
+              name="Calibration Plans"
+              parent="menu_ls_calibration_planning"
+              action="action_ls_calibration_plan"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_calibration_plan_generate"
+              name="Generate Scheduled Calibrations"
+              parent="menu_ls_calibration_planning"
+              action="action_ls_calibration_plan_generate"
+              sequence="20"
+              groups="ls_calibration.group_ls_calibration_technician"/>
+
+    <!-- Execution -->
+    <menuitem id="menu_ls_calibration_execution"
+              name="Calibrations"
+              parent="menu_ls_calibration_root"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_calibration_record_open"
+              name="Open Calibrations"
+              parent="menu_ls_calibration_execution"
+              action="action_ls_calibration_record_open"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_calibration_record"
+              name="All Calibration Records"
+              parent="menu_ls_calibration_execution"
+              action="action_ls_calibration_record"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_calibration_certificate"
+              name="Certificates"
+              parent="menu_ls_calibration_execution"
+              action="action_ls_calibration_certificate"
+              sequence="30"/>
+
+    <!-- Deviations -->
+    <menuitem id="menu_ls_calibration_deviations"
+              name="Out of Tolerance"
+              parent="menu_ls_calibration_root"
+              sequence="40"/>
+
+    <menuitem id="menu_ls_calibration_oot"
+              name="OOT Events"
+              parent="menu_ls_calibration_deviations"
+              action="action_ls_calibration_oot"
+              sequence="10"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_ls_calibration_configuration"
+              name="Configuration"
+              parent="menu_ls_calibration_root"
+              sequence="90"
+              groups="ls_calibration.group_ls_calibration_manager"/>
+
+    <menuitem id="menu_ls_calibration_instrument_category"
+              name="Instrument Categories"
+              parent="menu_ls_calibration_configuration"
+              action="action_ls_calibration_instrument_category"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_calibration_standard"
+              name="Reference Standards"
+              parent="menu_ls_calibration_configuration"
+              action="action_ls_calibration_standard"
+              sequence="20"/>
+
+</odoo>

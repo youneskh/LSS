@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo noupdate="1">
+
+    <!--
+      Only fields whose presence on `ir.cron` is long established are set
+      here. `numbercall` and `doall` are deliberately omitted: their
+      continued presence in Odoo 19 could not be verified from official
+      documentation, and omitting them lets the ORM apply its own defaults
+      instead of failing at installation on an unknown field.
+    -->
+    <record id="cron_notify_risk_review_due" model="ir.cron">
+        <field name="name">Life Sciences Risk: notify overdue risk reviews</field>
+        <field name="model_id" ref="model_ls_risk_register"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_notify_review_due()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

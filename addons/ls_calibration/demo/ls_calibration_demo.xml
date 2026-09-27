@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="demo_instrument_balance" model="ls.calibration.instrument">
+        <field name="name">Analytical balance QC laboratory</field>
+        <field name="manufacturer">Demo Instruments</field>
+        <field name="model_reference">AB-220</field>
+        <field name="serial_number">DEMO-AB-0001</field>
+        <field name="location">QC laboratory - weighing room</field>
+        <field name="criticality">critical</field>
+        <field name="gxp_impact">direct</field>
+        <field name="range_min">0.0</field>
+        <field name="range_max">220.0</field>
+        <field name="unit">g</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.001</field>
+        <field name="alert_lead_days">30</field>
+        <field name="state">in_service</field>
+    </record>
+
+    <record id="demo_instrument_thermometer" model="ls.calibration.instrument">
+        <field name="name">Reference thermometer stability chamber</field>
+        <field name="manufacturer">Demo Instruments</field>
+        <field name="model_reference">RT-100</field>
+        <field name="serial_number">DEMO-RT-0007</field>
+        <field name="location">Stability room 1</field>
+        <field name="criticality">major</field>
+        <field name="gxp_impact">direct</field>
+        <field name="range_min">-30.0</field>
+        <field name="range_max">80.0</field>
+        <field name="unit">degC</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.2</field>
+        <field name="alert_lead_days">45</field>
+        <field name="state">in_service</field>
+    </record>
+
+    <record id="demo_instrument_mass_standard" model="ls.calibration.instrument">
+        <field name="name">Mass standard set E2</field>
+        <field name="manufacturer">Demo Metrology</field>
+        <field name="model_reference">E2-SET</field>
+        <field name="serial_number">DEMO-MS-0100</field>
+        <field name="location">QC laboratory - metrology cabinet</field>
+        <field name="criticality">critical</field>
+        <field name="gxp_impact">direct</field>
+        <field name="range_min">0.0</field>
+        <field name="range_max">200.0</field>
+        <field name="unit">g</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.0001</field>
+        <field name="alert_lead_days">60</field>
+        <field name="state">in_service</field>
+    </record>
+
+    <record id="demo_plan_balance" model="ls.calibration.plan">
+        <field name="instrument_id" ref="demo_instrument_balance" />
+        <field name="description">Annual calibration of the analytical balance</field>
+        <field name="procedure_reference">SOP-MET-001</field>
+        <field
+            name="method_description"
+        >Calibration at three points of the measuring range with the E2 mass standard set, after 30 minutes of stabilisation.</field>
+        <field name="interval_number">12</field>
+        <field name="interval_uom">month</field>
+        <field
+            name="start_date"
+            eval="(DateTime.now() - timedelta(days=200)).strftime('%Y-%m-%d')"
+        />
+        <field name="state">active</field>
+    </record>
+
+    <record id="demo_plan_point_balance_1" model="ls.calibration.plan.point">
+        <field name="plan_id" ref="demo_plan_balance" />
+        <field name="sequence">10</field>
+        <field name="name">Point 1 - 10 g</field>
+        <field name="nominal_value">10.0</field>
+        <field name="unit">g</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.001</field>
+    </record>
+
+    <record id="demo_plan_point_balance_2" model="ls.calibration.plan.point">
+        <field name="plan_id" ref="demo_plan_balance" />
+        <field name="sequence">20</field>
+        <field name="name">Point 2 - 100 g</field>
+        <field name="nominal_value">100.0</field>
+        <field name="unit">g</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.001</field>
+    </record>
+
+    <record id="demo_plan_point_balance_3" model="ls.calibration.plan.point">
+        <field name="plan_id" ref="demo_plan_balance" />
+        <field name="sequence">30</field>
+        <field name="name">Point 3 - 200 g</field>
+        <field name="nominal_value">200.0</field>
+        <field name="unit">g</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.001</field>
+    </record>
+
+    <record id="demo_plan_thermometer" model="ls.calibration.plan">
+        <field name="instrument_id" ref="demo_instrument_thermometer" />
+        <field name="description">Half-yearly calibration of the reference thermometer</field>
+        <field name="procedure_reference">SOP-MET-004</field>
+        <field
+            name="method_description"
+        >Comparison with an accredited reference thermometer in a stirred liquid bath at two temperatures.</field>
+        <field name="interval_number">6</field>
+        <field name="interval_uom">month</field>
+        <field
+            name="start_date"
+            eval="(DateTime.now() + timedelta(days=20)).strftime('%Y-%m-%d')"
+        />
+        <field name="state">active</field>
+    </record>
+
+    <record id="demo_plan_point_thermometer_1" model="ls.calibration.plan.point">
+        <field name="plan_id" ref="demo_plan_thermometer" />
+        <field name="sequence">10</field>
+        <field name="name">Point 1 - 5 degC</field>
+        <field name="nominal_value">5.0</field>
+        <field name="unit">degC</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.2</field>
+    </record>
+
+    <record id="demo_plan_point_thermometer_2" model="ls.calibration.plan.point">
+        <field name="plan_id" ref="demo_plan_thermometer" />
+        <field name="sequence">20</field>
+        <field name="name">Point 2 - 25 degC</field>
+        <field name="nominal_value">25.0</field>
+        <field name="unit">degC</field>
+        <field name="tolerance_type">absolute</field>
+        <field name="tolerance_value">0.2</field>
+    </record>
+
+    <record id="demo_record_balance" model="ls.calibration.record">
+        <field name="instrument_id" ref="demo_instrument_balance" />
+        <field name="plan_id" ref="demo_plan_balance" />
+        <field name="calibration_type">periodic</field>
+        <field
+            name="scheduled_date"
+            eval="(DateTime.now() - timedelta(days=200)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="calibration_date"
+            eval="(DateTime.now() - timedelta(days=198)).strftime('%Y-%m-%d 08:30:00')"
+        />
+        <field name="performed_by_id" ref="base.user_admin" />
+        <field
+            name="standard_ids"
+            eval="[(6, 0, [ref('demo_instrument_mass_standard')])]"
+        />
+        <field name="ambient_temperature">21.4</field>
+        <field name="ambient_humidity">45.0</field>
+        <field name="conclusion">All test points within the acceptance limits.</field>
+        <field
+            name="line_ids"
+            eval="[
+                (0, 0, {
+                    'sequence': 10,
+                    'plan_point_id': ref('demo_plan_point_balance_1'),
+                    'name': 'Point 1 - 10 g',
+                    'nominal_value': 10.0,
+                    'unit': 'g',
+                    'tolerance_type': 'absolute',
+                    'tolerance_value': 0.001,
+                    'as_found_value': 10.0003,
+                    'as_left_value': 10.0003,
+                }),
+                (0, 0, {
+                    'sequence': 20,
+                    'plan_point_id': ref('demo_plan_point_balance_2'),
+                    'name': 'Point 2 - 100 g',
+                    'nominal_value': 100.0,
+                    'unit': 'g',
+                    'tolerance_type': 'absolute',
+                    'tolerance_value': 0.001,
+                    'as_found_value': 99.9995,
+                    'as_left_value': 99.9995,
+                }),
+                (0, 0, {
+                    'sequence': 30,
+                    'plan_point_id': ref('demo_plan_point_balance_3'),
+                    'name': 'Point 3 - 200 g',
+                    'nominal_value': 200.0,
+                    'unit': 'g',
+                    'tolerance_type': 'absolute',
+                    'tolerance_value': 0.001,
+                    'as_found_value': 200.0008,
+                    'as_left_value': 200.0008,
+                }),
+            ]"
+        />
+    </record>
+
+    <!-- The demonstration record follows the real workflow so that the demo
+         database contains an approved record with its complete history. -->
+    <function
+        model="ls.calibration.record"
+        name="action_start"
+        eval="[[ref('demo_record_balance')]]"
+    />
+    <function
+        model="ls.calibration.record"
+        name="action_submit_review"
+        eval="[[ref('demo_record_balance')]]"
+    />
+    <function
+        model="ls.calibration.record"
+        name="action_approve"
+        eval="[[ref('demo_record_balance')]]"
+    />
+
+    <record id="demo_certificate_balance" model="ls.calibration.certificate">
+        <field name="instrument_id" ref="demo_instrument_balance" />
+        <field name="record_id" ref="demo_record_balance" />
+        <field name="issuer_type">internal</field>
+        <field
+            name="issue_date"
+            eval="(DateTime.now() - timedelta(days=197)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="valid_until"
+            eval="(DateTime.now() + timedelta(days=168)).strftime('%Y-%m-%d')"
+        />
+    </record>
+
+    <function
+        model="ls.calibration.certificate"
+        name="action_issue"
+        eval="[[ref('demo_certificate_balance')]]"
+    />
+
+</odoo>

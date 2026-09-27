@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_training_certification_list_view" model="ir.ui.view">
+        <field name="name">ls.training.certification.list</field>
+        <field name="model">ls.training.certification</field>
+        <field name="arch" type="xml">
+            <list string="Training Certifications"
+                  decoration-danger="state == 'expired'"
+                  decoration-warning="state == 'expiring'"
+                  decoration-muted="state == 'revoked'"
+                  create="false">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="course_id"/>
+                <field name="course_version" optional="hide"/>
+                <field name="date_granted"/>
+                <field name="date_expiry"/>
+                <field name="days_to_expiry" optional="hide"/>
+                <field name="score" optional="hide"/>
+                <field name="session_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'valid'"
+                       decoration-warning="state == 'expiring'"
+                       decoration-danger="state == 'expired'"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_training_certification_form_view" model="ir.ui.view">
+        <field name="name">ls.training.certification.form</field>
+        <field name="model">ls.training.certification</field>
+        <field name="arch" type="xml">
+            <form string="Training Certification">
+                <header>
+                    <button name="action_revoke" type="object"
+                            string="Revoke" class="btn-secondary"
+                            invisible="revoked"
+                            groups="ls_training.group_ls_training_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="valid,expiring,expired"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Revoked"
+                            bg_color="text-bg-danger" invisible="not revoked"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="subject" string="Subject">
+                            <field name="employee_id"
+                                   options="{'no_create': True}"/>
+                            <field name="course_id"
+                                   options="{'no_create': True}"/>
+                            <field name="course_version"/>
+                            <field name="session_id" readonly="1"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"
+                                   options="{'no_create': True}"/>
+                        </group>
+                        <group name="validity" string="Validity">
+                            <field name="date_granted"/>
+                            <field name="date_expiry"/>
+                            <field name="days_to_expiry"/>
+                            <field name="score"/>
+                            <field name="revoked" readonly="1"/>
+                        </group>
+                    </group>
+                    <group name="revocation" string="Revocation"
+                           invisible="not revoked">
+                        <field name="revocation_reason" nolabel="1"
+                               readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page name="competencies" string="Competencies">
+                            <field name="competency_ids"
+                                   widget="many2many_tags" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_certification_revoke_form_view"
+            model="ir.ui.view">
+        <field name="name">ls.training.certification.revoke.form</field>
+        <field name="model">ls.training.certification</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Revoke Certification">
+                <group>
+                    <field name="name" readonly="1"/>
+                    <field name="employee_id" readonly="1"/>
+                    <field name="course_id" readonly="1"/>
+                    <field name="revocation_reason" required="1"
+                           placeholder="Document why this certification is being revoked."/>
+                </group>
+                <footer>
+                    <button name="action_confirm_revoke" type="object"
+                            string="Revoke" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_training_certification_search_view" model="ir.ui.view">
+        <field name="name">ls.training.certification.search</field>
+        <field name="model">ls.training.certification</field>
+        <field name="arch" type="xml">
+            <search string="Training Certifications">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="course_id"/>
+                <field name="competency_ids"/>
+                <filter name="filter_valid" string="Valid"
+                        domain="[('state', '=', 'valid')]"/>
+                <filter name="filter_expiring" string="Expiring Soon"
+                        domain="[('state', '=', 'expiring')]"/>
+                <filter name="filter_expired" string="Expired"
+                        domain="[('state', '=', 'expired')]"/>
+                <filter name="filter_revoked" string="Revoked"
+                        domain="[('state', '=', 'revoked')]"/>
+                <separator/>
+                <filter name="filter_action_required"
+                        string="Action Required"
+                        domain="[('state', 'in', ('expiring', 'expired'))]"/>
+                <filter name="filter_mine" string="My Certifications"
+                        domain="[('employee_id.user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_granted_this_year" string="Granted"
+                        date="date_granted"/>
+                                    <filter name="group_by_employee" string="Employee"
+                        context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_by_course" string="Course"
+                        context="{'group_by': 'course_id'}"/>
+                    <filter name="group_by_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_by_expiry" string="Expiry Month"
+                        context="{'group_by': 'date_expiry:month'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_training_certification_action"
+            model="ir.actions.act_window">
+        <field name="name">Certifications</field>
+        <field name="res_model">ls.training.certification</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id"
+               ref="ls_training_certification_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No certification issued yet
+            </p>
+            <p>
+                Certifications are issued automatically when a training
+                session is closed, and can also be recorded manually for
+                externally delivered training.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_training_certification_action_expiring"
+            model="ir.actions.act_window">
+        <field name="name">Expiring and Expired</field>
+        <field name="res_model">ls.training.certification</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', 'in', ('expiring', 'expired'))]</field>
+        <field name="search_view_id"
+               ref="ls_training_certification_search_view"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No certification requires attention
+            </p>
+            <p>
+                Certifications appear here once they enter the warning
+                window configured by the
+                ls_training.expiry_warning_days parameter.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="action_report_ls_calibration_certificate" model="ir.actions.report">
+        <field name="name">Calibration Certificate</field>
+        <field name="model">ls.calibration.certificate</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >ls_calibration.report_ls_calibration_certificate</field>
+        <field
+            name="report_file"
+        >ls_calibration.report_ls_calibration_certificate</field>
+        <field name="binding_model_id" ref="model_ls_calibration_certificate" />
+        <field name="binding_type">report</field>
+        <field
+            name="print_report_name"
+        >'Calibration Certificate - %s' % (object.name)</field>
+    </record>
+
+    <template id="report_ls_calibration_certificate_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2>
+                    Calibration Certificate
+                    <span t-field="doc.name" />
+                </h2>
+                <div class="row mt32 mb32">
+                    <div class="col-6">
+                        <strong>Instrument:</strong>
+                        <span t-field="doc.instrument_id.display_name" />
+                        <br />
+                        <strong>Manufacturer:</strong>
+                        <span t-field="doc.instrument_id.manufacturer" />
+                        <br />
+                        <strong>Model:</strong>
+                        <span t-field="doc.instrument_id.model_reference" />
+                        <br />
+                        <strong>Serial number:</strong>
+                        <span t-field="doc.instrument_id.serial_number" />
+                    </div>
+                    <div class="col-6">
+                        <strong>Issue date:</strong>
+                        <span t-field="doc.issue_date" />
+                        <br />
+                        <strong>Valid until:</strong>
+                        <span t-field="doc.valid_until" />
+                        <br />
+                        <strong>Issuer:</strong>
+                        <span t-field="doc.issuer_type" />
+                        <br />
+                        <t t-if="doc.issuer_type == 'external'">
+                            <strong>Laboratory:</strong>
+                            <span t-field="doc.issuer_partner_id.name" />
+                            <br />
+                            <strong>Accreditation:</strong>
+                            <span t-field="doc.accreditation_reference" />
+                        </t>
+                    </div>
+                </div>
+
+                <t t-if="doc.record_id">
+                    <h4>Calibration record</h4>
+                    <p>
+                        <strong>Reference:</strong>
+                        <span t-field="doc.record_id.name" />
+                        <br />
+                        <strong>Calibration date:</strong>
+                        <span t-field="doc.record_id.calibration_date" />
+                        <br />
+                        <strong>Result:</strong>
+                        <span t-field="doc.record_id.result" />
+                        <br />
+                        <strong>Next due date:</strong>
+                        <span t-field="doc.record_id.next_due_date" />
+                    </p>
+
+                    <h4>Test points</h4>
+                    <table class="table table-sm o_main_table">
+                        <thead>
+                            <tr>
+                                <th>Point</th>
+                                <th class="text-end">Nominal</th>
+                                <th>Unit</th>
+                                <th class="text-end">As left</th>
+                                <th class="text-end">Deviation</th>
+                                <th class="text-center">Verdict</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="doc.record_id.line_ids" t-as="line">
+                                <td><span t-field="line.name" /></td>
+                                <td class="text-end">
+                                    <span t-field="line.nominal_value" />
+                                </td>
+                                <td><span t-field="line.unit" /></td>
+                                <td class="text-end">
+                                    <span t-field="line.as_left_value" />
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="line.as_left_deviation" />
+                                </td>
+                                <td class="text-center">
+                                    <span t-if="line.as_left_in_tolerance">Pass</span>
+                                    <span t-else="">Fail</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </t>
+
+                <div t-if="doc.note" class="mt16">
+                    <h4>Notes</h4>
+                    <p><span t-field="doc.note" /></p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_calibration_certificate">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t
+                    t-call="ls_calibration.report_ls_calibration_certificate_document"
+                    t-lang="doc.company_id.partner_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+
+</odoo>

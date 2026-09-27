@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "C:\Users\youne\AppData\Roaming\kimi-desktop\daimon-share\daimon\skills\pdf\scripts\pdf.py", line 314, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\youne\AppData\Roaming\kimi-desktop\daimon-share\daimon\skills\pdf\scripts\pdf.py", line 308, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "C:\Users\youne\AppData\Roaming\kimi-desktop\daimon-share\daimon\skills\pdf\scripts\pdf.py", line 89, in cmd_extract_text
+    from cmd_extract import extract_text
+  File "C:\Users\youne\AppData\Roaming\kimi-desktop\daimon-share\daimon\skills\pdf\scripts\cmd_extract.py", line 6, in <module>
+    import pikepdf
+ModuleNotFoundError: No module named 'pikepdf'

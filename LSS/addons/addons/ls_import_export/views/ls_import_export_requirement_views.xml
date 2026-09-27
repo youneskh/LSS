@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ===== Requirement: tree ========================================= -->
+
+    <record id="view_ls_import_export_requirement_list" model="ir.ui.view">
+        <field name="name">ls.import_export.compliance.requirement.list</field>
+        <field name="model">ls.import_export.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <list decoration-success="in_force == True"
+                  decoration-muted="in_force == False">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="requirement_type"/>
+                <field name="operation_type_scope"/>
+                <field name="in_force" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ===== Requirement: form ========================================= -->
+
+    <record id="view_ls_import_export_requirement_form" model="ir.ui.view">
+        <field name="name">ls.import_export.compliance.requirement.form</field>
+        <field name="model">ls.import_export.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Backed In Force"
+                            bg_color="text-bg-success"
+                            invisible="in_force == False"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name"
+                                  placeholder="Requirement title"/></h1>
+                        <h3><field name="code" readonly="1" class="oe_inline"/></h3>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    <group>
+                        <group string="Type and Scope">
+                            <field name="requirement_type"/>
+                            <field name="operation_type_scope"/>
+                            <field name="product_category_ids"
+                                   widget="many2many_tags"/>
+                        </group>
+                        <group string="Truth Protocol">
+                            <field name="in_force" readonly="1"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Cited Provisions">
+                        <field name="provision_ids" nolabel="1"
+                               domain="[('status', '=', 'in_force')]"
+                               widget="many2many_tags"
+                               options="{'color_field': 'status'}">
+                            <list>
+                                <field name="code"/>
+                                <field name="reference"/>
+                                <field name="name"/>
+                                <field name="authority"/>
+                                <field name="status"/>
+                                <field name="effective_date"/>
+                            </list>
+                        </field>
+                    </group>
+                    <notebook>
+                        <page string="Configuration">
+                            <field name="config"
+                                   placeholder="Engine-specific configuration (opaque in Phase 1)."
+                                   nolabel="1"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ===== Requirement: search ======================================= -->
+
+    <record id="view_ls_import_export_requirement_search" model="ir.ui.view">
+        <field name="name">ls.import_export.compliance.requirement.search</field>
+        <field name="model">ls.import_export.compliance.requirement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="requirement_type"/>
+                <separator/>
+                <filter name="filter_in_force" string="Backed In Force"
+                        domain="[('in_force', '=', True)]"/>
+                <filter name="filter_registry_gap" string="Registry Gap"
+                        domain="[('in_force', '=', False)]"/>
+                <separator/>
+                <filter name="filter_document" string="Document"
+                        domain="[('requirement_type', '=', 'document')]"/>
+                <filter name="filter_authorization" string="Authorization"
+                        domain="[('requirement_type', '=', 'authorization')]"/>
+                <filter name="filter_cost" string="Cost Component"
+                        domain="[('requirement_type', '=', 'cost_component')]"/>
+                <separator/>
+                <filter name="filter_import" string="Import"
+                        domain="[('operation_type_scope', 'in', ['import', 'both'])]"/>
+                <filter name="filter_export" string="Export"
+                        domain="[('operation_type_scope', 'in', ['export', 'both'])]"/>
+                <group name="group_by">
+                    <filter name="group_type" string="Requirement Type"
+                            context="{'group_by': 'requirement_type'}"/>
+                    <filter name="group_scope" string="Operation Scope"
+                            context="{'group_by': 'operation_type_scope'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ===== Requirement: action ======================================= -->
+
+    <record id="action_ls_import_export_requirement" model="ir.actions.act_window">
+        <field name="name">Compliance Requirements</field>
+        <field name="res_model">ls.import_export.compliance.requirement</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_import_export_requirement_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No compliance requirement defined yet.
+            </p>
+            <p>
+                Create a requirement backed by at least one cited provision
+                that is currently in force. The compliance engine evaluates
+                requirements only when they have a backing provision whose
+                status is "In Force"; otherwise a registry gap is raised.
+            </p>
+        </field>
+    </record>
+
+</odoo>

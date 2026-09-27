@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_audit_trail_purge_wizard_form" model="ir.ui.view">
+        <field name="name">ls.audit_trail.purge.wizard.form</field>
+        <field name="model">ls.audit_trail.purge.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Audit Trail Retention Run">
+                <div class="alert alert-danger" role="alert">
+                    A retention run permanently removes audit entries. It is
+                    allowed only when the company has an approved retention
+                    period and procedure. The removed range is replaced by a
+                    retention anchor that records how many entries were removed,
+                    their aggregate digest and this justification, so the chain
+                    stays verifiable and the removal itself becomes evidence.
+                </div>
+                <group>
+                    <group string="Authorisation" name="authorisation">
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="purge_allowed"/>
+                        <field name="retention_days"/>
+                        <field name="procedure_reference"/>
+                    </group>
+                    <group string="Scope" name="scope">
+                        <field name="cutoff_datetime"/>
+                        <field name="entry_count"/>
+                        <field name="first_sequence"/>
+                        <field name="last_sequence"/>
+                    </group>
+                </group>
+                <group string="Confirmation">
+                    <field name="confirm_entry_count"/>
+                    <field name="justification"
+                           placeholder="Approved retention decision, and the record of that approval."/>
+                </group>
+                <footer>
+                    <button name="action_execute" type="object"
+                            string="Execute Retention Run"
+                            class="btn-danger"
+                            confirm="This permanently removes the audit entries in scope. Continue?"
+                            invisible="not purge_allowed"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_purge_wizard" model="ir.actions.act_window">
+        <field name="name">Retention Run</field>
+        <field name="res_model">ls.audit_trail.purge.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

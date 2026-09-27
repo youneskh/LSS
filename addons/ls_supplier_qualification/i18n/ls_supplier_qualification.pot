@@ -1,0 +1,2185 @@
+# Translation template of ls_supplier_qualification.
+# This file is distributed under the same licence as the module.
+# Generated offline by tools/extract_pot.py. Regenerate it with
+# odoo-bin --i18n-export before a release.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#: models/ls_supplier_assessment_template.py:130
+msgid "%s (copy)"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:355
+msgid "%s criteria loaded from template %s."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:526
+msgid "%s critical audit finding(s) are still open."
+msgstr ""
+
+#: models/ls_supplier_audit.py:448
+msgid "A closed audit cannot be cancelled (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_category.py:45
+msgid "A closed audit is required before the dossier can be submitted for approval."
+msgstr ""
+
+#: models/ls_supplier_audit.py:708
+msgid "A closed finding cannot be cancelled (finding %s)."
+msgstr ""
+
+#: models/ls_supplier_category.py:40
+msgid "A completed assessment is required before the dossier can be submitted for approval."
+msgstr ""
+
+#: models/ls_supplier_review.py:318
+msgid "A completed review cannot be cancelled (review %s)."
+msgstr ""
+
+#: models/ls_supplier_criterion.py:57
+msgid "A mandatory criterion scored below the minimum acceptable score blocks a 'Pass' result."
+msgstr ""
+
+#: models/ls_supplier_category.py:50
+msgid "A recurring audit is planned after each approval."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:460
+msgid "A reviewed assessment cannot be cancelled (assessment %s)."
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:40
+#: wizards/ls_supplier_status_wizard_views.xml:17
+msgid "Action"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:153
+#: views/ls_supplier_performance_views.xml:57
+msgid "Action Required"
+msgstr ""
+
+#: views/ls_supplier_category_views.xml:46
+msgid "Active Substance Manufacturer"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:124
+msgid "Adverse Decision"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:44
+msgid "Agree Action"
+msgstr ""
+
+#: views/res_config_settings_views.xml:35
+msgid "Also verify that each ordered product belongs to the qualified scope of the supplier."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:768
+msgid "An approved or disqualified dossier cannot be reset to draft (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_category.py:69
+#: views/ls_supplier_category_views.xml:67
+msgid "Applicable Frameworks"
+msgstr ""
+
+#: models/ls_supplier_review.py:120
+msgid "Applied to the dossier when the decision maintains the approval. Left empty, the interval of the dossier is used."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:208
+msgid "Approval Conditions"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:131
+msgid "Approval Valid Until"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:918
+msgid "Approval validity elapsed on %s: the dossier is now expired."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:111
+msgid "Approve"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:726
+#: wizards/ls_supplier_approve_wizard_views.xml:10
+msgid "Approve Supplier Qualification"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:711
+msgid "Approve supplier qualification %s"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:331
+msgid "Approved"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:116
+msgid "Approved By"
+msgstr ""
+
+#: models/res_partner.py:40
+#: views/res_partner_views.xml:46
+msgid "Approved Supplier"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:31
+#: views/ls_supplier_category_views.xml:43
+#: views/ls_supplier_category_views.xml:96
+#: views/ls_supplier_criterion_views.xml:30
+#: views/ls_supplier_criterion_views.xml:72
+#: views/ls_supplier_qualification_views.xml:158
+#: views/ls_supplier_qualification_views.xml:352
+#: views/ls_supplier_standard_views.xml:26
+msgid "Archived"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:310
+msgid "Assessment %s cannot be deleted once it has been started. Cancel it instead."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:371
+msgid "Assessment %s has no criterion. Load a template first."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:400
+msgid "Assessment %s: a written conclusion is required before completion."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:392
+msgid "Assessment %s: every criterion scored below the minimum acceptable score must carry a comment. Criteria concerned: %s."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:240
+msgid "Assessment %s: the conditional threshold cannot exceed the pass threshold."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:229
+msgid "Assessment %s: the maximum score per criterion must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:234
+msgid "Assessment %s: the minimum score for mandatory criteria must be between 0 and %s."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:193
+msgid "Assessment Analysis"
+msgstr ""
+
+#: views/ls_supplier_criterion_views.xml:10
+#: views/ls_supplier_criterion_views.xml:65
+msgid "Assessment Criteria"
+msgstr ""
+
+#: views/ls_supplier_criterion_views.xml:27
+msgid "Assessment Criterion"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:182
+msgid "Assessment Scores"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:28
+msgid "Assessment Template"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:10
+msgid "Assessment Templates"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:164
+msgid "Assessment Type"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:464
+msgid "Assessment cancelled."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:413
+msgid "Assessment completed by the assessor."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:404
+msgid "Assessment completed with a weighted score of %s%% (result: %s)."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:476
+msgid "Assessment reset to draft."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:443
+#: models/ls_supplier_assessment.py:447
+msgid "Assessment reviewed."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:678
+msgid "Assessment stage started."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:375
+msgid "Assessment started."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:148
+#: views/ls_supplier_qualification_views.xml:136
+#: views/ls_supplier_qualification_views.xml:245
+msgid "Assessments"
+msgstr ""
+
+#: models/ls_supplier_review.py:88
+msgid "Assessments Reviewed"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:170
+msgid "Assessor"
+msgstr ""
+
+#: views/ls_supplier_criterion_views.xml:52
+msgid "Assessor Guidance"
+msgstr ""
+
+#: models/res_company.py:112
+msgid "At least one performance weight must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_audit.py:288
+msgid "Audit %s cannot be deleted once it has been planned. Cancel it instead."
+msgstr ""
+
+#: models/ls_supplier_audit.py:247
+msgid "Audit %s reports %s critical finding(s) and therefore cannot conclude 'Acceptable'."
+msgstr ""
+
+#: models/ls_supplier_audit.py:427
+msgid "Audit %s still has %s open finding(s) and cannot be closed."
+msgstr ""
+
+#: models/ls_supplier_audit.py:365
+msgid "Audit %s: a written conclusion is required before issuing the report."
+msgstr ""
+
+#: models/ls_supplier_audit.py:211
+msgid "Audit %s: the end date cannot precede the start date."
+msgstr ""
+
+#: models/ls_supplier_audit.py:360
+msgid "Audit %s: the outcome must be set before issuing the report."
+msgstr ""
+
+#: models/ls_supplier_audit.py:234
+msgid "Audit %s: the response cannot be received before the report is issued."
+msgstr ""
+
+#: models/ls_supplier_audit.py:225
+msgid "Audit %s: the response due date cannot precede the report date."
+msgstr ""
+
+#: models/ls_supplier_audit.py:96
+#: views/ls_supplier_audit_views.xml:263
+msgid "Audit Basis"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:347
+msgid "Audit Due"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:37
+msgid "Audit Finding"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:109
+#: views/ls_supplier_audit_views.xml:13
+msgid "Audit Findings"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:180
+msgid "Audit Plan"
+msgstr ""
+
+#: views/ls_supplier_category_views.xml:93
+msgid "Audit Required"
+msgstr ""
+
+#: views/res_config_settings_views.xml:25
+msgid "Audit Response Lead Time"
+msgstr ""
+
+#: models/res_company.py:32
+msgid "Audit Response Lead Time (days)"
+msgstr ""
+
+#: models/ls_supplier_audit.py:115
+msgid "Audit Team"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:322
+msgid "Audit Type"
+msgstr ""
+
+#: models/ls_supplier_audit.py:452
+msgid "Audit cancelled."
+msgstr ""
+
+#: models/ls_supplier_audit.py:435
+msgid "Audit closed after verification of all findings."
+msgstr ""
+
+#: models/ls_supplier_audit.py:431
+msgid "Audit closed."
+msgstr ""
+
+#: models/ls_supplier_audit.py:695
+msgid "Audit finding closed."
+msgstr ""
+
+#: models/ls_supplier_audit.py:305
+msgid "Audit planned on %s."
+msgstr ""
+
+#: models/ls_supplier_audit.py:347
+msgid "Audit report drafting started."
+msgstr ""
+
+#: models/ls_supplier_audit.py:386
+msgid "Audit report issued by the lead auditor."
+msgstr ""
+
+#: models/ls_supplier_audit.py:379
+msgid "Audit report issued. Outcome: %s."
+msgstr ""
+
+#: models/ls_supplier_audit.py:464
+msgid "Audit reset to draft."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:690
+msgid "Audit stage started."
+msgstr ""
+
+#: models/ls_supplier_audit.py:330
+msgid "Audit started."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:153
+#: views/ls_supplier_qualification_views.xml:140
+#: views/ls_supplier_qualification_views.xml:258
+msgid "Audits"
+msgstr ""
+
+#: models/ls_supplier_review.py:96
+msgid "Audits Reviewed"
+msgstr ""
+
+#: models/ls_supplier_performance.py:456
+msgid "Automatic delivery counters require the standard link between stock moves and purchase order lines provided by the 'purchase_stock' module. Install it or enter the counters manually."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:36
+msgid "Basis of the approval decision. Recorded verbatim in the signature log."
+msgstr ""
+
+#: models/ls_supplier_material.py:89
+msgid "Batch or lot numbers evaluated during qualification."
+msgstr ""
+
+#: models/res_company.py:38
+#: views/res_config_settings_views.xml:31
+msgid "Behaviour when a purchase order is confirmed for a supplier that is not approved."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:52
+#: views/ls_supplier_audit_views.xml:211
+#: views/ls_supplier_audit_views.xml:53
+#: views/ls_supplier_performance_views.xml:49
+#: views/ls_supplier_review_views.xml:45
+msgid "Cancel"
+msgstr ""
+
+#: models/ls_supplier_material.py:66
+msgid "Catalogue Product"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:25
+msgid "Categories this questionnaire is intended for. Informative only: any template can be selected on any assessment."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:357
+msgid "Category"
+msgstr ""
+
+#: models/ls_supplier_category.py:134
+msgid "Category '%s' requires periodic audits, so the audit interval must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:738
+#: wizards/ls_supplier_status_wizard_views.xml:10
+msgid "Change Qualification Status"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:115
+msgid "Change Status"
+msgstr ""
+
+#: views/res_config_settings_views.xml:35
+msgid "Check Qualified Scope"
+msgstr ""
+
+#: models/res_company.py:46
+msgid "Check Qualified Scope on Purchase Orders"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:51
+msgid "Close"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:209
+msgid "Close Audit"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:40
+msgid "Collect Evidence"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:133
+msgid "Comments"
+msgstr ""
+
+#: models/ls_supplier_performance.py:96
+msgid "Complaints Raised"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:48
+msgid "Complete"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:43
+msgid "Complete Review"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:121
+msgid "Completed"
+msgstr ""
+
+#: models/ls_supplier_review.py:196
+msgid "Completed review %s cannot be deleted."
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:43
+msgid "Completing the review applies its decision to the qualification dossier. Continue?"
+msgstr ""
+
+#: models/ls_supplier_performance.py:99
+msgid "Computed from the delivery counters and editable when the counters are not available."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:124
+#: views/ls_supplier_audit_views.xml:286
+msgid "Conclusion"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:92
+#: wizards/ls_supplier_approve_wizard_views.xml:29
+msgid "Conditions"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:138
+msgid "Conditions attached to a conditional approval."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:32
+msgid "Conditions the supplier must satisfy and the date by which they must be satisfied."
+msgstr ""
+
+#: models/ls_supplier_review.py:125
+msgid "Conditions written on the dossier when the decision maintains the approval with conditions."
+msgstr ""
+
+#: models/ls_supplier_audit.py:311
+msgid "Conduct supplier audit %s"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:47
+#: wizards/ls_supplier_status_wizard_views.xml:31
+msgid "Confirm"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:52
+msgid "Confirm Approval"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:71
+#: wizards/ls_supplier_status_wizard.py:53
+msgid "Confirm Your Login"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:151
+msgid "Confirmed"
+msgstr ""
+
+#: models/ls_supplier_performance.py:375
+msgid "Confirmed evaluation %s cannot be deleted. Cancel it instead."
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:80
+msgid "Consolidated summary of the period: assessments, audits, findings, performance, complaints and changes."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:52
+msgid "Contact record of the supplier. One active dossier is allowed per supplier and per company."
+msgstr ""
+
+#: models/ls_supplier_audit.py:638
+msgid "Corrective action agreed."
+msgstr ""
+
+#: models/ls_supplier_audit.py:656
+msgid "Corrective action implemented."
+msgstr ""
+
+#: models/ls_supplier_audit.py:676
+msgid "Corrective action verified."
+msgstr ""
+
+#: models/ls_supplier_performance.py:447
+msgid "Counters can only be recomputed on a draft evaluation."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:34
+#: views/ls_supplier_assessment_template_views.xml:59
+msgid "Criteria"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:71
+msgid "Criteria Count"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:338
+msgid "Criteria can only be loaded while assessment %s is a draft."
+msgstr ""
+
+#: models/ls_supplier_criterion.py:35
+msgid "Criterion"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:581
+msgid "Criterion '%s': the score cannot exceed %s."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:116
+#: views/ls_supplier_category_views.xml:86
+msgid "Critical"
+msgstr ""
+
+#: views/ls_supplier_category_views.xml:99
+#: views/ls_supplier_qualification_views.xml:359
+msgid "Criticality"
+msgstr ""
+
+#: models/res_partner.py:24
+msgid "Current Dossier"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:172
+msgid "Date"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:129
+#: views/ls_supplier_review_views.xml:82
+#: wizards/ls_supplier_approve_wizard_views.xml:23
+msgid "Decision"
+msgstr ""
+
+#: models/ls_supplier_review.py:307
+msgid "Decision of periodic review %s applied: %s."
+msgstr ""
+
+#: models/ls_supplier_category.py:33
+msgid "Default criticality applied to suppliers of this category. It can be overridden on each qualification dossier."
+msgstr ""
+
+#: views/res_config_settings_views.xml:25
+msgid "Default number of days granted to a supplier to answer an issued audit report."
+msgstr ""
+
+#: models/res_company.py:32
+msgid "Default number of days granted to the supplier to answer an issued audit report."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:71
+msgid "Defaults to the category criticality and can be raised or lowered on the dossier with a justification in the log."
+msgstr ""
+
+#: models/ls_supplier_performance.py:84
+msgid "Deliveries Received"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:84
+msgid "Delivery"
+msgstr ""
+
+#: models/ls_supplier_performance.py:478
+msgid "Delivery counters recomputed from %s receipt move(s), of which %s late."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:232
+msgid "Derived from the dossier criticality, the latest assessment result, the latest performance rating and the open critical or major audit findings. The computation rule is documented in doc/03_functional_specification.md."
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:71
+#: views/ls_supplier_category_views.xml:70
+msgid "Description"
+msgstr ""
+
+#: models/ls_supplier_material.py:41
+#: models/ls_supplier_standard.py:22
+msgid "Designation"
+msgstr ""
+
+#: models/ls_supplier_material.py:41
+msgid "Designation of the material or service as used by the quality department. It is independent of the product catalogue so that non-catalogued items can be qualified."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:54
+#: wizards/ls_supplier_status_wizard_views.xml:33
+msgid "Discard"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:162
+msgid "Disqualified"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:109
+msgid "Document the conditions attached to the approval."
+msgstr ""
+
+#: models/ls_supplier_performance.py:115
+msgid "Documentation Compliance (%)"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:104
+msgid "Documentation and Service"
+msgstr ""
+
+#: models/ls_supplier_performance.py:287
+msgid "Documentation compliance"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:530
+msgid "Documents, records or observations supporting the score."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:510
+#: models/ls_supplier_criterion.py:39
+#: views/ls_supplier_criterion_views.xml:75
+msgid "Domain"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:17
+#: wizards/ls_supplier_status_wizard_views.xml:12
+msgid "Dossier"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:659
+msgid "Dossier %s cannot be deleted because it has reached the '%s' status. Archive it instead."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:704
+msgid "Dossier %s cannot be submitted for approval:\n- %s"
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:113
+msgid "Dossier %s is already disqualified."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:592
+msgid "Dossier %s is approved but the following information is missing: %s."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:604
+msgid "Dossier %s is conditionally approved: the conditions must be documented."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:99
+msgid "Dossier %s is no longer pending approval."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:573
+msgid "Dossier %s: the approval expiry date must be after the approval date."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:772
+msgid "Dossier reset to registered status."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:708
+msgid "Dossier submitted for approval."
+msgstr ""
+
+#: models/ls_supplier_signature.py:50
+msgid "Dossier the signed record belongs to, used for grouping and for the dossier report."
+msgstr ""
+
+#: models/ls_supplier_category.py:89
+#: views/ls_supplier_category_views.xml:23
+#: views/ls_supplier_category_views.xml:39
+msgid "Dossiers"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:149
+#: views/ls_supplier_review_views.xml:119
+msgid "Draft"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:200
+msgid "Draft Report"
+msgstr ""
+
+#: models/res_company.py:19
+msgid "Enforce Segregation of Duties"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:70
+msgid "Evaluation"
+msgstr ""
+
+#: models/ls_supplier_performance.py:272
+msgid "Evaluation %s overlaps another confirmed evaluation of the same dossier."
+msgstr ""
+
+#: models/ls_supplier_performance.py:295
+msgid "Evaluation %s: %s must be between 0 and 100."
+msgstr ""
+
+#: models/ls_supplier_performance.py:320
+msgid "Evaluation %s: counters cannot be negative."
+msgstr ""
+
+#: models/ls_supplier_performance.py:325
+msgid "Evaluation %s: late deliveries cannot exceed total deliveries."
+msgstr ""
+
+#: models/ls_supplier_performance.py:330
+msgid "Evaluation %s: rejected lots cannot exceed inspected lots."
+msgstr ""
+
+#: models/ls_supplier_performance.py:253
+msgid "Evaluation %s: the period end must be after the period start."
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:67
+msgid "Evidence Reviewed"
+msgstr ""
+
+#: models/ls_supplier_review.py:205
+msgid "Evidence can only be collected on a draft review (review %s)."
+msgstr ""
+
+#: models/ls_supplier_review.py:229
+msgid "Evidence collected: %s assessment(s), %s audit(s), %s performance evaluation(s)."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:73
+msgid "Execution"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:57
+#: views/ls_supplier_qualification_views.xml:160
+msgid "Expired"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:108
+msgid "Expires Within 90 Days"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:340
+msgid "Expiring Soon"
+msgstr ""
+
+#: views/res_config_settings_views.xml:21
+msgid "Expiry Reminder"
+msgstr ""
+
+#: models/res_company.py:26
+msgid "Expiry Reminder (days)"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:60
+msgid "F-01"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:156
+msgid "Failed"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:79
+msgid "Finding"
+msgstr ""
+
+#: models/ls_supplier_audit.py:573
+msgid "Finding %s cannot be closed before the audit report is issued."
+msgstr ""
+
+#: models/ls_supplier_audit.py:596
+msgid "Finding %s is %s: a corrective action must be documented."
+msgstr ""
+
+#: models/ls_supplier_audit.py:669
+msgid "Finding %s: describe how the action was verified."
+msgstr ""
+
+#: models/ls_supplier_audit.py:629
+msgid "Finding %s: document the agreed corrective action."
+msgstr ""
+
+#: models/ls_supplier_audit.py:612
+msgid "Finding %s: enter the supplier response first."
+msgstr ""
+
+#: models/ls_supplier_audit.py:634
+msgid "Finding %s: set the due date of the corrective action."
+msgstr ""
+
+#: models/ls_supplier_audit.py:582
+msgid "Finding %s: the closure date cannot precede the implementation date."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:255
+msgid "Finding Summary"
+msgstr ""
+
+#: models/ls_supplier_audit.py:712
+msgid "Finding cancelled."
+msgstr ""
+
+#: models/ls_supplier_audit.py:691
+msgid "Finding closed."
+msgstr ""
+
+#: models/ls_supplier_audit.py:128
+#: views/ls_supplier_audit_views.xml:222
+#: views/ls_supplier_audit_views.xml:271
+msgid "Findings"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:536
+msgid "Flag the criterion as a finding to be followed up outside the assessment."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:71
+msgid "Follow-Up"
+msgstr ""
+
+#: models/ls_supplier_category.py:69
+msgid "Frameworks the organisation applies when qualifying suppliers of this category."
+msgstr ""
+
+#: models/ls_supplier_criterion.py:62
+msgid "Frameworks the organisation associates with this criterion. The association is an internal traceability aid."
+msgstr ""
+
+#: models/ls_supplier_audit.py:96
+msgid "Frameworks used as the basis of the audit. The module records the designation only."
+msgstr ""
+
+#: models/ls_supplier_standard.py:36
+msgid "Free-text note describing why the organisation applies this framework to suppliers. Entered by the quality department; the module does not pre-fill any normative interpretation."
+msgstr ""
+
+#: views/res_config_settings_views.xml:15
+msgid "Governance"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:160
+#: views/ls_supplier_audit_views.xml:122
+#: views/ls_supplier_audit_views.xml:318
+#: views/ls_supplier_category_views.xml:97
+#: views/ls_supplier_criterion_views.xml:73
+#: views/ls_supplier_material_views.xml:109
+#: views/ls_supplier_performance_views.xml:157
+#: views/ls_supplier_qualification_views.xml:353
+msgid "Group By"
+msgstr ""
+
+#: models/ls_supplier_criterion.py:45
+msgid "Guidance shown to the assessor: what evidence to look for and how to score the criterion."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:342
+msgid "High Risk"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:37
+#: views/ls_supplier_audit_views.xml:63
+#: views/ls_supplier_category_views.xml:49
+#: views/ls_supplier_material_views.xml:63
+msgid "Identification"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:151
+msgid "In Progress"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:333
+msgid "In Qualification"
+msgstr ""
+
+#: views/res_config_settings_views.xml:41
+msgid "Indicator Weights"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:82
+#: views/ls_supplier_qualification_views.xml:212
+msgid "Indicators"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:52
+msgid "Integrity Chain"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:55
+msgid "Intended Supplier Categories"
+msgstr ""
+
+#: views/ls_supplier_standard_views.xml:38
+msgid "Internal Scope Note"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:203
+msgid "Issue Report"
+msgstr ""
+
+#: views/ls_supplier_standard_views.xml:59
+msgid "Issuing Body"
+msgstr ""
+
+#: models/ls_supplier_signature.py:89
+msgid "JSON snapshot of the signed values at the moment of signing."
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:97
+#: views/ls_supplier_signature_views.xml:49
+#: wizards/ls_supplier_approve_wizard.py:66
+#: wizards/ls_supplier_approve_wizard_views.xml:34
+#: wizards/ls_supplier_status_wizard.py:48
+#: wizards/ls_supplier_status_wizard_views.xml:21
+msgid "Justification"
+msgstr ""
+
+#: models/ls_supplier_performance.py:89
+msgid "Late Deliveries"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:194
+msgid "Latest Assessment Score (%)"
+msgstr ""
+
+#: models/res_partner.py:24
+msgid "Live dossier of the supplier in the company of the current user."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:44
+msgid "Load Criteria from Template"
+msgstr ""
+
+#: models/ls_supplier_signature.py:77
+msgid "Login typed by the signer in the signature dialog and matched against the login of the connected user."
+msgstr ""
+
+#: models/ls_supplier_performance.py:93
+msgid "Lots Inspected"
+msgstr ""
+
+#: models/ls_supplier_performance.py:94
+msgid "Lots Rejected"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:118
+#: views/ls_supplier_category_views.xml:88
+msgid "Major"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:517
+#: models/ls_supplier_assessment_template.py:156
+#: views/ls_supplier_criterion_views.xml:70
+#: views/ls_supplier_criterion_views.xml:77
+msgid "Mandatory"
+msgstr ""
+
+#: models/ls_supplier_criterion.py:57
+msgid "Mandatory by Default"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:533
+msgid "Mandatory when the score is below the minimum acceptable score."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:47
+msgid "Mark Implemented"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:113
+msgid "Material Type"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:60
+msgid "Material or service designation"
+msgstr ""
+
+#: models/ls_supplier_material.py:176
+msgid "Material or service qualified."
+msgstr ""
+
+#: models/ls_supplier_material.py:197
+msgid "Material or service rejected."
+msgstr ""
+
+#: models/ls_supplier_material.py:188
+msgid "Material or service suspended."
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:78
+msgid "Meaning"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:46
+msgid "Minimum score a mandatory criterion must reach for the assessment to be able to conclude 'Pass'."
+msgstr ""
+
+#: views/ls_supplier_category_views.xml:90
+msgid "Minor"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:221
+msgid "Monitoring"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:146
+msgid "My Assessments"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:307
+msgid "My Audits"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:328
+msgid "My Dossiers"
+msgstr ""
+
+#: models/ls_supplier_review.py:120
+msgid "New Validity End"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:521
+msgid "No closed audit with an acceptable outcome is attached to the dossier."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:511
+msgid "No completed assessment with a Pass or Conditional result is attached to the dossier."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:533
+msgid "No qualified material or service defines the approval scope."
+msgstr ""
+
+#: models/ls_supplier_performance.py:95
+msgid "Non-Conformities"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:317
+msgid "Not Acceptable"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:337
+msgid "Not Approved"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:114
+#: views/ls_supplier_audit_views.xml:312
+msgid "Not Closed"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:82
+#: views/ls_supplier_qualification_views.xml:308
+msgid "Notes"
+msgstr ""
+
+#: views/res_config_settings_views.xml:21
+msgid "Number of days before an end of validity at which the scheduled actions raise reminders."
+msgstr ""
+
+#: models/res_company.py:26
+msgid "Number of days before the end of validity at which the scheduled actions raise reminders."
+msgstr ""
+
+#: models/ls_supplier_category.py:54
+msgid "Number of months between two periodic audits."
+msgstr ""
+
+#: models/ls_supplier_category.py:64
+msgid "Number of months between two periodic supplier reviews."
+msgstr ""
+
+#: models/ls_supplier_performance.py:89
+msgid "Number of receipt lines received after the scheduled date."
+msgstr ""
+
+#: models/ls_supplier_performance.py:84
+msgid "Number of receipt lines received from the supplier during the period."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:81
+msgid "Objective description of what was observed."
+msgstr ""
+
+#: models/ls_supplier_standard.py:22
+msgid "Official designation of the standard or framework, for example 'ISO 13485:2016'."
+msgstr ""
+
+#: models/ls_supplier_performance.py:99
+msgid "On-Time Delivery (%)"
+msgstr ""
+
+#: models/ls_supplier_performance.py:285
+msgid "On-time delivery"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:472
+msgid "Only a cancelled assessment can be reset to draft (assessment %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:460
+msgid "Only a cancelled audit can be reset to draft (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_performance.py:420
+msgid "Only a cancelled evaluation can be reset to draft (evaluation %s)."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:427
+msgid "Only a completed assessment can be reviewed (assessment %s)."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:721
+msgid "Only a dossier pending approval can be approved (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:686
+msgid "Only a dossier under assessment or pending approval can be moved to audit (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:698
+msgid "Only a dossier under assessment or under audit can be submitted for approval (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:366
+msgid "Only a draft assessment can be started (assessment %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:301
+msgid "Only a draft audit can be planned (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_performance.py:388
+msgid "Only a draft evaluation can be confirmed (evaluation %s)."
+msgstr ""
+
+#: models/ls_supplier_review.py:243
+msgid "Only a draft review can be completed (review %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:355
+msgid "Only a drafted report can be issued (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:624
+msgid "Only a finding with a response can have its action agreed (finding %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:646
+msgid "Only a finding with an agreed action can be marked implemented (finding %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:321
+msgid "Only a planned audit can be started (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_material.py:184
+msgid "Only a qualified scope line can be suspended (line '%s')."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:674
+msgid "Only a registered dossier can be moved to assessment (dossier %s)."
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:90
+msgid "Only a suspended dossier can be reinstated (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:684
+msgid "Only a verified finding can be closed (finding %s)."
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:79
+msgid "Only an approved dossier can be suspended (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:383
+msgid "Only an assessment in progress can be completed (assessment %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:338
+msgid "Only an audit in progress can move to report drafting (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:750
+msgid "Only an expired or suspended dossier can be sent to requalification (dossier %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:664
+msgid "Only an implemented action can be verified (finding %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:422
+msgid "Only an issued or answered audit can be closed (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:407
+msgid "Only an issued report can receive a response (audit %s)."
+msgstr ""
+
+#: models/ls_supplier_audit.py:607
+msgid "Only an open finding can register a response (finding %s)."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:344
+msgid "Open Critical Findings"
+msgstr ""
+
+#: models/ls_supplier_material.py:100
+msgid "Optional end of validity specific to this material. When empty, the validity of the dossier applies."
+msgstr ""
+
+#: models/ls_supplier_material.py:66
+msgid "Optional link to the product catalogue. When set, the purchase scope control can verify that purchase order lines stay inside the qualified scope."
+msgstr ""
+
+#: models/ls_supplier_standard.py:33
+msgid "Organisation that issues and maintains the framework."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:324
+msgid "Outcome"
+msgstr ""
+
+#: views/res_config_settings_views.xml:62
+msgid "Overall score at or above which a supplier is rated A, B or C. Below the C threshold the rating is D."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:121
+msgid "Overdue Action"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:335
+msgid "Pending Approval"
+msgstr ""
+
+#: models/ls_supplier_performance.py:115
+msgid "Percentage of deliveries received with complete and correct documentation. Entered by the quality department."
+msgstr ""
+
+#: models/ls_supplier_performance.py:122
+msgid "Percentage of requests answered by the supplier within the agreed lead time. Entered by the quality department."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:1002
+msgid "Perform periodic review of supplier %s"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:145
+#: views/ls_supplier_qualification_views.xml:272
+msgid "Performance"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:184
+msgid "Performance Analysis"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:41
+msgid "Performance Evaluation"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:163
+#: views/ls_supplier_performance_views.xml:13
+#: views/ls_supplier_performance_views.xml:147
+msgid "Performance Evaluations"
+msgstr ""
+
+#: models/ls_supplier_review.py:104
+msgid "Performance Evaluations Reviewed"
+msgstr ""
+
+#: views/res_config_settings_views.xml:39
+msgid "Performance Scorecard"
+msgstr ""
+
+#: models/ls_supplier_performance.py:412
+msgid "Performance evaluation cancelled."
+msgstr ""
+
+#: models/ls_supplier_performance.py:392
+msgid "Performance evaluation confirmed: %s%% (rating %s)."
+msgstr ""
+
+#: models/res_company.py:108
+msgid "Performance weights cannot be negative."
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:163
+msgid "Period End"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:37
+msgid "Periodic Review"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:168
+#: views/ls_supplier_review_views.xml:114
+#: views/ls_supplier_review_views.xml:13
+msgid "Periodic Reviews"
+msgstr ""
+
+#: models/ls_supplier_audit.py:123
+msgid "Person of the supplier who receives the audit report."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:195
+msgid "Plan"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:982
+msgid "Plan periodic audit of supplier %s"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:943
+#: models/ls_supplier_qualification.py:952
+msgid "Plan requalification of supplier %s"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:310
+msgid "Planned"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:328
+msgid "Planned Date"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:238
+msgid "Planning and Team"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:265
+msgid "Prerequisites that are not met yet for submitting the dossier to approval."
+msgstr ""
+
+#: views/res_config_settings_views.xml:17
+msgid "Prevent an assessor or a lead auditor from approving the dossier they contributed to, and prevent an assessment from being reviewed by its own assessor."
+msgstr ""
+
+#: models/ls_supplier_audit.py:92
+msgid "Processes, sites, products and periods covered by the audit."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:269
+msgid "Processes, sites, products and periods covered."
+msgstr ""
+
+#: views/res_config_settings_views.xml:29
+msgid "Purchase Control"
+msgstr ""
+
+#: models/res_company.py:38
+#: views/res_config_settings_views.xml:31
+msgid "Purchase Order Control"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:71
+#: views/res_partner_views.xml:16
+msgid "Qualification"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:812
+msgid "Qualification %(decision)s until %(date)s."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:386
+msgid "Qualification Analysis"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:97
+msgid "Qualification Dossier"
+msgstr ""
+
+#: models/ls_supplier_category.py:84
+#: models/res_partner.py:14
+#: views/ls_supplier_qualification_views.xml:13
+#: views/ls_supplier_qualification_views.xml:322
+msgid "Qualification Dossiers"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:375
+msgid "Qualification Overview"
+msgstr ""
+
+#: views/ls_supplier_category_views.xml:56
+msgid "Qualification Rules"
+msgstr ""
+
+#: models/res_partner.py:31
+msgid "Qualification Status"
+msgstr ""
+
+#: models/res_partner.py:36
+msgid "Qualification Valid Until"
+msgstr ""
+
+#: models/purchase_order.py:21
+msgid "Qualification Warning"
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:109
+msgid "Qualification reinstated: %s"
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:86
+msgid "Qualification suspended: %s"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:101
+msgid "Qualified"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:37
+msgid "Qualified Material or Service"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:158
+#: views/ls_supplier_material_views.xml:13
+#: views/ls_supplier_material_views.xml:95
+#: views/ls_supplier_qualification_views.xml:229
+msgid "Qualified Scope"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:42
+msgid "Qualify"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:92
+msgid "Quality"
+msgstr ""
+
+#: models/ls_supplier_performance.py:108
+msgid "Quality Acceptance (%)"
+msgstr ""
+
+#: models/ls_supplier_performance.py:286
+msgid "Quality acceptance"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:536
+msgid "Raise Finding"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:161
+msgid "Rating"
+msgstr ""
+
+#: models/res_company.py:65
+msgid "Rating A Threshold"
+msgstr ""
+
+#: models/res_company.py:68
+msgid "Rating B Threshold"
+msgstr ""
+
+#: models/res_company.py:71
+msgid "Rating C Threshold"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:156
+msgid "Rating C or D"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:120
+#: views/res_config_settings_views.xml:62
+msgid "Rating Thresholds"
+msgstr ""
+
+#: models/res_company.py:131
+msgid "Rating thresholds must be between 0 and 100."
+msgstr ""
+
+#: models/res_company.py:139
+msgid "Rating thresholds must decrease from A to C."
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard_views.xml:23
+msgid "Reason for the status change. Recorded on the dossier and verbatim in the signature log."
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:45
+msgid "Recompute Delivery Counters"
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:48
+msgid "Recorded on the dossier and verbatim in the signature log."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:66
+msgid "Recorded verbatim in the signature log."
+msgstr ""
+
+#: models/ls_supplier_audit.py:492
+msgid "Reference"
+msgstr ""
+
+#: views/ls_supplier_standard_views.xml:23
+msgid "Reference Standard"
+msgstr ""
+
+#: views/ls_supplier_standard_views.xml:10
+#: views/ls_supplier_standard_views.xml:51
+msgid "Reference Standards"
+msgstr ""
+
+#: models/ls_supplier_audit.py:492
+msgid "Reference of the finding inside the audit report."
+msgstr ""
+
+#: models/ls_supplier_material.py:82
+msgid "Reference of the internal specification the supplier must meet."
+msgstr ""
+
+#: models/ls_supplier_audit.py:527
+msgid "Reference of the requirement the finding relates to, as written by the auditor."
+msgstr ""
+
+#: models/ls_supplier_criterion.py:71
+msgid "Reference to the organisation's own procedure or clause mapping. Free text maintained by the quality department."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:206
+#: views/ls_supplier_audit_views.xml:41
+msgid "Register Response"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:48
+msgid "Reject"
+msgstr ""
+
+#: models/ls_supplier_criterion.py:62
+#: views/ls_supplier_criterion_views.xml:49
+msgid "Related Frameworks"
+msgstr ""
+
+#: models/ls_supplier_criterion.py:50
+msgid "Relative weight proposed when the criterion is added to a template. The weight can be overridden per template."
+msgstr ""
+
+#: views/res_config_settings_views.xml:41
+msgid "Relative weights combined into the overall performance score. They are frozen on each evaluation at creation."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:248
+msgid "Reporting"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:760
+msgid "Requalification started."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:119
+msgid "Requalify"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:924
+msgid "Requalify supplier %s"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:54
+#: views/ls_supplier_audit_views.xml:213
+#: views/ls_supplier_material_views.xml:51
+#: views/ls_supplier_performance_views.xml:51
+#: views/ls_supplier_qualification_views.xml:123
+msgid "Reset to Draft"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:81
+#: views/ls_supplier_qualification_views.xml:363
+msgid "Responsible"
+msgstr ""
+
+#: models/ls_supplier_performance.py:288
+msgid "Responsiveness"
+msgstr ""
+
+#: models/ls_supplier_performance.py:122
+msgid "Responsiveness (%)"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:166
+#: views/ls_supplier_assessment_views.xml:89
+msgid "Result"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:71
+msgid "Retype the login of the connected user to confirm the signature intent."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:40
+#: wizards/ls_supplier_status_wizard_views.xml:27
+msgid "Retype your login"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:50
+#: views/ls_supplier_review_views.xml:59
+msgid "Review"
+msgstr ""
+
+#: models/ls_supplier_review.py:166
+msgid "Review %s maintains the approval with conditions: the conditions must be documented."
+msgstr ""
+
+#: models/ls_supplier_review.py:173
+msgid "Review %s: an adverse decision must be justified."
+msgstr ""
+
+#: models/ls_supplier_review.py:152
+msgid "Review %s: the period end must be after the period start."
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:131
+msgid "Review Date"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:349
+msgid "Review Due"
+msgstr ""
+
+#: models/ls_supplier_review.py:322
+msgid "Review cancelled."
+msgstr ""
+
+#: models/ls_supplier_review.py:248
+msgid "Review completed. Decision: %s."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:149
+#: views/ls_supplier_qualification_views.xml:284
+msgid "Reviews"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:361
+msgid "Risk Level"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:86
+msgid "Root Cause and Action"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:267
+#: views/ls_supplier_qualification_views.xml:131
+msgid "Scope"
+msgstr ""
+
+#: models/ls_supplier_material.py:100
+msgid "Scope Valid Until"
+msgstr ""
+
+#: models/ls_supplier_material.py:165
+msgid "Scope line '%s' cannot be qualified from its current status."
+msgstr ""
+
+#: models/ls_supplier_material.py:149
+msgid "Scope line '%s' is qualified: the qualification date is required."
+msgstr ""
+
+#: models/ls_supplier_material.py:139
+msgid "Scope line '%s': the validity end date must be after the qualification date."
+msgstr ""
+
+#: models/ls_supplier_material.py:204
+msgid "Scope line reset to draft."
+msgstr ""
+
+#: models/ls_supplier_material.py:223
+msgid "Scope validity elapsed on %s."
+msgstr ""
+
+#: models/ls_supplier_material.py:227
+msgid "Scope validity elapsed on %s: the line is suspended."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:139
+msgid "Score (%)"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:101
+#: views/ls_supplier_assessment_views.xml:102
+msgid "Scored Criteria"
+msgstr ""
+
+#: views/ls_supplier_assessment_template_views.xml:43
+msgid "Scoring Rules"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:83
+msgid "Scoring Rules (frozen)"
+msgstr ""
+
+#: models/ls_supplier_assessment.py:117
+msgid "Scoring scale frozen from the template when the assessment was created."
+msgstr ""
+
+#: views/res_config_settings_views.xml:17
+msgid "Segregation of Duties"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:847
+msgid "Segregation of duties: %s produced assessment or audit evidence for dossier %s and therefore cannot approve it. The rule can be disabled per company in the Supplier Qualification settings."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:254
+#: models/ls_supplier_assessment.py:435
+msgid "Segregation of duties: assessment %s cannot be reviewed by its own assessor."
+msgstr ""
+
+#: models/ls_supplier_assessment.py:343
+msgid "Select a template before loading its criteria."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:126
+msgid "Severity"
+msgstr ""
+
+#: models/ls_supplier_standard.py:29
+msgid "Short technical code used in reports and exports."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard_views.xml:38
+#: wizards/ls_supplier_status_wizard_views.xml:25
+msgid "Signature"
+msgstr ""
+
+#: models/ls_supplier_signature.py:271
+msgid "Signature Chain Verification"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:82
+msgid "Signature Date"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:173
+#: views/ls_supplier_qualification_views.xml:296
+#: views/ls_supplier_signature_views.xml:10
+#: views/ls_supplier_signature_views.xml:69
+msgid "Signature Log"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:29
+msgid "Signature Log Entry"
+msgstr ""
+
+#: models/ls_supplier_signature.py:137
+msgid "Signature log entries are append-only and cannot be deleted."
+msgstr ""
+
+#: models/ls_supplier_signature.py:131
+msgid "Signature log entries are append-only and cannot be modified."
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:154
+msgid "Signatures"
+msgstr ""
+
+#: models/ls_supplier_signature.py:70
+msgid "Signed By"
+msgstr ""
+
+#: models/ls_supplier_signature.py:57
+#: views/ls_supplier_signature_views.xml:80
+msgid "Signed Model"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:41
+msgid "Signed Record"
+msgstr ""
+
+#: models/ls_supplier_signature.py:63
+msgid "Signed Record ID"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:57
+msgid "Signed Values Snapshot"
+msgstr ""
+
+#: views/ls_supplier_signature_views.xml:35
+#: views/ls_supplier_signature_views.xml:76
+msgid "Signer"
+msgstr ""
+
+#: models/ls_supplier_material.py:85
+msgid "Site where the material is manufactured, when it differs from the supplier address."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:46
+#: views/ls_supplier_audit_views.xml:197
+msgid "Start"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:101
+msgid "Start Assessment"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:104
+msgid "Start Audit"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:168
+#: views/ls_supplier_audit_views.xml:128
+#: views/ls_supplier_audit_views.xml:326
+#: views/ls_supplier_material_views.xml:115
+#: views/ls_supplier_qualification_views.xml:355
+msgid "Status"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:63
+#: views/ls_supplier_audit_views.xml:229
+#: views/ls_supplier_performance_views.xml:62
+#: views/ls_supplier_review_views.xml:53
+msgid "Subject"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:107
+msgid "Submit for Approval"
+msgstr ""
+
+#: views/ls_supplier_review_views.xml:77
+msgid "Summary"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:52
+#: views/ls_supplier_assessment_views.xml:162
+#: views/ls_supplier_audit_views.xml:124
+#: views/ls_supplier_audit_views.xml:320
+#: views/ls_supplier_material_views.xml:111
+#: views/ls_supplier_performance_views.xml:159
+#: views/ls_supplier_qualification_views.xml:182
+#: views/ls_supplier_review_views.xml:127
+msgid "Supplier"
+msgstr ""
+
+#: models/res_partner.py:127
+msgid "Supplier %(partner)s is not approved (dossier %(dossier)s is in status '%(state)s')."
+msgstr ""
+
+#: models/res_partner.py:122
+msgid "Supplier %s has no qualification dossier."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:556
+msgid "Supplier '%s' already has an active qualification dossier in company '%s'. Requalify the existing dossier instead of creating a second one."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:40
+msgid "Supplier Assessment"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:13
+#: views/ls_supplier_assessment_views.xml:140
+msgid "Supplier Assessments"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:192
+msgid "Supplier Audit"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:152
+#: views/ls_supplier_audit_views.xml:301
+msgid "Supplier Audits"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:25
+#: views/ls_supplier_category_views.xml:10
+#: views/ls_supplier_category_views.xml:82
+msgid "Supplier Categories"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:63
+#: views/ls_supplier_category_views.xml:33
+msgid "Supplier Category"
+msgstr ""
+
+#: models/ls_supplier_audit.py:123
+msgid "Supplier Contact"
+msgstr ""
+
+#: views/res_config_settings_views.xml:14
+msgid "Supplier Qualification"
+msgstr ""
+
+#: models/purchase_order.py:13
+msgid "Supplier Qualification Dossier"
+msgstr ""
+
+#: models/purchase_order.py:17
+msgid "Supplier Qualification Status"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:83
+msgid "Supplier Response"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:173
+msgid "Supplier Scorecards"
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:120
+msgid "Supplier disqualified: %s"
+msgstr ""
+
+#: models/ls_supplier_performance.py:400
+msgid "Supplier performance below target for %s"
+msgstr ""
+
+#: models/purchase_order.py:66
+msgid "Supplier qualification warning: %s"
+msgstr ""
+
+#: models/ls_supplier_audit.py:414
+msgid "Supplier response received."
+msgstr ""
+
+#: models/ls_supplier_audit.py:616
+msgid "Supplier response registered."
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:45
+msgid "Suspend"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:105
+msgid "Suspended"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:79
+msgid "Suspension Reason"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:122
+msgid "Template '%s': the conditional threshold cannot be greater than the pass threshold."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:112
+msgid "Template '%s': the conditional threshold must be between 0 and 100."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:101
+msgid "Template '%s': the maximum score per criterion must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:106
+msgid "Template '%s': the minimum score for mandatory criteria must be between 0 and %s."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:117
+msgid "Template '%s': the pass threshold must be between 0 and 100."
+msgstr ""
+
+#: wizards/ls_supplier_status_wizard.py:98
+msgid "The approval of dossier %s has expired. Requalify the supplier instead of reinstating it."
+msgstr ""
+
+#: models/res_partner.py:136
+msgid "The approval of supplier %(partner)s expired on %(date)s."
+msgstr ""
+
+#: models/res_company.py:88
+msgid "The audit response lead time cannot be negative."
+msgstr ""
+
+#: models/ls_supplier_criterion.py:101
+msgid "The default weight of criterion '%s' must be strictly positive."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:113
+msgid "The end of validity must be a future date."
+msgstr ""
+
+#: models/res_company.py:84
+msgid "The expiry reminder lead time cannot be negative."
+msgstr ""
+
+#: models/res_partner.py:148
+msgid "The following products are outside the qualified scope of supplier %(partner)s: %(products)s."
+msgstr ""
+
+#: models/purchase_order.py:73
+msgid "The following purchase orders cannot be confirmed because of the supplier qualification status:\n- %s"
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:104
+#: wizards/ls_supplier_status_wizard.py:72
+msgid "The login you entered does not match the login of the connected user."
+msgstr ""
+
+#: models/ls_supplier_category.py:124
+msgid "The requalification interval of category '%s' must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_category.py:129
+msgid "The review interval of category '%s' must be strictly positive."
+msgstr ""
+
+#: models/ls_supplier_signature.py:265
+msgid "The signature chain is consistent."
+msgstr ""
+
+#: models/ls_supplier_signature.py:257
+msgid "The signature chain verification failed for %s entries. Sequence numbers: %s."
+msgstr ""
+
+#: models/ls_supplier_standard.py:59
+msgid "The standard code cannot be empty."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:629
+msgid "The supplier and the category of dossier %s can no longer be changed once the dossier has reached the '%s' status. Create a new dossier or reset the current one to draft."
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:159
+msgid "This Year"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:153
+msgid "To Review"
+msgstr ""
+
+#: views/ls_supplier_material_views.xml:103
+msgid "Under Qualification"
+msgstr ""
+
+#: models/res_partner.py:84
+msgid "Unsupported operator '%s' for the approved supplier filter."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:40
+msgid "Upper bound of the scoring scale. Each criterion is scored from 0 to this value."
+msgstr ""
+
+#: wizards/ls_supplier_approve_wizard.py:59
+msgid "Valid Until"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:195
+msgid "Validity"
+msgstr ""
+
+#: views/ls_supplier_qualification_views.xml:365
+msgid "Validity End"
+msgstr ""
+
+#: models/ls_supplier_category.py:58
+msgid "Validity of the approval, in months, counted from the approval date."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:92
+msgid "Verification and Closure"
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:49
+msgid "Verify"
+msgstr ""
+
+#: models/res_company.py:59
+msgid "Weight - Documentation"
+msgstr ""
+
+#: models/res_company.py:53
+msgid "Weight - On-Time Delivery"
+msgstr ""
+
+#: models/res_company.py:56
+msgid "Weight - Quality Acceptance"
+msgstr ""
+
+#: models/res_company.py:62
+msgid "Weight - Responsiveness"
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:58
+msgid "Weighted percentage at or above which the result is 'Conditional'. Below this value the result is 'Fail'."
+msgstr ""
+
+#: models/ls_supplier_assessment_template.py:52
+msgid "Weighted percentage at or above which the result is 'Pass'."
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:114
+msgid "Weights"
+msgstr ""
+
+#: views/ls_supplier_performance_views.xml:112
+msgid "Weights and Thresholds (frozen)"
+msgstr ""
+
+#: views/ls_supplier_criterion_views.xml:54
+msgid "What evidence to look for and how to score this criterion."
+msgstr ""
+
+#: models/res_company.py:19
+msgid "When enabled, the approver of a dossier cannot be an assessor or a lead auditor of that dossier, and an assessment cannot be reviewed by its own assessor."
+msgstr ""
+
+#: models/res_company.py:46
+msgid "When enabled, the purchase order control also verifies that each ordered product belongs to the qualified scope of the supplier."
+msgstr ""
+
+#: views/ls_supplier_standard_views.xml:40
+msgid "Why the organisation applies this framework to its suppliers. The module stores the designation only and does not reproduce the normative text."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:314
+msgid "With Open Findings"
+msgstr ""
+
+#: views/ls_supplier_assessment_views.xml:127
+msgid "Written conclusion of the assessor. Required before completion."
+msgstr ""
+
+#: views/ls_supplier_audit_views.xml:288
+msgid "Written conclusion of the lead auditor. Required before the report can be issued."
+msgstr ""
+
+#: models/ls_supplier_qualification.py:585
+msgid "approval date"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:587
+msgid "approver"
+msgstr ""
+
+#: models/ls_supplier_qualification.py:589
+msgid "validity end date"
+msgstr ""

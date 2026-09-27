@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details.
+
+     GENERATED FILE - produced by tools_generate_demo.py.
+
+     Demonstration data only. The matrix below is pre-approved so that the
+     demonstration workflow can run end to end. Never use demonstration
+     acceptability criteria in a regulated environment. -->
+<odoo>
+
+    <record id="demo_matrix" model="ls.risk.matrix">
+        <field name="name">Demonstration 3x3 Matrix</field>
+        <field name="code">DEMO-3X3</field>
+        <field name="reference_document">DEMO-RMP-001</field>
+        <field name="description">Demonstration criteria. Not suitable for regulated use.</field>
+        <field name="state">approved</field>
+        <field name="is_default" eval="True"/>
+        <field name="approved_by_id" ref="base.user_admin"/>
+        <field name="approval_date" eval="DateTime.now()"/>
+    </record>
+
+    <record id="demo_matrix_sev_1" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">severity</field>
+        <field name="value">1</field>
+        <field name="name">Minor</field>
+        <field name="description">Demo: no impact on product quality.</field>
+    </record>
+    <record id="demo_matrix_sev_2" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">severity</field>
+        <field name="value">2</field>
+        <field name="name">Moderate</field>
+        <field name="description">Demo: rework or additional testing required.</field>
+    </record>
+    <record id="demo_matrix_sev_3" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">severity</field>
+        <field name="value">3</field>
+        <field name="name">Critical</field>
+        <field name="description">Demo: patient safety impact or recall.</field>
+    </record>
+
+    <record id="demo_matrix_prob_1" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">probability</field>
+        <field name="value">1</field>
+        <field name="name">Unlikely</field>
+        <field name="description">Demo: not expected to occur.</field>
+    </record>
+    <record id="demo_matrix_prob_2" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">probability</field>
+        <field name="value">2</field>
+        <field name="name">Possible</field>
+        <field name="description">Demo: may occur occasionally.</field>
+    </record>
+    <record id="demo_matrix_prob_3" model="ls.risk.matrix.level">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="scale">probability</field>
+        <field name="value">3</field>
+        <field name="name">Likely</field>
+        <field name="description">Demo: expected to occur routinely.</field>
+    </record>
+
+    <record id="demo_matrix_cell_1_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="demo_matrix_cell_1_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="demo_matrix_cell_1_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">1</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="demo_matrix_cell_2_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">low</field>
+        <field name="acceptability">acceptable</field>
+    </record>
+    <record id="demo_matrix_cell_2_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="demo_matrix_cell_2_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">2</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="demo_matrix_cell_3_1" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">1</field>
+        <field name="risk_level">medium</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="demo_matrix_cell_3_2" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">2</field>
+        <field name="risk_level">high</field>
+        <field name="acceptability">acceptable_with_control</field>
+    </record>
+    <record id="demo_matrix_cell_3_3" model="ls.risk.matrix.cell">
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="severity_value">3</field>
+        <field name="probability_value">3</field>
+        <field name="risk_level">very_high</field>
+        <field name="acceptability">not_acceptable</field>
+    </record>
+
+    <record id="demo_risk_contamination" model="ls.risk.register">
+        <field name="title">Cross-contamination during granulation</field>
+        <field name="risk_type">process</field>
+        <field name="category_id" ref="risk_category_pq_purity"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="owner_id" ref="base.user_admin"/>
+        <field name="identified_by_id" ref="base.user_admin"/>
+        <field name="description">Shared granulation equipment may carry residues between products.</field>
+        <field name="hazard">Product residue on shared equipment</field>
+        <field name="sequence_of_events">Insufficient cleaning between campaigns</field>
+        <field name="hazardous_situation">Residue of the previous product is present on the product contact surface</field>
+        <field name="harm">Patient exposed to an unintended active substance</field>
+    </record>
+    <record id="demo_risk_balance" model="ls.risk.register">
+        <field name="title">Analytical balance out of calibration</field>
+        <field name="risk_type">equipment</field>
+        <field name="category_id" ref="risk_category_data_integrity"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="owner_id" ref="base.user_admin"/>
+        <field name="identified_by_id" ref="base.user_admin"/>
+        <field name="description">A balance used for assay sample weighing may drift outside tolerance.</field>
+        <field name="hazard">Measurement error</field>
+        <field name="sequence_of_events">Calibration interval exceeded without detection</field>
+        <field name="hazardous_situation">Sample mass recorded incorrectly during release testing</field>
+        <field name="harm">Incorrect assay result leads to release of non-conforming product</field>
+    </record>
+    <record id="demo_risk_audit_trail" model="ls.risk.register">
+        <field name="title">Audit trail disabled on a chromatography system</field>
+        <field name="risk_type">computerised_system</field>
+        <field name="category_id" ref="risk_category_data_integrity"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="owner_id" ref="base.user_admin"/>
+        <field name="identified_by_id" ref="base.user_admin"/>
+        <field name="description">The audit trail of a computerised laboratory system may be switched off.</field>
+        <field name="hazard">Loss of record attributability</field>
+        <field name="sequence_of_events">Administrative privileges granted to analysts</field>
+        <field name="hazardous_situation">Analytical data modified without a traceable record</field>
+        <field name="harm">Undetected data integrity failure affecting product release decisions</field>
+    </record>
+
+    <record id="demo_risk_contamination_assessment" model="ls.risk.assessment">
+        <field name="risk_id" ref="demo_risk_contamination"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="assessment_type">initial</field>
+        <field name="severity_level_id" ref="demo_matrix_sev_3"/>
+        <field name="probability_level_id" ref="demo_matrix_prob_2"/>
+        <field name="assessed_by_id" ref="base.user_admin"/>
+        <field name="estimation_rationale">Demonstration rationale only.</field>
+    </record>
+    <record id="demo_risk_balance_assessment" model="ls.risk.assessment">
+        <field name="risk_id" ref="demo_risk_balance"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="assessment_type">initial</field>
+        <field name="severity_level_id" ref="demo_matrix_sev_2"/>
+        <field name="probability_level_id" ref="demo_matrix_prob_2"/>
+        <field name="assessed_by_id" ref="base.user_admin"/>
+        <field name="estimation_rationale">Demonstration rationale only.</field>
+    </record>
+    <record id="demo_risk_audit_trail_assessment" model="ls.risk.assessment">
+        <field name="risk_id" ref="demo_risk_audit_trail"/>
+        <field name="matrix_id" ref="demo_matrix"/>
+        <field name="assessment_type">initial</field>
+        <field name="severity_level_id" ref="demo_matrix_sev_3"/>
+        <field name="probability_level_id" ref="demo_matrix_prob_1"/>
+        <field name="assessed_by_id" ref="base.user_admin"/>
+        <field name="estimation_rationale">Demonstration rationale only.</field>
+    </record>
+
+    <record id="demo_fmea" model="ls.risk.fmea">
+        <field name="title">Granulation process FMEA</field>
+        <field name="fmea_type">process</field>
+        <field name="scope">Wet granulation of solid oral dosage forms on line 2, from dispensing to drying.</field>
+        <field name="assumptions">Demonstration data. Equipment assumed qualified and operators assumed trained.</field>
+        <field name="facilitator_id" ref="base.user_admin"/>
+        <field name="rpn_threshold">100</field>
+        <field name="severity_action_threshold">9</field>
+    </record>
+
+    <record id="demo_fmea_line_1" model="ls.risk.fmea.line">
+        <field name="fmea_id" ref="demo_fmea"/>
+        <field name="sequence">10</field>
+        <field name="item">Granulator</field>
+        <field name="item_function">Mix powder blend to target homogeneity</field>
+        <field name="failure_mode">Inadequate mixing</field>
+        <field name="failure_effect">Content uniformity outside specification</field>
+        <field name="severity">9</field>
+        <field name="failure_cause">Mixing time below the validated range</field>
+        <field name="occurrence">3</field>
+        <field name="current_controls">In-process content uniformity testing</field>
+        <field name="detection">4</field>
+        <field name="recommended_action">Interlock mixing time to the validated recipe</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="action_state">open</field>
+    </record>
+    <record id="demo_fmea_line_2" model="ls.risk.fmea.line">
+        <field name="fmea_id" ref="demo_fmea"/>
+        <field name="sequence">20</field>
+        <field name="item">Binder addition pump</field>
+        <field name="item_function">Deliver binder solution at the target rate</field>
+        <field name="failure_mode">Binder overdosed</field>
+        <field name="failure_effect">Oversized granules and slow dissolution</field>
+        <field name="severity">6</field>
+        <field name="failure_cause">Pump calibration drift</field>
+        <field name="occurrence">4</field>
+        <field name="current_controls">Quarterly pump calibration</field>
+        <field name="detection">5</field>
+        <field name="recommended_action">Reduce the calibration interval and add an in-line flow check</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="action_state">open</field>
+    </record>
+    <record id="demo_fmea_line_3" model="ls.risk.fmea.line">
+        <field name="fmea_id" ref="demo_fmea"/>
+        <field name="sequence">30</field>
+        <field name="item">Fluid bed dryer</field>
+        <field name="item_function">Dry granules to target moisture</field>
+        <field name="failure_mode">Under-drying</field>
+        <field name="failure_effect">High residual moisture accelerates degradation</field>
+        <field name="severity">7</field>
+        <field name="failure_cause">Outlet temperature probe fouling</field>
+        <field name="occurrence">3</field>
+        <field name="current_controls">End-of-drying moisture test</field>
+        <field name="detection">3</field>
+        <field name="recommended_action">Add a probe cleaning step to the batch record</field>
+        <field name="responsible_id" ref="base.user_admin"/>
+        <field name="action_state">open</field>
+    </record>
+
+</odoo>

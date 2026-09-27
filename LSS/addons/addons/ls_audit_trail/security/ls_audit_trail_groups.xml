@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo noupdate="0">
+
+    <!--
+        No group category is assigned. Assigning one would require the field
+        that classifies groups on res.groups, whose name changed between Odoo
+        releases and could not be verified for Odoo 19 from official
+        documentation. The three groups below therefore rely only on the group
+        name and on implied_ids, which are stable.
+    -->
+
+    <record id="group_ls_audit_trail_viewer" model="res.groups">
+        <field name="name">Audit Trail / Viewer</field>
+        <field name="comment">Read the audit trail of the user's own companies. Grants no ability to export, verify or configure.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_ls_audit_trail_auditor" model="res.groups">
+        <field name="name">Audit Trail / Auditor</field>
+        <field name="comment">Read the audit trail, run integrity verifications and produce evidence packs. Cannot change what is audited.</field>
+        <field name="implied_ids" eval="[(4, ref('group_ls_audit_trail_viewer'))]"/>
+    </record>
+
+    <record id="group_ls_audit_trail_admin" model="res.groups">
+        <field name="name">Audit Trail / Administrator</field>
+        <field name="comment">Configure audit rules and execute approved retention runs, in addition to every auditor right. Segregation of duties requires that this group be held by a different person than the auditor group.</field>
+        <field name="implied_ids" eval="[(4, ref('group_ls_audit_trail_auditor'))]"/>
+    </record>
+
+</odoo>

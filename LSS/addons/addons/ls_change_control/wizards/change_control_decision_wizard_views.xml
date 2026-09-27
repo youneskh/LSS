@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_decision_wizard_form" model="ir.ui.view">
+        <field name="name">ls.change_control.decision_wizard.form</field>
+        <field name="model">ls.change_control.decision_wizard</field>
+        <field name="arch" type="xml">
+            <form string="Decision">
+                <group>
+                    <field name="request_id"/>
+                    <field name="mode"/>
+                    <field name="request_state"/>
+                </group>
+                <group string="Justification">
+                    <field name="reason" nolabel="1"
+                           placeholder="This justification is written on the change request and cannot be modified afterwards."/>
+                </group>
+                <div class="alert alert-warning" role="alert"
+                     invisible="mode == 'close'">
+                    A rejected or cancelled change request is final. It is
+                    never reopened: a new change request must be raised if the
+                    change is still required.
+                </div>
+                <footer>
+                    <button name="action_confirm" type="object"
+                            string="Confirm" class="btn-primary"/>
+                    <button string="Discard" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

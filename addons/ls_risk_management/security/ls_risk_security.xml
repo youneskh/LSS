@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <!--
+      Odoo 19 replaced `category_id` on `res.groups` with `privilege_id`,
+      pointing at the new `res.groups.privilege` model, which in turn carries
+      the `ir.module.category`. Verified against the official Odoo 19
+      developer tutorial "Restrict access to data".
+
+      An explicit `ir.module.category` record is created here rather than
+      relying on the identifier that Odoo derives from the manifest
+      `category` string, so that the cross-reference is deterministic.
+    -->
+    <record id="module_category_life_sciences_risk" model="ir.module.category">
+        <field name="name">Life Sciences Risk Management</field>
+        <field name="description">Risk register, risk assessment, risk control measures and FMEA.</field>
+        <field name="sequence">55</field>
+    </record>
+
+    <record id="res_groups_privilege_risk" model="res.groups.privilege">
+        <field name="name">Risk Management</field>
+        <field name="category_id" ref="module_category_life_sciences_risk"/>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Read-only access to risks, assessments, control measures and FMEA. -->
+    <record id="group_risk_viewer" model="res.groups">
+        <field name="name">Risk Viewer</field>
+        <field name="privilege_id" ref="res_groups_privilege_risk"/>
+        <field name="comment">Read-only access to the risk register, assessments, risk control measures and FMEA worksheets.</field>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <!--
+      Records and assesses risks. Deliberately NOT granted the right to
+      approve assessments, accept residual risk, approve a risk matrix or
+      close a risk: those are reserved to the Risk Manager so that
+      segregation of duties is enforced by access rights as well as by the
+      ORM-level checks in the model methods.
+    -->
+    <record id="group_risk_analyst" model="res.groups">
+        <field name="name">Risk Analyst</field>
+        <field name="privilege_id" ref="res_groups_privilege_risk"/>
+        <field name="implied_ids" eval="[(4, ref('group_risk_viewer'))]"/>
+        <field name="comment">Creates and assesses risks, records risk control measures
+and performs FMEA. Cannot approve assessments, accept residual risk, approve risk
+matrices or close risks.</field>
+    </record>
+
+    <!-- Full access, including approval, residual risk acceptance and closure. -->
+    <record id="group_risk_manager" model="res.groups">
+        <field name="name">Risk Manager</field>
+        <field name="privilege_id" ref="res_groups_privilege_risk"/>
+        <field name="implied_ids" eval="[(4, ref('group_risk_analyst'))]"/>
+        <field name="comment">Full access to risk management, including approval of
+assessments and risk matrices, residual risk acceptance, risk closure and
+configuration of the risk taxonomy.</field>
+    </record>
+
+</odoo>

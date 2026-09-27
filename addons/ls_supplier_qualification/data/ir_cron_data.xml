@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <record id="cron_ls_supplier_qualification_expiry" model="ir.cron">
+        <field name="name">Supplier Qualification: check approval validity</field>
+        <field name="model_id" ref="model_ls_supplier_qualification"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_ls_supplier_due_dates" model="ir.cron">
+        <field name="name">Supplier Qualification: check audit and review due dates</field>
+        <field name="model_id" ref="model_ls_supplier_qualification"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_due_dates()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="cron_ls_supplier_material_expiry" model="ir.cron">
+        <field name="name">Supplier Qualification: check qualified scope validity</field>
+        <field name="model_id" ref="model_ls_supplier_material"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_check_material_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for full copyright
+     and licensing details. -->
+<odoo>
+
+    <record id="action_report_ls_risk_register" model="ir.actions.report">
+        <field name="name">Risk Record</field>
+        <field name="model">ls.risk.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_risk_management.report_ls_risk_register_document</field>
+        <field name="report_file">ls_risk_management.report_ls_risk_register_document</field>
+        <field name="print_report_name">'Risk - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_ls_risk_register"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_ls_risk_fmea" model="ir.actions.report">
+        <field name="name">FMEA Worksheet</field>
+        <field name="model">ls.risk.fmea</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ls_risk_management.report_ls_risk_fmea_document</field>
+        <field name="report_file">ls_risk_management.report_ls_risk_fmea_document</field>
+        <field name="print_report_name">'FMEA - %s rev %s' % (object.name, object.revision)</field>
+        <field name="binding_model_id" ref="model_ls_risk_fmea"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

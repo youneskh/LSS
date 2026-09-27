@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <template id="report_ls_env_sample_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Environmental Monitoring Record</h2>
+                        <h3 t-field="doc.name"/>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-6">
+                                <strong>Sampling Point:</strong>
+                                <span t-field="doc.sampling_point_id"/><br/>
+                                <strong>Area:</strong>
+                                <span t-field="doc.area_id"/><br/>
+                                <strong>Grade:</strong>
+                                <span t-field="doc.grade_id"/><br/>
+                                <strong>Occupancy State:</strong>
+                                <span t-field="doc.occupancy_state"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Scheduled Date:</strong>
+                                <span t-field="doc.scheduled_date"/><br/>
+                                <strong>Collected On:</strong>
+                                <span t-field="doc.collection_datetime"/><br/>
+                                <strong>Collected By:</strong>
+                                <span t-field="doc.collected_by_id"/><br/>
+                                <strong>Batch Reference:</strong>
+                                <span t-field="doc.batch_reference"/>
+                            </div>
+                        </div>
+
+                        <h4>Results</h4>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Method</th>
+                                    <th class="text-end">Value</th>
+                                    <th>Unit</th>
+                                    <th class="text-end">Alert</th>
+                                    <th class="text-end">Action</th>
+                                    <th class="text-end">Spec</th>
+                                    <th>Outcome</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.result_ids" t-as="result">
+                                    <td><span t-field="result.parameter_id"/></td>
+                                    <td><span t-field="result.method_id"/></td>
+                                    <td class="text-end">
+                                        <span t-if="result.result_type == 'quantitative'"
+                                              t-field="result.value_numeric"/>
+                                        <span t-if="result.result_type == 'qualitative'"
+                                              t-field="result.value_qualitative"/>
+                                    </td>
+                                    <td><span t-field="result.uom_label"/></td>
+                                    <td class="text-end">
+                                        <span t-if="result.applied_alert_set"
+                                              t-field="result.applied_alert_value"/>
+                                        <span t-if="not result.applied_alert_set">-</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-if="result.applied_action_set"
+                                              t-field="result.applied_action_value"/>
+                                        <span t-if="not result.applied_action_set">-</span>
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-if="result.applied_spec_set"
+                                              t-field="result.applied_spec_value"/>
+                                        <span t-if="not result.applied_spec_set">-</span>
+                                    </td>
+                                    <td><span t-field="result.evaluation"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <t t-set="amended" t-value="doc.result_ids.filtered(lambda r: r.is_amended)"/>
+                        <div t-if="amended">
+                            <h4>Amendments</h4>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th class="text-end">Originally Reported</th>
+                                        <th>Amended By</th>
+                                        <th>Amended On</th>
+                                        <th>Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="amended" t-as="result">
+                                        <td><span t-field="result.parameter_id"/></td>
+                                        <td class="text-end">
+                                            <span t-field="result.original_value_numeric"/>
+                                        </td>
+                                        <td><span t-field="result.amended_by_id"/></td>
+                                        <td><span t-field="result.amendment_datetime"/></td>
+                                        <td><span t-field="result.amendment_reason"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h4>Execution Record</h4>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Results entered by</strong></td>
+                                <td><span t-field="doc.results_entered_by_id"/></td>
+                                <td><span t-field="doc.results_entered_datetime"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reviewed by</strong></td>
+                                <td><span t-field="doc.reviewed_by_id"/></td>
+                                <td><span t-field="doc.review_datetime"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Approved by</strong></td>
+                                <td><span t-field="doc.approved_by_id"/></td>
+                                <td><span t-field="doc.approval_datetime"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Overall outcome</strong></td>
+                                <td colspan="2"><span t-field="doc.overall_evaluation"/></td>
+                            </tr>
+                        </table>
+
+                        <div t-if="doc.state == 'cancelled'" class="mt16">
+                            <h4>Cancellation</h4>
+                            <p t-field="doc.cancellation_reason"/>
+                        </div>
+
+                        <p class="text-muted mt32">
+                            This record is a printed extract of an electronic record. The
+                            electronic record held in the system is the primary record.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

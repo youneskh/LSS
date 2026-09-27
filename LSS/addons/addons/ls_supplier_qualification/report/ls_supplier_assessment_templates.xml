@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <template id="report_ls_supplier_assessment_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.company_id.partner_id.lang)"/>
+            <div class="page">
+                <h2>Supplier Assessment Report</h2>
+                <h3 t-field="doc.name"/>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Supplier</strong>
+                        <div t-field="doc.partner_id"
+                             t-options="{'widget': 'contact', 'fields': ['address'], 'no_marker': True}"/>
+                    </div>
+                    <div class="col-6">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Dossier</strong></td>
+                                <td><span t-field="doc.qualification_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Template</strong></td>
+                                <td><span t-field="doc.template_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type</strong></td>
+                                <td><span t-field="doc.assessment_type"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date</strong></td>
+                                <td><span t-field="doc.date"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assessor</strong></td>
+                                <td><span t-field="doc.assessor_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reviewer</strong></td>
+                                <td><span t-field="doc.reviewer_id"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <h4 class="mt-4">Scoring Rules Applied</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td style="width:45%"><strong>Scale</strong></td>
+                        <td>0 to <span t-field="doc.max_score_per_criterion"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Minimum score for mandatory criteria</strong></td>
+                        <td><span t-field="doc.mandatory_min_score"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pass threshold</strong></td>
+                        <td><span t-field="doc.pass_threshold"/> %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Conditional threshold</strong></td>
+                        <td><span t-field="doc.conditional_threshold"/> %</td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Scored Criteria</h4>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Criterion</th>
+                            <th>Domain</th>
+                            <th class="text-end">Weight</th>
+                            <th class="text-center">Mandatory</th>
+                            <th class="text-end">Score</th>
+                            <th>Evidence</th>
+                            <th>Comment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.line_ids" t-as="line">
+                            <td><span t-field="line.criterion_id.code"/></td>
+                            <td><span t-field="line.criterion_id.name"/></td>
+                            <td><span t-field="line.criterion_domain"/></td>
+                            <td class="text-end"><span t-field="line.weight"/></td>
+                            <td class="text-center">
+                                <span t-if="line.is_mandatory">Yes</span>
+                            </td>
+                            <td class="text-end">
+                                <span t-field="line.score"/> /
+                                <span t-field="line.max_score"/>
+                            </td>
+                            <td><span t-field="line.evidence"/></td>
+                            <td><span t-field="line.comment"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="mt-4">Result</h4>
+                <table class="table table-sm">
+                    <tr>
+                        <td style="width:45%"><strong>Weighted score</strong></td>
+                        <td>
+                            <span t-field="doc.total_weighted_score"/> /
+                            <span t-field="doc.total_max_weighted_score"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Percentage</strong></td>
+                        <td><span t-field="doc.score_percent"/> %</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mandatory criteria below minimum</strong></td>
+                        <td><span t-field="doc.mandatory_failed_count"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Result</strong></td>
+                        <td><span t-field="doc.result"/></td>
+                    </tr>
+                </table>
+
+                <h4 class="mt-4">Conclusion</h4>
+                <p t-field="doc.conclusion"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_ls_supplier_assessment">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="ls_supplier_qualification.report_ls_supplier_assessment_document"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

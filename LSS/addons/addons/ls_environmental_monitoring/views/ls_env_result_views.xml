@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views3.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_result_list" model="ir.ui.view">
+            <field name="name">ls.env.result.list</field>
+            <field name="model">ls.env.result</field>
+            <field name="arch" type="xml">
+                <list string="Results" create="false"
+                      decoration-danger="evaluation in ('action_exceeded', 'spec_exceeded')"
+                      decoration-warning="evaluation == 'alert_exceeded'">
+                    <field name="sample_id"/>
+                    <field name="collection_datetime"/>
+                    <field name="sampling_point_id"/>
+                    <field name="area_id" optional="show"/>
+                    <field name="parameter_id"/>
+                    <field name="value_numeric"/>
+                    <field name="value_qualitative" optional="hide"/>
+                    <field name="uom_label"/>
+                    <field name="applied_alert_value" string="Alert" optional="hide"/>
+                    <field name="applied_action_value" string="Action" optional="show"/>
+                    <field name="applied_spec_value" string="Spec" optional="hide"/>
+                    <field name="evaluation" widget="badge"/>
+                    <field name="is_amended" optional="hide"/>
+                    <field name="excursion_id" optional="show"/>
+                    <field name="sample_state" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_result_form" model="ir.ui.view">
+            <field name="name">ls.env.result.form</field>
+            <field name="model">ls.env.result</field>
+            <field name="arch" type="xml">
+                <form string="Result" create="false">
+                    <header>
+                        <button name="action_amend" type="object" string="Amend Result"
+                                invisible="sample_state != 'approved' or is_amended"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Amended" bg_color="text-bg-warning"
+                                invisible="not is_amended"/>
+                        <group>
+                            <group string="Context">
+                                <field name="sample_id" readonly="1"/>
+                                <field name="sample_state" readonly="1"/>
+                                <field name="sampling_point_id" readonly="1"/>
+                                <field name="area_id" readonly="1"/>
+                                <field name="occupancy_state" readonly="1"/>
+                                <field name="collection_datetime" readonly="1"/>
+                            </group>
+                            <group string="Measurement">
+                                <field name="parameter_id" readonly="sample_state != 'draft'"/>
+                                <field name="result_type" readonly="1"/>
+                                <field name="method_id"/>
+                                <field name="value_set"/>
+                                <field name="value_numeric" invisible="result_type != 'quantitative'"/>
+                                <field name="value_qualitative" invisible="result_type != 'qualitative'"/>
+                                <field name="uom_label" readonly="1"/>
+                                <field name="microbial_identification"/>
+                            </group>
+                        </group>
+                        <group string="Criteria Applied at Evaluation">
+                            <group>
+                                <field name="limit_id" readonly="1"/>
+                                <field name="applied_direction" readonly="1"/>
+                                <field name="evaluation_datetime" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="applied_alert_value" readonly="1" invisible="not applied_alert_set"/>
+                                <field name="applied_action_value" readonly="1" invisible="not applied_action_set"/>
+                                <field name="applied_spec_value" readonly="1" invisible="not applied_spec_set"/>
+                                <field name="applied_alert_set" invisible="1"/>
+                                <field name="applied_action_set" invisible="1"/>
+                                <field name="applied_spec_set" invisible="1"/>
+                                <field name="evaluation" readonly="1"/>
+                                <field name="excursion_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Amendment" invisible="not is_amended">
+                            <group>
+                                <field name="original_value_numeric" readonly="1"/>
+                                <field name="original_value_qualitative" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="amended_by_id" readonly="1"/>
+                                <field name="amendment_datetime" readonly="1"/>
+                            </group>
+                            <field name="amendment_reason" readonly="1"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="notes" nolabel="1"/>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_result_search" model="ir.ui.view">
+            <field name="name">ls.env.result.search</field>
+            <field name="model">ls.env.result</field>
+            <field name="arch" type="xml">
+                <search string="Results">
+                    <field name="sample_id"/>
+                    <field name="sampling_point_id"/>
+                    <field name="parameter_id"/>
+                    <field name="area_id"/>
+                    <field name="microbial_identification"/>
+                    <filter name="filter_breach" string="Threshold Breached" domain="[('is_breach', '=', True)]"/>
+                    <filter name="filter_action" string="Action or Worse"
+                            domain="[('evaluation', 'in', ['action_exceeded', 'spec_exceeded'])]"/>
+                    <filter name="filter_no_limit" string="No Approved Limit"
+                            domain="[('evaluation', '=', 'no_limit')]"/>
+                    <filter name="filter_amended" string="Amended" domain="[('is_amended', '=', True)]"/>
+                    <separator/>
+                    <filter name="filter_released" string="On Approved Samples"
+                            domain="[('sample_state', '=', 'approved')]"/>
+                                            <filter name="group_point" string="Sampling Point" context="{'group_by': 'sampling_point_id'}"/>
+                    <filter name="group_parameter" string="Parameter" context="{'group_by': 'parameter_id'}"/>
+                    <filter name="group_evaluation" string="Outcome" context="{'group_by': 'evaluation'}"/>
+                    <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                    <filter name="group_date" string="Collection Date" context="{'group_by': 'collection_datetime'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_result" model="ir.actions.act_window">
+            <field name="name">Results</field>
+            <field name="res_model">ls.env.result</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_filter_released': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No result recorded yet</p>
+                <p>Results are recorded against samples and appear here once entered.</p>
+            </field>
+        </record>
+
+        <record id="action_ls_env_result_breach" model="ir.actions.act_window">
+            <field name="name">Threshold Breaches</field>
+            <field name="res_model">ls.env.result</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[('is_breach', '=', True)]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No breach recorded</p>
+                <p>Results that exceeded an alert, action or specification threshold appear here.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

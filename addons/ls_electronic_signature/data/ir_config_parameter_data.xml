@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="param_session_idle_minutes" model="ir.config_parameter">
+            <field name="key">ls_electronic_signature.session_idle_minutes</field>
+            <field name="value">15</field>
+        </record>
+
+        <record id="param_max_failed_attempts" model="ir.config_parameter">
+            <field name="key">ls_electronic_signature.max_failed_attempts</field>
+            <field name="value">3</field>
+        </record>
+
+        <record id="param_lockout_minutes" model="ir.config_parameter">
+            <field name="key">ls_electronic_signature.lockout_minutes</field>
+            <field name="value">15</field>
+        </record>
+
+        <record id="param_credential_api_mode" model="ir.config_parameter">
+            <field name="key">ls_electronic_signature.credential_api_mode</field>
+            <field name="value">auto</field>
+        </record>
+
+        <record id="param_attempt_isolated_cursor" model="ir.config_parameter">
+            <field name="key">ls_electronic_signature.attempt_isolated_cursor</field>
+            <field name="value">1</field>
+        </record>
+
+        <record id="seq_signature_request" model="ir.sequence">
+            <field name="name">Electronic Signature Request</field>
+            <field name="code">ls.signature.request</field>
+            <field name="prefix">ESR/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

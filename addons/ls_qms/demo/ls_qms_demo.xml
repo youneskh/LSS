@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html).
+
+     Demonstration data. It references only base.user_admin so that it does
+     not depend on the demo data of other modules. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_department_quality" model="hr.department">
+            <field name="name">Quality Assurance (demo)</field>
+        </record>
+
+        <record id="demo_policy" model="ls.qms.policy">
+            <field name="name">Quality Policy of the Site</field>
+            <field name="state">published</field>
+            <field name="author_id" ref="base.user_admin"/>
+            <field name="approver_id" ref="base.user_admin"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="date_effective" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+            <field name="review_period_months">24</field>
+            <field name="scope">All manufacturing, packaging, control and release activities performed on the site.</field>
+            <field name="policy_statement"><![CDATA[<p>The organisation manufactures and controls its products in accordance with the applicable regulatory requirements and with the specifications agreed with its customers.</p>]]></field>
+            <field name="commitment"><![CDATA[<ul><li>Satisfy applicable requirements.</li><li>Continually improve the quality management system.</li><li>Provide the resources needed to reach the quality objectives.</li></ul>]]></field>
+            <field name="communication_method">Displayed in the production and control areas, given during induction training and available in the document management system.</field>
+        </record>
+
+        <record id="demo_objective_complaints" model="ls.qms.objective">
+            <field name="name">Reduce the number of customer complaints</field>
+            <field name="policy_id" ref="demo_policy"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="state">in_progress</field>
+            <field name="direction">decrease</field>
+            <field name="uom_name">complaints per quarter</field>
+            <field name="baseline_value">20</field>
+            <field name="target_value">8</field>
+            <field name="date_start" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+            <field name="date_target" eval="(DateTime.today() + relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_objective_measurement_1" model="ls.qms.objective.measurement">
+            <field name="objective_id" ref="demo_objective_complaints"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="value">16</field>
+            <field name="recorded_by_id" ref="base.user_admin"/>
+            <field name="comment">First quarter after the corrective actions were implemented.</field>
+        </record>
+
+        <record id="demo_objective_measurement_2" model="ls.qms.objective.measurement">
+            <field name="objective_id" ref="demo_objective_complaints"/>
+            <field name="date" eval="(DateTime.today() - relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="value">12</field>
+            <field name="recorded_by_id" ref="base.user_admin"/>
+            <field name="comment">Second quarter measurement.</field>
+        </record>
+
+        <record id="demo_objective_training" model="ls.qms.objective">
+            <field name="name">Increase the rate of completed training</field>
+            <field name="policy_id" ref="demo_policy"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="state">in_progress</field>
+            <field name="direction">increase</field>
+            <field name="uom_name">percent</field>
+            <field name="baseline_value">72</field>
+            <field name="target_value">95</field>
+            <field name="date_start" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="date_target" eval="(DateTime.today() + relativedelta(months=9)).strftime('%Y-%m-%d')"/>
+        </record>
+
+        <record id="demo_sop_document_control" model="ls.qms.sop">
+            <field name="name">Control of Documented Information</field>
+            <field name="state">published</field>
+            <field name="author_id" ref="base.user_admin"/>
+            <field name="approver_id" ref="base.user_admin"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="date_effective" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="review_period_months">24</field>
+            <field name="training_required" eval="True"/>
+            <field name="purpose"><![CDATA[<p>Define how quality documents are drafted, reviewed, approved, published, revised and withdrawn.</p>]]></field>
+            <field name="scope">All documents of the quality management system.</field>
+            <field name="definitions">Controlled document: document whose issue, distribution and withdrawal are managed. Revision: identified successive version of a document.</field>
+            <field name="responsibilities"><![CDATA[<p>The author drafts the document. The reviewers check its technical content. The approver approves and publishes it. The quality manager withdraws superseded revisions.</p>]]></field>
+            <field name="procedure"><![CDATA[<ol><li>Create the document in the quality management system.</li><li>Complete the purpose, the scope and the body.</li><li>Submit the document for review.</li><li>Approve the document. The author cannot approve their own document.</li><li>Publish the document and record its effective date.</li><li>Revise the document by creating a new revision, giving a reason for change.</li></ol>]]></field>
+            <field name="reference_documents">Quality Policy of the Site.</field>
+        </record>
+
+        <record id="demo_work_instruction_numbering" model="ls.qms.work_instruction">
+            <field name="name">Allocating a Document Reference</field>
+            <field name="sop_id" ref="demo_sop_document_control"/>
+            <field name="state">published</field>
+            <field name="author_id" ref="base.user_admin"/>
+            <field name="approver_id" ref="base.user_admin"/>
+            <field name="date_effective" eval="(DateTime.today() - relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="review_period_months">24</field>
+            <field name="estimated_duration_minutes">5</field>
+            <field name="instruction_body"><![CDATA[<ol><li>Open the relevant document type.</li><li>Create the record. The reference is allocated by the numbering sequence.</li><li>Check that the reference has been written to the document header.</li></ol>]]></field>
+            <field name="safety_precautions">No specific hazard is associated with this activity.</field>
+        </record>
+
+        <record id="demo_quality_plan" model="ls.qms.quality_plan">
+            <field name="name">Quality Plan of the Tablet Line</field>
+            <field name="subject">Compressed tablets, production line 1</field>
+            <field name="state">draft</field>
+            <field name="author_id" ref="base.user_admin"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="review_period_months">12</field>
+            <field name="scope">Weighing, blending, compression and primary packaging.</field>
+            <field name="objective_summary">Ensure that every batch conforms to the registered specification before release.</field>
+            <field name="sop_ids" eval="[(4, ref('demo_sop_document_control'))]"/>
+        </record>
+
+        <record id="demo_quality_plan_line_1" model="ls.qms.quality_plan.line">
+            <field name="quality_plan_id" ref="demo_quality_plan"/>
+            <field name="sequence">10</field>
+            <field name="stage">Weighing</field>
+            <field name="characteristic">Weighed quantity of each component</field>
+            <field name="specification">Within the tolerance of the manufacturing formula</field>
+            <field name="control_method">Double check on a calibrated balance</field>
+            <field name="frequency">Every component of every batch</field>
+            <field name="sample_size">100 percent</field>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="record_reference">Batch weighing sheet</field>
+        </record>
+
+        <record id="demo_quality_plan_line_2" model="ls.qms.quality_plan.line">
+            <field name="quality_plan_id" ref="demo_quality_plan"/>
+            <field name="sequence">20</field>
+            <field name="stage">Compression</field>
+            <field name="characteristic">Mass of the individual tablet</field>
+            <field name="specification">Target mass, tolerance defined in the specification</field>
+            <field name="control_method">Weighing on a calibrated analytical balance</field>
+            <field name="frequency">Every 30 minutes</field>
+            <field name="sample_size">20 tablets</field>
+            <field name="responsible_id" ref="base.user_admin"/>
+            <field name="record_reference">In-process control sheet</field>
+        </record>
+
+        <record id="demo_quality_record_management_review" model="ls.qms.quality_record">
+            <field name="name">Management Review of the First Half Year</field>
+            <field name="record_type">management_review</field>
+            <field name="state">confirmed</field>
+            <field name="author_id" ref="base.user_admin"/>
+            <field name="department_id" ref="demo_department_quality"/>
+            <field name="date_record" eval="(DateTime.today() - relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+            <field name="retention_period_months">60</field>
+            <field name="policy_id" ref="demo_policy"/>
+            <field name="objective_id" ref="demo_objective_complaints"/>
+            <field name="description">Review of the quality objectives, of the customer complaints and of the status of the documented information.</field>
+            <field name="conclusion">The quality management system is effective. The complaint objective is on track. The review of the procedures due next quarter is confirmed.</field>
+        </record>
+
+    </data>
+</odoo>

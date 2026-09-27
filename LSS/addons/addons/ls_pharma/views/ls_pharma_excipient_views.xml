@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_excipient_list" model="ir.ui.view">
+        <field name="name">ls.pharma.excipient.list</field>
+        <field name="model">ls.pharma.excipient</field>
+        <field name="arch" type="xml">
+            <list string="Excipients"
+                  decoration-muted="state == 'obsolete'"
+                  decoration-warning="state == 'restricted'"
+                  decoration-success="state == 'qualified'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="excipient_function"/>
+                <field name="cas_number" optional="hide"/>
+                <field name="pharmacopoeia"/>
+                <field name="maximum_daily_intake_mg" optional="hide"/>
+                <field name="is_novel" optional="show"/>
+                <field name="requires_declaration" optional="hide"/>
+                <field name="of_animal_origin" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_excipient_form" model="ir.ui.view">
+        <field name="name">ls.pharma.excipient.form</field>
+        <field name="model">ls.pharma.excipient</field>
+        <field name="arch" type="xml">
+            <form string="Excipient">
+                <header>
+                    <button name="action_qualify"
+                            string="Qualify"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="state not in ['draft', 'restricted']"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_restrict"
+                            string="Restrict"
+                            type="object"
+                            invisible="state != 'qualified'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_obsolete"
+                            string="Declare Obsolete"
+                            type="object"
+                            invisible="state == 'obsolete'"
+                            groups="ls_pharma.group_ls_pharma_qa"/>
+                    <button name="action_set_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'obsolete'"
+                            groups="ls_pharma.group_ls_pharma_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,qualified,restricted,obsolete"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Excipient name"/>
+                        </h1>
+                        <label for="code"/>
+                        <h2>
+                            <field name="code" placeholder="Internal code"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="excipient_function"/>
+                            <field name="cas_number"/>
+                            <field name="product_id"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Quality Standard">
+                            <field name="pharmacopoeia"/>
+                            <field name="monograph_reference"/>
+                            <field name="storage_condition"/>
+                            <field name="retest_period_months"/>
+                        </group>
+                        <group string="Safety and Labelling">
+                            <field name="maximum_daily_intake_mg"/>
+                            <field name="requires_declaration"/>
+                            <field name="is_novel"/>
+                        </group>
+                        <group string="Origin">
+                            <field name="of_animal_origin"/>
+                            <field name="tse_statement_reference"
+                                   invisible="not of_animal_origin"
+                                   required="of_animal_origin"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Approved Manufacturers" name="manufacturers">
+                            <field name="manufacturer_partner_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_excipient_search" model="ir.ui.view">
+        <field name="name">ls.pharma.excipient.search</field>
+        <field name="model">ls.pharma.excipient</field>
+        <field name="arch" type="xml">
+            <search string="Excipients">
+                <field name="name"
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"
+                       string="Excipient"/>
+                <field name="cas_number"/>
+                <field name="product_id"/>
+                <field name="manufacturer_partner_ids"/>
+                <filter name="filter_qualified" string="Qualified"
+                        domain="[('state', '=', 'qualified')]"/>
+                <filter name="filter_restricted" string="Restricted"
+                        domain="[('state', '=', 'restricted')]"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="filter_novel" string="Novel Excipient"
+                        domain="[('is_novel', '=', True)]"/>
+                <filter name="filter_declaration" string="Requires Label Declaration"
+                        domain="[('requires_declaration', '=', True)]"/>
+                <filter name="filter_animal_origin" string="Of Animal Origin"
+                        domain="[('of_animal_origin', '=', True)]"/>
+                <separator/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_function" string="Function"
+                            context="{'group_by': 'excipient_function'}"/>
+                    <filter name="group_pharmacopoeia" string="Pharmacopoeia"
+                            context="{'group_by': 'pharmacopoeia'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_excipient" model="ir.actions.act_window">
+        <field name="name">Excipients</field>
+        <field name="res_model">ls.pharma.excipient</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_excipient_search"/>
+        <field name="context">{'search_default_filter_qualified': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register the first excipient
+            </p>
+            <p>
+                An excipient carries its function in the formulation, its
+                quality standard and its approved manufacturers. Novel
+                excipients are flagged so that they can be traced to the
+                dossier section that supports them.
+            </p>
+        </field>
+    </record>
+
+</odoo>

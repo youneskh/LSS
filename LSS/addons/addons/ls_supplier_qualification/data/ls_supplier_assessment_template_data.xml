@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Starter questionnaires. The scale (0-5), the minimum acceptable score
+     for mandatory criteria (3) and the thresholds (80 % pass, 60 %
+     conditional) are PROPOSALS of this module. They must be reviewed and
+     approved by the quality department before first use, and they are frozen
+     on each assessment at creation time.
+-->
+<odoo noupdate="1">
+
+    <record id="assessment_template_full" model="ls.supplier.assessment.template">
+        <field name="name">Full Supplier Assessment</field>
+        <field name="code">TPL-FULL</field>
+        <field name="description">Complete questionnaire intended for critical suppliers such as active substance manufacturers, contract manufacturers, contract laboratories and primary packaging manufacturers.</field>
+        <field name="max_score_per_criterion">5</field>
+        <field name="mandatory_min_score">3</field>
+        <field name="pass_threshold">80.0</field>
+        <field name="conditional_threshold">60.0</field>
+        <field name="sequence">10</field>
+        <field name="category_ids" eval="[(6, 0, [
+            ref('category_api_manufacturer'),
+            ref('category_primary_packaging'),
+            ref('category_contract_manufacturer'),
+            ref('category_contract_laboratory'),
+        ])]"/>
+        <field name="line_ids" eval="[
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_certified'),
+                'sequence': 10,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_manual'),
+                'sequence': 20,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_management_review'),
+                'sequence': 30,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_internal_audit'),
+                'sequence': 40,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_capa'),
+                'sequence': 50,
+                'weight': 2.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_reg_authorisation'),
+                'sequence': 60,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_reg_inspection_history'),
+                'sequence': 70,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_reg_notification'),
+                'sequence': 80,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_doc_control'),
+                'sequence': 90,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_doc_retention'),
+                'sequence': 100,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_doc_coa'),
+                'sequence': 110,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mfg_process_control'),
+                'sequence': 120,
+                'weight': 3.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mfg_validation'),
+                'sequence': 130,
+                'weight': 3.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mfg_premises'),
+                'sequence': 140,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mfg_contamination'),
+                'sequence': 150,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_lab_methods'),
+                'sequence': 160,
+                'weight': 3.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_lab_calibration'),
+                'sequence': 170,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_lab_oos'),
+                'sequence': 180,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mat_traceability'),
+                'sequence': 190,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mat_subsupplier'),
+                'sequence': 200,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_log_storage'),
+                'sequence': 210,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_log_transport'),
+                'sequence': 220,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_chg_notification'),
+                'sequence': 230,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_chg_deviation'),
+                'sequence': 240,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_di_access_control'),
+                'sequence': 250,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_di_audit_trail'),
+                'sequence': 260,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_di_backup'),
+                'sequence': 270,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_per_training'),
+                'sequence': 280,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_per_responsibilities'),
+                'sequence': 290,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_hse_compliance'),
+                'sequence': 300,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_com_continuity'),
+                'sequence': 310,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_com_financial'),
+                'sequence': 320,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+        ]"/>
+    </record>
+
+    <record id="assessment_template_short" model="ls.supplier.assessment.template">
+        <field name="name">Short Supplier Assessment</field>
+        <field name="code">TPL-SHORT</field>
+        <field name="description">Reduced questionnaire intended for suppliers of lower criticality, such as secondary packaging, equipment, logistics and general goods and services.</field>
+        <field name="max_score_per_criterion">5</field>
+        <field name="mandatory_min_score">3</field>
+        <field name="pass_threshold">75.0</field>
+        <field name="conditional_threshold">55.0</field>
+        <field name="sequence">20</field>
+        <field name="category_ids" eval="[(6, 0, [
+            ref('category_excipient_supplier'),
+            ref('category_secondary_packaging'),
+            ref('category_calibration_provider'),
+            ref('category_equipment_supplier'),
+            ref('category_logistics_provider'),
+            ref('category_general_supplier'),
+        ])]"/>
+        <field name="line_ids" eval="[
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_certified'),
+                'sequence': 10,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_qms_capa'),
+                'sequence': 20,
+                'weight': 2.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_reg_authorisation'),
+                'sequence': 30,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_reg_notification'),
+                'sequence': 40,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_doc_control'),
+                'sequence': 50,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_doc_coa'),
+                'sequence': 60,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_mat_traceability'),
+                'sequence': 70,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_log_storage'),
+                'sequence': 80,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_chg_notification'),
+                'sequence': 90,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_chg_deviation'),
+                'sequence': 100,
+                'weight': 3.0,
+                'is_mandatory': True,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_per_training'),
+                'sequence': 110,
+                'weight': 2.0,
+                'is_mandatory': False,
+            }),
+            (0, 0, {
+                'criterion_id': ref('criterion_com_continuity'),
+                'sequence': 120,
+                'weight': 1.0,
+                'is_mandatory': False,
+            }),
+        ]"/>
+    </record>
+
+</odoo>

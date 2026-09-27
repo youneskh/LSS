@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+     Generated file: see build_views3.py in the delivery package. -->
+<odoo>
+    <data>
+        <record id="view_ls_env_excursion_list" model="ir.ui.view">
+            <field name="name">ls.env.excursion.list</field>
+            <field name="model">ls.env.excursion</field>
+            <field name="arch" type="xml">
+                <list string="Excursions" create="false"
+                      decoration-danger="excursion_type == 'spec_exceeded'"
+                      decoration-warning="excursion_type == 'action_exceeded'"
+                      decoration-muted="state in ('closed', 'cancelled')">
+                    <field name="name"/>
+                    <field name="detection_date"/>
+                    <field name="sampling_point_id"/>
+                    <field name="area_id"/>
+                    <field name="excursion_type" widget="badge"/>
+                    <field name="severity"/>
+                    <field name="product_impact"/>
+                    <field name="batch_reference" optional="show"/>
+                    <field name="owner_id"/>
+                    <field name="external_reference" optional="show"/>
+                    <field name="state" widget="badge"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_ls_env_excursion_form" model="ir.ui.view">
+            <field name="name">ls.env.excursion.form</field>
+            <field name="model">ls.env.excursion</field>
+            <field name="arch" type="xml">
+                <form string="Excursion" create="false">
+                    <header>
+                        <button name="action_start_assessment" type="object" string="Start Assessment"
+                                class="btn-primary" invisible="state != 'open'"/>
+                        <button name="action_start_investigation" type="object" string="Open Investigation"
+                                invisible="state != 'assessment'"/>
+                        <button name="action_propose_closure" type="object" string="Propose Closure"
+                                class="btn-primary" invisible="state not in ('assessment', 'investigation')"/>
+                        <button name="action_open_closure_wizard" type="object" string="Close"
+                                class="btn-primary" invisible="state != 'pending_closure'"/>
+                        <button name="action_reopen_investigation" type="object" string="Reopen Investigation"
+                                invisible="state != 'pending_closure'"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                invisible="state in ('closed', 'cancelled', 'pending_closure')"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="open,assessment,investigation,pending_closure,closed"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Closed" bg_color="text-bg-success"
+                                invisible="state != 'closed'"/>
+                        <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                                invisible="state != 'cancelled'"/>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group string="Detection">
+                                <field name="sample_id" readonly="1"/>
+                                <field name="sampling_point_id" readonly="1"/>
+                                <field name="area_id" readonly="1"/>
+                                <field name="detection_date" readonly="1"/>
+                                <field name="excursion_type" readonly="1"/>
+                                <field name="batch_reference" readonly="1"/>
+                            </group>
+                            <group string="Handling">
+                                <field name="owner_id"/>
+                                <field name="severity"/>
+                                <field name="product_impact"/>
+                                <field name="investigation_required"/>
+                                <field name="external_reference"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Breaching Results" name="results">
+                                <field name="result_ids" nolabel="1" readonly="1">
+                                    <list>
+                                        <field name="parameter_id"/>
+                                        <field name="value_numeric"/>
+                                        <field name="value_qualitative"/>
+                                        <field name="uom_label"/>
+                                        <field name="applied_alert_value" string="Alert"/>
+                                        <field name="applied_action_value" string="Action"/>
+                                        <field name="applied_spec_value" string="Spec"/>
+                                        <field name="evaluation" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Immediate Actions" name="immediate">
+                                <field name="immediate_actions" nolabel="1"
+                                       placeholder="Actions taken on detection, before assessment was complete."/>
+                            </page>
+                            <page string="Impact Assessment" name="assessment">
+                                <field name="impact_assessment" nolabel="1"
+                                       placeholder="Effect on product, process and area status."/>
+                            </page>
+                            <page string="Investigation" name="investigation">
+                                <group string="Root Cause">
+                                    <field name="root_cause" nolabel="1"/>
+                                </group>
+                                <group string="Corrective Actions">
+                                    <field name="corrective_actions" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Closure" name="closure" invisible="state != 'closed'">
+                                <group>
+                                    <field name="closed_by_id" readonly="1"/>
+                                    <field name="closure_datetime" readonly="1"/>
+                                </group>
+                                <field name="closure_justification" readonly="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ls_env_excursion_search" model="ir.ui.view">
+            <field name="name">ls.env.excursion.search</field>
+            <field name="model">ls.env.excursion</field>
+            <field name="arch" type="xml">
+                <search string="Excursions">
+                    <field name="name"/>
+                    <field name="sampling_point_id"/>
+                    <field name="area_id"/>
+                    <field name="batch_reference"/>
+                    <field name="external_reference"/>
+                    <filter name="filter_open" string="Open"
+                            domain="[('state', 'not in', ['closed', 'cancelled'])]"/>
+                    <filter name="filter_spec" string="Specification Breach"
+                            domain="[('excursion_type', '=', 'spec_exceeded')]"/>
+                    <filter name="filter_product_impact" string="Potential or Confirmed Product Impact"
+                            domain="[('product_impact', 'in', ['potential', 'confirmed'])]"/>
+                    <filter name="filter_mine" string="Owned by Me" domain="[('owner_id', '=', uid)]"/>
+                                            <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Breach Type" context="{'group_by': 'excursion_type'}"/>
+                    <filter name="group_area" string="Area" context="{'group_by': 'area_id'}"/>
+                    <filter name="group_severity" string="Severity" context="{'group_by': 'severity'}"/>
+                    <filter name="group_owner" string="Owner" context="{'group_by': 'owner_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_ls_env_excursion" model="ir.actions.act_window">
+            <field name="name">Excursions</field>
+            <field name="res_model">ls.env.excursion</field>
+            <field name="view_mode">list,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_filter_open': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">No excursion recorded</p>
+                <p>Excursions are opened automatically when an approved sample contains a threshold breach.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_pharma_stability_schedule_wizard_form" model="ir.ui.view">
+        <field name="name">ls.pharma.stability.schedule.wizard.form</field>
+        <field name="model">ls.pharma.stability.schedule.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Stability Schedule">
+                <group>
+                    <field name="study_id" readonly="1"/>
+                    <field name="duration_months"/>
+                    <field name="condition_ids"
+                           widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                </group>
+                <group string="Proposed Time Points">
+                    <field name="preview" nolabel="1" readonly="1"/>
+                </group>
+                <div class="text-muted">
+                    The proposal follows the testing frequencies of
+                    ICH Q1A(R2): for the long term condition, every three
+                    months over the first year, every six months over the
+                    second year and annually thereafter; for the accelerated
+                    condition, a minimum of three time points; for the
+                    intermediate condition, a minimum of four time points.
+                    Time points that already exist are not created twice.
+                </div>
+                <footer>
+                    <button name="action_generate"
+                            string="Generate"
+                            type="object"
+                            class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

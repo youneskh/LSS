@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!-- ================================================================ -->
+    <!-- Serialised units                                                  -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_serialization_list" model="ir.ui.view">
+        <field name="name">ls.pharma.serialization.list</field>
+        <field name="model">ls.pharma.serialization</field>
+        <field name="arch" type="xml">
+            <list string="Serial Numbers"
+                  decoration-muted="state in ['decommissioned', 'destroyed', 'sampled']"
+                  decoration-success="state == 'shipped'">
+                <field name="serial_number"/>
+                <field name="gtin"/>
+                <field name="product_id"/>
+                <field name="batch_id"/>
+                <field name="batch_number" optional="hide"/>
+                <field name="expiry_date"/>
+                <field name="national_number" optional="hide"/>
+                <field name="aggregation_id" optional="show"/>
+                <field name="element_string" optional="hide"/>
+                <field name="date_commissioned" optional="hide"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_serialization_form" model="ir.ui.view">
+        <field name="name">ls.pharma.serialization.form</field>
+        <field name="model">ls.pharma.serialization</field>
+        <field name="arch" type="xml">
+            <form string="Serial Number">
+                <header>
+                    <button name="action_commission" string="Commission"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'generated'"/>
+                    <button name="action_mark_shipped" string="Mark Shipped"
+                            type="object"
+                            invisible="state not in ['commissioned', 'aggregated']"/>
+                    <button name="action_decommission" string="Decommission"
+                            type="object"
+                            invisible="state in ['decommissioned', 'destroyed', 'sampled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="generated,commissioned,aggregated,shipped"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="serial_number"/>
+                        <h1>
+                            <field name="serial_number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Unique Identifier">
+                            <field name="gtin"/>
+                            <field name="batch_number"/>
+                            <field name="expiry_date"/>
+                            <field name="national_number"/>
+                        </group>
+                        <group string="Context">
+                            <field name="product_id" options="{'no_create': True}"/>
+                            <field name="batch_id" options="{'no_create': True}"/>
+                            <field name="aggregation_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Life Cycle">
+                        <group>
+                            <field name="date_commissioned"/>
+                        </group>
+                        <group>
+                            <field name="date_decommissioned"/>
+                            <field name="decommission_reason"/>
+                        </group>
+                    </group>
+                    <group string="GS1 Element String">
+                        <field name="element_string" nolabel="1"/>
+                    </group>
+                    <div class="text-muted">
+                        Article 4 of Commission Delegated Regulation (EU)
+                        2016/161 states that the unique identifier carries the
+                        product code, the serial number, the national
+                        reimbursement number where the Member State requires
+                        it, the batch number and the expiry date, and that the
+                        serial number must not be possible to deduce.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_serialization_search" model="ir.ui.view">
+        <field name="name">ls.pharma.serialization.search</field>
+        <field name="model">ls.pharma.serialization</field>
+        <field name="arch" type="xml">
+            <search string="Serial Numbers">
+                <field name="serial_number" string="Serial Number"/>
+                <field name="gtin"/>
+                <field name="batch_id"/>
+                <field name="product_id"/>
+                <field name="batch_number"/>
+                <field name="aggregation_id"/>
+                <filter name="filter_generated" string="Generated"
+                        domain="[('state', '=', 'generated')]"/>
+                <filter name="filter_commissioned" string="Commissioned"
+                        domain="[('state', '=', 'commissioned')]"/>
+                <filter name="filter_aggregated" string="Aggregated"
+                        domain="[('state', '=', 'aggregated')]"/>
+                <filter name="filter_shipped" string="Shipped"
+                        domain="[('state', '=', 'shipped')]"/>
+                <separator/>
+                <filter name="filter_decommissioned" string="Decommissioned"
+                        domain="[('state', '=', 'decommissioned')]"/>
+                <separator/>
+                <filter name="filter_expiry" string="Expiry Date" date="expiry_date"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_batch" string="Batch"
+                            context="{'group_by': 'batch_id'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_aggregation" string="Aggregation"
+                            context="{'group_by': 'aggregation_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_serialization" model="ir.actions.act_window">
+        <field name="name">Serial Numbers</field>
+        <field name="res_model">ls.pharma.serialization</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_serialization_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No serial number has been generated yet
+            </p>
+            <p>
+                Serial numbers are generated for a batch from the serial
+                number generation wizard, which draws them from a
+                cryptographically strong random source.
+            </p>
+        </field>
+    </record>
+
+    <!-- ================================================================ -->
+    <!-- Aggregation                                                       -->
+    <!-- ================================================================ -->
+
+    <record id="view_ls_pharma_aggregation_list" model="ir.ui.view">
+        <field name="name">ls.pharma.aggregation.list</field>
+        <field name="model">ls.pharma.aggregation</field>
+        <field name="arch" type="xml">
+            <list string="Aggregation"
+                  decoration-muted="state == 'disaggregated'"
+                  decoration-success="state == 'shipped'">
+                <field name="sscc"/>
+                <field name="level"/>
+                <field name="batch_id"/>
+                <field name="parent_id" optional="show"/>
+                <field name="child_count" optional="show"/>
+                <field name="unit_count"/>
+                <field name="date_packed" optional="show"/>
+                <field name="state" widget="badge"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_aggregation_form" model="ir.ui.view">
+        <field name="name">ls.pharma.aggregation.form</field>
+        <field name="model">ls.pharma.aggregation</field>
+        <field name="arch" type="xml">
+            <form string="Aggregation">
+                <header>
+                    <button name="action_pack" string="Pack"
+                            type="object" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_mark_shipped" string="Mark Shipped"
+                            type="object"
+                            invisible="state != 'packed'"/>
+                    <button name="action_disaggregate" string="Disaggregate"
+                            type="object"
+                            invisible="state not in ['packed', 'shipped']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,packed,shipped"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="sscc"/>
+                        <h1>
+                            <field name="sscc"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Container">
+                            <field name="level"/>
+                            <field name="batch_id" options="{'no_create': True}"/>
+                            <field name="parent_id" options="{'no_create': True}"/>
+                            <field name="date_packed"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Content">
+                            <field name="child_count"/>
+                            <field name="unit_count"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <group string="GS1 Element String">
+                        <field name="element_string" nolabel="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Contained Units" name="units">
+                            <field name="serialization_ids">
+                                <list string="Serialised Units">
+                                    <field name="serial_number"/>
+                                    <field name="gtin"/>
+                                    <field name="batch_number"/>
+                                    <field name="expiry_date"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Contained Containers" name="children">
+                            <field name="child_ids">
+                                <list string="Contained Containers">
+                                    <field name="sscc"/>
+                                    <field name="level"/>
+                                    <field name="unit_count"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_pharma_aggregation_search" model="ir.ui.view">
+        <field name="name">ls.pharma.aggregation.search</field>
+        <field name="model">ls.pharma.aggregation</field>
+        <field name="arch" type="xml">
+            <search string="Aggregation">
+                <field name="sscc" string="SSCC"/>
+                <field name="batch_id"/>
+                <field name="parent_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_packed" string="Packed"
+                        domain="[('state', '=', 'packed')]"/>
+                <filter name="filter_shipped" string="Shipped"
+                        domain="[('state', '=', 'shipped')]"/>
+                <separator/>
+                <filter name="filter_top_level" string="Top Level"
+                        domain="[('parent_id', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_level" string="Level"
+                            context="{'group_by': 'level'}"/>
+                    <filter name="group_batch" string="Batch"
+                            context="{'group_by': 'batch_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_pharma_aggregation" model="ir.actions.act_window">
+        <field name="name">Aggregation</field>
+        <field name="res_model">ls.pharma.aggregation</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_pharma_aggregation_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No container has been aggregated yet
+            </p>
+            <p>
+                A container carries a Serial Shipping Container Code and the
+                serialised units or the smaller containers that it contains.
+            </p>
+        </field>
+    </record>
+
+</odoo>

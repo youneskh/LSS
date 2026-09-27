@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_impact_area_list" model="ir.ui.view">
+        <field name="name">ls.change_control.impact_area.list</field>
+        <field name="model">ls.change_control.impact_area</field>
+        <field name="arch" type="xml">
+            <list string="Impact Areas" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="requires_assessment"/>
+                <field name="description" optional="hide"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_impact_area_form" model="ir.ui.view">
+        <field name="name">ls.change_control.impact_area.form</field>
+        <field name="model">ls.change_control.impact_area</field>
+        <field name="arch" type="xml">
+            <form string="Impact Area">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Manufacturing Process"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group>
+                            <field name="requires_assessment"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_impact_area_search" model="ir.ui.view">
+        <field name="name">ls.change_control.impact_area.search</field>
+        <field name="model">ls.change_control.impact_area</field>
+        <field name="arch" type="xml">
+            <search string="Impact Areas">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_requires_assessment" string="Assessment Mandatory"
+                        domain="[('requires_assessment', '=', True)]"/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_impact_area" model="ir.actions.act_window">
+        <field name="name">Impact Areas</field>
+        <field name="res_model">ls.change_control.impact_area</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_impact_area_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define the areas of the quality system to assess
+            </p>
+            <p>
+                Each impact area retained on a change request produces one
+                impact assessment record, which gives a deterministic
+                assessment coverage.
+            </p>
+        </field>
+    </record>
+
+</odoo>

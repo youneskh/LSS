@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_status_wizard_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.status.wizard.form</field>
+        <field name="model">ls.supplier.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Change Qualification Status">
+                <group>
+                    <group string="Dossier">
+                        <field name="qualification_id"/>
+                        <field name="partner_id"/>
+                        <field name="current_state"/>
+                    </group>
+                    <group string="Action">
+                        <field name="action_type" widget="radio"/>
+                    </group>
+                </group>
+                <group string="Justification">
+                    <field name="reason" nolabel="1"
+                           placeholder="Reason for the status change. Recorded on the dossier and verbatim in the signature log."/>
+                </group>
+                <group string="Signature">
+                    <field name="signature_login"
+                           placeholder="Retype your login"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel"
+                            data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

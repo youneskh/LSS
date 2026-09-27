@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_capa_action_form" model="ir.ui.view">
+        <field name="name">ls.capa.action.form</field>
+        <field name="model">ls.capa.action</field>
+        <field name="arch" type="xml">
+            <form string="CAPA Action">
+                <header>
+                    <button name="action_start" type="object" string="Start"
+                            class="btn-primary" invisible="state != 'draft'"
+                            groups="ls_capa.group_ls_capa_coordinator"/>
+                    <button name="action_done" type="object" string="Mark Done"
+                            class="btn-primary"
+                            invisible="state not in ['draft', 'in_progress']"
+                            groups="ls_capa.group_ls_capa_coordinator"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ['done', 'cancelled']"
+                            groups="ls_capa.group_ls_capa_coordinator"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'cancelled'"
+                            groups="ls_capa.group_ls_capa_coordinator"/>
+                    <button name="action_create_task" type="object"
+                            string="Create Task"
+                            invisible="task_id or state == 'cancelled'"
+                            groups="ls_capa.group_ls_capa_coordinator"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Late" bg_color="text-bg-danger"
+                            invisible="not is_late"/>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="issue_id"
+                                   readonly="context.get('default_issue_id', False)"/>
+                            <field name="root_cause_id"
+                                   domain="[('issue_id', '=', issue_id)]"/>
+                            <field name="action_type"/>
+                            <field name="responsible_id"/>
+                        </group>
+                        <group>
+                            <field name="date_planned"/>
+                            <field name="date_done"/>
+                            <field name="task_id"/>
+                            <field name="is_late" invisible="1"/>
+                            <field name="sequence" groups="base.group_no_one"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Action Description">
+                        <field name="description" nolabel="1"
+                               placeholder="Describe the action so that completion can be objectively verified."/>
+                    </group>
+                    <group string="Completion Evidence" invisible="state == 'cancelled'">
+                        <field name="completion_evidence" nolabel="1"
+                               placeholder="Reference the document or record proving the action was performed."/>
+                    </group>
+                    <group string="Cancellation Reason" invisible="state != 'cancelled'">
+                        <field name="cancellation_reason" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter>
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </chatter>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_capa_action_list" model="ir.ui.view">
+        <field name="name">ls.capa.action.list</field>
+        <field name="model">ls.capa.action</field>
+        <field name="arch" type="xml">
+            <list string="CAPA Actions" decoration-danger="is_late"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="issue_id"/>
+                <field name="action_type"/>
+                <field name="description"/>
+                <field name="responsible_id"/>
+                <field name="date_planned"/>
+                <field name="date_done" optional="show"/>
+                <field name="task_id" optional="hide"/>
+                <field name="is_late" invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_capa_action_search" model="ir.ui.view">
+        <field name="name">ls.capa.action.search</field>
+        <field name="model">ls.capa.action</field>
+        <field name="arch" type="xml">
+            <search string="Search CAPA Actions">
+                <field name="name"/>
+                <field name="issue_id"/>
+                <field name="description"/>
+                <field name="responsible_id"/>
+                <filter name="filter_mine" string="My Actions"
+                        domain="[('responsible_id', '=', uid)]"/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', 'in', ['draft', 'in_progress'])]"/>
+                <filter name="filter_late" string="Late"
+                        domain="[('is_late', '=', True)]"/>
+                <filter name="filter_done" string="Done"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter name="filter_corrective" string="Corrective"
+                        domain="[('action_type', '=', 'corrective')]"/>
+                <filter name="filter_preventive" string="Preventive"
+                        domain="[('action_type', '=', 'preventive')]"/>
+                <group name="group_by">
+                    <filter name="group_issue" string="CAPA"
+                            context="{'group_by': 'issue_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_type" string="Action Type"
+                            context="{'group_by': 'action_type'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                            context="{'group_by': 'responsible_id'}"/>
+                    <filter name="group_date_planned" string="Planned Month"
+                            context="{'group_by': 'date_planned:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_capa_action" model="ir.actions.act_window">
+        <field name="name">CAPA Actions</field>
+        <field name="res_model">ls.capa.action</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_capa_action_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>
+    </record>
+
+</odoo>

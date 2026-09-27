@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The fields numbercall and doall are deliberately NOT set. Their presence
+     on ir.cron changed across recent Odoo major versions and could not be
+     confirmed for 19.0 from official documentation. Omitting them is safe in
+     either case: the framework defaults to an indefinitely recurring job that
+     does not replay missed executions, which is the behaviour wanted here.
+     Setting them would risk a load-time failure on an unknown field. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="cron_ls_audit_overdue_audits" model="ir.cron">
+            <field name="name">Life Sciences Audit: notify overdue audits</field>
+            <field name="model_id" ref="model_ls_audit_schedule"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_overdue_audits()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_audit_overdue_findings" model="ir.cron">
+            <field name="name">Life Sciences Audit: notify overdue findings</field>
+            <field name="model_id" ref="model_ls_audit_finding"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_overdue_findings()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_ls_audit_qualification_expiry" model="ir.cron">
+            <field name="name">Life Sciences Audit: notify auditor qualification expiry</field>
+            <field name="model_id" ref="model_ls_audit_auditor"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_notify_qualification_expiry()</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">7</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

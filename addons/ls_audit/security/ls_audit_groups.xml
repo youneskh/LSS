@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Odoo 19 replaced res.groups.category_id by res.groups.privilege_id,
+        which points to the new res.groups.privilege model. The module
+        category is carried by the privilege record instead of the group.
+    -->
+    <record id="module_category_ls_quality" model="ir.module.category">
+        <field name="name">Life Sciences Quality</field>
+        <field name="description">Quality management applications of the Life Sciences Suite.</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="privilege_ls_audit" model="res.groups.privilege">
+        <field name="name">Audit Management</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="module_category_ls_quality"/>
+    </record>
+
+    <!--
+        Group hierarchy, from the least to the most privileged.
+        Each group implies the previous one so that access rights remain
+        additive and no right has to be repeated.
+    -->
+    <record id="group_ls_audit_auditee" model="res.groups">
+        <field name="name">Auditee</field>
+        <field name="privilege_id" ref="privilege_ls_audit"/>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+        <field name="comment">Responds to the findings raised against the areas they are accountable for. Read-only on audits and reports.</field>
+    </record>
+
+    <record id="group_ls_audit_auditor" model="res.groups">
+        <field name="name">Auditor</field>
+        <field name="privilege_id" ref="privilege_ls_audit"/>
+        <field name="implied_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+        <field name="comment">Executes audits: assesses checklist questions, raises findings and drafts audit reports.</field>
+    </record>
+
+    <record id="group_ls_audit_lead_auditor" model="res.groups">
+        <field name="name">Lead Auditor</field>
+        <field name="privilege_id" ref="privilege_ls_audit"/>
+        <field name="implied_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+        <field name="comment">Leads audits: schedules audits, loads checklists, issues findings, verifies effectiveness and reviews audit reports.</field>
+    </record>
+
+    <record id="group_ls_audit_manager" model="res.groups">
+        <field name="name">Audit Manager</field>
+        <field name="privilege_id" ref="privilege_ls_audit"/>
+        <field name="implied_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_lead_auditor'))]"/>
+        <field name="comment">Owns the audit programme and the audit configuration: audit types, areas, auditor qualifications, finding categories, programme approval and report approval.</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_document_new_version_wizard_form" model="ir.ui.view">
+        <field name="name">ls.document.new.version.wizard.form</field>
+        <field name="model">ls.document.new.version.wizard</field>
+        <field name="arch" type="xml">
+            <form string="New Document Version">
+                <group>
+                    <field name="document_id" readonly="1"/>
+                    <field name="document_state" readonly="1"/>
+                    <field name="content" filename="filename" widget="binary"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+                <group string="Summary of Change">
+                    <field name="change_summary" nolabel="1" placeholder="What changed compared with the previous version"/>
+                </group>
+                <group string="Reason for Change">
+                    <field name="change_reason" nolabel="1" placeholder="Why the change was necessary"/>
+                </group>
+                <footer>
+                    <button name="action_create_version" string="Create Version" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_document_new_version_wizard" model="ir.actions.act_window">
+        <field name="name">New Version</field>
+        <field name="res_model">ls.document.new.version.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_ls_document_reject_wizard_form" model="ir.ui.view">
+        <field name="name">ls.document.reject.wizard.form</field>
+        <field name="model">ls.document.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reject Document">
+                <group>
+                    <field name="document_id" readonly="1"/>
+                </group>
+                <group string="Reason for Rejection">
+                    <field name="reason" nolabel="1" placeholder="Reason communicated to the document owner"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_rejection" string="Confirm Rejection" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_document_reject_wizard" model="ir.actions.act_window">
+        <field name="name">Reject Document</field>
+        <field name="res_model">ls.document.reject.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

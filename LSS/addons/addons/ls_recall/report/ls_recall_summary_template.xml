@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Status and final reports print the frozen figures once the report
+        has been approved, and the live figures while it is still a
+        draft. The printed document states which of the two it is showing.
+    -->
+
+    <template id="report_ls_recall_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <t t-set="frozen"
+                           t-value="doc.state in ('approved', 'submitted')"/>
+                        <h2 class="text-center">
+                            <span t-field="doc.report_type"/>
+                        </h2>
+                        <p class="text-center">
+                            <span t-field="doc.name"/> |
+                            <span t-field="doc.execution_id.name"/> |
+                            <span t-field="doc.report_date"/>
+                        </p>
+
+                        <div t-if="not frozen"
+                             class="alert alert-warning">
+                            Draft report. The figures below are the
+                            current values and are not yet frozen.
+                        </div>
+
+                        <h3>Subject of the Action</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Product</th>
+                                <td><span t-field="doc.execution_id.product_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Lots</th>
+                                <td><span t-esc="', '.join(doc.execution_id.lot_ids.mapped('name'))"/></td>
+                            </tr>
+                            <tr>
+                                <th>Classification</th>
+                                <td><span t-field="doc.execution_id.classification"/></td>
+                            </tr>
+                            <tr>
+                                <th>Decision date</th>
+                                <td><span t-field="doc.execution_id.decision_date"/></td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td><span t-field="doc.execution_id.state"/></td>
+                            </tr>
+                        </table>
+
+                        <h3>Reconciliation</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Distributed</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_distributed"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_distributed"/>
+                                </td>
+                                <th>Returned</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_returned"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_returned"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Destroyed on site</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_destroyed"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_destroyed"/>
+                                </td>
+                                <th>Not recoverable</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_not_recovered"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_not_recovered"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Accounted for</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_accounted"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_accounted"/>
+                                </td>
+                                <th>Outstanding</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_qty_outstanding"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.qty_outstanding"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Reconciliation rate (%)</th>
+                                <td colspan="3">
+                                    <span t-if="frozen" t-field="doc.snapshot_reconciliation_rate"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.reconciliation_rate"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Consignees and Effectiveness Checks</h3>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Consignees</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_consignee_count"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.consignee_count"/>
+                                </td>
+                                <th>Responded</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_responded_count"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.consignee_responded_count"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Checks required</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_checks_required"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.effectiveness_required_count"/>
+                                </td>
+                                <th>Checks performed</th>
+                                <td>
+                                    <span t-if="frozen" t-field="doc.snapshot_checks_performed"/>
+                                    <span t-if="not frozen" t-field="doc.execution_id.effectiveness_performed_count"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h3>Situation Summary</h3>
+                        <div t-field="doc.summary"/>
+                        <h3>Actions Taken</h3>
+                        <div t-field="doc.actions_taken"/>
+                        <h3>Product Disposition</h3>
+                        <div t-field="doc.disposition"/>
+                        <h3>Conclusion</h3>
+                        <div t-field="doc.conclusion"/>
+
+                        <table class="table table-sm mt-4">
+                            <tr>
+                                <th>Prepared by</th>
+                                <td><span t-field="doc.prepared_by_user_id"/></td>
+                                <th>Reviewed by</th>
+                                <td><span t-field="doc.reviewed_by_user_id"/></td>
+                            </tr>
+                            <tr>
+                                <th>Approved by</th>
+                                <td><span t-field="doc.approved_by_user_id"/></td>
+                                <th>Approved on</th>
+                                <td><span t-field="doc.approval_date"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

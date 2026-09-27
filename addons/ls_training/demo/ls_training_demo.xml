@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <!-- ==================== COMPETENCIES ==================== -->
+        <record id="demo_competency_gowning"
+                model="ls.training.competency">
+            <field name="name">Aseptic Gowning</field>
+            <field name="code">CMP-GOWN</field>
+            <field name="minimum_level">proficient</field>
+            <field name="reassessment_months">12</field>
+            <field name="description">Ability to gown for entry into a
+                grade B cleanroom without breaching sterility.</field>
+        </record>
+
+        <record id="demo_competency_documentation"
+                model="ls.training.competency">
+            <field name="name">GMP Documentation Practice</field>
+            <field name="code">CMP-DOC</field>
+            <field name="minimum_level">proficient</field>
+            <field name="reassessment_months">24</field>
+            <field name="description">Correct completion, correction and
+                signature of GMP records.</field>
+        </record>
+
+        <!-- ==================== COURSES ==================== -->
+        <record id="demo_course_gmp_basics"
+                model="ls.training.course">
+            <field name="name">GMP Fundamentals</field>
+            <field name="code">TRN/CRS/DEMO1</field>
+            <field name="version">2.0</field>
+            <field name="course_type">gmp</field>
+            <field name="delivery_mode">classroom</field>
+            <field name="duration_hours">4.0</field>
+            <field name="validity_months">24</field>
+            <field name="requires_assessment" eval="True"/>
+            <field name="pass_score">80.0</field>
+            <field name="objective">Understand the principles of Good
+                Manufacturing Practice and their application on the shop
+                floor.</field>
+            <field name="competency_ids"
+                   eval="[Command.link(ref('demo_competency_documentation'))]"/>
+        </record>
+
+        <record id="demo_course_gowning"
+                model="ls.training.course">
+            <field name="name">Aseptic Gowning Qualification</field>
+            <field name="code">TRN/CRS/DEMO2</field>
+            <field name="version">1.0</field>
+            <field name="course_type">technical</field>
+            <field name="delivery_mode">on_the_job</field>
+            <field name="duration_hours">2.0</field>
+            <field name="validity_months">12</field>
+            <field name="requires_assessment" eval="True"/>
+            <field name="pass_score">100.0</field>
+            <field name="objective">Demonstrate compliant gowning for
+                grade B cleanroom access.</field>
+            <field name="competency_ids"
+                   eval="[Command.link(ref('demo_competency_gowning'))]"/>
+        </record>
+
+        <record id="demo_course_induction"
+                model="ls.training.course">
+            <field name="name">Site Induction</field>
+            <field name="code">TRN/CRS/DEMO3</field>
+            <field name="version">1.0</field>
+            <field name="course_type">induction</field>
+            <field name="delivery_mode">self_study</field>
+            <field name="duration_hours">1.0</field>
+            <field name="validity_months">0</field>
+            <field name="requires_assessment" eval="False"/>
+        </record>
+
+        <!-- Approve the demo courses through the documented workflow -->
+        <function model="ls.training.course" name="action_submit_review">
+            <value eval="[
+                ref('demo_course_gmp_basics'),
+                ref('demo_course_gowning'),
+                ref('demo_course_induction'),
+            ]"/>
+        </function>
+        <function model="ls.training.course" name="action_approve">
+            <value eval="[
+                ref('demo_course_gmp_basics'),
+                ref('demo_course_gowning'),
+                ref('demo_course_induction'),
+            ]"/>
+        </function>
+
+        <!-- ==================== REQUIREMENTS ==================== -->
+        <record id="demo_requirement_induction_all"
+                model="ls.training.requirement">
+            <field name="course_id" ref="demo_course_induction"/>
+            <field name="department_id" ref="hr.dep_administration"/>
+            <field name="mandatory" eval="True"/>
+            <field name="grace_days">14</field>
+            <field name="note">Every new arrival completes the site
+                induction within two weeks.</field>
+        </record>
+
+        <record id="demo_requirement_gmp_all"
+                model="ls.training.requirement">
+            <field name="course_id" ref="demo_course_gmp_basics"/>
+            <field name="department_id" ref="hr.dep_administration"/>
+            <field name="mandatory" eval="True"/>
+            <field name="grace_days">30</field>
+            <field name="note">GMP awareness is required for all personnel
+                with access to production areas.</field>
+        </record>
+
+        <!-- ==================== SESSION ==================== -->
+        <record id="demo_session_gmp"
+                model="ls.training.session">
+            <field name="course_id" ref="demo_course_gmp_basics"/>
+            <field name="date_start"
+                   eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d 08:00:00')"/>
+            <field name="date_end"
+                   eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d 12:00:00')"/>
+            <field name="location">Training Room 1</field>
+            <field name="capacity">20</field>
+        </record>
+
+        <record id="demo_attendance_gmp_1"
+                model="ls.training.attendance">
+            <field name="session_id" ref="demo_session_gmp"/>
+            <field name="employee_id" ref="hr.employee_admin"/>
+            <field name="attended" eval="True"/>
+            <field name="score">92.0</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+#
+# LSS Foundation & Licensing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: LSS Foundation 19.0\n"
+"Language-Team: \n"
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Business Establishment Project"
+msgstr ""
+
+msgid "Regulatory Authority"
+msgstr ""
+
+msgid "Regulatory Procedure"
+msgstr ""
+
+msgid "Regulatory Step"
+msgstr ""
+
+msgid "License"
+msgstr ""
+
+msgid "Regulatory Text"
+msgstr ""
+
+msgid "Checklist Item"
+msgstr ""
+
+msgid "Foundation Document"
+msgstr ""
+
+msgid "Investment Item"
+msgstr ""
+
+msgid "Pharmaceutical"
+msgstr ""
+
+msgid "Medical Devices"
+msgstr ""
+
+msgid "Cosmetics"
+msgstr ""
+
+msgid "Manufacturing"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "Generate Roadmap"
+msgstr ""
+
+msgid "Start Project"
+msgstr ""

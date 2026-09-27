@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_cosmetic_restriction_list" model="ir.ui.view">
+        <field name="name">ls.cosmetic.restriction.list</field>
+        <field name="model">ls.cosmetic.restriction</field>
+        <field name="arch" type="xml">
+            <list string="Annex Entries">
+                <field name="annex"/>
+                <field name="reference_number"/>
+                <field name="substance_name"/>
+                <field name="inci_name" optional="show"/>
+                <field name="cas_number" optional="hide"/>
+                <field name="ec_number" optional="hide"/>
+                <field name="has_numeric_limit"/>
+                <field name="max_concentration" digits="[16, 6]"/>
+                <field name="consolidation_date"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_restriction_form" model="ir.ui.view">
+        <field name="name">ls.cosmetic.restriction.form</field>
+        <field name="model">ls.cosmetic.restriction</field>
+        <field name="arch" type="xml">
+            <form string="Annex Entry">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="substance_name"/>
+                        <h1><field name="substance_name" placeholder="Substance name as published"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="annex"/>
+                            <field name="reference_number"/>
+                            <field name="inci_name"/>
+                            <field name="cas_number"/>
+                            <field name="ec_number"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Limit">
+                            <field name="has_numeric_limit"/>
+                            <field name="max_concentration" digits="[16, 6]"
+                                   invisible="not has_numeric_limit"
+                                   required="has_numeric_limit"/>
+                            <field name="product_type_scope"/>
+                        </group>
+                    </group>
+                    <group string="Provenance">
+                        <field name="source_reference"/>
+                        <field name="consolidation_date"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <notebook>
+                        <page string="Conditions of Use" name="conditions">
+                            <field name="conditions_of_use" placeholder="Conditions as published in the annex"/>
+                        </page>
+                        <page string="Label Wording" name="wording">
+                            <field name="label_wording"
+                                   placeholder="Wording of conditions of use and warnings required on the label"/>
+                        </page>
+                        <page string="Other Column" name="other">
+                            <field name="other_column"
+                                   placeholder="Column 'Other' of Annex III"/>
+                        </page>
+                        <page string="Internal Note" name="note">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_cosmetic_restriction_search" model="ir.ui.view">
+        <field name="name">ls.cosmetic.restriction.search</field>
+        <field name="model">ls.cosmetic.restriction</field>
+        <field name="arch" type="xml">
+            <search string="Annex Entries">
+                <field name="substance_name"/>
+                <field name="inci_name"/>
+                <field name="reference_number"/>
+                <field name="cas_number"/>
+                <filter name="filter_annex_ii" string="Annex II - Prohibited"
+                        domain="[('annex', '=', 'ii')]"/>
+                <filter name="filter_annex_iii" string="Annex III - Restricted"
+                        domain="[('annex', '=', 'iii')]"/>
+                <filter name="filter_annex_iv" string="Annex IV - Colorants"
+                        domain="[('annex', '=', 'iv')]"/>
+                <filter name="filter_annex_v" string="Annex V - Preservatives"
+                        domain="[('annex', '=', 'v')]"/>
+                <filter name="filter_annex_vi" string="Annex VI - UV-filters"
+                        domain="[('annex', '=', 'vi')]"/>
+                <separator/>
+                <filter name="filter_numeric" string="Numeric Limit"
+                        domain="[('has_numeric_limit', '=', True)]"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_annex" string="Annex" context="{'group_by': 'annex'}"/>
+                    <filter name="group_consolidation" string="Consolidation Date"
+                            context="{'group_by': 'consolidation_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_cosmetic_restriction" model="ir.actions.act_window">
+        <field name="name">Annex Restrictions</field>
+        <field name="res_model">ls.cosmetic.restriction</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_cosmetic_restriction_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Load the annex entries you rely on</p>
+            <p>
+                This module ships no content for Annexes II to VI of Regulation
+                (EC) No 1223/2009. Those annexes are amended several times per
+                year, so an embedded snapshot would be out of date and would give
+                a false impression of authority.
+            </p>
+            <p>
+                Load the entries you rely on from the current consolidated text,
+                record the source and consolidation date on each one, and keep
+                them under change control. Until an entry is linked to an
+                ingredient, the module reports that compliance has not been
+                evaluated rather than that it is compliant.
+            </p>
+        </field>
+    </record>
+
+</odoo>

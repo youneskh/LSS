@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite. See LICENSE file for copyright details. -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="cron_verify_signature_chain" model="ir.cron">
+            <field name="name">Electronic Signatures: verify hash chain</field>
+            <field name="model_id" ref="model_ls_signature_integrity_check"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_verify_all_companies()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_close_idle_sessions" model="ir.cron">
+            <field name="name">Electronic Signatures: close idle signing sessions</field>
+            <field name="model_id" ref="model_ls_signature_session"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_close_idle_sessions()</field>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_expire_signature_requests" model="ir.cron">
+            <field name="name">Electronic Signatures: expire overdue requests</field>
+            <field name="model_id" ref="model_ls_signature_request"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_expire_requests()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

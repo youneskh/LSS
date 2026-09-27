@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_complaint_category_view_list" model="ir.ui.view">
+        <field name="name">ls.complaint.category.list</field>
+        <field name="model">ls.complaint.category</field>
+        <field name="arch" type="xml">
+            <list string="Complaint Categories">
+                <field name="sequence" widget="handle"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="default_severity"/>
+                <field name="requires_investigation"/>
+                <field name="acknowledgement_target_days"/>
+                <field name="investigation_target_days"/>
+                <field name="closure_target_days"/>
+                <field name="ae_reporting_deadline_days"/>
+                <field name="complaint_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_complaint_category_view_form" model="ir.ui.view">
+        <field name="name">ls.complaint.category.form</field>
+        <field name="model">ls.complaint.category</field>
+        <field name="arch" type="xml">
+            <form string="Complaint Category">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_complaints" type="object"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="complaint_count" widget="statinfo" string="Complaints"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Category name"/></h1>
+                    </div>
+                    <group>
+                        <group name="identification" string="Identification">
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group name="classification" string="Classification">
+                            <field name="default_severity"/>
+                            <field name="requires_investigation"/>
+                        </group>
+                    </group>
+                    <group name="targets" string="Configurable Targets (calendar days, 0 = not configured)">
+                        <group>
+                            <field name="acknowledgement_target_days"/>
+                            <field name="investigation_target_days"/>
+                        </group>
+                        <group>
+                            <field name="closure_target_days"/>
+                            <field name="ae_reporting_deadline_days"/>
+                        </group>
+                    </group>
+                    <group string="Description">
+                        <field name="description" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_complaint_category_view_search" model="ir.ui.view">
+        <field name="name">ls.complaint.category.search</field>
+        <field name="model">ls.complaint.category</field>
+        <field name="arch" type="xml">
+            <search string="Complaint Categories">
+                <field name="name"/>
+                <field name="code"/>
+                <filter name="filter_requires_investigation" string="Investigation Required"
+                        domain="[('requires_investigation', '=', True)]"/>
+                <filter name="filter_inactive" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_by_severity" string="Default Severity"
+                        context="{'group_by': 'default_severity'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_complaint_category_action" model="ir.actions.act_window">
+        <field name="name">Complaint Categories</field>
+        <field name="res_model">ls.complaint.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_complaint_category_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first complaint category</p>
+            <p>
+                Categories drive the classification of complaints and the target
+                dates applied to them. No target is delivered pre-configured: each
+                organisation must define its own targets.
+            </p>
+        </field>
+    </record>
+
+</odoo>

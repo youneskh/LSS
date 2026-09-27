@@ -1,0 +1,158 @@
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h2 class="oe_slogan">Life Sciences &mdash; Training Management</h2>
+    <h3 class="oe_slogan">
+      Training, certification and competency management for regulated
+      environments
+    </h3>
+    <p class="oe_mt32 text-center">
+      Pharmaceutical manufacturing &middot; Medical devices &middot;
+      Medical plastics &middot; Cosmetics &middot; Laboratories
+    </p>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Please read before installing</h3>
+    <div class="oe_span12">
+      <p>
+        This release has never been installed or executed. It was developed
+        without access to an Odoo 19 runtime. Five API assumptions are
+        documented as unverified in
+        <code>doc/verification_notes.md</code>, together with their
+        remediation. Install on a scratch database and run the test suite
+        first.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Controlled course catalogue</h3>
+    <div class="oe_span6">
+      <p class="oe_mt32">
+        Courses follow an explicit approval lifecycle &mdash; Draft, Under
+        Review, Approved, Obsolete &mdash; because training must be
+        delivered against controlled material. Only approved courses can be
+        scheduled.
+      </p>
+      <p>
+        Each course is versioned. The version in force at the moment a
+        certification is issued is copied onto that certification and never
+        changes, so a later revision cannot retroactively alter what an
+        employee was trained on.
+      </p>
+    </div>
+    <div class="oe_span6">
+      <ul>
+        <li>Classroom, on-the-job, self-study, external e-Learning</li>
+        <li>Configurable certification validity</li>
+        <li>Optional assessment with a pass mark</li>
+        <li>Competencies granted by the course</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Outcomes derived from evidence</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32">
+        A trainer records presence and, where required, a score. The system
+        derives pass or fail. Nobody can type a result directly, so any
+        outcome can be reconstructed from its inputs &mdash; which is
+        exactly what an auditor does during a data-integrity review.
+      </p>
+      <p>
+        Absence yields <em>Pending</em>, not <em>Failed</em>, because
+        non-attendance is not a failed assessment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Append-only certifications</h3>
+    <div class="oe_span6">
+      <ul>
+        <li>Issued automatically when a session closes</li>
+        <li>Recorded manually for external training</li>
+        <li>Never deletable &mdash; revocation with a documented reason is
+            the only withdrawal path</li>
+        <li>Renewal adds a record; history is never overwritten</li>
+      </ul>
+    </div>
+    <div class="oe_span6">
+      <p class="oe_mt32">
+        Status is computed from the expiry date and refreshed nightly, so a
+        lapsed qualification never continues to display as valid. Employees
+        are emailed inside a configurable warning window.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Requirements and the training matrix</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32">
+        State that a job position, a department or a named employee must
+        hold a course. The matrix then reports every employee/course cell
+        as Valid, Expiring Soon, Expired, Revoked or Not Trained, with a
+        one-click Gaps filter and a pivot view.
+      </p>
+      <p>
+        Each employee carries a compliance rate, and a one-page individual
+        training record can be printed for inspection.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Regulatory position</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32">
+        This module <strong>supports implementation</strong> of training and
+        competence processes of the kind expected by ISO 9001:2015,
+        ISO 13485:2016, GMP guidance, ISO 22716:2007, ISO 15378:2017 and
+        FDA 21 CFR Part 211.
+      </p>
+      <p>
+        It does <strong>not</strong> implement FDA 21 CFR Part 11. There is
+        no electronic signature and no field-level audit trail. It
+        implements nothing ANPP-specific, because ANPP training-record
+        requirements could not be verified from official sources.
+      </p>
+      <p>
+        Software does not deliver compliance. Compliance is produced by an
+        organisation's procedures, its trained personnel, its quality system
+        and its own validation of the tools it uses.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container oe_dark">
+  <div class="oe_row oe_spaced">
+    <h3 class="oe_slogan">Technical</h3>
+    <div class="oe_span12">
+      <p class="oe_mt32">
+        Odoo 19.0 Community. Depends on <code>base</code>,
+        <code>mail</code> and <code>hr</code> only. No additional Python
+        package. No custom JavaScript. No raw SQL. AGPL-3.
+      </p>
+      <p>
+        8 models, 124 fields, 88 methods, 8 SQL constraints, 18 Python
+        constraints, 4 security groups, 31 access-control lines, 13 record
+        rules, 146 tests and 16 documents.
+      </p>
+    </div>
+  </div>
+</section>

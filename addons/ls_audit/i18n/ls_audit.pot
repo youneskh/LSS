@@ -1,0 +1,658 @@
+# Translation template for the ls_audit module.
+# Copyright 2026 Life Sciences Suite Architecture Team
+# This file is distributed under the same licence as the
+# ls_audit module (AGPL-3.0).
+#
+# This template covers the strings raised by the Python code.
+# Field labels, help texts and view strings are keyed by model
+# metadata and must be appended by running Odoo's exporter:
+#   odoo-bin -d <db> --i18n-export=ls_audit.pot --modules=ls_audit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-24 13:59+0000\n"
+"PO-Revision-Date: 2026-07-24 13:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_auditor.py:138
+#, python-format
+msgid "%(name)s (Lead Auditor)"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:634
+#, python-format
+msgid "%(name)s has no auditor qualification record and cannot be assigned to audit %(ref)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:622
+#, python-format
+msgid "%(name)s is not registered as a qualified lead auditor and cannot lead audit %(ref)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_checklist_load.py:75
+#, python-format
+msgid "A checklist can only be loaded while audit %(ref)s is planned or scheduled."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_finding_response.py:81
+#, python-format
+msgid "A corrective action must be described in the response."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:198
+#, python-format
+msgid "A finding can only be raised from a non-conform or observation result."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:194
+#, python-format
+msgid "A finding has already been raised for this question."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:599
+#, python-format
+msgid "Accept Response"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:661
+#, python-format
+msgid "Action '%(action)s' is not allowed for audit(s) %(refs)s in their current status."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:534
+#, python-format
+msgid "Action '%(action)s' is not allowed for finding(s) %(refs)s in their current status."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:283
+#, python-format
+msgid "Action '%(action)s' is not allowed for report(s) %(refs)s in their current status."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_area.py:121
+#, python-format
+msgid "An auditable area cannot be its own ancestor."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:345
+#, python-format
+msgid "Approve"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:487
+#, python-format
+msgid "Area '%(area)s' is not in the scope of audit %(ref)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_checklist_load.py:91
+#, python-format
+msgid "Audit %(ref)s already contains %(count)s question(s). Tick 'Replace Existing Questions' to load a different checklist."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:793
+#, python-format
+msgid "Audit %(ref)s cannot be closed because no audit report has been issued."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:686
+#, python-format
+msgid "Audit %(ref)s cannot be scheduled because its programme has not been approved."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:714
+#, python-format
+msgid "Audit %(ref)s cannot be started because no checklist has been loaded."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:762
+#, python-format
+msgid "Audit %(ref)s cannot move to follow-up because no audit report has been issued."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:577
+#, python-format
+msgid "Audit %(ref)s covers areas of another company: %(areas)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:486
+#, python-format
+msgid "Audit %(ref)s is not impartial: %(names)s appear both in the audit team and among the auditees. An auditor cannot audit their own work."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:507
+#, python-format
+msgid "Audit %(ref)s is not impartial: %(names)s own at least one of the audited areas and cannot be part of the audit team."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:739
+#, python-format
+msgid "Audit %(ref)s still has %(count)s mandatory question(s) without assessment."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:781
+#, python-format
+msgid "Audit %(ref)s still has %(count)s open finding(s) and cannot be closed."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:869
+#, python-format
+msgid "Audit Reports"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:458
+#, python-format
+msgid "Audit(s) %(refs)s cannot be deleted because they left the planned status. Cancel them instead so that the record and its audit trail are retained."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:440
+#, python-format
+msgid "Audit(s) %(refs)s reached a final status and can no longer be modified."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:309
+#, python-format
+msgid "Audits"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_cancel.py:118
+#, python-format
+msgid "Cancelled by %(user)s. Reason: %(reason)s"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_checklist_load.py:118
+#, python-format
+msgid "Checklist %(name)s loaded with %(count)s question(s)."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:158
+#, python-format
+msgid "Checklist '%(name)s' can only be approved from the draft status."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:166
+#, python-format
+msgid "Checklist '%(name)s' cannot be approved because it contains no question."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:210
+#, python-format
+msgid "Checklist '%(name)s' has been used by %(count)s audit(s) and cannot be sent back to draft. Create a new version instead."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_checklist_load.py:83
+#, python-format
+msgid "Checklist '%(name)s' is not approved and cannot be loaded into an audit."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:147
+#, python-format
+msgid "Checklist responses can only be edited while the audit is scheduled or in progress. Affected audit(s): %(refs)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:176
+#, python-format
+msgid "Checklist responses can only be removed while the audit is still scheduled."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:777
+#, python-format
+msgid "Close"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:731
+#, python-format
+msgid "Complete"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:469
+#, python-format
+msgid "Finding %(ref)s cannot be assigned to %(name)s, who raised it. The response must come from the audited area."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:664
+#, python-format
+msgid "Finding %(ref)s cannot be closed because the verification method has not been documented."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:675
+#, python-format
+msgid "Finding %(ref)s cannot be closed because the verification result has not been documented."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:556
+#, python-format
+msgid "Finding %(ref)s cannot be issued because audit %(audit)s is not in progress."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:683
+#, python-format
+msgid "Finding %(ref)s cannot be verified by the responsible auditee. Verification must be performed independently."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_finding_response.py:74
+#, python-format
+msgid "Finding %(ref)s is not awaiting a response."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:512
+#, python-format
+msgid "Finding %(ref)s references records of another company: %(items)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:615
+#, python-format
+msgid "Finding %(ref)s requires a CAPA reference before the response can be accepted."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_finding_response.py:96
+#, python-format
+msgid "Finding %(ref)s requires a CAPA reference."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:605
+#, python-format
+msgid "Finding %(ref)s requires a documented root cause before the response can be accepted."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_finding_response.py:87
+#, python-format
+msgid "Finding %(ref)s requires a documented root cause."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:429
+#, python-format
+msgid "Finding(s) %(refs)s reached a final status and can no longer be modified."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:447
+#, python-format
+msgid "Finding(s) %(refs)s were issued and cannot be deleted. Cancel them instead so that the record and its audit trail are retained."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:850
+#, python-format
+msgid "Findings"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:755
+#, python-format
+msgid "Follow-up"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:548
+#: code:addons/ls_audit/models/ls_audit_report.py:379
+#, python-format
+msgid "Issue"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:34
+#: code:addons/ls_audit/models/ls_audit_finding.py:395
+#: code:addons/ls_audit/models/ls_audit_finding.py:395
+#: code:addons/ls_audit/models/ls_audit_finding.py:401
+#: code:addons/ls_audit/models/ls_audit_program.py:29
+#: code:addons/ls_audit/models/ls_audit_program.py:178
+#: code:addons/ls_audit/models/ls_audit_program.py:178
+#: code:addons/ls_audit/models/ls_audit_program.py:184
+#: code:addons/ls_audit/models/ls_audit_report.py:28
+#: code:addons/ls_audit/models/ls_audit_report.py:200
+#: code:addons/ls_audit/models/ls_audit_report.py:200
+#: code:addons/ls_audit/models/ls_audit_report.py:206
+#: code:addons/ls_audit/models/ls_audit_schedule.py:31
+#: code:addons/ls_audit/models/ls_audit_schedule.py:408
+#: code:addons/ls_audit/models/ls_audit_schedule.py:408
+#: code:addons/ls_audit/models/ls_audit_schedule.py:414
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:205
+#, python-format
+msgid "New Finding"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_response.py:122
+#, python-format
+msgid "Objective evidence is required for the non-conform or observation result recorded on question '%(question)s'."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:189
+#, python-format
+msgid "Only an approved checklist can be made obsolete. Checklist '%(name)s' is not approved."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:903
+#, python-format
+msgid "Overdue audit %(ref)s"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:210
+#, python-format
+msgid "Programme '%(name)s' can only be approved from the draft status."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:218
+#, python-format
+msgid "Programme '%(name)s' cannot be approved because it contains no audit."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:241
+#, python-format
+msgid "Programme '%(name)s' must be approved before it can be started."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:259
+#, python-format
+msgid "Programme '%(name)s' must be in progress before it can be closed."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:270
+#, python-format
+msgid "Programme '%(name)s' still contains %(count)s audit(s) that are neither closed nor cancelled: %(audits)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist_line.py:77
+#, python-format
+msgid "Questions of an approved or obsolete checklist cannot be modified. Create a new checklist version instead. Affected checklist(s): %(names)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_cancel.py:107
+#, python-format
+msgid "Record %(name)s is in status '%(state)s' and can no longer be cancelled."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_cancel.py:79
+#, python-format
+msgid "Records of type '%(model)s' cannot be cancelled through this wizard."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:629
+#, python-format
+msgid "Reject Response"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:357
+#, python-format
+msgid "Report %(ref)s cannot be approved by the user who prepared it. Preparation and approval must be performed by different users."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:383
+#, python-format
+msgid "Report %(ref)s cannot be issued because its distribution list is empty. Audit results must be reported to the responsible management."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:325
+#, python-format
+msgid "Report %(ref)s cannot be reviewed by the user who prepared it. The review must be independent."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:305
+#, python-format
+msgid "Report %(ref)s cannot be submitted because the fieldwork of audit %(audit)s is not complete."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:266
+#, python-format
+msgid "Report %(ref)s is attached to an audit of another company."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:349
+#, python-format
+msgid "Report %(ref)s must be reviewed before it can be approved."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:248
+#, python-format
+msgid "Report(s) %(refs)s left the draft status and cannot be deleted. Cancel them instead so that the record and its audit trail are retained."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:230
+#, python-format
+msgid "Report(s) %(refs)s reached a final status and can no longer be modified."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:646
+#, python-format
+msgid "Request Verification"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:410
+#, python-format
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_finding_response.py:114
+#, python-format
+msgid "Response submitted by %(user)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:321
+#, python-format
+msgid "Review"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:679
+#, python-format
+msgid "Schedule"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:710
+#, python-format
+msgid "Start"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_report.py:297
+#, python-format
+msgid "Submit for Review"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:279
+#, python-format
+msgid "The applicable areas of checklist '%(name)s' contain areas of another company."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:566
+#, python-format
+msgid "The audit type of audit %(ref)s belongs to another company."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_checklist.py:267
+#, python-format
+msgid "The audit type of checklist '%(name)s' belongs to another company."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_type.py:81
+#, python-format
+msgid "The default checklist '%(checklist)s' belongs to another company than the audit type '%(type)s'."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_program.py:194
+#, python-format
+msgid "The end date of programme '%(name)s' is earlier than its start date."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_auditor.py:152
+#, python-format
+msgid "The expiry date of auditor '%(name)s' is earlier than the qualification date."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:325
+#: code:addons/ls_audit/models/ls_audit_schedule.py:371
+#, python-format
+msgid "The overdue filter only supports equality operators."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_area.py:132
+#, python-format
+msgid "The parent area '%(parent)s' belongs to another company than the area '%(area)s'."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:534
+#, python-format
+msgid "The planned date of audit %(ref)s falls outside the period of programme %(program)s (%(start)s to %(end)s)."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:916
+#, python-format
+msgid "The planned date of this audit has passed while the audit has not been started."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:558
+#, python-format
+msgid "The programme of audit %(ref)s belongs to another company."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_schedule.py:643
+#, python-format
+msgid "The qualification of %(name)s is expired or does not cover every area of audit %(ref)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_auditor.py:169
+#, python-format
+msgid "The qualified scope of auditor '%(name)s' contains areas of another company: %(areas)s."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/wizards/ls_audit_cancel.py:102
+#, python-format
+msgid "The record to cancel no longer exists."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding_category.py:106
+#, python-format
+msgid "The response deadline of category '%(name)s' cannot be negative."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:633
+#, python-format
+msgid "The response was rejected by %(user)s. A revised response is required."
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:657
+#, python-format
+msgid "Verify and Close"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:509
+#, python-format
+msgid "area"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:505
+#, python-format
+msgid "audit"
+msgstr ""
+
+#. module: ls_audit
+#: code:addons/ls_audit/models/ls_audit_finding.py:507
+#, python-format
+msgid "category"
+msgstr ""
+

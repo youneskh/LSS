@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     Menu ownership note: the Functional Specification places deviation menus
+     under a shared "Quality" root owned by ls_qms. ls_qms does not exist, so
+     this module declares the root itself. When ls_qms is implemented, the
+     root menu below should be moved to ls_qms and this file changed to
+     reference it with parent="ls_qms.menu_quality_root". -->
+<odoo>
+
+    <menuitem id="menu_ls_quality_root"
+              name="Quality Management"
+              web_icon="ls_deviation,static/description/icon.png"
+              sequence="70"
+              groups="ls_deviation.group_ls_deviation_viewer"/>
+
+    <menuitem id="menu_ls_deviation_main"
+              name="Deviations"
+              parent="menu_ls_quality_root"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_deviation_all"
+              name="All Deviations"
+              parent="menu_ls_deviation_main"
+              action="action_ls_deviation"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_deviation_my"
+              name="My Deviations"
+              parent="menu_ls_deviation_main"
+              action="action_ls_deviation_my"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_deviation_investigations"
+              name="Investigations"
+              parent="menu_ls_deviation_main"
+              action="action_ls_deviation_investigation"
+              sequence="30"
+              groups="ls_deviation.group_ls_deviation_investigator"/>
+
+    <menuitem id="menu_ls_deviation_dispositions"
+              name="Product Dispositions"
+              parent="menu_ls_deviation_main"
+              action="action_ls_deviation_disposition"
+              sequence="40"
+              groups="ls_deviation.group_ls_deviation_investigator"/>
+
+    <menuitem id="menu_ls_deviation_actions"
+              name="Immediate Actions"
+              parent="menu_ls_deviation_main"
+              action="action_ls_deviation_action"
+              sequence="50"/>
+
+    <menuitem id="menu_ls_deviation_reporting"
+              name="Reporting"
+              parent="menu_ls_quality_root"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_deviation_analysis"
+              name="Deviation Analysis"
+              parent="menu_ls_deviation_reporting"
+              action="action_ls_deviation_analysis"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_deviation_stage_log"
+              name="Transition Log"
+              parent="menu_ls_deviation_reporting"
+              action="action_ls_deviation_stage_log"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_deviation_config"
+              name="Configuration"
+              parent="menu_ls_quality_root"
+              sequence="90"
+              groups="ls_deviation.group_ls_deviation_manager"/>
+
+    <menuitem id="menu_ls_deviation_config_type"
+              name="Deviation Types"
+              parent="menu_ls_deviation_config"
+              action="action_ls_deviation_type"
+              sequence="10"/>
+
+    <menuitem id="menu_ls_deviation_config_category"
+              name="Deviation Categories"
+              parent="menu_ls_deviation_config"
+              action="action_ls_deviation_category"
+              sequence="20"/>
+
+    <menuitem id="menu_ls_deviation_config_rca"
+              name="Root Cause Analysis Methods"
+              parent="menu_ls_deviation_config"
+              action="action_ls_deviation_rca_method"
+              sequence="30"/>
+
+    <menuitem id="menu_ls_deviation_config_tag"
+              name="Tags"
+              parent="menu_ls_deviation_config"
+              action="action_ls_deviation_tag"
+              sequence="40"/>
+
+</odoo>

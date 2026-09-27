@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_calibration_instrument_view_list" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.list</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <list string="Instruments" multi_edit="1">
+                <field name="code" />
+                <field name="name" />
+                <field name="category_id" optional="show" />
+                <field name="serial_number" optional="hide" />
+                <field name="location" optional="show" />
+                <field name="criticality" optional="show" />
+                <field name="gxp_impact" optional="hide" />
+                <field name="responsible_user_id" optional="show" widget="many2one_avatar_user" />
+                <field name="last_calibration_date" optional="show" />
+                <field name="next_calibration_date" optional="show" />
+                <field
+                    name="calibration_status"
+                    widget="badge"
+                    decoration-danger="calibration_status == 'overdue'"
+                    decoration-warning="calibration_status == 'due_soon'"
+                    decoration-success="calibration_status == 'valid'"
+                    decoration-muted="calibration_status in ('not_applicable', 'not_scheduled')"
+                />
+                <field name="state" widget="badge" />
+                <field name="company_id" groups="base.group_multi_company" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_calibration_instrument_view_form" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.form</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <form string="Instrument">
+                <header>
+                    <button
+                        name="action_set_in_service"
+                        string="Set In Service"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state not in ('draft', 'out_of_service')"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_set_out_of_service"
+                        string="Set Out of Service"
+                        type="object"
+                        invisible="state != 'in_service'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_retire"
+                        string="Retire"
+                        type="object"
+                        invisible="state == 'retired'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        invisible="state != 'retired'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,in_service,out_of_service"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_plans"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-calendar"
+                        >
+                            <field name="plan_count" widget="statinfo" string="Plans" />
+                        </button>
+                        <button
+                            name="action_view_records"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-check-square-o"
+                        >
+                            <field
+                                name="record_count"
+                                widget="statinfo"
+                                string="Records"
+                            />
+                        </button>
+                        <button
+                            name="action_view_certificates"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                        >
+                            <field
+                                name="certificate_count"
+                                widget="statinfo"
+                                string="Certificates"
+                            />
+                        </button>
+                    </div>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="text-bg-danger"
+                        invisible="active"
+                    />
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. Balance QC laboratory 1" />
+                        </h1>
+                        <label for="code" />
+                        <h2>
+                            <field name="code" readonly="state != 'draft'" />
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="identification" string="Identification">
+                            <field name="category_id" />
+                            <field name="manufacturer" />
+                            <field name="model_reference" />
+                            <field name="serial_number" />
+                            <field name="equipment_id" />
+                            <field name="location" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group name="classification" string="Classification">
+                            <field name="criticality" />
+                            <field name="gxp_impact" />
+                            <field name="responsible_user_id" />
+                            <field name="alert_lead_days" />
+                            <field name="calibration_status" />
+                            <field name="last_calibration_date" />
+                            <field name="next_calibration_date" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="metrology" string="Metrological Data">
+                            <group>
+                                <group string="Measuring Range">
+                                    <field name="range_min" />
+                                    <field name="range_max" />
+                                    <field name="unit" />
+                                </group>
+                                <group string="Default Acceptance Criteria">
+                                    <field name="tolerance_type" />
+                                    <field name="tolerance_value" />
+                                </group>
+                            </group>
+                        </page>
+                        <page name="plans" string="Calibration Plans">
+                            <field name="plan_ids" readonly="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="description" />
+                                    <field name="interval_number" />
+                                    <field name="interval_uom" />
+                                    <field name="last_calibration_date" />
+                                    <field name="next_due_date" />
+                                    <field name="state" widget="badge" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="records" string="Calibration Records">
+                            <field name="record_ids" readonly="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="calibration_date" />
+                                    <field name="calibration_type" />
+                                    <field name="as_found_status" />
+                                    <field name="result" widget="badge" />
+                                    <field name="state" widget="badge" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="certificates" string="Certificates">
+                            <field name="certificate_ids" readonly="1">
+                                <list>
+                                    <field name="name" />
+                                    <field name="issue_date" />
+                                    <field name="valid_until" />
+                                    <field name="issuer_type" />
+                                    <field name="state" widget="badge" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="notes" string="Notes">
+                            <field name="note" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_calibration_instrument_view_search" model="ir.ui.view">
+        <field name="name">ls.calibration.instrument.search</field>
+        <field name="model">ls.calibration.instrument</field>
+        <field name="arch" type="xml">
+            <search string="Instruments">
+                <field name="name" />
+                <field name="code" />
+                <field name="serial_number" />
+                <field name="category_id" />
+                <field name="responsible_user_id" />
+                <field name="location" />
+                <filter
+                    name="filter_overdue"
+                    string="Overdue"
+                    domain="[('calibration_status', '=', 'overdue')]"
+                />
+                <filter
+                    name="filter_due_soon"
+                    string="Due Soon"
+                    domain="[('calibration_status', '=', 'due_soon')]"
+                />
+                <filter
+                    name="filter_valid"
+                    string="Valid"
+                    domain="[('calibration_status', '=', 'valid')]"
+                />
+                <filter
+                    name="filter_not_scheduled"
+                    string="Not Scheduled"
+                    domain="[('calibration_status', '=', 'not_scheduled')]"
+                />
+                <separator />
+                <filter
+                    name="filter_in_service"
+                    string="In Service"
+                    domain="[('state', '=', 'in_service')]"
+                />
+                <filter
+                    name="filter_critical"
+                    string="Critical"
+                    domain="[('criticality', '=', 'critical')]"
+                />
+                <filter
+                    name="filter_gxp_direct"
+                    string="Direct GxP Impact"
+                    domain="[('gxp_impact', '=', 'direct')]"
+                />
+                <separator />
+                <filter
+                    name="filter_my_instruments"
+                    string="My Instruments"
+                    domain="[('responsible_user_id', '=', uid)]"
+                />
+                <filter
+                    name="filter_archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                                    <filter
+                    name="group_by_state"
+                    string="State"
+                    context="{'group_by': 'state'}"
+                    />
+                    <filter
+                    name="group_by_category"
+                    string="Category"
+                    context="{'group_by': 'category_id'}"
+                    />
+                    <filter
+                    name="group_by_criticality"
+                    string="Criticality"
+                    context="{'group_by': 'criticality'}"
+                    />
+                    <filter
+                    name="group_by_gxp_impact"
+                    string="GxP Impact"
+                    context="{'group_by': 'gxp_impact'}"
+                    />
+                    <filter
+                    name="group_by_responsible"
+                    string="Responsible"
+                    context="{'group_by': 'responsible_user_id'}"
+                    />
+                    <filter
+                    name="group_by_next_date"
+                    string="Next Calibration Date"
+                    context="{'group_by': 'next_calibration_date'}"
+                    />
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_calibration_instrument_action" model="ir.actions.act_window">
+        <field name="name">Instruments</field>
+        <field name="res_model">ls.calibration.instrument</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_calibration_instrument_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a new instrument</p>
+            <p>
+                The instrument register lists every measuring, monitoring and test
+                device whose result is used to accept or reject a product, a process
+                or an environmental condition.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_calibration_status_action" model="ir.actions.act_window">
+        <field name="name">Calibration Status</field>
+        <field name="res_model">ls.calibration.instrument</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_calibration_instrument_view_search" />
+        <field
+            name="domain"
+        >[('calibration_status', 'in', ['due_soon', 'overdue'])]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No calibration is due</p>
+            <p>
+                This view lists the instruments whose next calibration is due within
+                their alert lead time or is already overdue.
+            </p>
+        </field>
+    </record>
+
+</odoo>

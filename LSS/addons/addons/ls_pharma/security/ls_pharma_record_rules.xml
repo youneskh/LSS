@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <!--
+        Multi-company isolation.
+
+        Every rule below is a global rule: no group is attached to it, so it
+        applies to every user without exception, including administrators.
+        A global rule is the correct construct for company isolation, because
+        an isolation that a role could bypass would not be an isolation.
+
+        The computed "global" field of ir.rule is never written here; it is
+        derived by the framework from the absence of groups.
+
+        The domain uses the "company_ids" key of the evaluation context, which
+        holds the companies the user has currently enabled. Records without a
+        company remain visible so that data shared across companies is not
+        hidden.
+
+        Models excluded from this file and the reason for each exclusion:
+
+        * ls.pharma.stability.condition: reference data shared by every
+          company; it carries no company field.
+        * the three transient wizard models: a transient record is already
+          restricted to the user that created it by the framework.
+    -->
+
+    <record id="rule_ls_pharma_api_company" model="ir.rule">
+        <field name="name">Active ingredient: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_api"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_excipient_company" model="ir.rule">
+        <field name="name">Excipient: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_excipient"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_company" model="ir.rule">
+        <field name="name">Batch: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_component_company" model="ir.rule">
+        <field name="name">Batch component: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_component"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_equipment_company" model="ir.rule">
+        <field name="name">Batch equipment: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_equipment"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_coproduct_company" model="ir.rule">
+        <field name="name">Batch co-product: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_coproduct"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_company" model="ir.rule">
+        <field name="name">Batch record: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_step_company" model="ir.rule">
+        <field name="name">Batch record step: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_step"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_control_company" model="ir.rule">
+        <field name="name">Batch record control: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_control"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_discrepancy_company" model="ir.rule">
+        <field name="name">Batch record discrepancy: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_discrepancy"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_labeling_company" model="ir.rule">
+        <field name="name">Batch record labelling: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_labeling"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_sample_company" model="ir.rule">
+        <field name="name">Batch record sample: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_sample"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_record_clearance_company" model="ir.rule">
+        <field name="name">Batch record area inspection: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_record_clearance"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_batch_release_company" model="ir.rule">
+        <field name="name">Batch release decision: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_batch_release"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_stability_study_company" model="ir.rule">
+        <field name="name">Stability study: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_stability_study"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_stability_timepoint_company" model="ir.rule">
+        <field name="name">Stability time point: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_stability_timepoint"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_stability_sample_company" model="ir.rule">
+        <field name="name">Stability sample: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_stability_sample"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_stability_result_company" model="ir.rule">
+        <field name="name">Stability result: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_stability_result"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_serialization_company" model="ir.rule">
+        <field name="name">Serialised unit: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_serialization"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_aggregation_company" model="ir.rule">
+        <field name="name">Aggregation container: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_aggregation"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_ctd_dossier_company" model="ir.rule">
+        <field name="name">CTD dossier: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_ctd_dossier"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_ls_pharma_ctd_section_company" model="ir.rule">
+        <field name="name">CTD section: multi-company</field>
+        <field name="model_id" ref="model_ls_pharma_ctd_section"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

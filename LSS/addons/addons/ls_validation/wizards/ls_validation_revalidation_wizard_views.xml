@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_validation_revalidation_wizard_form" model="ir.ui.view">
+        <field name="name">ls.validation.revalidation.wizard.form</field>
+        <field name="model">ls.validation.revalidation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Plan Revalidation">
+                <div class="alert alert-info" role="alert">
+                    The test cases of the selected protocol are copied into a
+                    new draft protocol. The new protocol follows the normal
+                    review and approval path before execution.
+                </div>
+                <group>
+                    <field name="item_id"/>
+                    <field name="source_protocol_id"/>
+                    <field name="master_plan_id"/>
+                    <field name="new_title"/>
+                    <field name="planned_start_date"/>
+                    <field name="planned_end_date"/>
+                </group>
+                <footer>
+                    <button name="action_create_protocol" type="object"
+                            string="Create Protocol" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_validation_revalidation_wizard"
+            model="ir.actions.act_window">
+        <field name="name">Plan Revalidation</field>
+        <field name="res_model">ls.validation.revalidation.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

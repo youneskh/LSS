@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="demo_retention_policy_gmp" model="ls.document.retention_policy">
+            <field name="name">GMP records - 5 years after publication</field>
+            <field name="code">GMP-5Y</field>
+            <field name="duration_value">5</field>
+            <field name="duration_unit">year</field>
+            <field name="retention_trigger">publication</field>
+            <field name="notice_period_days">90</field>
+            <field name="end_of_life_action">notify</field>
+            <field name="description">Demonstration policy. The retention period applicable to a given record type must be determined by the organisation from the applicable regulations.</field>
+        </record>
+
+        <record id="demo_folder_qms" model="ls.document.folder">
+            <field name="name">Quality Management System</field>
+            <field name="retention_policy_id" ref="demo_retention_policy_gmp"/>
+            <field name="description">Root folder of the demonstration QMS documentation.</field>
+        </record>
+
+        <record id="demo_folder_sop" model="ls.document.folder">
+            <field name="name">Standard Operating Procedures</field>
+            <field name="parent_id" ref="demo_folder_qms"/>
+            <field name="retention_policy_id" ref="demo_retention_policy_gmp"/>
+        </record>
+
+        <record id="demo_folder_work_instructions" model="ls.document.folder">
+            <field name="name">Work Instructions</field>
+            <field name="parent_id" ref="demo_folder_qms"/>
+        </record>
+
+        <record id="demo_tag_sop" model="ls.document.tag">
+            <field name="name">SOP</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="demo_tag_gmp" model="ls.document.tag">
+            <field name="name">GMP</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="demo_document_deviation_sop" model="ls.document.document">
+            <field name="name">Handling of Deviations</field>
+            <field name="folder_id" ref="demo_folder_sop"/>
+            <field name="description">Demonstration document describing how deviations are recorded, investigated and closed.</field>
+            <field name="tag_ids" eval="[(6, 0, [ref('demo_tag_sop'), ref('demo_tag_gmp')])]"/>
+            <field name="retention_policy_id" ref="demo_retention_policy_gmp"/>
+        </record>
+
+        <record id="demo_document_training_sop" model="ls.document.document">
+            <field name="name">Training and Qualification of Personnel</field>
+            <field name="folder_id" ref="demo_folder_sop"/>
+            <field name="description">Demonstration document describing the training process.</field>
+            <field name="tag_ids" eval="[(6, 0, [ref('demo_tag_sop')])]"/>
+        </record>
+
+        <record id="demo_version_deviation_v1" model="ls.document.version">
+            <field name="document_id" ref="demo_document_deviation_sop"/>
+            <field name="filename">SOP-deviations-v1.txt</field>
+            <field name="content">RGVtb25zdHJhdGlvbiBjb250ZW50IGZvciB0aGUgZGV2aWF0aW9uIGhhbmRsaW5nIHByb2NlZHVyZS4=</field>
+            <field name="change_summary">Initial issue.</field>
+            <field name="change_reason">Creation of the procedure.</field>
+        </record>
+
+    </data>
+</odoo>

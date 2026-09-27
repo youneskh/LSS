@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0).
+
+     The demo users below are deliberately distinct people, because the module
+     refuses an audit whose team overlaps its auditees or the owners of the
+     audited areas. Note that res.users.groups_id was renamed to group_ids in
+     Odoo 19; the new name is used here. -->
+<odoo>
+
+    <!-- Demo users -->
+    <record id="demo_user_lead_auditor" model="res.users">
+        <field name="name">Amina Lead Auditor</field>
+        <field name="login">demo_ls_lead_auditor</field>
+        <field name="email">lead.auditor@example.com</field>
+        <field name="group_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_lead_auditor'))]"/>
+    </record>
+
+    <record id="demo_user_auditor" model="res.users">
+        <field name="name">Karim Auditor</field>
+        <field name="login">demo_ls_auditor</field>
+        <field name="email">auditor@example.com</field>
+        <field name="group_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_auditor'))]"/>
+    </record>
+
+    <record id="demo_user_auditee" model="res.users">
+        <field name="name">Sofiane Production Manager</field>
+        <field name="login">demo_ls_auditee</field>
+        <field name="email">auditee@example.com</field>
+        <field name="group_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_auditee'))]"/>
+    </record>
+
+    <record id="demo_user_quality_manager" model="res.users">
+        <field name="name">Nadia Quality Manager</field>
+        <field name="login">demo_ls_quality_manager</field>
+        <field name="email">quality.manager@example.com</field>
+        <field name="group_ids" eval="[Command.link(ref('ls_audit.group_ls_audit_manager'))]"/>
+    </record>
+
+    <!-- Audit types -->
+    <record id="demo_audit_type_internal" model="ls.audit.type">
+        <field name="name">Internal System Audit</field>
+        <field name="code">INT</field>
+        <field name="sequence">10</field>
+        <field name="is_external" eval="False"/>
+        <field name="description">Planned internal audit of the quality management system.</field>
+    </record>
+
+    <record id="demo_audit_type_supplier" model="ls.audit.type">
+        <field name="name">Supplier Audit</field>
+        <field name="code">SUP</field>
+        <field name="sequence">20</field>
+        <field name="is_external" eval="True"/>
+        <field name="description">On-site audit of a material or service supplier.</field>
+    </record>
+
+    <!-- Auditable areas -->
+    <record id="demo_area_site" model="ls.audit.area">
+        <field name="name">Algiers Manufacturing Site</field>
+        <field name="code">SITE-ALG</field>
+        <field name="description">Primary manufacturing site.</field>
+    </record>
+
+    <record id="demo_area_filling" model="ls.audit.area">
+        <field name="name">Sterile Filling</field>
+        <field name="code">PROD-FILL</field>
+        <field name="parent_id" ref="demo_area_site"/>
+        <field name="responsible_id" ref="demo_user_auditee"/>
+        <field name="description">Aseptic filling line for injectable products.</field>
+    </record>
+
+    <record id="demo_area_warehouse" model="ls.audit.area">
+        <field name="name">Raw Material Warehouse</field>
+        <field name="code">WH-RM</field>
+        <field name="parent_id" ref="demo_area_site"/>
+        <field name="responsible_id" ref="demo_user_auditee"/>
+        <field name="description">Storage of active ingredients and excipients.</field>
+    </record>
+
+    <!-- Auditor qualifications -->
+    <record id="demo_auditor_lead" model="ls.audit.auditor">
+        <field name="user_id" ref="demo_user_lead_auditor"/>
+        <field name="is_lead_auditor" eval="True"/>
+        <field name="qualification_date" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() + relativedelta(years=2)).strftime('%Y-%m-%d')"/>
+        <field name="certificate_reference">TRN/2025/0142</field>
+        <field name="notes">Qualified lead auditor, no scope restriction.</field>
+    </record>
+
+    <record id="demo_auditor_member" model="ls.audit.auditor">
+        <field name="user_id" ref="demo_user_auditor"/>
+        <field name="is_lead_auditor" eval="False"/>
+        <field name="qualification_date" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+        <field name="expiry_date" eval="(DateTime.today() + relativedelta(years=1)).strftime('%Y-%m-%d')"/>
+        <field name="certificate_reference">TRN/2025/0198</field>
+    </record>
+
+    <!-- Checklist template: created in draft, questions added, then approved -->
+    <record id="demo_checklist_doc_control" model="ls.audit.checklist">
+        <field name="name">Documentation Control</field>
+        <field name="code">CHK-DOC</field>
+        <field name="version">1</field>
+        <field name="audit_type_id" ref="demo_audit_type_internal"/>
+        <field name="description">Verification of the control of documented information in a manufacturing area.</field>
+    </record>
+
+    <record id="demo_checklist_line_01" model="ls.audit.checklist.line">
+        <field name="checklist_id" ref="demo_checklist_doc_control"/>
+        <field name="sequence">10</field>
+        <field name="name">Are only current, approved versions of procedures available at the point of use?</field>
+        <field name="reference_clause">SOP-QA-001 §4.2</field>
+        <field name="guidance">Sample at least three documents at the workstation and compare their revision to the master list.</field>
+        <field name="is_mandatory" eval="True"/>
+    </record>
+
+    <record id="demo_checklist_line_02" model="ls.audit.checklist.line">
+        <field name="checklist_id" ref="demo_checklist_doc_control"/>
+        <field name="sequence">20</field>
+        <field name="name">Are obsolete documents removed from the point of use or clearly identified as obsolete?</field>
+        <field name="reference_clause">SOP-QA-001 §4.6</field>
+        <field name="guidance">Check document holders, notice boards and local drives.</field>
+        <field name="is_mandatory" eval="True"/>
+    </record>
+
+    <record id="demo_checklist_line_03" model="ls.audit.checklist.line">
+        <field name="checklist_id" ref="demo_checklist_doc_control"/>
+        <field name="sequence">30</field>
+        <field name="name">Are batch records completed contemporaneously and signed by the operator performing the step?</field>
+        <field name="reference_clause">SOP-PR-014 §6.1</field>
+        <field name="guidance">Review two completed batch records and compare entry times with the process timeline.</field>
+        <field name="is_mandatory" eval="True"/>
+    </record>
+
+    <record id="demo_checklist_line_04" model="ls.audit.checklist.line">
+        <field name="checklist_id" ref="demo_checklist_doc_control"/>
+        <field name="sequence">40</field>
+        <field name="name">Are corrections to records made so that the original entry remains readable?</field>
+        <field name="reference_clause">SOP-QA-007 §3.3</field>
+        <field name="guidance">Look for overwriting, correction fluid or unexplained amendments.</field>
+        <field name="is_mandatory" eval="False"/>
+    </record>
+
+    <!-- Approve the checklist after its questions exist -->
+    <record id="demo_checklist_doc_control" model="ls.audit.checklist">
+        <field name="state">approved</field>
+        <field name="approved_by_id" ref="demo_user_quality_manager"/>
+        <field name="approval_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <!-- Attach the approved checklist as the default of the internal audit type -->
+    <record id="demo_audit_type_internal" model="ls.audit.type">
+        <field name="default_checklist_id" ref="demo_checklist_doc_control"/>
+    </record>
+
+    <!-- Audit programme -->
+    <record id="demo_program_2026" model="ls.audit.program">
+        <field name="name">Internal Audit Programme</field>
+        <field name="date_start" eval="DateTime.today().strftime('%Y-01-01')"/>
+        <field name="date_end" eval="DateTime.today().strftime('%Y-12-31')"/>
+        <field name="responsible_id" ref="demo_user_quality_manager"/>
+        <field name="objective">Cover every GMP-critical process at least once during the year. Frequency is set from process criticality, regulatory impact and the results of the previous programme.</field>
+    </record>
+
+    <!-- Audits -->
+    <record id="demo_audit_filling" model="ls.audit.schedule">
+        <field name="name">Documentation Control - Sterile Filling</field>
+        <field name="program_id" ref="demo_program_2026"/>
+        <field name="audit_type_id" ref="demo_audit_type_internal"/>
+        <field name="area_ids" eval="[Command.set([ref('demo_area_filling')])]"/>
+        <field name="objective">Determine whether the control of documented information in the sterile filling area conforms to the internal procedures.</field>
+        <field name="scope">Sterile filling line 1, day and night shifts, documentation issued during the current year. Equipment qualification records are excluded.</field>
+        <field name="criteria">SOP-QA-001, SOP-QA-007, SOP-PR-014.</field>
+        <field name="lead_auditor_id" ref="demo_user_lead_auditor"/>
+        <field name="auditor_ids" eval="[Command.set([ref('demo_user_auditor')])]"/>
+        <field name="auditee_ids" eval="[Command.set([ref('demo_user_auditee')])]"/>
+        <field name="date_planned" eval="(DateTime.today() + relativedelta(days=14)).strftime('%Y-%m-%d')"/>
+    </record>
+
+    <record id="demo_audit_warehouse" model="ls.audit.schedule">
+        <field name="name">Documentation Control - Raw Material Warehouse</field>
+        <field name="program_id" ref="demo_program_2026"/>
+        <field name="audit_type_id" ref="demo_audit_type_internal"/>
+        <field name="area_ids" eval="[Command.set([ref('demo_area_warehouse')])]"/>
+        <field name="objective">Determine whether goods receipt and storage records conform to the internal procedures.</field>
+        <field name="scope">Raw material warehouse, receiving and sampling areas, records of the current quarter.</field>
+        <field name="criteria">SOP-QA-001, SOP-WH-003.</field>
+        <field name="lead_auditor_id" ref="demo_user_lead_auditor"/>
+        <field name="auditee_ids" eval="[Command.set([ref('demo_user_auditee')])]"/>
+        <field name="date_planned" eval="(DateTime.today() + relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+    </record>
+
+</odoo>

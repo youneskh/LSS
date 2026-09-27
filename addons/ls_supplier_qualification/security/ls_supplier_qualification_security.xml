@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo noupdate="1">
+
+    <!-- ==============================================================
+         Multi-company rules.
+
+         No `groups` field is set: in Odoo a rule without groups is global
+         and applies to every user, including administrators. The `global`
+         field itself is computed from `groups` and is never written here.
+         ============================================================== -->
+
+    <record id="ls_supplier_category_rule_company" model="ir.rule">
+        <field name="name">Supplier category: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_category"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_criterion_rule_company" model="ir.rule">
+        <field name="name">Supplier criterion: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_criterion"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_assessment_template_rule_company" model="ir.rule">
+        <field name="name">Assessment template: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_assessment_template"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_assessment_template_line_rule_company" model="ir.rule">
+        <field name="name">Assessment template line: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_assessment_template_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_qualification_rule_company" model="ir.rule">
+        <field name="name">Qualification dossier: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_qualification"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_material_rule_company" model="ir.rule">
+        <field name="name">Qualified scope: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_material"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_assessment_rule_company" model="ir.rule">
+        <field name="name">Assessment: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_assessment"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_assessment_line_rule_company" model="ir.rule">
+        <field name="name">Assessment line: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_assessment_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_audit_rule_company" model="ir.rule">
+        <field name="name">Audit: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_audit"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_audit_finding_rule_company" model="ir.rule">
+        <field name="name">Audit finding: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_audit_finding"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_performance_rule_company" model="ir.rule">
+        <field name="name">Performance evaluation: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_performance"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_review_rule_company" model="ir.rule">
+        <field name="name">Periodic review: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_review"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="ls_supplier_signature_rule_company" model="ir.rule">
+        <field name="name">Signature log: multi-company</field>
+        <field name="model_id" ref="model_ls_supplier_signature"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- ============================================================== -->
+    <!-- Ownership rules on assessments                                 -->
+    <!--                                                                 -->
+    <!-- Rules attached to different groups are combined with OR, so a   -->
+    <!-- Supplier Manager (who also holds the Assessor group by          -->
+    <!-- implication) keeps unrestricted access through the manager      -->
+    <!-- rule below.                                                     -->
+    <!-- ============================================================== -->
+
+    <record id="ls_supplier_assessment_rule_assessor" model="ir.rule">
+        <field name="name">Assessment: assessors modify their own assessments</field>
+        <field name="model_id" ref="model_ls_supplier_assessment"/>
+        <field name="groups" eval="[(4, ref('group_ls_supplier_assessor'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('assessor_id', '=', user.id)]</field>
+    </record>
+
+    <record id="ls_supplier_assessment_rule_manager" model="ir.rule">
+        <field name="name">Assessment: managers access all assessments</field>
+        <field name="model_id" ref="model_ls_supplier_assessment"/>
+        <field name="groups" eval="[(4, ref('group_ls_supplier_manager'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record id="ls_supplier_audit_rule_auditor" model="ir.rule">
+        <field name="name">Audit: assessors modify audits of their team</field>
+        <field name="model_id" ref="model_ls_supplier_audit"/>
+        <field name="groups" eval="[(4, ref('group_ls_supplier_assessor'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">['|', ('lead_auditor_id', '=', user.id), ('auditor_ids', 'in', [user.id])]</field>
+    </record>
+
+    <record id="ls_supplier_audit_rule_manager" model="ir.rule">
+        <field name="name">Audit: managers access all audits</field>
+        <field name="model_id" ref="model_ls_supplier_audit"/>
+        <field name="groups" eval="[(4, ref('group_ls_supplier_manager'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

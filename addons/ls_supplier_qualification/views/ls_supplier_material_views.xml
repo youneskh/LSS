@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_material_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.material.list</field>
+        <field name="model">ls.supplier.material</field>
+        <field name="arch" type="xml">
+            <list string="Qualified Scope"
+                  decoration-danger="is_expired or state == 'rejected'"
+                  decoration-muted="state == 'suspended'"
+                  decoration-success="state == 'qualified' and not is_expired">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="partner_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="material_type"/>
+                <field name="specification_reference" optional="hide"/>
+                <field name="manufacturing_site" optional="hide"/>
+                <field name="qualification_date" optional="show"/>
+                <field name="expiry_date" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'qualified'"
+                       decoration-warning="state == 'suspended'"
+                       decoration-danger="state == 'rejected'"/>
+                <field name="is_expired" column_invisible="1"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_material_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.material.form</field>
+        <field name="model">ls.supplier.material</field>
+        <field name="arch" type="xml">
+            <form string="Qualified Material or Service">
+                <header>
+                    <button name="action_qualify" type="object" string="Qualify"
+                            class="btn-primary"
+                            invisible="state not in ['draft', 'suspended']"
+                            groups="ls_supplier_qualification.group_ls_supplier_manager"/>
+                    <button name="action_suspend" type="object" string="Suspend"
+                            invisible="state != 'qualified'"
+                            groups="ls_supplier_qualification.group_ls_supplier_manager"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state in ['rejected']"
+                            groups="ls_supplier_qualification.group_ls_supplier_manager"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft"
+                            invisible="state == 'draft'"
+                            groups="ls_supplier_qualification.group_ls_supplier_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,qualified"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Expired" bg_color="text-bg-danger"
+                            invisible="not is_expired"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Material or service designation"/></h1>
+                    </div>
+                    <group>
+                        <group string="Identification">
+                            <field name="qualification_id"/>
+                            <field name="partner_id"/>
+                            <field name="product_id"/>
+                            <field name="material_type"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="is_expired" invisible="1"/>
+                        </group>
+                        <group string="Qualification">
+                            <field name="specification_reference"/>
+                            <field name="manufacturing_site"/>
+                            <field name="evaluated_batches"/>
+                            <field name="qualification_date"/>
+                            <field name="expiry_date"/>
+                        </group>
+                    </group>
+                    <group string="Suspension Reason" invisible="not suspension_reason">
+                        <field name="suspension_reason" nolabel="1" readonly="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_material_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.material.search</field>
+        <field name="model">ls.supplier.material</field>
+        <field name="arch" type="xml">
+            <search string="Qualified Scope">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="qualification_id"/>
+                <filter name="filter_qualified" string="Qualified"
+                        domain="[('state', '=', 'qualified')]"/>
+                <filter name="filter_draft" string="Under Qualification"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_suspended" string="Suspended"
+                        domain="[('state', '=', 'suspended')]"/>
+                <separator/>
+                <filter name="filter_expiring" string="Expires Within 90 Days"
+                        domain="[('expiry_date', '&lt;=', (context_today() + datetime.timedelta(days=90)).strftime('%Y-%m-%d')), ('expiry_date', '!=', False)]"/>
+                                    <filter name="group_partner" string="Supplier"
+                        context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_type" string="Material Type"
+                        context="{'group_by': 'material_type'}"/>
+                    <filter name="group_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_material" model="ir.actions.act_window">
+        <field name="name">Qualified Scope</field>
+        <field name="res_model">ls.supplier.material</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_qualified': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Define the approval scope</p>
+            <p>
+                A dossier can only be approved once at least one material or
+                service is qualified. The scope makes explicit what the
+                supplier is approved to supply.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_change_control_approval_list" model="ir.ui.view">
+        <field name="name">ls.change_control.approval.list</field>
+        <field name="model">ls.change_control.approval</field>
+        <field name="arch" type="xml">
+            <list string="Approvals"
+                  decoration-success="state == 'approved'"
+                  decoration-danger="state == 'rejected'">
+                <field name="request_id"/>
+                <field name="approval_role"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="mandatory"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'"
+                       decoration-warning="state == 'pending'"/>
+                <field name="date_requested" optional="show"/>
+                <field name="date_decision" optional="show"/>
+                <field name="decided_by_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_approval_form" model="ir.ui.view">
+        <field name="name">ls.change_control.approval.form</field>
+        <field name="model">ls.change_control.approval</field>
+        <field name="arch" type="xml">
+            <form string="Approval">
+                <header>
+                    <button name="action_approve" type="object" string="Approve"
+                            class="oe_highlight" confirm="Record your approval decision? A recorded decision cannot be modified."
+                            invisible="state != 'pending' or request_state != 'impact_assessment'"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            confirm="Record your rejection? The change request will be rejected and cannot be reopened."
+                            invisible="state != 'pending' or request_state != 'impact_assessment'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="approval_role" readonly="state != 'pending'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id" readonly="1"/>
+                            <field name="request_state" invisible="1"/>
+                            <field name="user_id" readonly="state != 'pending'"/>
+                            <field name="mandatory" readonly="state != 'pending'"/>
+                            <field name="sequence" readonly="state != 'pending'"/>
+                        </group>
+                        <group>
+                            <field name="date_requested"/>
+                            <field name="date_decision" invisible="state == 'pending'"/>
+                            <field name="decided_by_id" invisible="state == 'pending'"/>
+                            <field name="signature_meaning" invisible="state == 'pending'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <group string="Comment">
+                        <field name="comment" nolabel="1" readonly="state != 'pending'"
+                               placeholder="A comment is mandatory to reject the change."/>
+                    </group>
+                    <div class="alert alert-info" role="status" invisible="state != 'pending'">
+                        The identity of the approver, the decision date and
+                        time in UTC and the meaning of the decision are
+                        recorded with the decision. A recorded decision can
+                        never be modified or deleted.
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_change_control_approval_search" model="ir.ui.view">
+        <field name="name">ls.change_control.approval.search</field>
+        <field name="model">ls.change_control.approval</field>
+        <field name="arch" type="xml">
+            <search string="Approvals">
+                <field name="request_id"/>
+                <field name="user_id"/>
+                <field name="approval_role"/>
+                <filter name="filter_my_approvals" string="My Approvals"
+                        domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_pending" string="Pending"
+                        domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_rejected" string="Rejected"
+                        domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter name="filter_awaiting_decision" string="Awaiting Decision"
+                        domain="[('state', '=', 'pending'), ('request_state', '=', 'impact_assessment')]"/>
+                                    <filter name="group_request" string="Change Request"
+                        context="{'group_by': 'request_id'}"/>
+                    <filter name="group_role" string="Approval Role"
+                        context="{'group_by': 'approval_role'}"/>
+                    <filter name="group_user" string="Approver"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_state" string="Decision"
+                        context="{'group_by': 'state'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_approval" model="ir.actions.act_window">
+        <field name="name">Approvals</field>
+        <field name="res_model">ls.change_control.approval</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_approval_search"/>
+        <field name="context">{'search_default_filter_awaiting_decision': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No approval to display
+            </p>
+            <p>
+                Approvals are generated from the approval template of the
+                change category when the impact assessment starts.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_change_control_my_approvals" model="ir.actions.act_window">
+        <field name="name">My Approvals</field>
+        <field name="res_model">ls.change_control.approval</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_change_control_approval_search"/>
+        <field name="domain">[('user_id', '=', uid)]</field>
+        <field name="context">{'search_default_filter_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No approval is awaiting your decision
+            </p>
+        </field>
+    </record>
+
+</odoo>

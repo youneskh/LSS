@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_ls_capa_issue" model="ir.sequence">
+            <field name="name">CAPA Record</field>
+            <field name="code">ls.capa.issue</field>
+            <field name="prefix">CAPA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_capa_root_cause" model="ir.sequence">
+            <field name="name">CAPA Root Cause Analysis</field>
+            <field name="code">ls.capa.root_cause</field>
+            <field name="prefix">RCA/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_capa_action" model="ir.sequence">
+            <field name="name">CAPA Action</field>
+            <field name="code">ls.capa.action</field>
+            <field name="prefix">CAPA-ACT/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_ls_capa_effectiveness" model="ir.sequence">
+            <field name="name">CAPA Effectiveness Check</field>
+            <field name="code">ls.capa.effectiveness</field>
+            <field name="prefix">CAPA-EFF/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

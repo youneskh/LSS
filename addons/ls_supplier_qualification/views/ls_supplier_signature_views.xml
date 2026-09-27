@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_supplier_signature_view_list" model="ir.ui.view">
+        <field name="name">ls.supplier.signature.list</field>
+        <field name="model">ls.supplier.signature</field>
+        <field name="arch" type="xml">
+            <list string="Signature Log" create="false" edit="false" delete="false">
+                <field name="sequence_number"/>
+                <field name="signed_on"/>
+                <field name="user_id"/>
+                <field name="meaning" widget="badge"/>
+                <field name="res_model"/>
+                <field name="signed_record_name"/>
+                <field name="qualification_id" optional="show"/>
+                <field name="reason" optional="hide"/>
+                <field name="record_hash" optional="hide"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_supplier_signature_view_form" model="ir.ui.view">
+        <field name="name">ls.supplier.signature.form</field>
+        <field name="model">ls.supplier.signature</field>
+        <field name="arch" type="xml">
+            <form string="Signature Log Entry" create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Signer">
+                            <field name="user_id"/>
+                            <field name="login_used"/>
+                            <field name="signed_on"/>
+                            <field name="meaning"/>
+                        </group>
+                        <group string="Signed Record">
+                            <field name="res_model"/>
+                            <field name="res_id"/>
+                            <field name="signed_record_name"/>
+                            <field name="qualification_id"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                    <group string="Justification">
+                        <field name="reason" nolabel="1"/>
+                    </group>
+                    <group string="Integrity Chain">
+                        <field name="sequence_number"/>
+                        <field name="previous_hash"/>
+                        <field name="record_hash"/>
+                    </group>
+                    <group string="Signed Values Snapshot">
+                        <field name="payload" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_supplier_signature_view_search" model="ir.ui.view">
+        <field name="name">ls.supplier.signature.search</field>
+        <field name="model">ls.supplier.signature</field>
+        <field name="arch" type="xml">
+            <search string="Signature Log">
+                <field name="signed_record_name"/>
+                <field name="user_id"/>
+                <field name="qualification_id"/>
+                <field name="res_model"/>
+                                    <filter name="group_user" string="Signer"
+                        context="{'group_by': 'user_id'}"/>
+                    <filter name="group_meaning" string="Meaning"
+                        context="{'group_by': 'meaning'}"/>
+                    <filter name="group_model" string="Signed Model"
+                        context="{'group_by': 'res_model'}"/>
+                    <filter name="group_date" string="Signature Date"
+                        context="{'group_by': 'signed_on'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_signature" model="ir.actions.act_window">
+        <field name="name">Signature Log</field>
+        <field name="res_model">ls.supplier.signature</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No signature recorded yet</p>
+            <p>
+                Entries are appended automatically when a decision is taken.
+                They cannot be modified or deleted.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ls_supplier_signature_verify" model="ir.actions.server">
+        <field name="name">Verify Signature Chain</field>
+        <field name="model_id" ref="model_ls_supplier_signature"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_verify_chain()</field>
+    </record>
+
+</odoo>

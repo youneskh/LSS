@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0.html). -->
+<odoo>
+
+    <record id="view_ls_audit_trail_evidence_pack_list" model="ir.ui.view">
+        <field name="name">ls.audit_trail.evidence_pack.list</field>
+        <field name="model">ls.audit_trail.evidence_pack</field>
+        <field name="arch" type="xml">
+            <list string="Evidence Packs" delete="false"
+                  decoration-danger="verification_result == 'failed'">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="entry_count"/>
+                <field name="line_count" optional="show"/>
+                <field name="verification_result"/>
+                <field name="generated_by" optional="show"/>
+                <field name="generated_on" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'generated'"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_evidence_pack_form" model="ir.ui.view">
+        <field name="name">ls.audit_trail.evidence_pack.form</field>
+        <field name="model">ls.audit_trail.evidence_pack</field>
+        <field name="arch" type="xml">
+            <form string="Evidence Pack">
+                <header>
+                    <button name="action_generate" type="object" string="Generate"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_download" type="object" string="Download Archive"
+                            class="btn-primary" invisible="state != 'generated'"/>
+                    <button name="action_verify_archive" type="object"
+                            string="Verify Archive Digest"
+                            class="btn-secondary" invisible="state != 'generated'"/>
+                    <button name="%(action_report_ls_audit_trail_evidence_pack)d"
+                            type="action" string="Print Cover Sheet"
+                            class="btn-secondary" invisible="state != 'generated'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,generated"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="verification_result != 'failed'">
+                        The integrity verification executed while generating this
+                        pack reported a divergence. The pack still documents the
+                        entries as stored, but the finding must be investigated
+                        before the pack is relied upon as evidence.
+                    </div>
+                    <group>
+                        <group string="Selection" name="selection">
+                            <field name="company_id" readonly="state != 'draft'"
+                                   groups="base.group_multi_company"/>
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="model_names" readonly="state != 'draft'"
+                                   placeholder="e.g. mrp.production,stock.lot"/>
+                            <field name="user_ids" widget="many2many_tags"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Result" name="result" invisible="state == 'draft'">
+                            <field name="entry_count" readonly="1"/>
+                            <field name="line_count" readonly="1"/>
+                            <field name="first_sequence" readonly="1"/>
+                            <field name="last_sequence" readonly="1"/>
+                            <field name="pack_digest" readonly="1"/>
+                            <field name="verification_id" readonly="1"/>
+                            <field name="attachment_id" readonly="1"/>
+                            <field name="generated_by" readonly="1"/>
+                            <field name="generated_on" readonly="1"/>
+                            <field name="active" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Purpose">
+                        <field name="purpose" nolabel="1" readonly="state != 'draft'"
+                               placeholder="Inspection, investigation or review this pack supports."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ls_audit_trail_evidence_pack_search" model="ir.ui.view">
+        <field name="name">ls.audit_trail.evidence_pack.search</field>
+        <field name="model">ls.audit_trail.evidence_pack</field>
+        <field name="arch" type="xml">
+            <search string="Evidence Packs">
+                <field name="name"/>
+                <field name="purpose"/>
+                <field name="generated_by"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_generated" string="Generated"
+                        domain="[('state', '=', 'generated')]"/>
+                <separator/>
+                <filter name="filter_pack_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                                    <filter name="group_pack_state" string="Status"
+                        context="{'group_by': 'state'}"/>
+                    <filter name="group_pack_user" string="Generated By"
+                        context="{'group_by': 'generated_by'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ls_audit_trail_evidence_pack" model="ir.actions.act_window">
+        <field name="name">Evidence Packs</field>
+        <field name="res_model">ls.audit_trail.evidence_pack</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ls_audit_trail_evidence_pack_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first evidence pack</p>
+            <p>
+                An evidence pack is a sealed ZIP archive containing the selected
+                audit entries in JSON and CSV form, together with a manifest
+                stating the digest of each file and the outcome of an integrity
+                verification of the exported range.
+            </p>
+        </field>
+    </record>
+
+</odoo>

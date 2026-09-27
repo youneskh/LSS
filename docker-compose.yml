@@ -1,0 +1,60 @@
+# Secrets are read from the .env file next to this file (not committed to
+# version control). See .env.example. Audit 2026-09-25, F-21.
+services:
+
+  db:
+    image: postgres:16
+    container_name: odoo19Claude_ls-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+    healthcheck:
+      # -h 127.0.0.1: test the TCP listener, not only the Unix socket, so the
+      # check does not report "healthy" while the server is still starting.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  odoo:
+    build:
+      context: .
+      args:
+        ODOO_IMAGE: ${ODOO_IMAGE:-odoo:19.0-20260723}
+    container_name: odoo19Claude_ls
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+    # The official Odoo entrypoint passes USER and PASSWORD to Odoo as
+    # --db_user / --db_password when odoo.conf does not set them.
+    environment:
+      USER: ${POSTGRES_USER}
+      PASSWORD: ${POSTGRES_PASSWORD}
+
+    ports:
+      # Published on the loopback interface only. Expose Odoo to the network
+      # through a reverse proxy (TLS), then set proxy_mode = True in odoo.conf.
+      - "127.0.0.1:8071:8069"
+
+    volumes:
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - ./addons:/mnt/extra-addons
+      # Test-only modules (ls_electronic_signature_test): mounted for command
+      # line test runs with an explicit --addons-path, never listed in the
+      # addons_path of odoo.conf, so the server cannot install them (F-26).
+      - ./test_addons:/mnt/test-addons:ro
+      - ./odoo-data:/var/lib/odoo
+      - ./logs:/var/log/odoo
+
+volumes: {}

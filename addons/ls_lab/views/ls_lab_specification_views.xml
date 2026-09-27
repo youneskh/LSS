@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ls_lab_specification_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.specification.list</field>
+        <field name="model">ls.lab.specification</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'obsolete'"
+                  decoration-success="state == 'approved'"
+                  decoration-info="state == 'review'">
+                <field name="code"/>
+                <field name="version"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="spec_type"/>
+                <field name="line_count"/>
+                <field name="effective_date" optional="show"/>
+                <field name="approved_by_id" optional="hide"/>
+                <field name="approval_date" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'approved'"
+                       decoration-info="state == 'review'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_specification_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.specification.form</field>
+        <field name="model">ls.lab.specification</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_submit_review" type="object"
+                            string="Submit for Review" class="oe_highlight"
+                            invisible="state != 'draft'"
+                            groups="ls_lab.ls_lab_group_reviewer"/>
+                    <button name="action_approve" type="object"
+                            string="Approve" class="oe_highlight"
+                            invisible="state != 'review'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_reset_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state != 'review'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_create_revision" type="object"
+                            string="Create Revision"
+                            invisible="state != 'approved'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <button name="action_set_obsolete" type="object"
+                            string="Set Obsolete"
+                            invisible="state != 'approved'"
+                            groups="ls_lab.ls_lab_group_manager"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,review,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Finished product release specification"/>
+                        </h1>
+                        <h3>
+                            <field name="code" class="oe_inline"/>
+                            <span class="oe_inline"> version </span>
+                            <field name="version" class="oe_inline"/>
+                        </h3>
+                    </div>
+                    <group>
+                        <group string="Scope">
+                            <field name="product_id"/>
+                            <field name="spec_type"/>
+                            <field name="effective_date"/>
+                            <field name="active" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Approval">
+                            <field name="approved_by_id"/>
+                            <field name="approval_date"/>
+                            <field name="predecessor_id" invisible="not predecessor_id"/>
+                            <field name="successor_id" invisible="not successor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Acceptance Criteria" name="criteria">
+                            <field name="line_ids" readonly="state in ('approved', 'obsolete')">
+                                <list editable="bottom" default_order="sequence, id">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="test_method_id"/>
+                                    <field name="result_type" column_invisible="1"/>
+                                    <field name="criterion_type"/>
+                                    <field name="min_value"
+                                           column_invisible="0"/>
+                                    <field name="max_value"/>
+                                    <field name="target_value" optional="hide"/>
+                                    <field name="text_criterion"/>
+                                    <field name="uom_id"/>
+                                    <field name="decimal_precision" optional="hide"/>
+                                    <field name="criterion_display" readonly="1"/>
+                                    <field name="is_mandatory"/>
+                                    <field name="report_on_coa"/>
+                                </list>
+                            </field>
+                            <div class="alert alert-info" role="alert"
+                                 invisible="state != 'approved'">
+                                This specification is approved and frozen. Acceptance
+                                criteria can no longer be changed. Use Create Revision
+                                to produce a new version.
+                            </div>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                        <page string="Obsolescence" name="obsolescence"
+                              invisible="state not in ('approved', 'obsolete')">
+                            <field name="obsolete_reason"
+                                   placeholder="Reason for making this specification obsolete"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_lab_specification_view_search" model="ir.ui.view">
+        <field name="name">ls.lab.specification.search</field>
+        <field name="model">ls.lab.specification</field>
+        <field name="arch" type="xml">
+            <search string="Specifications">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <filter name="filter_draft" string="Draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_review" string="Under Review"
+                        domain="[('state', '=', 'review')]"/>
+                <filter name="filter_approved" string="Approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_obsolete" string="Obsolete"
+                        domain="[('state', '=', 'obsolete')]"/>
+                <separator/>
+                <filter name="filter_effective_date" string="Effective Date"
+                        date="effective_date"/>
+                <separator/>
+                <filter name="filter_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_by_state" string="Status"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_product" string="Product"
+                            domain="[]" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_by_spec_type" string="Specification Type"
+                            domain="[]" context="{'group_by': 'spec_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_lab_action_specification" model="ir.actions.act_window">
+        <field name="name">Product Specifications</field>
+        <field name="res_model">ls.lab.specification</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ls_lab_specification_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first specification</p>
+            <p>
+                A specification lists the tests applied to a product and the
+                acceptance criterion for each. Samples are evaluated against the
+                approved version captured at registration.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_lab_specification_line_view_list" model="ir.ui.view">
+        <field name="name">ls.lab.specification_line.list</field>
+        <field name="model">ls.lab.specification_line</field>
+        <field name="arch" type="xml">
+            <list default_order="specification_id, sequence, id">
+                <field name="specification_id"/>
+                <field name="sequence" optional="hide"/>
+                <field name="test_method_id"/>
+                <field name="criterion_type"/>
+                <field name="criterion_display"/>
+                <field name="uom_id" optional="hide"/>
+                <field name="is_mandatory"/>
+                <field name="report_on_coa"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_lab_specification_line_view_form" model="ir.ui.view">
+        <field name="name">ls.lab.specification_line.form</field>
+        <field name="model">ls.lab.specification_line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group string="Test">
+                            <field name="specification_id"/>
+                            <field name="test_method_id"/>
+                            <field name="result_type"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Acceptance Criterion">
+                            <field name="criterion_type"/>
+                            <field name="min_value"
+                                   invisible="criterion_type not in ('range', 'min')"/>
+                            <field name="max_value"
+                                   invisible="criterion_type not in ('range', 'max')"/>
+                            <field name="target_value"
+                                   invisible="criterion_type == 'text'"/>
+                            <field name="text_criterion"
+                                   invisible="criterion_type != 'text'"/>
+                            <field name="uom_id"/>
+                            <field name="decimal_precision"/>
+                            <field name="criterion_display" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Reporting">
+                        <field name="is_mandatory"/>
+                        <field name="report_on_coa"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

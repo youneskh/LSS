@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Life Sciences Suite Architecture Team
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="ls_calibration_record_view_list" model="ir.ui.view">
+        <field name="name">ls.calibration.record.list</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <list
+                string="Calibration Records"
+                decoration-danger="result == 'fail'"
+                decoration-warning="as_found_status == 'out_of_tolerance'"
+            >
+                <field name="name" />
+                <field name="instrument_id" />
+                <field name="plan_id" optional="hide" />
+                <field name="calibration_type" optional="show" />
+                <field name="scheduled_date" optional="hide" />
+                <field name="calibration_date" />
+                <field name="performed_by_id" optional="show" widget="many2one_avatar_user" />
+                <field name="as_found_status" optional="show" />
+                <field name="as_left_status" optional="hide" />
+                <field name="result" widget="badge" />
+                <field name="next_due_date" optional="show" />
+                <field name="approved_by_id" optional="hide" />
+                <field name="state" widget="badge" />
+                <field name="company_id" groups="base.group_multi_company" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_view_form" model="ir.ui.view">
+        <field name="name">ls.calibration.record.form</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <form string="Calibration Record">
+                <header>
+                    <button
+                        name="action_start"
+                        string="Start"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"
+                    />
+                    <button
+                        name="action_submit_review"
+                        string="Submit to Review"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'in_progress'"
+                    />
+                    <button
+                        name="action_approve"
+                        string="Approve"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'to_review'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_open_reject_wizard"
+                        string="Reject"
+                        type="object"
+                        invisible="state != 'to_review'"
+                        groups="ls_calibration.group_ls_calibration_manager"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        invisible="state != 'rejected'"
+                    />
+                    <button
+                        name="action_cancel"
+                        string="Cancel"
+                        type="object"
+                        invisible="state in ('approved', 'cancelled')"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,in_progress,to_review,approved"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                            name="action_view_certificates"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o"
+                        >
+                            <field
+                                name="certificate_count"
+                                widget="statinfo"
+                                string="Certificates"
+                            />
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="identification" string="Identification">
+                            <field
+                                name="instrument_id"
+                                readonly="state != 'draft'"
+                            />
+                            <field
+                                name="plan_id"
+                                readonly="state != 'draft'"
+                                domain="[('instrument_id', '=', instrument_id)]"
+                            />
+                            <field name="calibration_type" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="scheduled_date" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                        </group>
+                        <group name="execution" string="Execution">
+                            <field name="calibration_date" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="performed_by_id" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="performed_externally" readonly="state not in ('draft', 'in_progress')" />
+                            <field
+                                name="provider_id"
+                                invisible="not performed_externally"
+                                required="performed_externally"
+                                readonly="state not in ('draft', 'in_progress')"
+                            />
+                            <field name="ambient_temperature" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="ambient_humidity" readonly="state not in ('draft', 'in_progress')" />
+                        </group>
+                    </group>
+                    <group>
+                        <group name="verdict" string="Verdict">
+                            <field name="as_found_status" />
+                            <field name="as_left_status" />
+                            <field name="result" widget="badge" />
+                            <field name="adjustment_performed" readonly="state not in ('draft', 'in_progress')" />
+                            <field name="next_due_date" />
+                        </group>
+                        <group name="approval" string="Review and Approval">
+                            <field name="submitted_by_id" />
+                            <field name="submission_date" />
+                            <field name="approved_by_id" />
+                            <field name="approval_date" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="lines" string="Test Points">
+                            <field
+                                name="line_ids"
+                                readonly="state not in ('draft', 'in_progress')"
+                            >
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="name" />
+                                    <field name="nominal_value" />
+                                    <field name="unit" />
+                                    <field name="tolerance_type" />
+                                    <field name="tolerance_value" />
+                                    <field name="limit_min" readonly="1" />
+                                    <field name="limit_max" readonly="1" />
+                                    <field name="as_found_value" />
+                                    <field
+                                        name="as_found_in_tolerance"
+                                        readonly="1"
+                                        widget="boolean_toggle"
+                                    />
+                                    <field name="as_left_value" />
+                                    <field
+                                        name="as_left_in_tolerance"
+                                        readonly="1"
+                                        widget="boolean_toggle"
+                                    />
+                                    <field name="as_found_deviation" optional="hide" readonly="1" />
+                                    <field name="as_left_deviation" optional="hide" readonly="1" />
+                                    <field name="plan_point_id" column_invisible="1" />
+                                    <field name="company_id" column_invisible="1" />
+                                </list>
+                            </field>
+                        </page>
+                        <page name="standards" string="Reference Standards">
+                            <group>
+                                <field
+                                    name="standard_ids"
+                                    widget="many2many_tags"
+                                    readonly="state not in ('draft', 'in_progress')"
+                                    domain="[('id', '!=', id), ('state', '=', 'in_service')]"
+                                />
+                                <field
+                                    name="external_standard_reference"
+                                    readonly="state not in ('draft', 'in_progress')"
+                                />
+                            </group>
+                        </page>
+                        <page
+                            name="oot"
+                            string="Out of Tolerance"
+                            invisible="as_found_status != 'out_of_tolerance'"
+                        >
+                            <group>
+                                <field
+                                    name="oot_impact_assessment"
+                                    readonly="state not in ('draft', 'in_progress')"
+                                    placeholder="Impact of the out-of-tolerance situation on the products and decisions taken since the previous calibration."
+                                />
+                                <field
+                                    name="oot_action_reference"
+                                    readonly="state not in ('draft', 'in_progress')"
+                                />
+                            </group>
+                        </page>
+                        <page name="conclusion" string="Conclusion">
+                            <field
+                                name="conclusion"
+                                readonly="state not in ('draft', 'in_progress')"
+                            />
+                            <separator string="Rejection Reason" invisible="state != 'rejected'" />
+                            <field name="rejection_reason" invisible="state != 'rejected'" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_view_search" model="ir.ui.view">
+        <field name="name">ls.calibration.record.search</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <search string="Calibration Records">
+                <field name="name" />
+                <field name="instrument_id" />
+                <field name="plan_id" />
+                <field name="performed_by_id" />
+                <field name="approved_by_id" />
+                <filter
+                    name="filter_to_review"
+                    string="To Review"
+                    domain="[('state', '=', 'to_review')]"
+                />
+                <filter
+                    name="filter_open"
+                    string="Open"
+                    domain="[('state', 'in', ['draft', 'in_progress', 'to_review'])]"
+                />
+                <filter
+                    name="filter_approved"
+                    string="Approved"
+                    domain="[('state', '=', 'approved')]"
+                />
+                <separator />
+                <filter
+                    name="filter_out_of_tolerance"
+                    string="As Found Out of Tolerance"
+                    domain="[('as_found_status', '=', 'out_of_tolerance')]"
+                />
+                <filter
+                    name="filter_failed"
+                    string="Failed"
+                    domain="[('result', '=', 'fail')]"
+                />
+                <separator />
+                <filter
+                    name="filter_my_records"
+                    string="Performed by Me"
+                    domain="[('performed_by_id', '=', uid)]"
+                />
+                <filter
+                    name="filter_this_year"
+                    string="This Year"
+                    domain="[('calibration_date', '&gt;=', (context_today() + relativedelta(month=1, day=1)).strftime('%Y-%m-%d'))]"
+                />
+                                    <filter
+                    name="group_by_instrument"
+                    string="Instrument"
+                    context="{'group_by': 'instrument_id'}"
+                    />
+                    <filter
+                    name="group_by_type"
+                    string="Calibration Type"
+                    context="{'group_by': 'calibration_type'}"
+                    />
+                    <filter
+                    name="group_by_result"
+                    string="Result"
+                    context="{'group_by': 'result'}"
+                    />
+                    <filter
+                    name="group_by_state"
+                    string="State"
+                    context="{'group_by': 'state'}"
+                    />
+                    <filter
+                    name="group_by_performer"
+                    string="Performed By"
+                    context="{'group_by': 'performed_by_id'}"
+                    />
+                    <filter
+                    name="group_by_month"
+                    string="Calibration Month"
+                    context="{'group_by': 'calibration_date:month'}"
+                    />
+            </search>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_view_pivot" model="ir.ui.view">
+        <field name="name">ls.calibration.record.pivot</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <pivot string="Calibration Analysis">
+                <field name="instrument_id" type="row" />
+                <field name="result" type="col" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_view_graph" model="ir.ui.view">
+        <field name="name">ls.calibration.record.graph</field>
+        <field name="model">ls.calibration.record</field>
+        <field name="arch" type="xml">
+            <graph string="Calibration Analysis" type="bar">
+                <field name="calibration_date" interval="month" />
+                <field name="result" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_action" model="ir.actions.act_window">
+        <field name="name">Calibration Records</field>
+        <field name="res_model">ls.calibration.record</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="ls_calibration_record_view_search" />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record a calibration</p>
+            <p>
+                A calibration record carries the as-found and as-left readings of
+                every test point, the reference standards used and the approval of
+                the calibration manager.
+            </p>
+        </field>
+    </record>
+
+    <record id="ls_calibration_record_analysis_action" model="ir.actions.act_window">
+        <field name="name">Calibration Analysis</field>
+        <field name="res_model">ls.calibration.record</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="search_view_id" ref="ls_calibration_record_view_search" />
+        <field name="context">{'search_default_filter_approved': 1}</field>
+    </record>
+
+</odoo>

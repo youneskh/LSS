@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Part of the Life Sciences Suite for Odoo 19 Community Edition.
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0). -->
+<odoo>
+
+    <record id="view_ls_recall_initiate_wizard_form" model="ir.ui.view">
+        <field name="name">ls.recall.initiate.wizard.form</field>
+        <field name="model">ls.recall.initiate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Initiate Recall">
+                <div class="alert alert-warning" role="alert">
+                    This opens a recall record. It does not notify anyone
+                    and does not change stock. Communications are prepared
+                    and issued from the recall itself.
+                </div>
+                <group>
+                    <group string="Decision">
+                        <field name="action_type"/>
+                        <field name="plan_id"/>
+                        <field name="classification"/>
+                        <field name="depth"/>
+                        <field name="decision_date"/>
+                        <field name="target_completion_date"/>
+                    </group>
+                    <group string="Scope">
+                        <field name="company_id"
+                               groups="base.group_multi_company"/>
+                        <field name="product_id"/>
+                        <field name="lot_ids" widget="many2many_tags"/>
+                        <field name="responsible_user_id"/>
+                        <field name="trace_now"/>
+                    </group>
+                </group>
+                <separator string="Reason"/>
+                <field name="reason"
+                       placeholder="Describe the quality defect or safety concern."/>
+                <footer>
+                    <button name="action_create_recall" type="object"
+                            string="Open Recall" class="btn-primary"/>
+                    <button string="Discard" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ls_recall_initiate_wizard"
+            model="ir.actions.act_window">
+        <field name="name">Initiate Recall</field>
+        <field name="res_model">ls.recall.initiate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
