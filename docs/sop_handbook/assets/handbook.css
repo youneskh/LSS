@@ -1,0 +1,130 @@
+@font-face { font-family: "Source Sans 3"; font-weight: 400; font-style: normal;
+  src: url(fonts/source-sans-3-latin-400-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Source Sans 3"; font-weight: 400; font-style: normal;
+  src: url(fonts/source-sans-3-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Source Sans 3"; font-weight: 400; font-style: italic;
+  src: url(fonts/source-sans-3-latin-400-italic.woff2) format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 400; font-style: italic;
+  src: url(fonts/source-sans-3-latin-ext-400-italic.woff2) format("woff2"); unicode-range: U+0100-02AF, U+1E00-1EFF; }
+@font-face { font-family: "Source Sans 3"; font-weight: 600;
+  src: url(fonts/source-sans-3-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 600;
+  src: url(fonts/source-sans-3-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-02AF, U+1E00-1EFF; }
+@font-face { font-family: "Source Sans 3"; font-weight: 700;
+  src: url(fonts/source-sans-3-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Sans 3"; font-weight: 700;
+  src: url(fonts/source-sans-3-latin-ext-700-normal.woff2) format("woff2"); unicode-range: U+0100-02AF, U+1E00-1EFF; }
+@font-face { font-family: "Source Serif 4"; font-weight: 600;
+  src: url(fonts/source-serif-4-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-weight: 600;
+  src: url(fonts/source-serif-4-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-02AF, U+1E00-1EFF; }
+@font-face { font-family: "Source Serif 4"; font-weight: 700;
+  src: url(fonts/source-serif-4-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: "Source Serif 4"; font-weight: 700;
+  src: url(fonts/source-serif-4-latin-ext-700-normal.woff2) format("woff2"); unicode-range: U+0100-02AF, U+1E00-1EFF; }
+
+:root {
+  --navy: #1F3A5F; --teal: #0F7C80; --amber: #C98200; --red: #B03A2E; --green: #2E7D4F;
+  --grey: #6B7280; --light: #EEF3F8; --line: #CBD5E1; --ink: #1b1f24;
+}
+@page { size: A4; margin: 17mm 16mm 18mm 18mm; }
+@page cover { margin: 0; }
+html { font-family: "Source Sans 3", "DejaVu Sans", sans-serif; font-size: 10.2pt; color: var(--ink); line-height: 1.42; }
+body { margin: 0; }
+h1, h2, h3, h4 { font-family: "Source Serif 4", "DejaVu Serif", serif; color: var(--navy); line-height: 1.2; }
+h1 { font-size: 23pt; margin: 0 0 4mm; }
+h2 { font-size: 15pt; margin: 6mm 0 2.5mm; }
+h3 { font-size: 11.5pt; margin: 4.5mm 0 1.5mm; }
+p { margin: 0 0 2.2mm; text-align: justify; hyphens: auto; }
+ul, ol { margin: 0 0 2.5mm 0; padding-left: 5.5mm; }
+li { margin-bottom: 1mm; }
+kbd { font-family: "Source Sans 3", sans-serif; font-weight: 600; font-size: 9pt; color: #fff; background: #71639e; border-radius: 3px; padding: 0.2mm 1.4mm; white-space: nowrap; }
+.menu { font-weight: 600; color: var(--teal); }
+code { font-family: "DejaVu Sans Mono", monospace; font-size: 8.4pt; background: #F1F4F8; padding: 0 1mm; border-radius: 2px; }
+table { border-collapse: collapse; width: 100%; margin: 1.5mm 0 3mm; font-size: 9.4pt; }
+th { background: var(--navy); color: #fff; text-align: left; font-weight: 600; padding: 1.4mm 2mm; }
+td { border-bottom: 0.3mm solid var(--line); padding: 1.3mm 2mm; vertical-align: top; }
+tr { break-inside: avoid; }
+.diagram { width: 100%; height: auto; display: block; margin: 1mm 0 1mm; }
+figure { margin: 2mm 0 3.5mm; break-inside: avoid; }
+figure img { width: 100%; border: 0.3mm solid var(--line); border-radius: 1.5mm; display: block; }
+figcaption { font-size: 8.6pt; color: var(--grey); font-style: italic; margin-top: 1.2mm; }
+.page-break { break-before: page; }
+.keep { break-inside: avoid; }
+
+/* ---------- cover ---------- */
+.cover { page: cover; width: 210mm; height: 297mm; position: relative; overflow: hidden; background: var(--navy); color: #fff; }
+.cover .band { position: absolute; left: 0; right: 0; top: 0; height: 297mm; }
+.cover .inner { position: absolute; left: 22mm; right: 22mm; top: 62mm; }
+.cover .kicker { font-size: 12pt; letter-spacing: 0.35em; text-transform: uppercase; color: #9FD3D6; font-weight: 600; }
+.cover h1 { color: #fff; font-size: 38pt; margin: 6mm 0 5mm; line-height: 1.08; }
+.cover .sub { font-size: 15pt; color: #DCE7F2; max-width: 150mm; }
+.cover .meta { position: absolute; left: 22mm; right: 22mm; bottom: 22mm; font-size: 10pt; color: #C9D6E3; border-top: 0.4mm solid #4C6B8F; padding-top: 4mm; display: flex; justify-content: space-between; }
+.cover .lang { display: inline-block; margin-top: 10mm; border: 0.4mm solid #9FD3D6; color: #9FD3D6; border-radius: 10mm; padding: 1.5mm 5mm; font-weight: 600; letter-spacing: 0.08em; }
+
+/* ---------- toc ---------- */
+.toc h1 { margin-bottom: 6mm; }
+.toc .row { display: flex; align-items: baseline; font-size: 9.6pt; margin: 0.6mm 0; }
+.toc .row .t { flex: 0 1 auto; }
+.toc .row .dots { flex: 1 1 auto; border-bottom: 0.3mm dotted #9aa8b8; margin: 0 1.5mm; transform: translateY(-1mm); }
+.toc .row .p { flex: 0 0 auto; font-variant-numeric: tabular-nums; color: var(--navy); font-weight: 600; }
+.toc .lvl0 { font-weight: 700; color: var(--navy); font-size: 11pt; margin-top: 3mm; }
+.toc .lvl1 { font-weight: 600; padding-left: 4mm; margin-top: 1.5mm; }
+.toc .lvl2 { padding-left: 9mm; color: #333; }
+.toc .lvl2 .code { font-weight: 600; color: var(--teal); display: inline-block; min-width: 25mm; }
+
+/* ---------- part / chapter openers ---------- */
+.part-opener { break-before: page; height: 250mm; display: flex; flex-direction: column; justify-content: center; }
+.part-opener .num { font-family: "Source Serif 4", serif; font-size: 70pt; color: #D7E2EE; line-height: 1; font-weight: 700; }
+.part-opener h1 { font-size: 30pt; }
+.part-opener .lead { font-size: 12pt; color: #3b4a5c; max-width: 150mm; }
+.part-opener ul.mods { list-style: none; padding: 0; margin-top: 8mm; columns: 2; }
+.part-opener ul.mods li { padding: 1.5mm 3mm; border-left: 1mm solid var(--teal); background: var(--light); margin-bottom: 2mm; break-inside: avoid; font-weight: 600; color: var(--navy); }
+
+.module-intro { break-before: page; }
+.module-intro .tag { display: inline-block; font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; background: var(--light); color: var(--navy); padding: 0.5mm 2mm; border-radius: 1mm; }
+
+/* ---------- SOP sheet ---------- */
+.sop { break-before: page; }
+.sop-head { background: var(--navy); color: #fff; border-radius: 2mm; padding: 4mm 5mm 4mm; margin-bottom: 3mm; position: relative; }
+.sop-head .code { font-size: 10pt; letter-spacing: 0.12em; color: #9FD3D6; font-weight: 700; }
+.sop-head h1 { color: #fff; font-size: 17pt; margin: 1mm 0 0; }
+.sop-head .mod { position: absolute; right: 5mm; top: 4mm; font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; background: rgba(255,255,255,0.14); padding: 0.6mm 2mm; border-radius: 1mm; }
+.meta-table td { font-size: 8.8pt; padding: 1mm 2mm; }
+.meta-table td.k { width: 30mm; color: var(--grey); font-weight: 600; }
+.blank { display: inline-block; min-width: 32mm; border-bottom: 0.3mm solid #999; }
+.sec { display: flex; gap: 3mm; align-items: baseline; margin: 4mm 0 1.5mm; break-after: avoid; }
+.sec .n { background: var(--teal); color: #fff; font-weight: 700; border-radius: 50%; width: 6mm; height: 6mm; display: inline-flex; align-items: center; justify-content: center; font-size: 8.5pt; flex: 0 0 6mm; transform: translateY(0.6mm); }
+.sec h3 { margin: 0; }
+ol.steps { counter-reset: s; list-style: none; padding-left: 0; }
+ol.steps > li { counter-increment: s; position: relative; padding-left: 9mm; margin-bottom: 2mm; break-inside: avoid; }
+ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0.2mm; width: 6mm; height: 6mm; border-radius: 1.2mm; background: var(--light); color: var(--navy); font-weight: 700; font-size: 9pt; display: flex; align-items: center; justify-content: center; border: 0.3mm solid var(--line); }
+ol.steps > li b.st { color: var(--navy); }
+.box { border-radius: 1.8mm; padding: 2.5mm 3.5mm 1.5mm; margin: 2mm 0 3mm; break-inside: avoid; }
+.box h4 { margin: 0 0 1.5mm; font-size: 10.5pt; font-family: "Source Sans 3", sans-serif; font-weight: 700; }
+.box ul { margin-bottom: 1mm; }
+.box.ctrl { background: #EEF6F6; border-left: 1.2mm solid var(--teal); }
+.box.ctrl h4 { color: var(--teal); }
+.box.good { background: #EEF6F0; border-left: 1.2mm solid var(--green); }
+.box.good h4 { color: var(--green); }
+.box.bad { background: #FBEFEE; border-left: 1.2mm solid var(--red); }
+.box.bad h4 { color: var(--red); }
+.box.demo { background: #FFF8EA; border-left: 1.2mm solid var(--amber); }
+.box.demo h4 { color: #8a5a00; }
+.box.note { background: var(--light); border-left: 1.2mm solid var(--navy); }
+.box.note h4 { color: var(--navy); }
+.box.warn { background: #FFF4E5; border-left: 1.2mm solid #D46A1E; }
+.box.warn h4 { color: #A34A0F; }
+ul.checks { list-style: none; padding-left: 0; }
+ul.checks li { padding-left: 5.5mm; position: relative; }
+ul.checks li::before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 700; }
+.box.bad ul.checks li::before { content: "✗"; color: var(--red); }
+.box.good ul.checks li::before { content: "★"; color: var(--green); font-size: 8pt; top: 0.5mm; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+.refs li { font-size: 9pt; }
+.small { font-size: 8.8pt; color: var(--grey); }
+.chip { display: inline-block; background: var(--light); border: 0.3mm solid var(--line); border-radius: 3mm; padding: 0 2mm; font-size: 8.6pt; margin: 0 1mm 1mm 0; }
+.anatomy td.k { width: 42mm; font-weight: 700; color: var(--navy); }
+.register td { font-size: 8.6pt; padding: 0.9mm 1.5mm; }
+.register th { font-size: 8.6pt; padding: 1.1mm 1.5mm; }
+.marker { position: absolute; font-size: 1px; color: #fff; opacity: 0.01; }

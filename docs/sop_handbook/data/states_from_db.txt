@@ -1,0 +1,117 @@
+ls.audit.checklist|state|draft=Draft > approved=Approved > obsolete=Obsolete
+ls.audit.finding|state|draft=Draft > open=Issued > responded=Response Received > in_progress=Action In Progress > verification=Pending Verification > closed=Closed > cancelled=Cancelled
+ls.audit.program|state|draft=Draft > approved=Approved > in_progress=In Progress > closed=Closed > cancelled=Cancelled
+ls.audit.report|state|draft=Draft > under_review=Under Review > approved=Approved > issued=Issued > cancelled=Cancelled
+ls.audit.schedule|state|planned=Planned > scheduled=Scheduled > in_progress=In Progress > completed=Completed > follow_up=Follow-up > closed=Closed > cancelled=Cancelled
+ls.audit_trail.evidence_pack|state|draft=Draft > generated=Generated
+ls.calibration.certificate|state|draft=Draft > issued=Issued > superseded=Superseded
+ls.calibration.instrument|state|draft=Draft > in_service=In Service > out_of_service=Out of Service > retired=Retired
+ls.calibration.plan|state|draft=Draft > active=Active > suspended=Suspended > obsolete=Obsolete
+ls.calibration.record|state|draft=Draft > in_progress=In Progress > to_review=To Review > approved=Approved > rejected=Rejected > cancelled=Cancelled
+ls.capa.action|state|draft=Draft > in_progress=In Progress > done=Done > cancelled=Cancelled
+ls.capa.effectiveness|state|draft=Draft > planned=Planned > done=Done
+ls.capa.issue|state|identified=Identified > assessed=Assessed > investigation=Investigation > action_planning=Action Planning > in_progress=In Progress > completed=Completed > verified=Verified > closed=Closed
+ls.capa.root_cause|state|draft=Draft > confirmed=Confirmed
+ls.change_control.approval|state|pending=Pending > approved=Approved > rejected=Rejected
+ls.change_control.assessment|state|draft=Draft > completed=Completed
+ls.change_control.implementation|state|pending=Pending > in_progress=In Progress > done=Done > cancelled=Cancelled
+ls.change_control.request|state|draft=Draft > under_review=Under Review > impact_assessment=Impact Assessment > approved=Approved > implementation=Implementation > verified=Verified > closed=Closed > rejected=Rejected > cancelled=Cancelled
+ls.change_control.verification|state|draft=Planned > completed=Completed
+ls.complaint|state|received=Received > assessment=Assessment > investigation=Investigation > capa_required=CAPA Required > resolution=Resolution > closed=Closed > cancelled=Cancelled
+ls.complaint.adverse_event|state|draft=Draft > assessed=Assessed > submitted=Submitted > closed=Closed
+ls.complaint.investigation|state|draft=Draft > in_progress=In Progress > completed=Completed > approved=Approved > rejected=Rejected
+ls.complaint.resolution|state|draft=Draft > in_progress=In Progress > done=Done > cancelled=Cancelled
+ls.cosmetic.claim|state|draft=Draft > substantiation=Under Substantiation > approved=Approved > rejected=Rejected > withdrawn=Withdrawn
+ls.cosmetic.dz_authorization|state|draft=Draft > submitted=Submitted > receipt=Deposit Receipt Issued > granted=Authorisation Granted > refused=Refused > notice=Formal Notice Issued > withdrawn=Withdrawn
+ls.cosmetic.formulation|state|draft=Draft > review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.cosmetic.label|state|draft=Draft > review=Under Review > approved=Approved > superseded=Superseded
+ls.cosmetic.pif|state|draft=Draft > active=Active > retention=Retention Period > archived=Archived
+ls.cosmetic.safety_assessment|state|draft=Draft > part_a=Part A in Preparation > part_b=Part B in Assessment > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.deviation|state|reported=Reported > assessed=Assessed > investigation=Investigation > disposition=Disposition > capa_required=CAPA Required > closed=Closed > cancelled=Cancelled
+ls.deviation.action|state|todo=To Do > done=Done > cancelled=Cancelled
+ls.deviation.disposition|state|draft=Draft > approved=Approved > rejected=Rejected
+ls.deviation.investigation|state|draft=Draft > in_progress=In Progress > completed=Completed
+ls.document.approval|state|pending=Pending > approved=Approved > rejected=Rejected > cancelled=Cancelled
+ls.document.document|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > archived=Archived
+ls.env.excursion|state|open=Open > assessment=Impact Assessment > investigation=Investigation > pending_closure=Pending Closure > closed=Closed > cancelled=Cancelled
+ls.env.limit|state|draft=Draft > approved=Approved > superseded=Superseded
+ls.env.plan|state|draft=Draft > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.env.sample|state|draft=Draft > scheduled=Scheduled > collected=Collected > in_analysis=In Analysis > results_entered=Results Entered > reviewed=Reviewed > approved=Approved > cancelled=Cancelled
+ls.env.trend|state|draft=Draft > computed=Computed > reviewed=Reviewed
+ls.import_export.provision|status|in_force=In Force > amended=Amended > repealed=Repealed > under_review=Under Review
+ls.import_export.regulatory.question|status|open=Open > answered=Answered > wont_answer=Will Not Answer
+ls.lab.coa|state|draft=Draft > issued=Issued > superseded=Superseded > cancelled=Cancelled
+ls.lab.oos|state|open=Open > phase1=Phase I - Laboratory > phase1_done=Phase I Complete > phase2=Phase II - Full Investigation > concluded=Concluded > closed=Closed > cancelled=Cancelled
+ls.lab.sample|state|received=Received > in_progress=In Progress > testing=Testing > results_recorded=Results Recorded > reviewed=Reviewed > approved=Approved > reported=Reported > cancelled=Cancelled
+ls.lab.specification|state|draft=Draft > review=Under Review > approved=Approved > obsolete=Obsolete
+ls.lab.stability_study|state|draft=Draft > approved=Approved > ongoing=Ongoing > completed=Completed > terminated=Terminated
+ls.lab.stability_timepoint|state|planned=Planned > sampled=Sampled > tested=Tested > completed=Completed > missed=Missed > cancelled=Cancelled
+ls.lab.test_method|state|draft=Draft > review=Under Review > approved=Approved > obsolete=Obsolete
+ls.lab.test_result|state|draft=Draft > entered=Entered > reviewed=Reviewed
+ls.md.ce_marking|state|draft=Draft > submitted=Submitted to Notified Body > issued=Certificate Issued > valid=Valid > suspended=Suspended > withdrawn=Withdrawn > expired=Expired
+ls.md.clinical_evaluation|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.device|state|draft=Draft > development=Under Development > conformity_assessment=Conformity Assessment > on_market=On the Market > suspended=Suspended > withdrawn=Withdrawn
+ls.md.pmcf_evaluation|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.pms|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.pms_report|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.risk_assessment|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.technical_file|state|draft=Draft > under_review=Under Review > approved=Approved > superseded=Superseded > cancelled=Cancelled
+ls.md.udi|state|draft=Draft > assigned=Assigned > published=Published to Database > obsolete=Obsolete
+ls.mp.component|state|draft=Draft > released=Released > on_hold=On Hold > obsolete=Obsolete
+ls.mp.injection_molding|state|draft=Draft > setup=Setup > startup_check=Start-up Verification > running=Running > completed=Completed > reviewed=Reviewed > closed=Closed > cancelled=Cancelled
+ls.mp.molding_parameter|state|draft=Draft > review=Under Review > approved=Approved > superseded=Superseded > obsolete=Obsolete > cancelled=Cancelled
+ls.mp.tool|state|draft=Draft > qualified=Qualified > in_service=In Service > maintenance=Under Maintenance > quarantined=Quarantined > decommissioned=Decommissioned
+ls.mp.tool.cavity|state|active=Active > blocked=Blocked > removed=Removed
+ls.mp.tool.maintenance|state|draft=Draft > in_progress=In Progress > done=Done > cancelled=Cancelled
+ls.pharma.aggregation|state|draft=Draft > packed=Packed > shipped=Shipped > disaggregated=Disaggregated
+ls.pharma.api|state|draft=Draft > qualified=Qualified > restricted=Restricted > obsolete=Obsolete
+ls.pharma.batch|state|draft=Planned > in_process=In Production > manufactured=Manufacturing Complete > quarantine=Quarantine > under_review=QA Record Review > released=Released > rejected=Rejected > cancelled=Cancelled
+ls.pharma.batch_record|state|draft=Draft > in_execution=In Execution > completed=Execution Complete > under_review=Under QA Review > approved=Approved > rejected=Rejected
+ls.pharma.batch_record.discrepancy|state|open=Open > under_investigation=Under Investigation > closed=Closed
+ls.pharma.batch_record.step|state|pending=Pending > in_progress=In Progress > done=Completed > not_applicable=Not Applicable
+ls.pharma.ctd.section|state|not_started=Not Started > in_preparation=In Preparation > ready=Ready > submitted=Submitted > deficiency=Deficiency > complete=Complete
+ls.pharma.ctd_dossier|state|draft=Draft > in_preparation=In Preparation > ready=Ready for Submission > submitted=Submitted > deficiency=Deficiency Received > approved=Approved > withdrawn=Withdrawn
+ls.pharma.excipient|state|draft=Draft > qualified=Qualified > restricted=Restricted > obsolete=Obsolete
+ls.pharma.material.mixin|state|draft=Draft > qualified=Qualified > restricted=Restricted > obsolete=Obsolete
+ls.pharma.serialization|state|generated=Generated > commissioned=Commissioned > aggregated=Aggregated > shipped=Shipped > decommissioned=Decommissioned > destroyed=Destroyed > sampled=Sampled > returned=Returned
+ls.pharma.stability.sample|state|stored=In Storage > pulled=Pulled > consumed=Consumed > discarded=Discarded
+ls.pharma.stability.timepoint|state|scheduled=Scheduled > pulled=Pulled > tested=Tested > completed=Completed > out_of_specification=Out of Specification > missed=Missed
+ls.pharma.stability_study|state|draft=Draft > scheduled=Scheduled > ongoing=Ongoing > completed=Completed > terminated=Terminated
+ls.qms.document.mixin|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > under_revision=Under Revision > obsolete=Obsolete
+ls.qms.objective|state|draft=Draft > in_progress=In Progress > achieved=Achieved > not_achieved=Not Achieved > cancelled=Cancelled
+ls.qms.policy|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > under_revision=Under Revision > obsolete=Obsolete
+ls.qms.quality_plan|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > under_revision=Under Revision > obsolete=Obsolete
+ls.qms.quality_record|state|draft=Draft > confirmed=Confirmed > archived=Archived > disposed=Disposed
+ls.qms.sop|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > under_revision=Under Revision > obsolete=Obsolete
+ls.qms.work_instruction|state|draft=Draft > under_review=Under Review > approved=Approved > published=Published > under_revision=Under Revision > obsolete=Obsolete
+ls.recall.communication|state|draft=Draft > approved=Approved > sent=Sent > acknowledged=Acknowledged > cancelled=Cancelled
+ls.recall.effectiveness|state|planned=Planned > performed=Performed > escalated=Escalated > cancelled=Cancelled
+ls.recall.execution|state|planned=Planned > initiated=Initiated > in_progress=In Progress > communication=Communication > effectiveness_check=Effectiveness Check > closed=Closed > cancelled=Cancelled
+ls.recall.line|status|pending=Pending Notification > notified=Notified > responded=Response Received > reconciled=Reconciled > discrepancy=Discrepancy
+ls.recall.plan|state|draft=Draft > under_review=Under Review > approved=Approved > obsolete=Obsolete
+ls.recall.report|state|draft=Draft > reviewed=Reviewed > approved=Approved > submitted=Submitted
+ls.risk.assessment|state|draft=Draft > confirmed=Confirmed > approved=Approved > cancelled=Cancelled
+ls.risk.fmea|state|draft=Draft > in_progress=In Progress > review=Under Review > approved=Approved > closed=Closed > cancelled=Cancelled
+ls.risk.matrix|state|draft=Draft > approved=Approved > obsolete=Obsolete
+ls.risk.mitigation|state|draft=Draft > approved=Approved > in_progress=In Progress > implemented=Implemented > verified=Verified > cancelled=Cancelled
+ls.risk.register|state|draft=Draft > assessed=Assessed > control=Risk Control > monitoring=Monitoring > closed=Closed > cancelled=Cancelled
+ls.signature.integrity.check|state|passed=Passed > failed=Failed
+ls.signature.request|state|draft=Draft > pending=Awaiting Signature > signed=Signed > declined=Declined > expired=Expired > cancelled=Cancelled
+ls.supplier.assessment|state|draft=Draft > in_progress=In Progress > done=Completed > reviewed=Reviewed > cancelled=Cancelled
+ls.supplier.audit|state|draft=Draft > planned=Planned > in_progress=In Progress > report_draft=Report Drafted > report_issued=Report Issued > response_received=Response Received > closed=Closed > cancelled=Cancelled
+ls.supplier.audit.finding|state|open=Open > response_received=Response Received > action_agreed=Action Agreed > implemented=Implemented > verified=Verified > closed=Closed > cancelled=Cancelled
+ls.supplier.material|state|draft=Under Qualification > qualified=Qualified > suspended=Suspended > rejected=Rejected
+ls.supplier.performance|state|draft=Draft > confirmed=Confirmed > cancelled=Cancelled
+ls.supplier.qualification|state|draft=Registered > assessment=Under Assessment > audit=Under Audit > approval=Pending Approval > approved=Approved > conditional=Conditionally Approved > suspended=Suspended > expired=Expired > disqualified=Disqualified
+ls.supplier.review|state|draft=Draft > done=Completed > cancelled=Cancelled
+ls.training.certification|state|valid=Valid > expiring=Expiring Soon > expired=Expired > revoked=Revoked
+ls.training.competency.assessment|state|draft=Draft > confirmed=Confirmed
+ls.training.course|state|draft=Draft > review=Under Review > approved=Approved > obsolete=Obsolete
+ls.training.matrix.line|status|not_trained=Not Trained > valid=Valid > expiring=Expiring Soon > expired=Expired > revoked=Revoked
+ls.training.session|state|draft=Draft > confirmed=Confirmed > in_progress=In Progress > done=Closed > cancelled=Cancelled
+ls.validation.discrepancy|state|open=Open > investigation=Under Investigation > resolved=Resolved > closed=Closed > cancelled=Cancelled
+ls.validation.execution|state|draft=Draft > in_progress=In Progress > completed=Completed > reviewed=Reviewed > approved=Approved > rejected=Rejected > cancelled=Cancelled
+ls.validation.master.plan|state|draft=Draft > review=Under Review > approved=Approved > active=Active > superseded=Superseded > cancelled=Cancelled
+ls.validation.protocol|state|draft=Draft > review=Under Review > approved=Approved > execution=In Execution > executed=Executed > closed=Closed > cancelled=Cancelled
+ls.validation.report|state|draft=Draft > review=Under Review > approved=Approved > cancelled=Cancelled
+qc.inspection|state|plan=Plan > draft=Draft > ready=Ready > waiting=Waiting supervisor approval > success=Quality success > failed=Quality failed > canceled=Canceled
