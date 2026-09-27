@@ -3,4 +3,4 @@ for r in ex.result_ids: print(r.code, '|', r.protocol_test_id.acceptance_criteri
 bad=ex.result_ids.filtered(lambda r:r.verdict=='fail')
 bad.with_user(UA).write({'actual_result':'Pressure recorded above the acceptance range for 40 s at minute 6 of the plateau (see printout p. 4).'})
 bad.discrepancy_id.with_user(UA).write({'description':'TC-002 failed: chamber pressure above the acceptance range for 40 s during the plateau.','immediate_action':'Pressure transmitter PT-02 connection checked; loose fitting found.'})
-env.cr.commit(); print('done')
+env.cr.commit(); print('OK discrepancy text', bool(bad.discrepancy_id))
