@@ -101,23 +101,23 @@ Known limitations
 Documentation
 =============
 
-===================================== =========================================
-``doc/01_business_analysis.md``       Objectives, requirements, roles, risks
-``doc/02_regulatory_analysis.md``     Provision-by-provision mapping and limits
+====================================== =========================================
+``doc/01_business_analysis.md``        Objectives, requirements, roles, risks
+``doc/02_regulatory_analysis.md``      Provision-by-provision mapping and limits
 ``doc/03_functional_specification.md`` States, gates, rules, reports
-``doc/04_technical_specification.md`` Models, constraints, security, algorithm
-``doc/05_architecture_review.md``     Review, deviations D-01 to D-04
-``doc/06_installation_guide.md``      Install, test, upgrade, uninstall
-``doc/07_configuration_guide.md``     Roles, sequences, plans, products
-``doc/08_user_manual.md``             End-to-end walkthrough
-``doc/09_administrator_manual.md``    Data, immutability, inspection readiness
-``doc/10_developer_manual.md``        Extension seams and conventions
-``doc/11_api_documentation.md``       Model and method reference
-``doc/12_test_plan_and_report.md``    What was and was not executed
-``doc/13_validation_report.md``       Qualification inputs; status incomplete
-``doc/14_verification_register.md``   Every unverified assumption
-``doc/15_compliance_checklist.md``    Final checklist with honest statuses
-===================================== =========================================
+``doc/04_technical_specification.md``  Models, constraints, security, algorithm
+``doc/05_architecture_review.md``      Review, deviations D-01 to D-04
+``doc/06_installation_guide.md``       Install, test, upgrade, uninstall
+``doc/07_configuration_guide.md``      Roles, sequences, plans, products
+``doc/08_user_manual.md``              End-to-end walkthrough
+``doc/09_administrator_manual.md``     Data, immutability, inspection readiness
+``doc/10_developer_manual.md``         Extension seams and conventions
+``doc/11_api_documentation.md``        Model and method reference
+``doc/12_test_plan_and_report.md``     What was and was not executed
+``doc/13_validation_report.md``        Qualification inputs; status incomplete
+``doc/14_verification_register.md``    Every unverified assumption
+``doc/15_compliance_checklist.md``     Final checklist with honest statuses
+====================================== =========================================
 
 Credits
 =======
