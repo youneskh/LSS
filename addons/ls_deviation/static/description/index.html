@@ -1,0 +1,211 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences — Deviation Management (<code>ls_deviation</code>)</h1>
+<p>Record, classify, investigate, disposition and close GxP deviations in
+<strong>Odoo 19 Community Edition</strong>.</p>
+<p><strong>Licence:</strong> AGPL-3 · <strong>Version:</strong> 19.0.1.0.0</p>
+<hr />
+<h2>⚠ Read first</h2>
+<p>This module has <strong>never been installed or executed against a running Odoo
+instance.</strong> It was built in an environment without Odoo and without network
+access to a database.</p>
+<p>Static checks pass (Python syntax, XML well-formedness, view-field
+cross-validation, manifest and reference integrity). The 92 automated tests
+were <strong>written but not run</strong>, and <code>flake8</code>/<code>pylint-odoo</code> were <strong>not run</strong>
+because they could not be installed.</p>
+<p>Read <a href="docs/00_VERIFICATION_STATUS.md"><code>docs/00_VERIFICATION_STATUS.md</code></a> before
+doing anything else with this module. Install into a scratch database first.</p>
+<hr />
+<h2>What it does</h2>
+<p>A deviation is a departure from an approved procedure, specification or
+expected outcome. This module enforces a controlled path from reporting to
+closure:</p>
+<pre><code>Reported → Assessed → Investigation → Disposition → CAPA Required → Closed
+                                                  ↘─────────────────↗
+</code></pre>
+<p>with <code>Cancelled</code> as a traceable terminal state and send-back transitions for
+rework.</p>
+<h3>Enforced, not merely offered</h3>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leaving <strong>Reported</strong></td>
+<td>Severity, impact assessment narrative and assigned investigator required</td>
+</tr>
+<tr>
+<td>Leaving <strong>Assessed</strong></td>
+<td>At least one investigation record must exist</td>
+</tr>
+<tr>
+<td>Leaving <strong>Investigation</strong></td>
+<td>All investigations complete; <strong>extension rationale mandatory</strong>; a product disposition required where impact was assessed</td>
+</tr>
+<tr>
+<td>Completing an investigation</td>
+<td>Findings <strong>and</strong> root cause both required</td>
+</tr>
+<tr>
+<td>Approving a disposition</td>
+<td>Manager group only — the proposer cannot self-approve</td>
+</tr>
+<tr>
+<td><strong>Closing</strong></td>
+<td>Conclusions <strong>and</strong> follow-up required; blocked by open actions or unapproved dispositions</td>
+</tr>
+<tr>
+<td>Changing a target date</td>
+<td>Only via wizard, only later, justification mandatory</td>
+</tr>
+<tr>
+<td>Deleting</td>
+<td>Blocked past Reported — cancel instead, with a reason</td>
+</tr>
+<tr>
+<td>Transition log</td>
+<td>Append-only; rejects write and unlink for <strong>every</strong> user including the superuser</td>
+</tr>
+</tbody>
+</table>
+<h3>Regulatory basis for the unusual gates</h3>
+<p>Three design decisions come directly from verified regulation rather than
+convention:</p>
+<ul>
+<li><strong>Mandatory <code>justification</code></strong> — 21 CFR 211.100(b): <em>any deviation from the
+  written procedures shall be recorded and justified.</em></li>
+<li><strong>Mandatory extension rationale and "other batches evaluated"</strong> —
+  21 CFR 211.192: the investigation <em>shall extend to other batches of the same
+  drug product and other drug products</em> that may be associated. The rationale
+  is required <strong>even when the conclusion is that no extension was needed</strong>,
+  because failure to extend is a recurring inspection finding.</li>
+<li><strong>Mandatory conclusions and follow-up at closure</strong> — 21 CFR 211.192: a
+  written record of the investigation <em>shall include the conclusions and
+  follow-up.</em></li>
+</ul>
+<p>No claim of compliance or certification is made. See
+<a href="docs/02_regulatory_analysis.md"><code>docs/02_regulatory_analysis.md</code></a>.</p>
+<hr />
+<h2>Installation</h2>
+<pre><code class="language-bash">odoo -d &lt;scratch_database&gt; -i ls_deviation --stop-after-init
+</code></pre>
+<p>Depends on <code>base</code>, <code>mail</code>, <code>hr</code>, <code>stock</code>, <code>mrp</code>, <code>maintenance</code>.</p>
+<p><strong>No user is granted access at install.</strong> Assign at least one user to
+<em>Deviation Manager</em> immediately afterwards, or the application is
+inaccessible. This is deliberate — see
+<a href="docs/08_installation_and_configuration.md"><code>docs/08_installation_and_configuration.md</code></a>.</p>
+<p>Run the tests:</p>
+<pre><code class="language-bash">odoo --test-enable --test-tags ls_deviation -d &lt;scratch_db&gt; -i ls_deviation --stop-after-init
+</code></pre>
+<hr />
+<h2>Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Can</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deviation Viewer</td>
+<td>Read</td>
+</tr>
+<tr>
+<td>Deviation Reporter</td>
+<td>Create; edit own records while Reported</td>
+</tr>
+<tr>
+<td>Deviation Investigator</td>
+<td>Edit any open record; investigate; propose dispositions</td>
+</tr>
+<tr>
+<td>Deviation Manager (QA)</td>
+<td>Approve dispositions; close; cancel; configure</td>
+</tr>
+</tbody>
+</table>
+<p>Strictly hierarchical — assign only the highest applicable.</p>
+<hr />
+<h2>What it deliberately does not do</h2>
+<ul>
+<li><strong>No CAPA lifecycle.</strong> A <code>capa_reference</code> field and a documented bridge-module hook only. <code>ls_capa</code> does not exist.</li>
+<li><strong>No 21 CFR Part 11 electronic signature.</strong> Approvals are ordinary authenticated writes. The transition log is explicitly documented as <em>not</em> a signature record.</li>
+<li><strong>No stock movement on disposition.</strong> A "Destroy" decision records the decision; scrapping the quant is a separate inventory transaction.</li>
+<li><strong>No dependency on <code>ls_qms</code>.</strong> It does not exist. This module declares its own root menu with a comment explaining how to reparent it later.</li>
+</ul>
+<hr />
+<h2>Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="docs/00_VERIFICATION_STATUS.md"><code>00_VERIFICATION_STATUS.md</code></a></td>
+<td><strong>Start here.</strong> What is proven, what is not, residual risks</td>
+</tr>
+<tr>
+<td><a href="docs/01_business_analysis.md"><code>01_business_analysis.md</code></a></td>
+<td>Objectives, requirements, roles, stories, scope, risks</td>
+</tr>
+<tr>
+<td><a href="docs/02_regulatory_analysis.md"><code>02_regulatory_analysis.md</code></a></td>
+<td>Verified citations and their design consequences</td>
+</tr>
+<tr>
+<td><a href="docs/03_functional_specification.md"><code>03_functional_specification.md</code></a></td>
+<td>Navigation, state machine, business rules, reports</td>
+</tr>
+<tr>
+<td><a href="docs/04_technical_specification.md"><code>04_technical_specification.md</code></a></td>
+<td>Models, fields, constraints, security, tree</td>
+</tr>
+<tr>
+<td><a href="docs/05_architecture_review.md"><code>05_architecture_review.md</code></a></td>
+<td>SOLID/DRY/KISS review, 9 findings, known weaknesses</td>
+</tr>
+<tr>
+<td><a href="docs/06_test_plan.md"><code>06_test_plan.md</code></a></td>
+<td>92 tests by area; coverage position</td>
+</tr>
+<tr>
+<td><a href="docs/07_static_analysis_report.md"><code>07_static_analysis_report.md</code></a></td>
+<td>What was run, what was not, negative control</td>
+</tr>
+<tr>
+<td><a href="docs/08_installation_and_configuration.md"><code>08_installation_and_configuration.md</code></a></td>
+<td>Install, roles, configuration, upgrade</td>
+</tr>
+<tr>
+<td><a href="docs/09_user_and_admin_manual.md"><code>09_user_and_admin_manual.md</code></a></td>
+<td>User, administrator and developer manuals</td>
+</tr>
+<tr>
+<td><a href="docs/10_validation_checklist.md"><code>10_validation_checklist.md</code></a></td>
+<td>20-item pre-release checklist, all open</td>
+</tr>
+<tr>
+<td><a href="docs/CHANGELOG.md"><code>CHANGELOG.md</code></a></td>
+<td>Release notes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Odoo 19 API notes</h2>
+<p>Six breaking changes from Odoo ≤18 were verified against official
+documentation and applied: <code>models.Constraint</code> instead of <code>_sql_constraints</code>;
+<code>&lt;list&gt;</code> instead of <code>&lt;tree&gt;</code>; <code>&lt;chatter/&gt;</code> instead of <code>oe_chatter</code>;
+<code>&lt;t t-name="card"&gt;</code> instead of <code>kanban-box</code>; <code>res.groups.privilege</code> with
+<code>privilege_id</code> instead of <code>category_id</code>; <code>_read_group</code> instead of
+<code>read_group</code>.</p>
+</div>
+</section>

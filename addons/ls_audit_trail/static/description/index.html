@@ -1,0 +1,84 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences — Audit Trail (<code>ls_audit_trail</code>)</h1>
+<p>Tamper-evident, field-level audit trail for GxP-regulated data held in Odoo 19
+Community Edition.</p>
+<h2>What this module does</h2>
+<p>It records who changed what, when, and from where, for the models and fields you
+choose. Each recorded change becomes an immutable entry in a per-company hash
+chain, so that removing, inserting or altering an entry after the fact is
+detectable. It provides on-demand and scheduled integrity verification, sealed
+evidence packs for inspectors, and a controlled, fully documented retention
+mechanism for removing aged entries without breaking the chain's verifiability.</p>
+<h2>What this module does <em>not</em> do</h2>
+<ul>
+<li><strong>It is not an electronic signature.</strong> Capturing a change is not the same as a
+  person signing for it. Electronic signatures are a separate concern; see
+  <code>ls_electronic_signature</code> in the Life Sciences Suite. The evidence pack cover
+  sheet carries handwritten (paper) signature lines only.</li>
+<li><strong>It does not make you compliant.</strong> It supports processes aligned with
+  FDA 21 CFR Part 11 §11.10(e), EU GMP Annex 11 §9 and the ALCOA+ data-integrity
+  expectations. Compliance additionally depends on your procedures, your system
+  validation, your training and your quality system. No certification is claimed.</li>
+<li><strong>It does not audit unstored data.</strong> One-to-many and many-to-many relations,
+  and non-stored computed fields, are never captured directly. Audit the model
+  on the other side of a relation, or the fields a computed value depends on.</li>
+</ul>
+<h2>Requirements</h2>
+<ul>
+<li>Odoo 19.0 Community Edition</li>
+<li>Python 3 (standard library only; no third-party Python dependency)</li>
+<li>PostgreSQL (the chain serialisation uses PostgreSQL transaction advisory locks)</li>
+</ul>
+<h2>Installation</h2>
+<p>Copy the <code>ls_audit_trail</code> directory into your Odoo addons path, update the app
+list, and install the module. No external Python package is required.</p>
+<h2>First configuration</h2>
+<ol>
+<li>Open <strong>Audit Trail ▸ Configuration ▸ Audit Rules</strong> (Administrator role).</li>
+<li>Create a rule naming the model to audit, the operations (create / write /
+   delete) and, optionally, the exact fields. An empty field list audits every
+   stored field except the technical ones.</li>
+<li>Record a justification for the scope. Nothing is audited until a rule exists.</li>
+</ol>
+<h2>Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Can</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audit Trail / Viewer</td>
+<td>Read the trail of their own companies</td>
+</tr>
+<tr>
+<td>Audit Trail / Auditor</td>
+<td>Also verify integrity and produce evidence packs</td>
+</tr>
+<tr>
+<td>Audit Trail / Administrator</td>
+<td>Also configure rules and run approved retention</td>
+</tr>
+</tbody>
+</table>
+<p>Segregation of duties is enforced at the ORM level, not only in the interface:
+an auditor cannot change what is audited, and only an administrator can remove
+entries — and only through the retention wizard, under explicit preconditions.</p>
+<h2>Integrity model</h2>
+<p>Each company owns an independent chain. Every entry stores the SHA-256 digest of
+its own canonical content (<code>payload_digest</code>) and a <code>hash_current</code> that binds that
+payload to the <code>hash_current</code> of the preceding entry. Verification recomputes
+both and compares them to the stored values, and reconciles the head of the
+chain against retention anchors. Chain positions are assigned under a PostgreSQL
+advisory lock so concurrent transactions cannot claim the same position.</p>
+<p>See <code>doc/</code> for the full functional, technical, administrator and validation
+documentation, and for the honest delivery-gate statement describing exactly
+what has and has not been verified.</p>
+<h2>Licence</h2>
+<p>AGPL-3.0-or-later. Authored by the Life Sciences Suite Architecture Team.</p>
+</div>
+</section>

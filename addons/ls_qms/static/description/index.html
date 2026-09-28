@@ -1,0 +1,249 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences QMS (<code>ls_qms</code>)</h1>
+<p>Controlled quality documentation, quality objectives and quality records for
+regulated Life Sciences organisations, on <strong>Odoo 19 Community Edition</strong>.</p>
+<ul>
+<li><strong>Version:</strong> 19.0.1.0.0</li>
+<li><strong>License:</strong> AGPL-3.0-or-later</li>
+<li><strong>Development status:</strong> Alpha</li>
+<li><strong>Depends on:</strong> <code>base</code>, <code>mail</code>, <code>hr</code></li>
+<li><strong>Odoo Enterprise code used:</strong> none</li>
+</ul>
+<hr />
+<h2>1. What the module does</h2>
+<p><code>ls_qms</code> implements Layer 3 of the Life Sciences Suite for the Quality
+Management System scope defined in section 7.2 of the Functional
+Specification. It provides:</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quality policy under revision control</td>
+<td><code>ls.qms.policy</code></td>
+</tr>
+<tr>
+<td>Standard operating procedures</td>
+<td><code>ls.qms.sop</code></td>
+</tr>
+<tr>
+<td>Work instructions subordinate to a procedure</td>
+<td><code>ls.qms.work_instruction</code></td>
+</tr>
+<tr>
+<td>Quality plans with a table of control lines</td>
+<td><code>ls.qms.quality_plan</code></td>
+</tr>
+<tr>
+<td>Control line of a quality plan</td>
+<td><code>ls.qms.quality_plan.line</code></td>
+</tr>
+<tr>
+<td>Quality objectives with measured achievement</td>
+<td><code>ls.qms.objective</code></td>
+</tr>
+<tr>
+<td>Dated measurement of an objective</td>
+<td><code>ls.qms.objective.measurement</code></td>
+</tr>
+<tr>
+<td>Quality records with retention control</td>
+<td><code>ls.qms.quality_record</code></td>
+</tr>
+</tbody>
+</table>
+<p>Two abstract models carry the shared behaviour:</p>
+<table>
+<thead>
+<tr>
+<th>Abstract model</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls.qms.document.mixin</code></td>
+<td>Lifecycle, revisions, periodic review, freezing of published content</td>
+</tr>
+<tr>
+<td><code>ls.qms.parameter.mixin</code></td>
+<td>Validated reading of the system parameters</td>
+</tr>
+</tbody>
+</table>
+<h2>2. Document lifecycle</h2>
+<pre><code>draft ──submit──► under_review ──approve──► approved ──publish──► published
+  ▲                    │                                             │
+  │                    │ reject                          create new revision
+  └────────────────────┘                                             │
+                                                                     ▼
+published (previous revision) ──automatically──► obsolete    under_revision
+</code></pre>
+<p>Rules enforced by the code:</p>
+<ol>
+<li>Only the transitions drawn above are accepted. Any other transition raises
+   a user error naming the source and the target state.</li>
+<li>The author of a document cannot approve it while the system parameter
+   <code>ls_qms.enforce_segregation_of_duties</code> is true.</li>
+<li>Approval and publication require the group <strong>Approver</strong>.</li>
+<li>Withdrawal and reopening require the group <strong>Manager</strong>.</li>
+<li>Content fields of a published or obsolete revision cannot be written.</li>
+<li>Only a draft revision can be deleted.</li>
+<li>Publishing revision <em>n</em> sets revision <em>n-1</em> to obsolete and stamps its
+   withdrawal date.</li>
+<li>A work instruction cannot be published before its parent procedure.</li>
+</ol>
+<h2>3. Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Reads</th>
+<th>Creates and edits</th>
+<th>Approves and publishes</th>
+<th>Withdraws and deletes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Viewer</td>
+<td>published revisions only</td>
+<td>no</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>User</td>
+<td>every state</td>
+<td>yes</td>
+<td>no</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Approver</td>
+<td>every state</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Manager</td>
+<td>every state</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Each group implies the previous one.</p>
+<h2>4. Installation</h2>
+<pre><code class="language-bash">odoo-bin -d &lt;database&gt; -i ls_qms --stop-after-init
+</code></pre>
+<p>The full procedure, including the prerequisites and the verification steps,
+is in <code>docs/06_installation_guide.md</code>.</p>
+<h2>5. Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>docs/01_business_analysis.md</code></td>
+<td>Objectives, stakeholders, user stories, scope</td>
+</tr>
+<tr>
+<td><code>docs/02_regulatory_analysis.md</code></td>
+<td>Frameworks supported, and what is <strong>not</strong> covered</td>
+</tr>
+<tr>
+<td><code>docs/03_functional_specification.md</code></td>
+<td>Menus, workflows, business rules, reports</td>
+</tr>
+<tr>
+<td><code>docs/04_technical_specification.md</code></td>
+<td>Models, fields, constraints, security, data</td>
+</tr>
+<tr>
+<td><code>docs/05_architecture_review.md</code></td>
+<td>Review against Odoo, OCA and design principles</td>
+</tr>
+<tr>
+<td><code>docs/06_installation_guide.md</code></td>
+<td>Installation and post-installation checks</td>
+</tr>
+<tr>
+<td><code>docs/07_configuration_guide.md</code></td>
+<td>System parameters, groups, sequences</td>
+</tr>
+<tr>
+<td><code>docs/08_user_manual.md</code></td>
+<td>Day-to-day operation for each role</td>
+</tr>
+<tr>
+<td><code>docs/09_administrator_manual.md</code></td>
+<td>Scheduled actions, backup, monitoring</td>
+</tr>
+<tr>
+<td><code>docs/10_developer_manual.md</code></td>
+<td>Extension points and coding conventions</td>
+</tr>
+<tr>
+<td><code>docs/11_api_documentation.md</code></td>
+<td>Public methods, signatures and return values</td>
+</tr>
+<tr>
+<td><code>docs/12_test_report.md</code></td>
+<td>Test inventory and <strong>execution status</strong></td>
+</tr>
+<tr>
+<td><code>docs/13_validation_report.md</code></td>
+<td>Validation position and residual risks</td>
+</tr>
+<tr>
+<td><code>docs/14_verification_and_deviation_register.md</code></td>
+<td>Verified facts, unverified points, deviations</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Statement on regulatory compliance</h2>
+<p>This module <strong>supports</strong> the implementation of quality processes. It does
+<strong>not</strong> certify compliance with any regulatory framework. It does not replace
+an organisational quality system, staff training, or computerised system
+validation performed by the operating organisation.</p>
+<p>Two functions frequently expected in a regulated environment are
+<strong>deliberately outside</strong> this module and are delegated to separate modules of
+the Life Sciences Suite:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Delegated to</th>
+<th>State of the extension point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Authenticated electronic signature per 21 CFR 11.100 and 11.200</td>
+<td><code>ls_electronic_signature</code></td>
+<td><code>_ls_qms_signature_hook</code> is called at approval and returns <code>True</code> in this module</td>
+</tr>
+<tr>
+<td>Field level audit trail with hash chain</td>
+<td><code>ls_audit_trail</code></td>
+<td>Not implemented here; <code>mail.thread</code> tracking only</td>
+</tr>
+</tbody>
+</table>
+<p>Read <code>docs/13_validation_report.md</code> before deploying in a regulated
+environment.</p>
+</div>
+</section>

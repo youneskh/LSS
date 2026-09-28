@@ -1,0 +1,151 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences - Document Management (<code>ls_document_management</code>)</h1>
+<p>Controlled document management for regulated Life Sciences environments, built
+for <strong>Odoo 19 Community Edition</strong>.</p>
+<p>Odoo Community Edition does not ship the Enterprise <strong>Documents</strong> application.
+This module provides an independent, controlled document management system
+suitable for GxP environments, with folder hierarchy, immutable versioning,
+a formal review-and-approval lifecycle, retention policies, document control
+records and links to any other Odoo record.</p>
+<hr />
+<h2>Regulatory notice</h2>
+<p>This module is designed to <strong>support</strong> the implementation of document control
+processes. <strong>It does not by itself make an organisation compliant with any
+regulatory framework.</strong> Compliance depends on organisational procedures,
+computer system validation, staff training and quality management, none of
+which are provided by software alone.</p>
+<p>No statement in this module or its documentation should be read as a
+certification of compliance with ISO 13485:2016, FDA 21 CFR Part 11, EU GMP
+Annex 11, or any other framework. See <code>docs/regulatory_analysis.md</code> for the
+scope and, importantly, the <strong>limits</strong> of what this module supports.</p>
+<hr />
+<h2>Features</h2>
+<ul>
+<li><strong>Hierarchical folders</strong> with unlimited nesting and a computed full path.</li>
+<li><strong>Folder-level access control.</strong> Each folder can restrict which security
+  groups may read or modify the documents it contains. Enforced by record
+  rules, not only by the user interface.</li>
+<li><strong>Immutable versioning.</strong> Every version stores one file, a mandatory summary
+  of change, the author, and a <strong>SHA-256 checksum</strong> of the content computed at
+  creation. The controlled fields of a version cannot be modified after
+  creation; a change of content requires a new version.</li>
+<li><strong>Document lifecycle.</strong> Draft -&gt; Under Review -&gt; Approved -&gt; Published -&gt;
+  Archived, with a revision loop that keeps the effective version in force
+  while a new one is prepared.</li>
+<li><strong>Parallel approval routing.</strong> One approval record per approver; the document
+  is approved only once every approval is granted. Approval and authoring roles
+  are segregated.</li>
+<li><strong>Retention policies.</strong> Configurable retention period and trigger, with a
+  daily scheduled action that flags documents as due soon or elapsed and either
+  notifies Document Managers or archives the document. <strong>No retention action
+  ever deletes a record.</strong> A legal-hold flag exempts a document from automatic
+  archiving.</li>
+<li><strong>Document Control Record</strong> QWeb PDF report listing the version and approval
+  history including checksums.</li>
+<li><strong>Links to any Odoo record</strong>, so a document can be attached to records of
+  other modules (for example the other Life Sciences Suite modules) without
+  creating a hard module dependency.</li>
+<li><strong>Multi-company</strong> isolation through global record rules.</li>
+<li><strong>Chatter</strong> (messages and activities) on the document.</li>
+</ul>
+<h2>Roles</h2>
+<p>The module defines four roles under the <em>Document Management</em> privilege:</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Capabilities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Viewer</td>
+<td>Read documents and version history.</td>
+</tr>
+<tr>
+<td>Editor</td>
+<td>Create documents, upload versions, submit for review. Implies Viewer.</td>
+</tr>
+<tr>
+<td>Approver</td>
+<td>Record approval decisions. Implies Viewer, <strong>not</strong> Editor, to keep authoring and approval segregated.</td>
+</tr>
+<tr>
+<td>Manager</td>
+<td>Configure folders, tags and retention policies; publish and archive. Implies Editor and Approver.</td>
+</tr>
+</tbody>
+</table>
+<h2>Data model</h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ls.document.folder</code></td>
+<td>Hierarchical storage and access-control unit.</td>
+</tr>
+<tr>
+<td><code>ls.document.document</code></td>
+<td>Controlled document master record and lifecycle.</td>
+</tr>
+<tr>
+<td><code>ls.document.version</code></td>
+<td>Immutable file revision with SHA-256 checksum.</td>
+</tr>
+<tr>
+<td><code>ls.document.approval</code></td>
+<td>One approver's decision on one version.</td>
+</tr>
+<tr>
+<td><code>ls.document.retention_policy</code></td>
+<td>Retention duration, trigger and end-of-life action.</td>
+</tr>
+<tr>
+<td><code>ls.document.tag</code></td>
+<td>Free-form categorisation.</td>
+</tr>
+<tr>
+<td><code>ls.document.link</code></td>
+<td>Link from a document to any Odoo record.</td>
+</tr>
+</tbody>
+</table>
+<h2>Dependencies</h2>
+<p><code>base</code>, <code>mail</code>. The <code>mail</code> dependency is required for the chatter (message and
+activity history) on documents; it is not requested by the parent
+specification but is necessary to deliver the specified Activity History
+feature.</p>
+<h2>Installation</h2>
+<ol>
+<li>Copy the <code>ls_document_management</code> directory into your Odoo add-ons path.</li>
+<li>Update the app list and install <strong>Life Sciences - Document Management</strong>.</li>
+<li>Assign the <em>Document Management</em> roles to users under
+   <em>Settings &gt; Users &amp; Companies &gt; Users</em>.</li>
+</ol>
+<p>See <code>docs/installation_guide.md</code> for details.</p>
+<h2>Verification status</h2>
+<p>The module ships with a test suite of <strong>101 test methods</strong> across seven test
+modules. <strong>These tests have not been executed in the environment where this
+module was produced</strong>, because that environment had neither an Odoo runtime nor
+network access. The tests are provided so that they can be run in a proper Odoo
+19 instance:</p>
+<pre><code>odoo -d &lt;db&gt; -i ls_document_management --test-enable --stop-after-init
+</code></pre>
+<p>A static self-check (<code>selfcheck.py</code>, kept outside the module) validates Python
+compilation, XML well-formedness, manifest/file consistency, access-rights
+integrity, XML-id cross-references and the absence of constructs removed in
+Odoo 17-19. Its output is recorded in <code>docs/static_check_output.txt</code>. <strong>This
+static check is not a substitute for running the module in Odoo, for
+<code>pylint-odoo</code>, or for computer system validation.</strong> See
+<code>docs/validation_report.md</code> for the honest, itemised status of every claim.</p>
+<h2>Licence</h2>
+<p>AGPL-3.0-or-later. See the OCA licence conventions.</p>
+</div>
+</section>

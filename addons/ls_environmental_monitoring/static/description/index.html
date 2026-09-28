@@ -1,0 +1,221 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences — Environmental Monitoring</h1>
+<p>Environmental monitoring programme management for regulated manufacturing areas
+on <strong>Odoo 19 Community Edition</strong>.</p>
+<p><strong>Version:</strong> 19.0.1.0.0
+<strong>Licence:</strong> AGPL-3.0
+<strong>Depends on:</strong> <code>base</code>, <code>mail</code>
+<strong>Delivery status:</strong> CONDITIONAL PASS — see <a href="#status">Status</a> before deploying</p>
+<hr />
+<h2>What it does</h2>
+<p>Manages the full cycle of a routine environmental monitoring programme:</p>
+<ol>
+<li><strong>Define the programme</strong> — areas, classification grades, parameters,
+   methods and sampling points, each carrying the rationale for its selection.</li>
+<li><strong>Set acceptance criteria</strong> — alert, action and specification limits per
+   sampling point and parameter, versioned and requiring approval by a second
+   person.</li>
+<li><strong>Schedule</strong> — approved monitoring plans generate the samples that fall due,
+   idempotently, by hand or on a daily job.</li>
+<li><strong>Execute</strong> — record collection, analysis and results, with each step
+   attributed to the user who performed it.</li>
+<li><strong>Evaluate</strong> — results are compared automatically against the approved
+   limits, and the thresholds applied are copied onto the result.</li>
+<li><strong>Handle breaches</strong> — action and specification exceedances open an excursion
+   with impact assessment, investigation and controlled closure.</li>
+<li><strong>Trend</strong> — descriptive analysis of released results over a period, with
+   exceedance rates, summary statistics and a direction indicator.</li>
+</ol>
+<hr />
+<h2>What it deliberately does not do</h2>
+<p>Read this before assuming coverage.</p>
+<ul>
+<li><strong>No numeric limits are shipped.</strong> Every threshold is configured and approved
+  by your organisation, which owns the justification for it.</li>
+<li><strong>No electronic signatures.</strong> Approval records who approved and when. That is
+  not a 21 CFR Part 11 compliant signature.</li>
+<li><strong>No field-level audit trail.</strong> Change history uses Odoo's standard tracking.</li>
+<li><strong>No corrective action management.</strong> Excursions carry a free-text external
+  reference and an overridable hook for a module that provides it.</li>
+<li><strong>No instrument interface and no continuous monitoring.</strong> Results are entered
+  by a person.</li>
+<li><strong>No product disposition.</strong> Product impact is assessed and recorded; no batch
+  is released, rejected or quarantined by this module.</li>
+<li><strong>No statistical significance testing.</strong> Trend direction is a descriptive
+  comparison of two halves of a series, and says so in the interface.</li>
+</ul>
+<p>The full list, with reasons, is in
+<a href="doc/regulatory_mapping.md"><code>doc/regulatory_mapping.md</code></a> section 4.</p>
+<hr />
+<h2>Status</h2>
+<p>This module has <strong>never been installed against a live Odoo 19 instance</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Activity</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python syntax</td>
+<td>Verified — all files parse</td>
+</tr>
+<tr>
+<td>XML well-formedness</td>
+<td>Verified — all 23 files parse</td>
+</tr>
+<tr>
+<td>Custom static analysis</td>
+<td>PASS, with the checker proven against 19 injected fault classes</td>
+</tr>
+<tr>
+<td>Pure-logic tests</td>
+<td><strong>38 executed, 38 passed</strong>, 100% measured statement coverage</td>
+</tr>
+<tr>
+<td>Database-backed tests</td>
+<td><strong>104 written, 0 executed</strong></td>
+</tr>
+<tr>
+<td>Installation on Odoo 19</td>
+<td><strong>Not performed</strong></td>
+</tr>
+<tr>
+<td><code>flake8</code> / <code>pylint-odoo</code></td>
+<td><strong>Not performed</strong> — not installed, no network access</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Highest remaining risk:</strong> the <code>&lt;chatter/&gt;</code> element used in seven form views
+was carried forward as a suite convention and was not re-verified against
+official Odoo 19 documentation. If it is wrong, the module will fail to install.
+Check this first. See <a href="doc/deviations.md"><code>doc/deviations.md</code></a> section B7.</p>
+<p>Full detail: <a href="doc/test_report.md"><code>doc/test_report.md</code></a>.</p>
+<hr />
+<h2>Regulatory position</h2>
+<p>This module <strong>supports</strong> the implementation of environmental monitoring
+processes. It does not certify compliance with any framework.</p>
+<p>Provisions whose text was verified during development, and which are mapped to
+specific features:</p>
+<ul>
+<li>21 CFR 211.42(c)(10)(iv), 211.46(b), 211.113(b) — verified via eCFR and FDA
+  guidance</li>
+<li>EU GMP Annex 1 (2022), published August 2022, effective 25 August 2023 with
+  section 8.123 effective 25 August 2024 — verified via multiple independent
+  sources</li>
+</ul>
+<p>Frameworks referenced but <strong>not verified</strong>, and therefore not claimed:
+ISO 14644, ISO 22716, ISO 13485 clause text, WHO GMP, and ANPP or Algerian BPF
+requirements. No numeric limit from any standard is embedded in this module.</p>
+<p>Full mapping with per-provision verification status:
+<a href="doc/regulatory_mapping.md"><code>doc/regulatory_mapping.md</code></a>.</p>
+<hr />
+<h2>Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>May do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Viewer</strong></td>
+<td>Read everything; change nothing</td>
+</tr>
+<tr>
+<td><strong>Technician</strong></td>
+<td>Create samples, record collection, enter results, run sample generation</td>
+</tr>
+<tr>
+<td><strong>Manager</strong></td>
+<td>Everything, including approving limits and plans, reviewing and approving samples, closing excursions, reviewing trend analyses</td>
+</tr>
+</tbody>
+</table>
+<p>Segregation of duties is enforced in the model layer, not only in the interface:</p>
+<ul>
+<li>a limit or plan is approved by someone other than its author;</li>
+<li>a sample is reviewed and approved by someone other than the person who
+  entered the results, and only by a manager;</li>
+<li>an excursion is closed by someone other than its owner.</li>
+</ul>
+<hr />
+<h2>Installation</h2>
+<pre><code class="language-bash">cp -r ls_environmental_monitoring /path/to/addons/
+./odoo-bin -u ls_environmental_monitoring -d &lt;database&gt;
+</code></pre>
+<p>Then follow <a href="doc/installation_guide.md"><code>doc/installation_guide.md</code></a> and
+<a href="doc/configuration_guide.md"><code>doc/configuration_guide.md</code></a>. The module ships no
+configuration data, so nothing works until areas, parameters, sampling points
+and limits have been created.</p>
+<hr />
+<h2>Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="doc/installation_guide.md"><code>doc/installation_guide.md</code></a></td>
+<td>Installation and post-install verification</td>
+</tr>
+<tr>
+<td><a href="doc/configuration_guide.md"><code>doc/configuration_guide.md</code></a></td>
+<td>Setting up a programme from nothing</td>
+</tr>
+<tr>
+<td><a href="doc/user_manual.md"><code>doc/user_manual.md</code></a></td>
+<td>Day-to-day operation</td>
+</tr>
+<tr>
+<td><a href="doc/administrator_manual.md"><code>doc/administrator_manual.md</code></a></td>
+<td>Roles, jobs, multi-company</td>
+</tr>
+<tr>
+<td><a href="doc/developer_manual.md"><code>doc/developer_manual.md</code></a></td>
+<td>Architecture and extension points</td>
+</tr>
+<tr>
+<td><a href="doc/api_reference.md"><code>doc/api_reference.md</code></a></td>
+<td>Generated from source; 18 models, 254 fields</td>
+</tr>
+<tr>
+<td><a href="doc/regulatory_mapping.md"><code>doc/regulatory_mapping.md</code></a></td>
+<td>Provision-by-provision mapping and verification status</td>
+</tr>
+<tr>
+<td><a href="doc/deviations.md"><code>doc/deviations.md</code></a></td>
+<td>Every departure from specification, with rationale</td>
+</tr>
+<tr>
+<td><a href="doc/test_report.md"><code>doc/test_report.md</code></a></td>
+<td>What was run, what was not</td>
+</tr>
+<tr>
+<td><a href="doc/validation_report.md"><code>doc/validation_report.md</code></a></td>
+<td>Delivery gate and outstanding qualification</td>
+</tr>
+<tr>
+<td><a href="doc/CHANGELOG.md"><code>doc/CHANGELOG.md</code></a></td>
+<td>Release history</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Verifying the delivery yourself</h2>
+<pre><code class="language-bash">python3 ls_environmental_monitoring/static_check.py   # expect: RESULT: PASS
+python3 negative_control.py                           # expect: 19/19 CAUGHT
+</code></pre>
+<hr />
+<h2>Credits</h2>
+<p><strong>Author:</strong> Life Sciences Suite Architecture Team
+<strong>Licence:</strong> AGPL-3.0 or later</p>
+</div>
+</section>

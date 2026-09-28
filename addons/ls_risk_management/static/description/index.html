@@ -1,0 +1,234 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences Suite — Risk Management</h1>
+<p><strong>Technical name:</strong> <code>ls_risk_management</code>
+<strong>Version:</strong> 19.0.1.0.0
+<strong>Target:</strong> Odoo 19.0 <strong>Community</strong> Edition
+<strong>Licence:</strong> AGPL-3
+<strong>Author:</strong> Life Sciences Suite Architecture Team</p>
+<p>Risk register, risk assessment, risk control and FMEA for regulated life
+sciences environments: pharmaceutical manufacturing, medical devices, medical
+plastics, cosmetics and QC laboratories.</p>
+<hr />
+<h2>Status: CONDITIONAL PASS — read this first</h2>
+<p>This module is complete, statically clean and documented. It has <strong>never been
+installed, started or executed</strong>, because the build environment had no Odoo
+runtime, no PostgreSQL and no network access.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python syntax, 21 files</td>
+<td><strong>Verified</strong></td>
+</tr>
+<tr>
+<td>XML well-formedness, 16 files</td>
+<td><strong>Verified</strong></td>
+</tr>
+<tr>
+<td>Custom static analysis</td>
+<td><strong>Verified</strong>, no findings</td>
+</tr>
+<tr>
+<td>Static analyser itself</td>
+<td><strong>Validated</strong> by 22 negative controls, 22/22 detected</td>
+</tr>
+<tr>
+<td>161 automated tests</td>
+<td><strong>Written, never executed</strong></td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td><strong>Not measured.</strong> The 95% target is <strong>not</strong> demonstrated</td>
+</tr>
+<tr>
+<td><code>flake8</code> / <code>pylint</code> / <code>pylint-odoo</code></td>
+<td><strong>Not run</strong> — no network, no package installation</td>
+</tr>
+<tr>
+<td>Installed against live Odoo 19</td>
+<td><strong>No</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Outstanding qualification tasks are enumerated in
+<a href="doc/VALIDATION_REPORT.md"><code>doc/VALIDATION_REPORT.md</code></a> section 5.</p>
+<hr />
+<h2>The design decision that shapes everything</h2>
+<p>ISO 14971:2019 requires the manufacturer to <strong>establish objective criteria for
+risk acceptability</strong>, and does <strong>not</strong> itself specify acceptable risk levels.
+(Verified from the ISO catalogue entry; see
+<a href="doc/VERIFICATION_LOG.md"><code>doc/VERIFICATION_LOG.md</code></a>.)</p>
+<p>So this module hardcodes no threshold anywhere. Acceptability lives in
+<code>ls.risk.matrix</code> as reviewable, approvable, version-controlled configuration.
+The 5x5 matrix that ships is delivered <strong>unapproved and not default</strong>, and
+cannot be used until your organisation reviews and approves it. That is not an
+oversight — a module that shipped ready-made acceptability criteria would be
+inviting you to adopt someone else's risk appetite.</p>
+<hr />
+<h2>What it provides</h2>
+<p><strong>Risk register</strong> — one record per identified risk, with the hazard, sequence
+of events, hazardous situation and harm recorded as four separate fields so
+the causal chain is documented rather than collapsed into one paragraph.
+Six-state lifecycle: Draft → Assessed → Risk Control → Monitoring → Closed,
+plus Cancelled.</p>
+<p><strong>Risk matrix</strong> — configurable severity and probability scales with objective
+definitions, and a per-cell risk band and acceptability decision. Draft →
+Approved → Obsolete. Approved matrices are immutable; supersede rather than
+edit.</p>
+<p><strong>Risk assessment</strong> — four assessment types (initial, residual, periodic
+review, production/post-production). Risk level and acceptability are derived
+from the approved matrix and cannot be typed in. <strong>The assessor cannot approve
+their own assessment</strong>, enforced in the ORM.</p>
+<p><strong>Risk control measures</strong> — the three control option categories with a
+documented preference order, so reliance on the weakest option is visible.
+Separate implementation and effectiveness verification, with <strong>different
+people required for each</strong>. Declaration and promotion of risks introduced by a
+control measure itself.</p>
+<p><strong>Residual risk</strong> — acceptance recorded with author, timestamp and
+justification. Where acceptability is <em>Not Acceptable</em>, the module <strong>refuses</strong>
+to record acceptance without a benefit-risk analysis.</p>
+<p><strong>FMEA</strong> — worksheets with failure modes, S/O/D ratings, RPN, dual action
+thresholds, revised ratings, revisions, and promotion of a failure mode into
+the risk register. Kept structurally separate from the ISO 14971 assessment
+path, because detection is an FMEA construct and does not belong in a
+14971 risk estimation.</p>
+<p><strong>Periodic review</strong> — review intervals, overdue flagging, a <em>Reviews Due</em>
+view, and a daily scheduled action notifying risk owners.</p>
+<p><strong>Reports</strong> — Risk Record and FMEA Worksheet, both carrying an explicit
+statement that they do not constitute a compliance claim.</p>
+<hr />
+<h2>Dependencies</h2>
+<pre><code class="language-python">&quot;depends&quot;: [&quot;base&quot;, &quot;mail&quot;]
+</code></pre>
+<p>Deliberately <strong>not</strong> <code>ls_qms</code>, although the suite specification lists it.
+Depending on a suite module that is not on the addons path would block
+installation. Integration uses an extension point instead. See
+<a href="doc/DEVIATIONS.md"><code>doc/DEVIATIONS.md</code></a> D-01.</p>
+<hr />
+<h2>Install</h2>
+<pre><code class="language-bash">odoo-bin -d YOUR_DATABASE -i ls_risk_management --stop-after-init
+</code></pre>
+<p>Then define and approve a risk matrix before anything else:
+<a href="doc/CONFIGURATION.md"><code>doc/CONFIGURATION.md</code></a>.</p>
+<hr />
+<h2>Roles</h2>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Can</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Risk Viewer</strong></td>
+<td>Read everything</td>
+</tr>
+<tr>
+<td><strong>Risk Analyst</strong></td>
+<td>Create and edit risks, assessments, control measures, FMEA</td>
+</tr>
+<tr>
+<td><strong>Risk Manager</strong></td>
+<td>The above, plus approve, accept residual risk, close, cancel, configure</td>
+</tr>
+</tbody>
+</table>
+<p>Two segregation-of-duties rules are enforced in the ORM and apply to everyone,
+administrators included: an assessor cannot approve their own assessment, and
+an implementation verifier cannot verify effectiveness. <strong>Provision at least
+two Risk Managers</strong>, or approvals will deadlock.</p>
+<p>Hiding a button is not a control. Nine workflow methods assert the caller's
+role themselves, so the external API and server actions are covered too.</p>
+<hr />
+<h2>Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="doc/VERIFICATION_LOG.md"><code>VERIFICATION_LOG.md</code></a></td>
+<td>Every verified and unverified fact, with sources</td>
+</tr>
+<tr>
+<td><a href="doc/VALIDATION_REPORT.md"><code>VALIDATION_REPORT.md</code></a></td>
+<td>Phase gates, delivery verdict, outstanding qualification</td>
+</tr>
+<tr>
+<td><a href="doc/TEST_REPORT.md"><code>TEST_REPORT.md</code></a></td>
+<td>The 161 tests and their unexecuted status</td>
+</tr>
+<tr>
+<td><a href="doc/DEVIATIONS.md"><code>DEVIATIONS.md</code></a></td>
+<td>10 declared deviations with rationale</td>
+</tr>
+<tr>
+<td><a href="doc/REGULATORY_TRACEABILITY.md"><code>REGULATORY_TRACEABILITY.md</code></a></td>
+<td>ISO 14971:2019 clause to field mapping</td>
+</tr>
+<tr>
+<td><a href="doc/INSTALLATION.md"><code>INSTALLATION.md</code></a></td>
+<td>Prerequisites, install, upgrade, uninstall</td>
+</tr>
+<tr>
+<td><a href="doc/CONFIGURATION.md"><code>CONFIGURATION.md</code></a></td>
+<td>Defining acceptability criteria, roles, multi-company</td>
+</tr>
+<tr>
+<td><a href="doc/USER_MANUAL.md"><code>USER_MANUAL.md</code></a></td>
+<td>Day-to-day use</td>
+</tr>
+<tr>
+<td><a href="doc/ADMINISTRATOR_MANUAL.md"><code>ADMINISTRATOR_MANUAL.md</code></a></td>
+<td>Security model, integrity controls, performance</td>
+</tr>
+<tr>
+<td><a href="doc/DEVELOPER_MANUAL.md"><code>DEVELOPER_MANUAL.md</code></a></td>
+<td>Architecture, conventions, extension points</td>
+</tr>
+<tr>
+<td><a href="doc/API_REFERENCE.md"><code>API_REFERENCE.md</code></a></td>
+<td>Generated from source by AST</td>
+</tr>
+<tr>
+<td><a href="doc/CHANGELOG.md"><code>CHANGELOG.md</code></a></td>
+<td>Release history</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Tooling</h2>
+<pre><code class="language-bash">python3 static_check.py         # must report no findings
+python3 negative_controls.py    # must report 22/22
+python3 tools_generate_data.py  # regenerate cross-referenced data XML
+python3 tools_generate_docs.py  # regenerate API reference and .pot
+</code></pre>
+<p>The negative controls exist because a static checker that has never been shown
+to fail proves nothing. Twenty-two deliberate faults are injected one at a
+time into throwaway copies and each must be detected.</p>
+<hr />
+<h2>What this module does not do</h2>
+<ul>
+<li>It does not hold your risk management plan or risk management file
+  (deviation D-09).</li>
+<li>Its approvals are <strong>not</strong> 21 CFR Part 11 electronic signatures
+  (deviation D-10).</li>
+<li>It claims <strong>no</strong> ANPP or ICH Q9 support. Neither could be verified from
+  official documentation, so neither is claimed, notwithstanding the suite
+  specification's traceability matrix.</li>
+<li>It does not make any organisation compliant with anything. It records the
+  evidence that supports your own compliance activities.</li>
+</ul>
+</div>
+</section>

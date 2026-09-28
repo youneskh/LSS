@@ -1,0 +1,246 @@
+<!-- Generated from README.md by gen_module_descriptions.py; do not edit. -->
+<section class="oe_container">
+<div class="oe_row oe_spaced">
+<h1>Life Sciences Suite — Pharmaceutical Manufacturing (<code>ls_pharma</code>)</h1>
+<p>Odoo 19 Community Edition module for regulated pharmaceutical manufacturing:
+manufacturing batches, batch production and control records, batch release,
+active ingredient and excipient master data, stability studies, GS1
+serialisation and Common Technical Document dossiers.</p>
+<ul>
+<li><strong>Technical name:</strong> <code>ls_pharma</code></li>
+<li><strong>Version:</strong> 19.0.1.0.0</li>
+<li><strong>Licence:</strong> AGPL-3.0 or later</li>
+<li><strong>Author:</strong> Life Sciences Suite Architecture Team</li>
+<li><strong>Depends on:</strong> <code>base</code>, <code>mail</code>, <code>product</code>, <code>stock</code>, <code>mrp</code></li>
+</ul>
+<hr />
+<h2>Read this first</h2>
+<p><strong>This module does not make an organisation compliant with any regulation.</strong>
+It records data and enforces process controls that a manufacturer needs in
+order to operate under a quality system. Compliance depends on the
+manufacturer's procedures, its validation activities, the training of its
+staff and the decisions of its quality unit. Nothing in this module has been
+certified by any regulatory authority.</p>
+<p><strong>Delivery status: CONDITIONAL PASS.</strong> What was verified and what was not is
+stated in <code>doc/13_validation_report.md</code> and repeated in section
+"Honest delivery gate" below. The short form: the sources compile, the XML is
+well formed and a purpose-built static checker reports no finding, but the
+tests shipped with the module <strong>have never been executed</strong>, no coverage has
+been measured, <code>flake8</code> and <code>pylint-odoo</code> have not been run, and the module
+has <strong>never been installed against a live Odoo 19 instance</strong>.</p>
+<hr />
+<h2>What the module does</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>What is recorded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batches</td>
+<td>Planned, in-process, manufactured, quarantined, reviewed, released or rejected batches, with components, major equipment, co-products, yields and expiry</td>
+</tr>
+<tr>
+<td>Batch records</td>
+<td>Processing steps, in-process and laboratory controls, line clearances, labelling reconciliation, samples, discrepancies, execution and quality review</td>
+</tr>
+<tr>
+<td>Release</td>
+<td>An append-only decision of the quality unit, covered by a SHA-256 integrity digest, with an eight-point checklist bound to its regulatory basis</td>
+</tr>
+<tr>
+<td>Materials</td>
+<td>Active pharmaceutical ingredients and excipients, their pharmacopoeial standard, potency basis, approved manufacturers and qualification state</td>
+</tr>
+<tr>
+<td>Stability</td>
+<td>Studies, storage conditions, a schedule generated from ICH Q1A(R2), samples, time points and results, with significant-change tracking</td>
+</tr>
+<tr>
+<td>Serialisation</td>
+<td>GS1 unique identifiers with a modulo-10 check digit, unpredictable serial numbers, and aggregation under Serial Shipping Container Codes</td>
+</tr>
+<tr>
+<td>Regulatory</td>
+<td>Common Technical Document dossiers with the ICH M4(R4) and M4Q structure shipped as a reusable template</td>
+</tr>
+</tbody>
+</table>
+<h2>What the module deliberately does not do</h2>
+<ul>
+<li>It is <strong>not</strong> a 21 CFR Part 11 electronic signature system. The release
+  digest detects modification; it does not manifest a signature, and the
+  module implements none of the identification, authentication or signature
+  controls of that Part.</li>
+<li>It does <strong>not</strong> render barcode symbols. It produces GS1 element strings,
+  which a symbology encoder consumes.</li>
+<li>It does <strong>not</strong> generate, validate or transmit an electronic submission
+  sequence. It tracks the preparation status of dossier sections.</li>
+<li>It does <strong>not</strong> depend on any other module of the Life Sciences Suite. See
+  <code>doc/15_deviation_register.md</code> for why.</li>
+</ul>
+<h2>Documentation</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>doc/01_business_analysis.md</code></td>
+<td>Objectives, stakeholders, roles, user stories, scope, risks</td>
+</tr>
+<tr>
+<td><code>doc/02_regulatory_analysis.md</code></td>
+<td>Every provision relied upon, with its source</td>
+</tr>
+<tr>
+<td><code>doc/03_functional_specification.md</code></td>
+<td>Menus, workflows, state machines, business rules</td>
+</tr>
+<tr>
+<td><code>doc/04_technical_specification.md</code></td>
+<td>Architecture, models, security, data, jobs</td>
+</tr>
+<tr>
+<td><code>doc/05_architecture_review.md</code></td>
+<td>Review against SOLID, DRY, KISS and upgrade safety</td>
+</tr>
+<tr>
+<td><code>doc/06_development_report.md</code></td>
+<td>What was built, and the coding rules applied</td>
+</tr>
+<tr>
+<td><code>doc/07_test_report.md</code></td>
+<td>The test suite and its honest execution status</td>
+</tr>
+<tr>
+<td><code>doc/08_static_analysis_report.md</code></td>
+<td>The static checker, its negative controls, its results</td>
+</tr>
+<tr>
+<td><code>doc/09_user_manual.md</code></td>
+<td>Day-to-day use, by role</td>
+</tr>
+<tr>
+<td><code>doc/10_administrator_manual.md</code></td>
+<td>Configuration, groups, scheduled actions, backups</td>
+</tr>
+<tr>
+<td><code>doc/11_developer_manual.md</code></td>
+<td>Extension points and conventions</td>
+</tr>
+<tr>
+<td><code>doc/12_api_reference.md</code></td>
+<td>Generated inventory of models, fields and methods</td>
+</tr>
+<tr>
+<td><code>doc/13_validation_report.md</code></td>
+<td>Delivery gate, residual risks, outstanding qualification</td>
+</tr>
+<tr>
+<td><code>doc/14_regulatory_traceability_matrix.md</code></td>
+<td>Provision to field or constraint</td>
+</tr>
+<tr>
+<td><code>doc/15_deviation_register.md</code></td>
+<td>Every departure from the suite specification</td>
+</tr>
+<tr>
+<td><code>doc/16_installation_and_configuration_guide.md</code></td>
+<td>Installation and first configuration</td>
+</tr>
+<tr>
+<td><code>doc/CHANGELOG.md</code>, <code>doc/RELEASE_NOTES.md</code></td>
+<td>History and release notes</td>
+</tr>
+<tr>
+<td><code>doc/00_final_validation_checklist.md</code></td>
+<td>The ten phase gates and their verdicts</td>
+</tr>
+</tbody>
+</table>
+<h2>Installation in brief</h2>
+<pre><code class="language-bash"># 1. place the module on the addons path
+cp -r ls_pharma /path/to/addons/
+
+# 2. restart the server and update the module list
+odoo-bin -u base -d &lt;database&gt;
+
+# 3. install
+odoo-bin -i ls_pharma -d &lt;database&gt;
+</code></pre>
+<p>Full instructions, including the first configuration of the GS1 company
+prefix, are in <code>doc/16_installation_and_configuration_guide.md</code>.</p>
+<h2>Re-running the checks</h2>
+<pre><code class="language-bash"># offline static analysis, from the directory that contains the module
+python3 ls_pharma/static_check.py ls_pharma
+
+# the test suite, against a real server
+odoo-bin -d &lt;database&gt; -i ls_pharma --test-enable --stop-after-init
+</code></pre>
+<h2>Honest delivery gate</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python syntax</td>
+<td>Verified</td>
+<td><code>python3 -m py_compile</code> over every source file</td>
+</tr>
+<tr>
+<td>XML well-formedness</td>
+<td>Verified</td>
+<td><code>lxml.etree.parse</code> over every XML file</td>
+</tr>
+<tr>
+<td>Internal consistency</td>
+<td>Verified</td>
+<td><code>static_check.py</code>, 0 findings, validated by fault injection</td>
+</tr>
+<tr>
+<td>Tests written</td>
+<td>Yes</td>
+<td>11 test modules under <code>tests/</code></td>
+</tr>
+<tr>
+<td>Tests executed</td>
+<td><strong>No</strong></td>
+<td>No Odoo runtime and no PostgreSQL in the build environment</td>
+</tr>
+<tr>
+<td>Coverage measured</td>
+<td><strong>No</strong></td>
+<td>Cannot be measured without executing the tests</td>
+</tr>
+<tr>
+<td><code>flake8</code> / <code>pylint-odoo</code></td>
+<td><strong>Not run</strong></td>
+<td>No network access to install them</td>
+</tr>
+<tr>
+<td>Installed on Odoo 19</td>
+<td><strong>No</strong></td>
+<td>No Odoo runtime in the build environment</td>
+</tr>
+<tr>
+<td>IQ / OQ / PQ</td>
+<td><strong>Not performed</strong></td>
+<td>Listed as outstanding in <code>doc/13_validation_report.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>No pass rate and no coverage percentage is claimed anywhere in this
+documentation, because none was measured.</p>
+</div>
+</section>
